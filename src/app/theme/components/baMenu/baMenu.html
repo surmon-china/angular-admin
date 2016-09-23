@@ -1,0 +1,25 @@
+<aside class="al-sidebar" 
+       (mouseleave)="hoverElemTop=outOfArea" sidebarResize>
+  <li class="al-sidebar-list-item">
+    <a href="/pages/userprofile" class="al-sidebar-user">
+      <img src="assets/img/app/profile/Nasta.png" class="al-sidebar-user-gravatar">
+      <div class="al-sidebar-user-profile">
+        <p class="al-sidebar-user-name">Surmon</p>
+        <small class="al-sidebar-user-slogan text-muted">Talk is cheap. Show me the code</small>
+      </div>
+    </a>
+  </li>
+  <ul id="al-sidebar-list" 
+      class="al-sidebar-list" 
+      baSlimScroll [baSlimScrollOptions]="{height: menuHeight}">
+    <ba-menu-item [menuItem]="item"
+                  (itemHover)="hoverItem($event)"
+                  (toggleSubMenu)="toggleSubMenu($event)"
+                  *ngFor="let item of menuItems">
+    </ba-menu-item>
+  </ul>
+  <div class="sidebar-hover-elem" 
+       [ngStyle]="{top: hoverElemTop + 'px', height: hoverElemHeight + 'px'}"
+       [ngClass]="{'show-hover-elem': showHoverElem }">
+  </div>
+</aside>
