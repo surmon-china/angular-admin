@@ -6,6 +6,7 @@
 ## Documentation
 Installation, customization and other useful articles: https://akveo.github.io/ng2-admin/
 
+
 ## Based on
 Angular 2, Bootstrap 4, Webpack and lots of awesome modules and plugins
 
