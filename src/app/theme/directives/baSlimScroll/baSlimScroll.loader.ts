@@ -1,1 +1,2 @@
-require('jquery-slimscroll');
+// require('jquery-slimscroll');
+require('./baSlimScroll.lib.ts')

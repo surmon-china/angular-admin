@@ -141,18 +141,6 @@ export const PAGES_MENU = [
         }
       },
       {
-        path: 'theme',
-        data: {
-          menu: {
-            title: '主题管理',
-            icon: 'ion-android-color-palette',
-            selected: false,
-            expanded: false,
-            order: 6
-          }
-        }
-      },
-      {
         path: 'file',
         data: {
           menu: {
