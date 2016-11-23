@@ -2,14 +2,13 @@
 @import '../../components/baMsgCenter/baMsgCenter';
 
 .page-top {
-  background-color: $topbar;
+  background-color: $sidebar;
   position: fixed;
   z-index: 904;
-  // box-shadow: 2px 0 3px rgba(0, 0, 0, 0.5);
-  height: 45px;
+  height: $top-height;
   width: 100%;
   min-width: $resMin;
-  padding: 0 20px 0 0px;
+  padding: 0 20px 0 0;
   border-bottom: 3px solid $topbar-border;
 
   .dropdown-toggle::after {
@@ -31,18 +30,13 @@ a.al-logo {
   white-space: nowrap;
   float: left;
   outline: none !important;
-  line-height: 45px;
-  width: 190px;
+  line-height: $top-height;
+  width: $sidebar-width;
   text-align: center;
 
-  .socicon {
+  span {
     margin-right: 5px;
     color: $primary;
-  }
-
-  .logo-text {
-    // font-family: initial;
-    // font-size: 18px;
   }
 }
 
@@ -78,7 +72,7 @@ a.al-logo {
 }
 
 a.refresh-data {
-  color: $topbar-text;
+  color: $sidebar-text;
   font-size: 13px;
   text-decoration: none;
   font-weight: $font-normal;
@@ -132,15 +126,14 @@ a.collapse-menu-link {
 
 .search {
   text-shadow: none;
-  color: $topbar-text;
   font-size: 13px;
   line-height: 25px;
   transition: all 0.5s ease;
   white-space: nowrap;
   overflow: hidden;
-  width: 162px;
+  width: $sidebar-width;
   float: left;
-  margin: 20px 0 0 30px;
+  margin: 9px 0 0 30px;
 
   label {
     cursor: pointer;
@@ -154,6 +147,7 @@ a.collapse-menu-link {
     margin-right: 13px;
   }
   input {
+    color: $sidebar-text;
     background: none;
     border: none;
     outline: none;

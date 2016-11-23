@@ -1,18 +1,11 @@
-<div class="page-top clearfix" 
-     baScrollPosition maxHeight="50" 
-     (scrollChange)="scrolledChanged($event)"
+<div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
      [ngClass]="{scrolled: isScrolled}">
-  <a routerLink="/pages/dashboard" 
-     class="al-logo clearfix">
-     <i class="socicon">y</i>
-      <span class="logo-text">NodePress</span>
-  </a>
-  <a (click)="toggleMenu()" 
-     class="collapse-menu-link ion-navicon"></a>
+  <a routerLink="/pages/dashboard" class="al-logo clearfix"><span>Node</span>Press</a>
+  <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
 
   <div class="search">
     <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
-    <input id="searchInput" type="text" placeholder="关键字搜索功能...">
+    <input id="searchInput" type="text" placeholder="Search for...">
   </div>
 
   <div class="user-profile clearfix">

@@ -1,6 +1,6 @@
 @import '../../sass/conf/conf';
 
-$sidebar-width: 180px;
+$sidebar-scroll-width: 4px;
 $angle-left: "\f100";
 $angle-right: "\f101";
 
@@ -19,7 +19,7 @@ $angle-right: "\f101";
 .al-sidebar-list {
   margin: 0;
   overflow: hidden;
-  padding: 18px 0 0 0;
+  padding: 0;
   list-style: none;
 }
 
@@ -139,7 +139,7 @@ a.al-sidebar-user {
     }
 
     > .al-sidebar-user-slogan {
-      // @include text-truncate();
+      @include text-truncate();
       display: block;
     }
   }
@@ -154,8 +154,8 @@ a.al-sidebar-user {
 
 .slimScrollBar, .slimScrollRail {
   border-radius: 0px !important;
-  width: 4px !important;
-  left: 176px;
+  width: $sidebar-scroll-width !important;
+  left: $sidebar-width - $sidebar-scroll-width;
 }
 
 @mixin layout-collapsed() {
@@ -190,7 +190,7 @@ a.al-sidebar-user {
       color: $sidebar-text;
       padding-left: 52px;
       height: auto;
-      line-height: 29px;
+      line-height: 40px;
       &:hover {
         color: $primary;
       }
@@ -211,11 +211,11 @@ a.al-sidebar-user {
 }
 
 .sidebar-hover-elem{
-  width: 4px;
+  width: $sidebar-scroll-width;
   background: $primary;
   position: absolute;
   top: -150px;
-  left: 176px;
+  left: $sidebar-width - $sidebar-scroll-width;
   transition: all 0.5s ease;
   transition-property: top, height;
   height: 42px;

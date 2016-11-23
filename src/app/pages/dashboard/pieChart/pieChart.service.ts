@@ -12,22 +12,22 @@ export class PieChartService {
     return [
       {
         color: pieColor,
-        description: 'New Visits',
+        description: '今日浏览人数',
         stats: '57,820',
         icon: 'person',
       }, {
         color: pieColor,
-        description: 'Purchases',
-        stats: '$ 89,745',
+        description: '今日留言数',
+        stats: '89,745',
         icon: 'money',
       }, {
         color: pieColor,
-        description: 'Active Users',
+        description: '今天新文章',
         stats: '178,391',
         icon: 'face',
       }, {
         color: pieColor,
-        description: 'Returned',
+        description: '我也不知道',
         stats: '32,592',
         icon: 'refresh',
       }
