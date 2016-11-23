@@ -1,6 +1,7 @@
 
-# Admin panel framework based on Angular 2, Bootstrap 4 and Webpack
-> angular-admin
+# angular-admin
+Admin panel framework based on Angular 2, Bootstrap 4 and Webpack
+
 
 # 目录结构
 ```
