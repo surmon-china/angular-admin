@@ -1,0 +1,73 @@
+<div class="contnet-top-tools">
+  <div class="pull-left">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-default btn-with-icon">
+        <i class="ion-refresh"></i>
+        <span>刷新</span>
+      </button>
+      <div class="btn-group" role="group">
+        <button id="batchBtnGroup" 
+                type="button" 
+                class="btn btn-default btn-with-icon dropdown-toggle" 
+                data-toggle="dropdown" 
+                aria-haspopup="true" 
+                aria-expanded="false">
+          <i class="ion-ios-list"></i>
+          <span>批量操作</span>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="batchBtnGroup">
+          <a class="dropdown-item" href="#">彻底删除</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
+  <thead class="thead-inverse">
+    <tr>
+      <th>
+        <input type="checkbox">
+      </th>
+      <th>ID</th>
+      <th>名称</th>
+      <th>描述</th>
+      <th>别名</th>
+      <th>文章</th>
+      <th width="30%" class="text-center">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories.data">
+      <td>
+        <input type="checkbox">
+      </td>
+      <td>
+        <span>{{ category.id }}</span>
+      </td>
+      <td>
+        <strong>{{ category.name }}</strong>
+      </td>
+      <td>{{ category.description || '暂无' }}</td>
+      <td>{{ category.slug }}</td>
+      <td>{{ category.articles || 0 }}</td>
+      <td>
+         <ul class="btn-list clearfix text-center">
+          <li>
+            <button class="btn btn-primary btn-sm" 
+                    type="button"
+                    (click)="editCategory({ category: category, event: $event })">编辑分类</button>
+          </li>
+          <li>
+            <button class="btn btn-danger btn-sm" 
+                    type="button">删除分类</button>
+          </li>
+          <li>
+            <a class="btn btn-success btn-sm" 
+               href="/category/{{ category.slug }}"
+               target="_blank">查看分类</a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

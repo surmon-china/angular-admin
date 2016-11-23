@@ -238,7 +238,7 @@
 /* general toolbar styles */
 
 .leaflet-bar {
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  box-shadow: none;
   a {
     background-color: $primary-dark;
     border-bottom: 1px solid #ccc;
@@ -297,7 +297,7 @@
 /* layers control */
 
 .leaflet-control-layers {
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
   background: $default;
 }
 
@@ -463,7 +463,7 @@
 .leaflet-popup-tip {
   background: white;
 
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
 }
 
 .leaflet-container a.leaflet-popup-close-button {

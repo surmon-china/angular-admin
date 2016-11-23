@@ -105,5 +105,10 @@
   background: -webkit-radial-gradient(bottom, ellipse cover,  $color-1 0%,$color-2 45%,$color-3 100%); /* Chrome10-25,Safari5.1-6 */
   background: radial-gradient(ellipse at bottom,  $color-1 0%,$color-2 45%,$color-3 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$color-1', endColorstr='$color-3',GradientType=1); /* IE6-9 fallback on horizontal gradient */
+}
 
+@mixin text-truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
