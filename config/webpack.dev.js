@@ -130,11 +130,13 @@ module.exports = function (options) {
            *
            * See: https://github.com/wbuchwalter/tslint-loader
            */
+           /*
           tslint: {
             emitErrors: false,
             failOnHint: false,
             resourcePath: 'src'
           }
+          */
         }
       })
     ],

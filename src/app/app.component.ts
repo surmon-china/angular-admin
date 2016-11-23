@@ -6,8 +6,7 @@ import { layoutPaths } from './theme/theme.constants';
 import { BaThemeConfig } from './theme/theme.config';
 
 /*
- * App Component
- * Top Level Component
+ * 顶级入口组件
  */
 @Component({
   selector: 'app',
@@ -37,6 +36,7 @@ export class App {
     });
   }
 
+  // 程序初始化，关闭加载状态
   public ngAfterViewInit(): void {
     // hide spinner once all loaders are completed
     BaThemePreloader.load().then((values) => {
