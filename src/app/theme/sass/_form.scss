@@ -43,15 +43,17 @@
   color: $content-text;
   @include placeholderStyle($content-text, 0.7);
   border: 1px solid $input-border;
-  border-radius: 5px;
+  border-radius: 2px;
   background-color: $input-background;
   box-shadow: none;
   font-size: 14px;
+  transition: background-color .2s;
   &:focus {
     color: $content-text;
     box-shadow: none;
-    border-color: $primary-bg;
-    background: $input-background;
+    border-color: $sidebar-border;
+    background: $sidebar-sublist;
+    transition: background-color .2s;
   }
 }
 

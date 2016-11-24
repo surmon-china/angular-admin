@@ -44,6 +44,13 @@ $text-color: #ffffff;
   .form-group {
     margin-bottom: 12px;
   }
+
+  > .secret-titles {
+
+    > .title {
+      margin: 0;
+    }
+  }
 }
 
 .auth-input {

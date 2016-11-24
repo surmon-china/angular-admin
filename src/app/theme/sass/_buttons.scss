@@ -5,14 +5,14 @@ $hover: 24;
 }
 
 .btn {
-  border-radius: 5px;
+  border-radius: 2px;
   transition: all 0.1s ease;
-  padding: 0.344rem 1rem;
-  font-size: 0.9rem;
+  padding: 0.45rem 1rem;
+  // font-size: 0.9rem;
 }
 
 .btn:hover {
-  transform: scale(1.2);
+  // transform: scale(1.2);
 }
 
 @mixin styleButton($color, $borderColor) {
@@ -35,7 +35,8 @@ $hover: 24;
   }
 
   &:hover, &:focus, &.focus, &:active, &.active {
-    @include styleButton($color, $borderColor - $hover);
+    // @include styleButton($color, $borderColor - $hover);
+    @include styleButton($color, $borderColor);
   }
 }
 
@@ -273,7 +274,7 @@ button.progress-button {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.3333333;
-  border-radius: 6px;
+  border-radius: 3px;
 }
 
 .dropdown button.btn.btn-default.dropdown-toggle {
