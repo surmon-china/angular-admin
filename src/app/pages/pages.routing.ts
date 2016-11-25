@@ -13,7 +13,7 @@ const routes: Routes = [
       // 公告管理
       { path: 'announcement', loadChildren: () => System.import('./announcement/announcement.module') },
       // 文章管理
-      // { path: 'article', loadChildren: () => System.import('./article/article.module') },
+      { path: 'article', loadChildren: () => System.import('./article/article.module') },
       // 页面管理
       // { path: 'page', loadChildren: () => System.import('./page/page.module') },
       // demo演示

@@ -7,8 +7,10 @@ $hover: 24;
 .btn {
   border-radius: 2px;
   transition: all 0.1s ease;
-  padding: 0.45rem 1rem;
-  // font-size: 0.9rem;
+  padding: 0rem 1rem;
+  min-height: 2.3rem;
+  line-height: 2.3rem;
+  font-size: 0.9rem;
 }
 
 .btn:hover {
@@ -23,10 +25,23 @@ $hover: 24;
 @mixin buttonColor($color, $borderColor) {
   @include styleButton($color, $borderColor);
 
-  &.disabled, &[disabled], fieldset[disabled] &, &.disabled:hover, &[disabled]:hover,
-  fieldset[disabled] &:hover, &.disabled:focus, &[disabled]:focus, fieldset[disabled] &:focus,
-  &.disabled.focus, &[disabled].focus, fieldset[disabled] &.focus, &.disabled:active,
-  &[disabled]:active, fieldset[disabled] &:active, &.disabled.active, &[disabled].active,
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] &,
+  &.disabled:hover,
+  &[disabled]:hover,
+  fieldset[disabled] &:hover,
+  &.disabled:focus,
+  &[disabled]:focus,
+  fieldset[disabled] &:focus,
+  &.disabled.focus,
+  &[disabled].focus,
+  fieldset[disabled] &.focus,
+  &.disabled:active,
+  &[disabled]:active,
+  fieldset[disabled] &:active,
+  &.disabled.active,
+  &[disabled].active,
   fieldset[disabled] &.active {
     @include styleButton($color, $borderColor + $hover/2);
     &:hover {
@@ -34,9 +49,12 @@ $hover: 24;
     }
   }
 
-  &:hover, &:focus, &.focus, &:active, &.active {
-    // @include styleButton($color, $borderColor - $hover);
+  &:focus {
     @include styleButton($color, $borderColor);
+  }
+
+  &:hover, &.focus, &:active, &.active {
+    @include styleButton(lighten($color, 5%), lighten($borderColor, 5%));
   }
 }
 
@@ -74,8 +92,8 @@ button.btn.btn-primary {
 button.btn.btn-default {
   border-width: 1px;
   color: $content-text;
-  @include buttonColor(transparent, $border);
-  &:active, &:target {
+  @include buttonColor($sidebar, $sidebar-border);
+  &.active, &:active, &:target {
     background-color: rgba(0, 0, 0, 0.2);
     color: $default-text;
   }
@@ -157,6 +175,7 @@ button.btn.btn-inverse {
     margin-top: 0px;
   }
 }
+
 
 .btn-toolbar {
   display: inline-block;
@@ -261,6 +280,7 @@ button.progress-button {
   padding: 1px 5px;
   font-size: 12px;
   line-height: 1.5;
+  min-height: auto;
 }
 
 .btn-group-sm > .btn, .btn-sm {
@@ -278,11 +298,12 @@ button.progress-button {
 }
 
 .dropdown button.btn.btn-default.dropdown-toggle {
-  color: $default-text;
-  border: 1px solid $border;
-  background-color: transparent;
-  &:focus, &:active {
-    background-color: $default;
+  border-width: 1px;
+  color: $content-text;
+  @include buttonColor($sidebar, $sidebar-border);
+  &.active, &:active, &:target {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: $default-text;
   }
 }
 

@@ -1,15 +1,22 @@
 import { Component } from '@angular/core';
-import { BaCard } from '../../../theme/components/baCard';
-import { ArticleService } from '../../../theme/services/article';
+// import { ArticleService } from '../../../theme/services/article';
 
 @Component({
   selector: 'list',
-  // directives: [BaCard],
-  providers: [ArticleService],
-  // template: require('./list.html')
+  template: require('./list.html')
 })
 
 export class ArticleList {
+
+  public articles = {
+    result: {
+      data: [{
+        meta: {
+
+        }
+      }]
+    }
+  }
 
   /*
 

@@ -1,10 +1,10 @@
 import { Routes, RouterModule }  from '@angular/router';
 
-import { Article }       from './article.component';
-import { Catrgory }      from './components/category';
-import { Edit }          from './components/edit';
-import { List }          from './components/list';
-import { Tag }            from './components/tag';
+import { Article }               from './article.component';
+import { ArticleCategory }       from './components/category';
+import { ArticleEdit }          from './components/edit';
+import { ArticleList }          from './components/list';
+import { ArticleTag }           from './components/tag';
 
 const routes: Routes = [
   {
@@ -12,10 +12,11 @@ const routes: Routes = [
     component: Article,
     children: [
       { path: '', redirectTo: 'category', pathMatch: 'full' },
-      { path: 'category', component: Catrgory },
-      { path: 'edit', component: Edit },
-      { path: 'list', component: List },
-      { path: 'tag', component: Tag }
+      { path: 'category', component: ArticleCategory },
+      { path: 'post', component: ArticleEdit },
+      { path: 'edit/:article_id', component: ArticleEdit },
+      { path: 'list', component: ArticleList },
+      { path: 'tag', component: ArticleTag }
     ]
   }
 ];
