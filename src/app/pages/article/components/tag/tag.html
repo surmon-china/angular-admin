@@ -23,11 +23,11 @@
           <label for="exampleInputPassword1">
             <h5>描述</h5>
           </label>
-          <textarea name="announcementContent" 
-                    id="announcementContent" 
+          <textarea name="announcementContent"
+                    id="announcementContent"
                     class="form-control"
-                    cols="30" 
-                    rows="20" 
+                    cols="30"
+                    rows="20"
                     placeholder="标签描述">
           </textarea>
           <span class="help-block sub-little-text">该标签的描述</span>
@@ -46,11 +46,11 @@
               <span>刷新</span>
             </button>
             <div class="btn-group" role="group">
-              <button id="batchBtnGroup" 
-                      type="button" 
-                      class="btn btn-default btn-with-icon dropdown-toggle" 
-                      data-toggle="dropdown" 
-                      aria-haspopup="true" 
+              <button id="batchBtnGroup"
+                      type="button"
+                      class="btn btn-default btn-with-icon dropdown-toggle"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
                       aria-expanded="false">
                 <i class="ion-ios-list"></i>
                 <span>批量操作</span>
@@ -85,7 +85,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="#num of [1,2,3,4,5,6,7,8,9,10]">
+          <tr *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]">
             <td>
               <input type="checkbox">
             </td>

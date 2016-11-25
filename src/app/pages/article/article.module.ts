@@ -1,15 +1,25 @@
-import { NgModule }      from '@angular/core';
-import { CommonModule }  from '@angular/common';
+import { NgModule }            from '@angular/core';
+import { CommonModule }        from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgaModule }     from '../../theme/nga.module';
+import { NgaModule }           from '../../theme/nga.module';
+import { CKEditorModule }      from 'ng2-ckeditor';
 
-import { routing }       from './article.routing';
+import { routing }             from './article.routing';
 
-import { Article }       from './article.component';
-import { Catrgory }      from './components/category';
-import { Edit }          from './components/edit';
-import { List }          from './components/list';
-import { Tag }            from './components/tag';
+import { Article }             from './article.component';
+import { ArticleCategory }     from './components/category';
+import { ArticleCategoryAdd }  from './components/category/components/add';
+import { ArticleCategoryList } from './components/category/components/list';
+
+import { ArticleEdit }          from './components/edit';
+import { ArticleEditMain }      from './components/edit/components/main';
+import { ArticleEditThumb }     from './components/edit/components/thumb';
+import { ArticleEditSubmit }    from './components/edit/components/submit';
+import { ArticleEditDuoshuo }   from './components/edit/components/duoshuo';
+import { ArticleEditCategory }  from './components/edit/components/category';
+
+import { ArticleList }          from './components/list';
+import { ArticleTag }           from './components/tag';
 
 @NgModule({
   imports: [
@@ -17,14 +27,25 @@ import { Tag }            from './components/tag';
     FormsModule,
     ReactiveFormsModule,
     NgaModule,
+    CKEditorModule,
     routing
   ],
   declarations: [
     Article,
-    Catrgory,
-    Edit,
-    List,
-    Tag
+
+    ArticleCategory,
+    ArticleCategoryAdd,
+    ArticleCategoryList,
+
+    ArticleEdit,
+    ArticleEditMain,
+    ArticleEditThumb,
+    ArticleEditSubmit,
+    ArticleEditDuoshuo,
+    ArticleEditCategory,
+
+    ArticleList,
+    ArticleTag
   ]
 })
 export default class ArticleModule {

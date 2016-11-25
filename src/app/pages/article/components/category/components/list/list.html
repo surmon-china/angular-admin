@@ -6,11 +6,11 @@
         <span>刷新</span>
       </button>
       <div class="btn-group" role="group">
-        <button id="batchBtnGroup" 
-                type="button" 
-                class="btn btn-default btn-with-icon dropdown-toggle" 
-                data-toggle="dropdown" 
-                aria-haspopup="true" 
+        <button id="batchBtnGroup"
+                type="button"
+                class="btn btn-default btn-with-icon dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
                 aria-expanded="false">
           <i class="ion-ios-list"></i>
           <span>批量操作</span>
@@ -53,16 +53,16 @@
       <td>
          <ul class="btn-list clearfix text-center">
           <li>
-            <button class="btn btn-primary btn-sm" 
+            <button class="btn btn-primary btn-sm"
                     type="button"
                     (click)="editCategory({ category: category, event: $event })">编辑分类</button>
           </li>
           <li>
-            <button class="btn btn-danger btn-sm" 
+            <button class="btn btn-danger btn-sm"
                     type="button">删除分类</button>
           </li>
           <li>
-            <a class="btn btn-success btn-sm" 
+            <a class="btn btn-success btn-sm"
                href="/category/{{ category.slug }}"
                target="_blank">查看分类</a>
           </li>

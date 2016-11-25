@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
   selector: 'acticle',
   template: `<router-outlet></router-outlet>`
 })
-export class Auth {
+export class Article {
   constructor() {
   }
 }

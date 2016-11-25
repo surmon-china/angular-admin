@@ -27,13 +27,9 @@ export const PAGES_MENU = [
         }
       },
       {
-        // 路径
         path: 'article',
-        // 数据
         data: {
-          // 菜单
           menu: {
-            // 菜单名称
             title: '文章管理',
             icon: 'ion-pin',
             // 是否选中
@@ -46,7 +42,7 @@ export const PAGES_MENU = [
         },
         children: [
           {
-            path: 'all',
+            path: 'list',
             data: {
               menu: {
                 title: '所有文章',
@@ -89,7 +85,7 @@ export const PAGES_MENU = [
             // 菜单名称
             title: '页面管理',
             icon: 'ion-document-text',
-            // 是否选中?
+            // 是否选中
             selected: false,
             // 是否可伸展
             expanded: false,

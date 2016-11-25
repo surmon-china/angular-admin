@@ -1,13 +1,11 @@
 import { Component, Input } from '@angular/core';
-// import { BaCheckbox } from '../../../../../theme/components';
 
 @Component({
   selector: 'article-category',
-  // directives: [BaCheckbox],
-  // template: require('./category.html')
+  template: require('./category.html')
 })
 
-export class ArticleCategory {
+export class ArticleEditCategory {
 
   @Input() category;
 
@@ -59,7 +57,7 @@ export class ArticleCategory {
 
   // 处理分类级别
   handleCategory () {
-    let _categories = this.categories; 
+    let _categories = this.categories;
     let _cates = _categories.filter(category => !category.pid);
     let _childs = _categories.filter(category => !!category.pid);
     _childs.forEach(category => {

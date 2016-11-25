@@ -16,11 +16,11 @@
               <span>刷新</span>
             </button>
             <div class="btn-group" role="group">
-              <button id="batchBtnGroup" 
-                      type="button" 
-                      class="btn btn-default btn-with-icon dropdown-toggle" 
-                      data-toggle="dropdown" 
-                      aria-haspopup="true" 
+              <button id="batchBtnGroup"
+                      type="button"
+                      class="btn btn-default btn-with-icon dropdown-toggle"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
                       aria-expanded="false">
                 <i class="ion-ios-list"></i>
                 <span>批量操作</span>
@@ -41,19 +41,25 @@
             </span>
           </div>
         </form>
-        <span class="pull-right">&nbsp;</span>
+        <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
         <form class="pull-right form-inline navbar-form">
-          <select class="form-control c-select" id="sort" style="min-width:95px">
+          <select class="form-control c-select" id="sort">
             <option default>创建时间</option>
             <option>浏览次数</option>
             <option>评论条数</option>
           </select>
-          <select class="form-control c-select" id="category" style="min-width:95px">
+          <select class="form-control c-select" id="category">
             <option default>所有分类</option>
             <option>- Code</option>
             <option>- Think</option>
             <option>-- Nothing</option>
             <option>- Other</option>
+          </select>
+          <select class="form-control c-select" id="tag">
+            <option default>所有标签</option>
+            <option>Javascript</option>
+            <option>Vue</option>
+            <option>...</option>
           </select>
         </form>
       </div>
@@ -125,19 +131,19 @@
               </td>
               <td>
                 <div class="button-wrapper">
-                  <button class="btn btn-primary btn-sm" 
+                  <button class="btn btn-primary btn-sm"
                           type="button">编辑文章</button>
                 </div>
                 <div class="button-wrapper">
-                  <button class="btn btn-info btn-sm" 
+                  <button class="btn btn-info btn-sm"
                           type="button">快速编辑</button>
                 </div>
                 <div class="button-wrapper">
-                  <button class="btn btn-danger btn-sm" 
+                  <button class="btn btn-danger btn-sm"
                           type="button">删除文章</button>
                 </div>
                 <div class="button-wrapper">
-                  <button class="btn btn-success btn-sm" 
+                  <button class="btn btn-success btn-sm"
                           type="button">查看文章</button>
                 </div>
               </td>

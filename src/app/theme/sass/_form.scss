@@ -41,12 +41,15 @@
 
 .form-control {
   color: $content-text;
-  @include placeholderStyle($content-text, 0.7);
+  @include placeholderStyle($content-text, 0.4);
+  padding: 0rem 0.75rem;
+  min-height: 2.3rem;
+  line-height: 2.3rem;
   border: 1px solid $input-border;
   border-radius: 2px;
   background-color: $input-background;
   box-shadow: none;
-  font-size: 14px;
+  font-size: .9rem;
   transition: background-color .2s;
   &:focus {
     color: $content-text;
@@ -61,8 +64,13 @@ select.form-control {
   padding-left: 8px;
 }
 
+select.form-control:not([size]):not([multiple]) {
+  height: 2.4rem;
+}
+
 select.form-control:not([multiple]) option {
   color: $dropdown-text;
+  background-color: $input-background;
 }
 
 select.form-control[multiple] option {
@@ -390,7 +398,7 @@ label.custom-input-danger {
   background-color: $input-background;
   color: $disabled;
   border-color: $disabled-bg;
-  @include placeholderStyle($default-text, 0.5);
+  @include placeholderStyle($default-text, 0.2);
 }
 
 .form-control-rounded {
@@ -436,7 +444,7 @@ label.custom-input-danger {
 }
 
 .dropdown-menu {
-  border-radius: 5px;
+  // border-radius: 5px;
 }
 
 .dropdown button.btn.btn-default.dropdown-toggle {
@@ -528,7 +536,7 @@ label.custom-input-danger {
     background-color: $input-background;
     border: 1px solid $input-border;
     border-radius: 5px;
-    @include placeholderStyle($default-text, 0.8);
+    @include placeholderStyle($default-text, 0.6);
     line-height: 22px;
     font-size: 11px;
     min-width: 53px;
@@ -578,7 +586,7 @@ label.custom-input-danger {
   }
 
   > .btn {
-    line-height: 1.56;
+    // line-height: 1.56;
   }
 }
 
