@@ -37,19 +37,14 @@
             <button type="button" class="btn btn-default">未发布（3）</button>
           </div>
           <span>&nbsp;</span>
-          <div class="btn-group" role="group">
-            <button id="batchBtnGroup"
-                    type="button"
-                    class="btn btn-default btn-with-icon dropdown-toggle"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false">
+          <div class="btn-group" dropdown>
+            <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
               <i class="ion-ios-list"></i>
               <span>批量操作</span>
             </button>
-            <div class="dropdown-menu" aria-labelledby="batchBtnGroup">
-              <a class="dropdown-item" href="#">批量删除</a>
-            </div>
+            <ul class="dropdown-menu" dropdownMenu>
+              <li class="dropdown-item"><a href="#">批量删除</a></li>
+            </ul>
           </div>
         </div>
         <form class="pull-right form-inline navbar-form">

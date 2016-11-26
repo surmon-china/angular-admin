@@ -1,17 +1,13 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgaModule } from '../../theme/nga.module';
-
-import { Comment } from './comment.component';
+import { NgaModule }     from '../../theme/nga.module';
 import { routing }       from './comment.routing';
 
+import { Comment }       from './comment.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
     NgaModule,
     routing
   ],

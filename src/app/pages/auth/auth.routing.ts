@@ -1,9 +1,9 @@
 import { Routes, RouterModule }  from '@angular/router';
 
 // import { Auth } from './components/auth.component';
-import { Login } from './components/login';
-import { Secret } from './components/secret';
-import { Register } from './components/register';
+import { AuthLogin } from './components/login';
+import { AuthSecret } from './components/secret';
+import { AuthRegister } from './components/register';
 
 const routes: Routes = [
   /*
@@ -12,16 +12,16 @@ const routes: Routes = [
     component: Auth,
     children: [
       { path: '', redirectTo: 'secret', pathMatch: 'full' },
-      { path: 'login', component: Login },
-      { path: 'secret', component: Secret },
-      { path: 'register', component: Register }
+      { path: 'login', component: AuthLogin },
+      { path: 'secret', component: AuthSecret },
+      { path: 'register', component: AuthRegister }
     ]
   }
   */
   { path: '', redirectTo: 'secret', pathMatch: 'full' },
-  { path: 'login', component: Login },
-  { path: 'secret', component: Secret },
-  { path: 'register', component: Register }
+  { path: 'login', component: AuthLogin },
+  { path: 'secret', component: AuthSecret },
+  { path: 'register', component: AuthRegister }
 ];
 
 export const routing = RouterModule.forChild(routes);

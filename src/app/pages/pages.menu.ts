@@ -32,11 +32,6 @@ export const PAGES_MENU = [
           menu: {
             title: '文章管理',
             icon: 'ion-pin',
-            // 是否选中
-            selected: false,
-            // 是否可伸展
-            expanded: false,
-            //排序值
             order: 2,
           }
         },
@@ -45,6 +40,7 @@ export const PAGES_MENU = [
             path: 'list',
             data: {
               menu: {
+                icon: 'ion-ios-list-outline',
                 title: '所有文章',
               }
             }
@@ -53,6 +49,7 @@ export const PAGES_MENU = [
             path: 'category',
             data: {
               menu: {
+                icon: 'ion-ios-folder',
                 title: '分类目录',
               }
             }
@@ -61,6 +58,7 @@ export const PAGES_MENU = [
             path: 'post',
             data: {
               menu: {
+                icon: 'ion-compose',
                 title: '发布文章',
               }
             }
@@ -69,6 +67,7 @@ export const PAGES_MENU = [
             path: 'tag',
             data: {
               menu: {
+                icon: 'ion-pricetags',
                 title: '文章标签',
               }
             }
@@ -76,20 +75,11 @@ export const PAGES_MENU = [
         ]
       },
       {
-        // 路径
         path: 'page',
-        // 数据
         data: {
-          // 菜单
           menu: {
-            // 菜单名称
             title: '页面管理',
             icon: 'ion-document-text',
-            // 是否选中
-            selected: false,
-            // 是否可伸展
-            expanded: false,
-            //排序值
             order: 3,
           }
         },
@@ -98,6 +88,7 @@ export const PAGES_MENU = [
             path: 'all',
             data: {
               menu: {
+                icon: 'ion-ios-list-outline',
                 title: '所有页面',
               }
             }
@@ -106,6 +97,7 @@ export const PAGES_MENU = [
             path: 'post',
             data: {
               menu: {
+                icon: 'ion-compose',
                 title: '新建页面',
               }
             }
@@ -116,37 +108,76 @@ export const PAGES_MENU = [
         path: 'comment',
         data: {
           menu: {
-            title: '评论管理',
+            title: '多说评论',
             icon: 'ion-chatbox-working',
-            selected: false,
-            expanded: false,
             order: 4
           }
-        }
-      },
-      {
-        path: 'menu',
-        data: {
-          menu: {
-            title: '菜单管理',
-            icon: 'ion-android-menu',
-            selected: false,
-            expanded: false,
-            order: 5
+        },
+        children: [
+          {
+            path: 'manage',
+            data: {
+              menu: {
+                title: '评论管理',
+                icon: 'ion-ios-list-outline'
+              }
+            }
+          },
+          {
+            path: 'thread',
+            data: {
+              menu: {
+                title: '多说文章',
+                icon: 'ion-ios-list-outline'
+              }
+            }
+          },
+          {
+            path: 'users',
+            data: {
+              menu: {
+                title: '多说用户',
+                icon: 'ion-ios-list-outline'
+              }
+            }
+          },
+          {
+            path: 'preferences',
+            data: {
+              menu: {
+                title: '个性化设置',
+                icon: 'ion-ios-flame'
+              }
+            }
+          },
+          {
+            path: 'tools',
+            data: {
+              menu: {
+                title: '开发工具',
+                icon: 'ion-wrench'
+              }
+            }
+          },
+          {
+            path: 'statistics',
+            data: {
+              menu: {
+                title: '评论统计',
+                icon: 'ion-stats-bars'
+              }
+            }
+          },
+          {
+            path: 'user',
+            data: {
+              menu: {
+                title: '个人资料',
+                icon: 'ion-person'
+              }
+            }
           }
-        }
-      },
-      {
-        path: 'file',
-        data: {
-          menu: {
-            title: '文件管理',
-            icon: 'ion-document',
-            selected: false,
-            expanded: false,
-            order: 7
-          }
-        }
+         ]
       },
       {
         path: 'plugin',
@@ -161,10 +192,20 @@ export const PAGES_MENU = [
         }
       },
       {
-        path: 'code',
+        path: 'options',
         data: {
           menu: {
-            title: '代码管理',
+            title: '全局设置',
+            icon: 'ion-gear-a',
+            order: 10,
+          }
+        }
+      },
+      {
+        path: 'linux',
+        data: {
+          menu: {
+            title: '远程管理',
             icon: 'ion-code-working',
             selected: false,
             expanded: false,
@@ -173,56 +214,151 @@ export const PAGES_MENU = [
         }
       },
       {
-        // 路径
-        path: 'option',
-        // 数据
+        path: '',
         data: {
-          // 菜单
           menu: {
-            // 菜单名称
-            title: '全局设置',
-            icon: 'ion-gear-a',
-            // 是否选中?
-            selected: false,
-            // 是否可伸展
-            expanded: false,
-            //排序值
-            order: 10,
+            title: '子站快链',
+            icon: 'ion-android-apps',
+            order: 700,
           }
         },
         children: [
           {
-            path: 'system',
+            path: '',
             data: {
               menu: {
-                title: '程序设置',
+                title: '公网IP',
+                url: 'http://121.42.55.33/',
+                icon: 'fa fa-sitemap',
+                order: 800,
+                target: '_blank'
               }
             }
           },
           {
-            path: 'base',
+            path: '',
             data: {
               menu: {
-                title: '基本设置',
+                title: 'FTP管理',
+                url: 'http://ftp.surmon.me',
+                icon: 'fa fa-file-code-o',
+                order: 800,
+                target: '_blank'
               }
             }
           },
           {
-            path: 'senior',
+            path: '',
             data: {
               menu: {
-                title: '高级设置',
+                title: '部署服务器',
+                url: 'http://deploy.surmon.me',
+                icon: 'fa fa-git',
+                order: 800,
+                target: '_blank'
               }
             }
           },
           {
-            path: 'other',
+            path: '',
             data: {
               menu: {
-                title: '其他设置',
+                title: 'Wordpress',
+                url: 'http://wordpress.surmon.me',
+                icon: 'fa fa-wordpress',
+                order: 800,
+                target: '_blank'
               }
             }
           },
+          {
+            path: '',
+            data: {
+              menu: {
+                title: 'NodePress',
+                url: 'http://api.surmon.me',
+                icon: 'ion-android-exit',
+                order: 800,
+                target: '_blank'
+              }
+            }
+          },
+          {
+            path: '',
+            data: {
+              menu: {
+                title: 'Vue-Blog',
+                url: 'http://n.surmon.me',
+                icon: 'ion-android-exit',
+                order: 800,
+                target: '_blank'
+              }
+            }
+          },
+          {
+            path: '',
+            data: {
+              menu: {
+                title: '学天下',
+                url: 'http://xtx.surmon.me',
+                icon: 'ion-android-exit',
+                order: 800,
+                target: '_blank'
+              }
+            }
+          },
+          {
+            path: '',
+            data: {
+              menu: {
+                title: 'Github',
+                url: 'https://github.com/surmon-china',
+                icon: 'fa fa-github',
+                target: '_blank'
+              }
+            }
+          }
+        ]
+      },
+      {
+        path: 'auth',
+        data: {
+          menu: {
+            title: '权限页面',
+            icon: 'ion-document',
+            selected: false,
+            expanded: false,
+            order: 650,
+          }
+        },
+        children: [
+          {
+            path: 'secret',
+            data: {
+              menu: {
+                icon: 'ion-person',
+                title: '私密'
+              }
+            }
+          },
+          {
+            path: 'login',
+            data: {
+              menu: {
+                icon: 'ion-person',
+                title: '登陆'
+              }
+            }
+          },
+          {
+            path: 'register',
+            data: {
+              menu: {
+                icon: 'ion-person',
+                title: '注册'
+              }
+            }
+          }
         ]
       },
       {
@@ -243,7 +379,7 @@ export const PAGES_MENU = [
               menu: {
                 title: '官方文档',
                 url: 'https://akveo.github.io/ng2-admin/',
-                // icon: 'ion-android-exit',
+                icon: 'ion-android-exit',
                 order: 800,
                 target: '_blank'
               }
@@ -253,8 +389,8 @@ export const PAGES_MENU = [
             path: 'editors',
             data: {
               menu: {
-                title: 'Editors',
-                // icon: 'ion-edit',
+                title: '编辑器',
+                icon: 'ion-edit',
                 selected: false,
                 expanded: false,
                 order: 100,
@@ -275,8 +411,8 @@ export const PAGES_MENU = [
            path: 'components',
            data: {
              menu: {
-               title: 'Components',
-               // icon: 'ion-gear-a',
+               title: '组件库',
+               icon: 'ion-gear-a',
                selected: false,
                expanded: false,
                order: 250,
@@ -297,8 +433,8 @@ export const PAGES_MENU = [
             path: 'charts',
             data: {
               menu: {
-                title: 'Charts',
-                // icon: 'ion-stats-bars',
+                title: '图表',
+                icon: 'ion-stats-bars',
                 selected: false,
                 expanded: false,
                 order: 200,
@@ -319,8 +455,8 @@ export const PAGES_MENU = [
             path: 'ui',
             data: {
               menu: {
-                title: 'UI Features',
-                // icon: 'ion-android-laptop',
+                title: 'UI 展示',
+                icon: 'ion-android-laptop',
                 selected: false,
                 expanded: false,
                 order: 300,
@@ -331,7 +467,7 @@ export const PAGES_MENU = [
                 path: 'typography',
                 data: {
                   menu: {
-                    title: 'Typography',
+                    title: '排版',
                   }
                 }
               },
@@ -339,7 +475,7 @@ export const PAGES_MENU = [
                 path: 'buttons',
                 data: {
                   menu: {
-                    title: 'Buttons',
+                    title: '按钮',
                   }
                 }
               },
@@ -347,7 +483,7 @@ export const PAGES_MENU = [
                 path: 'icons',
                 data: {
                   menu: {
-                    title: 'Icons',
+                    title: '图表',
                   }
                 }
               },
@@ -355,7 +491,7 @@ export const PAGES_MENU = [
                 path: 'modals',
                 data: {
                   menu: {
-                    title: 'Modals',
+                    title: '弹窗',
                   }
                 }
               },
@@ -363,7 +499,7 @@ export const PAGES_MENU = [
                 path: 'grid',
                 data: {
                   menu: {
-                    title: 'Grid',
+                    title: '栅格',
                   }
                 }
               },
@@ -373,8 +509,8 @@ export const PAGES_MENU = [
             path: 'forms',
             data: {
               menu: {
-                title: 'Form Elements',
-                // icon: 'ion-compose',
+                title: '表单组件',
+                icon: 'ion-compose',
                 selected: false,
                 expanded: false,
                 order: 400,
@@ -385,7 +521,7 @@ export const PAGES_MENU = [
                 path: 'inputs',
                 data: {
                   menu: {
-                    title: 'Form Inputs',
+                    title: '表单元素',
                   }
                 }
               },
@@ -393,7 +529,7 @@ export const PAGES_MENU = [
                 path: 'layouts',
                 data: {
                   menu: {
-                    title: 'Form Layouts',
+                    title: '表单布局',
                   }
                 }
               }
@@ -403,8 +539,8 @@ export const PAGES_MENU = [
             path: 'tables',
             data: {
               menu: {
-                title: 'Tables',
-                // icon: 'ion-grid',
+                title: '表格',
+                icon: 'ion-grid',
                 selected: false,
                 expanded: false,
                 order: 500,
@@ -415,7 +551,7 @@ export const PAGES_MENU = [
                 path: 'basictables',
                 data: {
                   menu: {
-                    title: 'Basic Tables',
+                    title: '基本表格',
                   }
                 }
               },
@@ -423,7 +559,7 @@ export const PAGES_MENU = [
                 path: 'smarttables',
                 data: {
                   menu: {
-                    title: 'Smart Tables',
+                    title: '小型表格',
                   }
                 }
               }
@@ -433,8 +569,8 @@ export const PAGES_MENU = [
             path: 'maps',
             data: {
               menu: {
-                title: 'Maps',
-                // icon: 'ion-ios-location-outline',
+                title: '地图',
+                icon: 'ion-ios-location-outline',
                 selected: false,
                 expanded: false,
                 order: 600,
@@ -475,164 +611,6 @@ export const PAGES_MENU = [
               }
             ]
           }
-        ]
-      },
-      {
-        path: 'auth',
-        data: {
-          menu: {
-            title: '一些页面',
-            icon: 'ion-document',
-            selected: false,
-            expanded: false,
-            order: 650,
-          }
-        },
-        children: [
-        {
-            path: 'secret',
-            data: {
-              menu: {
-                title: '私密'
-              }
-            }
-          },
-          {
-            path: 'login',
-            data: {
-              menu: {
-                title: '登陆'
-              }
-            }
-          },
-          {
-            path: 'register',
-            data: {
-              menu: {
-                title: '注册'
-              }
-            }
-          }
-        ]
-      },
-      {
-        path: '',
-        data: {
-          menu: {
-            title: '其他子站',
-            icon: 'ion-android-apps',
-            selected: false,
-            expanded: false,
-            order: 700,
-          }
-        },
-        children: [
-          {
-            path: '',
-            data: {
-              menu: {
-                title: '公网IP',
-                url: 'http://121.42.55.33/',
-                // icon: 'ion-android-exit',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: 'FTP管理',
-                url: 'http://ftp.surmon.me',
-                // icon: 'ion-android-exit',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: '部署服务器',
-                url: 'http://deploy.surmon.me',
-                // icon: 'ion-android-exit',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: 'Wordpress',
-                url: 'http://wordpress.surmon.me',
-                // icon: 'ion-android-exit',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: 'NodePress',
-                url: 'http://api.surmon.me',
-                // icon: 'ion-android-exit',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: 'Vue-Blog',
-                url: 'http://n.surmon.me',
-                // icon: 'ion-android-exit',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: '学天下',
-                url: 'http://xtx.surmon.me',
-                // icon: 'ion-android-exit',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          /*
-          {
-            path: '',
-            data: {
-              menu: {
-                title: '二级菜单',
-                url: '#'
-              }
-            },
-            children: [
-              {
-                path: '',
-                data: {
-                  menu: {
-                    title: '三级菜单',
-                    url: '#'
-                  }
-                }
-              }
-            ]
-          }
-          */
         ]
       }
     ]

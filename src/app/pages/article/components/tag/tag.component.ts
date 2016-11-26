@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'tag',
+  selector: 'article-tag',
   template: require('./tag.html')
 })
 

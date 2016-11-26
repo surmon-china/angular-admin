@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'article-duoshuo',
+  selector: 'article-edit-duoshuo',
   template: require('./duoshuo.html')
 })
 

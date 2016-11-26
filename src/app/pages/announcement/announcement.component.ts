@@ -3,7 +3,7 @@ import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/form
 
 @Component({
   selector: 'announcement',
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
   styles: [require('./announcement.scss')],
   template: require('./announcement.html'),
 })

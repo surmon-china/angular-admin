@@ -64,21 +64,42 @@ $hover: 24;
   border-color: $dark-color;
 }
 
+@mixin buttonDropdownMenu($color) {
+  & + .dropdown-menu {
+    > .dropdown-item {
+      > a {
+        &:hover {
+          background-color: $color;
+        }
+      }
+    }
+  }
+}
+
 .open > .btn.dropdown-toggle {
+  &.btn.btn-default {
+    @include openDropdownButton($sidebar, $sidebar-border)
+    @include buttonDropdownMenu($sidebar)
+  }
   &.btn.btn-primary {
     @include openDropdownButton($primary, $primary-dark)
+    @include buttonDropdownMenu($primary)
   }
   &.btn-success {
     @include openDropdownButton($success, $success-dark)
+    @include buttonDropdownMenu($success)
   }
   &.btn-info {
     @include openDropdownButton($info, $info-dark)
+    @include buttonDropdownMenu($info)
   }
   &.btn-warning {
     @include openDropdownButton($warning, $warning-dark)
+    @include buttonDropdownMenu($warning)
   }
   &.btn-danger {
     @include openDropdownButton($danger, $danger-dark)
+    @include buttonDropdownMenu($danger)
   }
 }
 
@@ -172,7 +193,7 @@ button.btn.btn-inverse {
     @include buttonGroupColor($warning);
   }
   .dropdown-menu {
-    margin-top: 0px;
+    // margin-top: 0px;
   }
 }
 

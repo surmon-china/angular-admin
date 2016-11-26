@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'article-category',
+  selector: 'article-edit-category',
   template: require('./category.html')
 })
 

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'article-submit',
+  selector: 'article-edit-submit',
   template: require('./submit.html')
 })
 

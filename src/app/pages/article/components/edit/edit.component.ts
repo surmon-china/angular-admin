@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'edit',
+  selector: 'article-edit',
   template: require('./edit.html')
 })
 
