@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 // import { ArticleService } from '../../../theme/services/article';
 
 @Component({
-  selector: 'list',
+  selector: 'article-list',
   template: require('./list.html')
 })
 

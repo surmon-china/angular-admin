@@ -1,13 +1,13 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { NgaModule }     from '../../theme/nga.module';
-
 import { routing }       from './auth.routing';
-import { Login }         from './components/login';
-import { Secret }        from './components/secret';
-import { Register }      from './components/register';
+
+// import { Auth }          from './components/auth.component';
+import { AuthLogin }     from './components/login';
+import { AuthSecret }    from './components/secret';
+import { AuthRegister }  from './components/register';
 
 @NgModule({
   imports: [
@@ -18,9 +18,10 @@ import { Register }      from './components/register';
     routing
   ],
   declarations: [
-    Login,
-    Secret,
-    Register
+    // Auth,
+    AuthLogin,
+    AuthSecret,
+    AuthRegister
   ]
 })
 export default class AuthModule {

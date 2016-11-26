@@ -1,12 +1,15 @@
 import { Routes, RouterModule }  from '@angular/router';
+import { Comment }               from './comment.component';
 
-import { Comment } from './comment.component';
-
-// noinspection TypeScriptValidateTypes
 const routes: Routes = [
-  {
-    path: '',
-    component: Comment
+    { path: '', redirectTo: 'manage', pathMatch: 'full' },
+    { path: 'manage', component: Comment },
+    { path: 'thread', component: Comment },
+    { path: 'users', component: Comment },
+    { path: 'preferences', component: Comment },
+    { path: 'tools', component: Comment },
+    { path: 'statistics', component: Comment },
+    { path: 'user', component: Comment }
   }
 ];
 

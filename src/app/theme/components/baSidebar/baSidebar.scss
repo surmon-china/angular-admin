@@ -173,9 +173,11 @@ a.al-sidebar-user {
   list-style: none;
   position: relative;
   display: none;
+  background-color: $sidebar-border;
   &.expanded {
     display: block;
   }
+
   > ba-menu-item > li {
     display: block;
     float: none;
@@ -188,7 +190,8 @@ a.al-sidebar-user {
       font-size: 13px;
       text-decoration: none;
       color: $sidebar-text;
-      padding-left: 52px;
+      // padding-left: 52px;
+      padding-left: 35px;
       height: auto;
       line-height: 40px;
       &:hover {

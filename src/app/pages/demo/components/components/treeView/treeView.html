@@ -1,5 +1,5 @@
 <div class="col-md-6">
   <ba-card title="basic">
-    <tree id="tree-view" [tree]="tree"></tree>
+    <Tree [nodes]="nodes" [options]="options" (onMoveNode)="onMoveNode($event)"></Tree>
   </ba-card>
 </div>

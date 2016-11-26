@@ -45,19 +45,14 @@
               <i class="ion-refresh"></i>
               <span>刷新</span>
             </button>
-            <div class="btn-group" role="group">
-              <button id="batchBtnGroup"
-                      type="button"
-                      class="btn btn-default btn-with-icon dropdown-toggle"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false">
+            <div class="btn-group" dropdown>
+              <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
                 <i class="ion-ios-list"></i>
                 <span>批量操作</span>
               </button>
-              <div class="dropdown-menu" aria-labelledby="batchBtnGroup">
-                <a class="dropdown-item" href="#">彻底删除</a>
-              </div>
+              <ul class="dropdown-menu" dropdownMenu>
+                <li class="dropdown-item"><a href="#">彻底删除</a></li>
+              </ul>
             </div>
           </div>
         </div>

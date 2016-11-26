@@ -3,12 +3,12 @@ import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/form
 import {EmailValidator, EqualPasswordsValidator} from '../../../../theme/validators';
 
 @Component({
-  selector: 'register',
+  selector: 'auth-register',
   encapsulation: ViewEncapsulation.None,
   styles: [require('./register.scss')],
   template: require('./register.html'),
 })
-export class Register {
+export class AuthRegister {
 
   public form:FormGroup;
   public name:AbstractControl;

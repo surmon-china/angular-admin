@@ -2,7 +2,8 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'article-category-list',
-  template: require('./list.html')
+  template: require('./list.html'),
+  styles: [require('./list.scss')]
 })
 
 export class ArticleCategoryList {

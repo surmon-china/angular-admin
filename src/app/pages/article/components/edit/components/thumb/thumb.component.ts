@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'article-thumb',
+  selector: 'article-edit-thumb',
   template: require('./thumb.html')
 })
 

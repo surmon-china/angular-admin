@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import './main.loader.ts';
 
 @Component({
-  selector: 'article-main',
+  selector: 'article-edit-main',
   template: require('./main.html')
 })
 export class ArticleEditMain {
