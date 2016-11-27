@@ -179,6 +179,7 @@ export const PAGES_MENU = [
           }
          ]
       },
+      /*
       {
         path: 'plugin',
         data: {
@@ -191,6 +192,7 @@ export const PAGES_MENU = [
           }
         }
       },
+      */
       {
         path: 'options',
         data: {
@@ -205,11 +207,23 @@ export const PAGES_MENU = [
         path: 'linux',
         data: {
           menu: {
-            title: '远程管理',
-            icon: 'ion-code-working',
+            title: 'Aliyun管理',
+            icon: 'ion-social-tux',
             selected: false,
             expanded: false,
             order: 9
+          }
+        }
+      },
+      {
+        path: '',
+        data: {
+          menu: {
+            title: 'Web-OS',
+            url: 'http://os.surmon.me',
+            icon: 'ion-social-windows',
+            order: 800,
+            target: '_blank'
           }
         }
       },
@@ -230,18 +244,6 @@ export const PAGES_MENU = [
                 title: '公网IP',
                 url: 'http://121.42.55.33/',
                 icon: 'fa fa-sitemap',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: 'FTP管理',
-                url: 'http://ftp.surmon.me',
-                icon: 'fa fa-file-code-o',
                 order: 800,
                 target: '_blank'
               }
@@ -365,7 +367,7 @@ export const PAGES_MENU = [
         path: 'demo',
         data: {
           menu: {
-            title: 'Demo演示',
+            title: 'Demo开发',
             icon: 'ion-ios-more',
             selected: false,
             expanded: false,
