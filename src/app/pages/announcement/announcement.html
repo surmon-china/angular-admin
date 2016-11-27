@@ -37,14 +37,24 @@
             <button type="button" class="btn btn-default">未发布（3）</button>
           </div>
           <span>&nbsp;</span>
-          <div class="btn-group" dropdown>
-            <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
-              <i class="ion-ios-list"></i>
-              <span>批量操作</span>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-default btn-with-icon">
+              <i class="ion-refresh"></i>
+              <span>刷新</span>
             </button>
-            <ul class="dropdown-menu" dropdownMenu>
-              <li class="dropdown-item"><a href="#">批量删除</a></li>
-            </ul>
+            <div class="btn-group" dropdown>
+              <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
+                <i class="ion-ios-list"></i>
+                <span>批量操作</span>
+              </button>
+              <ul class="dropdown-menu" dropdownMenu>
+                <li class="dropdown-item"><a href="#">移至回收站</a></li>
+                <li class="dropdown-item"><a href="#">彻底删除</a></li>
+                <li class="dropdown-item"><a href="#">批量还原</a></li>
+                <li class="dropdown-divider"></li>
+                <li class="dropdown-item"><a href="#">Separated link</a></li>
+              </ul>
+            </div>
           </div>
         </div>
         <form class="pull-right form-inline navbar-form">
