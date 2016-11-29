@@ -3,13 +3,13 @@ import { Comment }               from './comment.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'manage', pathMatch: 'full' },
-    { path: 'manage', component: Comment },
-    { path: 'thread', component: Comment },
-    { path: 'users', component: Comment },
-    { path: 'preferences', component: Comment },
-    { path: 'tools', component: Comment },
-    { path: 'statistics', component: Comment },
-    { path: 'user', component: Comment }
+    { path: 'manage', data: { name: 'manage' }, component: Comment },
+    { path: 'thread', data: { name: 'thread' }, component: Comment },
+    { path: 'users', data: { name: 'users' }, component: Comment },
+    { path: 'preferences', data: { name: 'preferences' }, component: Comment },
+    { path: 'tools', data: { name: 'tools' }, component: Comment },
+    { path: 'statistics', data: { name: 'statistics' }, component: Comment },
+    { path: 'user', data: { name: 'user' }, component: Comment }
   }
 ];
 

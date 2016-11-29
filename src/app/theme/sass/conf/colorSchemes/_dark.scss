@@ -13,7 +13,7 @@ $topbar-border: $sidebar-border;
 
 $default-text: $default; // default text color layout (usually is the same as $default)
 $content-text: $default-text; // content text color on card, panels, form, etc
-$help-text: $default-text; // additional text color for hits
+$help-text: rgba($default-text, 0.5); // additional text color for hits
 
 $label-text: $default-text; // labels color
 $border: rgba(255, 255, 255, 0.5); // border color

@@ -10,12 +10,12 @@ export class AuthSecret {
 
   public password:String;
   public sloganId:Number;
-  // public submitted:boolean = false;
 
   constructor() {
+  }
 
-    this.password = '';
-    this.sloganId = Math.ceil(Math.random() * 3);
+   onKey(event:any) {
+    console.log(event)
   }
 
   public onSubmit(values:Object):void {

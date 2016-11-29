@@ -1,1 +1,1 @@
-export * from './announcement.component';
+export * from './page.component';

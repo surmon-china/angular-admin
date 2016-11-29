@@ -10,6 +10,9 @@ export class ArticleCategoryList {
 
   @Input() categories;
 
+  categoriesAllSelect:boolean = false;
+  selectedCategories = [];
+
   constructor() {
   }
 
@@ -18,6 +21,7 @@ export class ArticleCategoryList {
     // console.log('编辑分类', params, target, DOM);
   }
 
-  ngOnInit() {
+  selectChange() {
+    console.log('changed');
   }
 }
