@@ -6,7 +6,7 @@
         <span>刷新</span>
       </button>
       <div class="btn-group" dropdown>
-        <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
+        <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true" [disabled]="!selectedCategories.length">
           <i class="ion-ios-list"></i>
           <span>批量操作</span>
         </button>
@@ -14,14 +14,15 @@
           <li class="dropdown-item"><a href="#">彻底删除</a></li>
         </ul>
       </div>
+      <span>{{ selectedCategories }}</span>
     </div>
   </div>
 </div>
-<table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich category-list">
+<table class="table table-hover table-striped table-no-borders black-muted-bg table-enrich category-list">
   <thead class="thead-inverse">
     <tr>
-      <th>
-        <input type="checkbox">
+      <th class="batch-checkbox">
+        <ba-checkbox [(ngModel)]="categoriesAllSelect" [label]="'全选'" (onChange)="selectChange"></ba-checkbox>
       </th>
       <th>ID</th>
       <th>名称</th>
@@ -32,9 +33,15 @@
     </tr>
   </thead>
   <tbody>
+    <tr *ngIf="!categories.data.length">
+      <td colspan="7">
+        <p class="text-muted text-center category-err-msg" *ngIf="categories.data.length == 0">暂无数据<p>
+        <p class="text-muted text-center category-err-msg" *ngIf="categories.data.length == undefined">加载中<p>
+      </td>
+    </tr>
     <tr *ngFor="let category of categories.data">
-      <td>
-        <input type="checkbox">
+      <td class="batch-checkbox">
+        <ba-checkbox [(ngModel)]="category.selected" [label]="'分类' + category.id"></ba-checkbox>
       </td>
       <td>
         <span>{{ category.id }}</span>
@@ -46,22 +53,13 @@
       <td>{{ category.slug }}</td>
       <td>{{ category.articles || 0 }}</td>
       <td>
-         <ul class="btn-list clearfix text-center">
-          <li>
-            <button class="btn btn-primary btn-sm"
-                    type="button"
-                    (click)="editCategory({ category: category, event: $event })">编辑分类</button>
-          </li>
-          <li>
-            <button class="btn btn-danger btn-sm"
-                    type="button">删除分类</button>
-          </li>
-          <li>
-            <a class="btn btn-success btn-sm"
-               href="/category/{{ category.slug }}"
-               target="_blank">查看分类</a>
-          </li>
-        </ul>
+        <div class="text-center">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-sm btn-warning" (click)="editCategory({ category: category, event: $event })">编辑分类</button>
+            <button type="button" class="btn btn-sm btn-danger">删除分类</button>
+            <a class="btn btn-sm btn-success" href="//surmon.me/category/{{ category.slug }}" target="_blank">查看分类</a>
+          </div>
+        </div>
       </td>
     </tr>
   </tbody>

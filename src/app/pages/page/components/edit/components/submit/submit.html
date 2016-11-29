@@ -1,0 +1,71 @@
+<form name="pageSubmit">
+  <div class="form-group row">
+    <label for="pageStatus"
+           class="col-sm-3 form-control-label">状态</label>
+    <div class="col-sm-6">
+      <select class="form-control c-select"
+              id="pageStatus"
+              name="pageStatus"
+              [(ngModel)]="page.status">
+        <option value="1" default>直接发布</option>
+        <option value="0">存为草稿</option>
+        <option value="-1">已删除</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="pagePublic" class="col-sm-3 form-control-label">公开度</label>
+    <div class="col-sm-6">
+      <select class="form-control c-select"
+              id="pagePublic"
+              name="pagePublic"
+              [(ngModel)]="page.public">
+        <option value="1" default>公开</option>
+        <option value="0">密码访问</option>
+        <option value="-1">私密</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="pagePassword" class="col-sm-3 form-control-label">公开度</label>
+    <div class="col-sm-6">
+       <input type="password"
+              class="form-control"
+              id="pagePassword"
+              name="pagePassword"
+              placeholder="文章密码"
+              [(ngModel)]="page.password"
+              [disabled]="page.public != 0">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="pagePublish" class="col-sm-3 form-control-label">发布类型</label>
+    <div class="col-sm-6">
+      <select class="form-control c-select"
+              id="pagePublish"
+              name="pagePublish"
+              [(ngModel)]="page.publish">
+        <option value="1" default>立即发布</option>
+        <option value="2">定时发布</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="pageTimestamp" class="col-sm-3 form-control-label">发布时间</label>
+    <div class="col-sm-6">
+       <input type="text"
+              class="form-control"
+              id="pageTimestamp"
+              placeholder="文章发布时间"
+              name="pageTimestamp"
+              [(ngModel)]="page.timestamp"
+              [disabled]="page.publish != 2">
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-12">
+       <button class="btn btn-block btn-default" (click)="submit()">发布文章</button>
+    </div>
+  </div>
+</form>

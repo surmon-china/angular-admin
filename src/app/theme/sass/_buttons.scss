@@ -103,6 +103,7 @@ $hover: 24;
   }
 }
 
+a.btn.btn-primary,
 button.btn.btn-primary {
   @include buttonColor($primary, $primary);
   &:active, &:target {
@@ -110,6 +111,7 @@ button.btn.btn-primary {
   }
 }
 
+a.btn.btn-default,
 button.btn.btn-default {
   border-width: 1px;
   color: $content-text;
@@ -120,6 +122,7 @@ button.btn.btn-default {
   }
 }
 
+a.btn.btn-success,
 button.btn.btn-success {
   @include buttonColor($success, $success);
   &:active, &:target {
@@ -127,6 +130,7 @@ button.btn.btn-success {
   }
 }
 
+a.btn.btn-info,
 button.btn.btn-info {
   @include buttonColor($info, $info);
   &:active, &:target {
@@ -134,6 +138,7 @@ button.btn.btn-info {
   }
 }
 
+a.btn.btn-warning,
 button.btn.btn-warning {
   @include buttonColor($warning, $warning);
   &:active, &:target {
@@ -141,6 +146,7 @@ button.btn.btn-warning {
   }
 }
 
+a.btn.btn-danger,
 button.btn.btn-danger {
   @include buttonColor($danger, $danger);
   &:active, &:target {
@@ -148,6 +154,7 @@ button.btn.btn-danger {
   }
 }
 
+a.btn.btn-inverse,
 button.btn.btn-inverse {
   @include buttonColor($help-text, $help-text);
   color: $label-text;
@@ -309,6 +316,7 @@ button.progress-button {
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
+  min-height: auto;
 }
 
 .btn-group-lg > .btn, .btn-lg {

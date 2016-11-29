@@ -1,22 +1,36 @@
-import { NgModule }      from '@angular/core';
-import { CommonModule }  from '@angular/common';
+import { NgModule }            from '@angular/core';
+import { CommonModule }        from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgaModule } from '../../theme/nga.module';
+import { NgaModule }           from '../../theme/nga.module';
+import { CKEditorModule }      from 'ng2-ckeditor';
+import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 
-import { Announcement } from './announcement.component';
-import { routing }       from './announcement.routing';
+import { routing }             from './page.routing';
 
+import { Page }                from './page.component';
+import { PageList }            from './components/list';
+import { PageEdit }            from './components/edit';
+import { PageEditMain }        from './components/edit/components/main';
+import { PageEditSubmit }      from './components/edit/components/submit';
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     FormsModule,
+    ReactiveFormsModule,
     NgaModule,
+    CKEditorModule,
+    DropdownModule,
+    ModalModule,
     routing
   ],
   declarations: [
-    Announcement
+    Page,
+    PageList,
+    PageEdit,
+    PageEditMain,
+    PageEditSubmit
   ]
 })
-export default class AnnouncementModule {}
+export default class PageModule {
+}

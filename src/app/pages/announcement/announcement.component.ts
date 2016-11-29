@@ -1,9 +1,9 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'announcement',
-  // encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.Emulated,
   styles: [require('./announcement.scss')],
   template: require('./announcement.html'),
 })

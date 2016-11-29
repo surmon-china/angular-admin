@@ -32,6 +32,7 @@
 
 .form-group {
   label {
+    padding-left: 5px;
     margin-bottom: 5px;
     color: $content-text;
     font-weight: $font-normal;
@@ -408,6 +409,10 @@ label.custom-input-danger {
 .help-block {
   color: $help-text;
   vertical-align: sub;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding-left: 5px;
 }
 
 .help-block.error-block {

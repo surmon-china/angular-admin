@@ -1,7 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 @Component({
   selector: 'pages',
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.Emulated,
   styles: [],
   template: `
     <ba-sidebar></ba-sidebar>

@@ -2,7 +2,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'options',
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.Emulated,
   styles: [require('./options.scss')],
   template: require('./options.html'),
 })

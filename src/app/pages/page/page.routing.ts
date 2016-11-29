@@ -1,12 +1,18 @@
 import { Routes, RouterModule }  from '@angular/router';
 
-import { Announcement } from './announcement.component';
+import { Page }                  from './page.component';
+import { PageEdit }              from './components/edit';
+import { PageList }              from './components/list';
 
-// noinspection TypeScriptValidateTypes
 const routes: Routes = [
-  {
-    path: '',
-    component: Announcement
+  { path: '',
+    component: Page,
+    children: [
+      { path: '', redirectTo: 'list', pathMatch: 'full' },
+      { path: 'list', component: PageList }
+      { path: 'post', component: PageEdit },
+      { path: 'edit/:page_id', component: PageEdit },
+    ]
   }
 ];
 

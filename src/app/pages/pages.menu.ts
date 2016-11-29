@@ -85,7 +85,7 @@ export const PAGES_MENU = [
         },
         children: [
           {
-            path: 'all',
+            path: 'list',
             data: {
               menu: {
                 icon: 'ion-ios-list-outline',
@@ -179,20 +179,6 @@ export const PAGES_MENU = [
           }
          ]
       },
-      /*
-      {
-        path: 'plugin',
-        data: {
-          menu: {
-            title: '扩展管理',
-            icon: 'ion-android-apps',
-            selected: false,
-            expanded: false,
-            order: 8
-          }
-        }
-      },
-      */
       {
         path: 'options',
         data: {
