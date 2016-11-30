@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'article-category-list',
+  encapsulation: ViewEncapsulation.Emulated,
   template: require('./list.html'),
   styles: [require('./list.scss')]
 })
@@ -28,6 +29,7 @@ export class ArticleCategoryList {
 
   // 多选切换
   batchSelectChange(is_select) {
+    if(!this.categories.data.length) return;
     this.selectedCategories = [];
     this.categories.data.forEach(item => { item.selected = is_select; is_select && this.selectedCategories.push(item._id) });
   }

@@ -33,34 +33,36 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngIf="!categories.data.length">
+    <tr *ngIf="!categories || !categories.data.length">
       <td colspan="7">
-        <p class="text-muted text-center category-err-msg" *ngIf="categories.data.length == 0">暂无数据<p>
-        <p class="text-muted text-center category-err-msg" *ngIf="categories.data.length == undefined">加载中<p>
+        <p class="text-muted text-center category-err-msg" *ngIf="categories && categories.data.length == 0">暂无数据<p>
+        <p class="text-muted text-center category-err-msg" *ngIf="categories && categories.data.length == undefined">加载中<p>
       </td>
     </tr>
-    <tr *ngFor="let category of categories.data">
-      <td class="batch-checkbox">
-        <ba-checkbox [(ngModel)]="category.selected" [label]="'分类' + category.id"  (ngModelChange)="itemSelectChange()"></ba-checkbox>
-      </td>
-      <td>
-        <span>{{ category.id }}</span>
-      </td>
-      <td>
-        <strong>{{ category.name }}</strong>
-      </td>
-      <td>{{ category.description || '暂无' }}</td>
-      <td>{{ category.slug }}</td>
-      <td>{{ category.articles || 0 }}</td>
-      <td>
-        <div class="text-center">
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-sm btn-warning" (click)="editCategory({ category: category, event: $event })">编辑分类</button>
-            <button type="button" class="btn btn-sm btn-danger">删除分类</button>
-            <a class="btn btn-sm btn-success" href="//surmon.me/category/{{ category.slug }}" target="_blank">查看分类</a>
+    <template [ngIf]="categories && categories.data.length">
+      <tr *ngFor="let category of categories.data">
+        <td class="batch-checkbox">
+          <ba-checkbox [(ngModel)]="category.selected" [label]="'分类' + category.id"  (ngModelChange)="itemSelectChange()"></ba-checkbox>
+        </td>
+        <td>
+          <span>{{ category.id }}</span>
+        </td>
+        <td>
+          <strong>{{ category.name }}</strong>
+        </td>
+        <td>{{ category.description || '暂无' }}</td>
+        <td>{{ category.slug }}</td>
+        <td>{{ category.articles || 0 }}</td>
+        <td>
+          <div class="text-center">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-sm btn-warning" (click)="editCategory({ category: category, event: $event })">编辑分类</button>
+              <button type="button" class="btn btn-sm btn-danger">删除分类</button>
+              <a class="btn btn-sm btn-success" href="//surmon.me/category/{{ category.slug }}" target="_blank">查看分类</a>
+            </div>
           </div>
-        </div>
-      </td>
-    </tr>
+        </td>
+      </tr>
+    </template>
   </tbody>
 </table>

@@ -19,7 +19,9 @@
     </label>
     <select class="form-control c-select" id="categoryParent" [formControl]="pid">
       <option value="">无</option>
-      <option *ngFor="let category of categories.data" [ngValue]="category._id">{{ category.name }}</option>
+      <template [ngIf]="categories && categories.data.length">
+        <option *ngFor="let category of categories.data" [ngValue]="category._id">{{ category.name }}</option>
+      </template>
     </select>
     <span class="help-block sub-little-text">可以选择父级分类</span>
   </div>
@@ -37,5 +39,5 @@
     </textarea>
     <span class="help-block sub-little-text">该分类的描述</span>
   </div>
-  <button type="submit" class="btn btn-success"  [disabled]="!form.valid || submiting">{{ submiting ? '分类添加中' : '添加分类目录' }}{{ submiting }}</button>
+  <button type="submit" class="btn btn-success"  [disabled]="!form.valid || submiting">{{ submiting ? '分类添加中' : '添加分类目录' }}</button>
 </form>
