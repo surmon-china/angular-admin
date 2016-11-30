@@ -25,6 +25,10 @@ export class ArticleCategoryService {
   // 添加分类
   addCategory(category) {
     console.log(category);
+    return this.http.post(this._categorysUrl, category)
+            .toPromise()
+            .then(res => res.json())
+            .catch(this.handleError);
   }
 
   // 修改分类
