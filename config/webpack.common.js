@@ -77,6 +77,13 @@ module.exports = function (options) {
       // An array of directory names to be resolved to the current directory
       modules: [helpers.root('src'), 'node_modules'],
 
+      alias: {
+        'src': path.resolve(__dirname, '../src'),
+        'app': path.resolve(__dirname, '../src/app'),
+        'pages': path.resolve(__dirname, '../src/app/pages'),
+        'theme': path.resolve(__dirname, '../src/app/theme')
+      }
+
     },
 
     /*

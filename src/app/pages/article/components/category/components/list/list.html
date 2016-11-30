@@ -22,7 +22,7 @@
   <thead class="thead-inverse">
     <tr>
       <th class="batch-checkbox">
-        <ba-checkbox [(ngModel)]="categoriesAllSelect" [label]="'全选'" (onChange)="selectChange"></ba-checkbox>
+        <ba-checkbox [(ngModel)]="categoriesSelectAll" [label]="'全选'" (ngModelChange)="batchSelectChange($event)"></ba-checkbox>
       </th>
       <th>ID</th>
       <th>名称</th>
@@ -41,7 +41,7 @@
     </tr>
     <tr *ngFor="let category of categories.data">
       <td class="batch-checkbox">
-        <ba-checkbox [(ngModel)]="category.selected" [label]="'分类' + category.id"></ba-checkbox>
+        <ba-checkbox [(ngModel)]="category.selected" [label]="'分类' + category.id"  (ngModelChange)="itemSelectChange()"></ba-checkbox>
       </td>
       <td>
         <span>{{ category.id }}</span>
