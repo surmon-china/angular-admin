@@ -7,6 +7,11 @@ import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { routing }             from './article.routing';
 
+// import { ArticleTagService } from './components/tag/tag.service';
+// import { ArticleListService } from './components/list/list.service';
+// import { ArticleEditService } from './components/edit/edit.service';
+import { ArticleCategoryService } from './components/category/category.service';
+
 import { Article }             from './article.component';
 import { ArticleCategory }     from './components/category';
 import { ArticleCategoryAdd }  from './components/category/components/add';
@@ -32,6 +37,12 @@ import { ArticleTag }           from './components/tag';
     DropdownModule,
     ModalModule,
     routing
+  ],
+  providers: [
+    // ArticleTagService,
+    // ArticleListService,
+    // ArticleEditService,
+    ArticleCategoryService
   ],
   declarations: [
     Article,

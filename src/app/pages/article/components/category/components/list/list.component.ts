@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'article-category-list',
@@ -9,11 +9,16 @@ import { Component, Input } from '@angular/core';
 export class ArticleCategoryList {
 
   @Input() categories;
+  @Output() deleteRequest = new EventEmitter();
 
-  categoriesAllSelect:boolean = false;
+  categoriesSelectAll:boolean = false;
   selectedCategories = [];
 
   constructor() {
+  }
+
+  ngOnInit() {
+    console.log(this, '分类列表初始化完毕')
   }
 
   editCategory(params) {
@@ -21,7 +26,18 @@ export class ArticleCategoryList {
     // console.log('编辑分类', params, target, DOM);
   }
 
-  selectChange() {
-    console.log('changed');
+  // 多选切换
+  batchSelectChange(is_select) {
+    this.selectedCategories = [];
+    this.categories.data.forEach(item => { item.selected = is_select; is_select && this.selectedCategories.push(item._id) });
+  }
+
+  // 单个切换
+  itemSelectChange() {
+    this.selectedCategories = [];
+    const categories = this.categories.data;
+    categories.forEach(item => { item.selected && this.selectedCategories.push(item._id) });
+    if(!this.selectedCategories.length) this.categoriesSelectAll = false;
+    if(!!this.selectedCategories.length && this.selectedCategories.length == categories.length) this.categoriesSelectAll = true;
   }
 }
