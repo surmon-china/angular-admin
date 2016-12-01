@@ -19,8 +19,11 @@ export class ArticleCategoryList {
   }
 
   ngOnInit() {
-    console.log(this, '分类列表初始化完毕')
+    // console.log(this, '分类列表初始化完毕')
   }
+
+  // 级别标记
+  public categoryLevelMark = level => Array.from({ length: level }, () => '');
 
   editCategory(params) {
     // let target = event.target || event.srcElement || event.currentTarget;

@@ -22,10 +22,14 @@
   <thead class="thead-inverse">
     <tr>
       <th class="batch-checkbox">
-        <ba-checkbox [(ngModel)]="categoriesSelectAll" [label]="'全选'" (ngModelChange)="batchSelectChange($event)"></ba-checkbox>
+        <ba-checkbox [(ngModel)]="categoriesSelectAll" (ngModelChange)="batchSelectChange($event)">
+          <span ba-checkbox-label>
+            <span>&nbsp;</span>
+            <strong>名称</strong>
+          </span>
+        </ba-checkbox>
       </th>
       <th>ID</th>
-      <th>名称</th>
       <th>描述</th>
       <th>别名</th>
       <th>文章</th>
@@ -42,13 +46,16 @@
     <template [ngIf]="categories && categories.data.length">
       <tr *ngFor="let category of categories.data">
         <td class="batch-checkbox">
-          <ba-checkbox [(ngModel)]="category.selected" [label]="'分类' + category.id"  (ngModelChange)="itemSelectChange()"></ba-checkbox>
+          <ba-checkbox [(ngModel)]="category.selected" (ngModelChange)="itemSelectChange()">
+            <span ba-checkbox-label>
+              <span>&nbsp;</span>
+              <strong *ngFor="let num of categoryLevelMark(category.level)">—&nbsp;</strong>
+              <strong>{{ category.name }}</strong>
+            </span>
+          </ba-checkbox>
         </td>
         <td>
-          <span>{{ category.id }}</span>
-        </td>
-        <td>
-          <strong>{{ category.name }}</strong>
+          <strong>{{ category.id }}</strong>
         </td>
         <td>{{ category.description || '暂无' }}</td>
         <td>{{ category.slug }}</td>

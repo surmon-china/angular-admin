@@ -34,7 +34,10 @@ export class ArticleCategoryAdd {
     this.description = this.form.controls['description'];
   }
 
+  // 级别标记
+  public categoryLevelMark = level => Array.from({ length: level }, () => '');
+
   public onSubmit(category:Object):void {
-    if (this.form.valid) this.submitCategory.emit(category);
+    if (this.form.valid) return this.submitCategory.emit(category);
   }
 }
