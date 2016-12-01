@@ -150,12 +150,22 @@ module.exports = function (options) {
     devServer: {
       port: METADATA.port,
       host: METADATA.host,
-      historyApiFallback: {
-        index: '/index.html'
-      },
       watchOptions: {
         aggregateTimeout: 300,
         poll: 1000
+      },
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8000',
+          secure: false,
+          changeOrigin: true,
+          pathRewrite: {
+            '^/api': ''
+          }
+        }
+      },
+      historyApiFallback: {
+        index: '/index.html'
       },
       outputPath: helpers.root('dist')
     },

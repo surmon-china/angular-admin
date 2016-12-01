@@ -2,7 +2,9 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { provideAuth } from 'angular2-jwt'
 import { RouterModule } from '@angular/router';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
 /*
@@ -30,9 +32,7 @@ type StoreType = {
   disposeOldHosts: () => void
 };
 
-/**
- * `AppModule` is the main entry point into Angular2's bootstraping process
- */
+// app入口模块
 @NgModule({
   bootstrap: [App],
   declarations: [
@@ -44,13 +44,24 @@ type StoreType = {
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    SimpleNotificationsModule,
     NgaModule.forRoot(),
     PagesModule,
     routing
   ],
-  providers: [ // expose our Services and Providers into Angular's dependency injection
+  // expose our Services and Providers into Angular's dependency injection
+  providers: [
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    provideAuth({
+      headerName: 'Authorization',
+      headerPrefix: 'Bearer',
+      tokenName: 'id_token',
+      tokenGetter() { return localStorage.getItem('id_token')},
+      globalHeaders: [{'Content-Type': 'application/json'}],
+      noJwtError: true,
+      noTokenScheme: true
+    })
   ]
 })
 

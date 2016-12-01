@@ -18,21 +18,54 @@ export class ArticleCategory {
     this._getCategories();
   }
 
+  // 分类级别递归排序
+  private _categoryLevelBuild = () => {
+    const categories = this.categories.data;
+    let cates = categories.filter((c, i) => !c.pid);
+    let subCates = categories.filter((c, i) => !!c.pid);
+    // 构建级别
+    const levelBuild = (sub, cates, level) => {
+      cates.forEach(c => {
+        if(Object.is(c._id, sub.pid)) {
+          c.level = level;
+          sub.level = level + 1;
+          c.children = c.children || [];
+          c.children.push(sub);
+        } else {
+          let hasChildren = c.children && c.children.length;
+          hasChildren && levelBuild(sub, c.children, level + 1);
+          hasChildren || (c.level = level);
+        }
+      })
+    };
+    subCates.forEach(sub => { levelBuild(sub, cates, 0)});
+
+    let newCategories = [];
+    const levelBuildOptimize = cates => {
+      cates.forEach(c => {
+        newCategories.push(c);
+        if(c.children && c.children.length) levelBuildOptimize(c.children);
+      })
+    }
+    levelBuildOptimize(cates);
+    this.categories.data = newCategories;
+  };
+
   // 获取分类
   private _getCategories() {
     this._articleCategoryService.getCategories().then(categories => {
       this.categories = categories.result;
+      this._categoryLevelBuild();
     });
   }
 
   // 添加分类
   private _addCategory(category) {
     this.addCategoryIng = true;
-    this._articleCategoryService.addCategory().then(category => {
+    this._articleCategoryService.addCategory(category).then(_category => {
+      if(_category.code) this._getCategories();
       this.addCategoryIng = false;
-      console.log(category)
     });
-
   }
 
   // 修改分类

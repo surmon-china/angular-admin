@@ -20,10 +20,14 @@
     <select class="form-control c-select" id="categoryParent" [formControl]="pid">
       <option value="">无</option>
       <template [ngIf]="categories && categories.data.length">
-        <option *ngFor="let category of categories.data" [ngValue]="category._id">{{ category.name }}</option>
+        <option *ngFor="let category of categories.data" [ngValue]="category._id">
+          <span *ngFor="let num of categoryLevelMark(category.level)">&nbsp;&nbsp;&nbsp;</span>
+          <span>{{ category.name }}</span>
+        </option>
       </template>
     </select>
     <span class="help-block sub-little-text">可以选择父级分类</span>
+
   </div>
   <div class="form-group" [ngClass]="{'has-error': (!description.valid && description.touched), 'has-success': (description.valid && description.touched)}">
     <label for="categoryDescription">
