@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { ModalDirective } from 'ng2-bootstrap';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 import { ArticleCategoryService } from './category.service';
@@ -9,8 +10,10 @@ import { ArticleCategoryService } from './category.service';
 })
 export class ArticleCategory {
 
+  @ViewChild('delModal') delModal: ModalDirective;
+
   public categories = { data: [] };
-  public addCategoryIng:boolean = false;
+  public addCategoryState = { ing: false, success: false };
 
   constructor(private _articleCategoryService:ArticleCategoryService) {}
 
@@ -59,10 +62,10 @@ export class ArticleCategory {
 
   // 添加分类
   private _addCategory(category) {
-    this.addCategoryIng = true;
+    this.addCategoryState = { ing: true, success: false };
     this._articleCategoryService.addCategory(category).then(_category => {
       if(_category.code) this._getCategories();
-      this.addCategoryIng = false;
+      this.addCategoryState = { ing: false, success: true };
     });
   }
 
@@ -74,10 +77,11 @@ export class ArticleCategory {
   // 删除分类
   private _delCategory(category) {
     console.log(category);
+    this.delModal.show();
   }
 
   // 批量删除分类
   private _delCategories(categories) {
-    console.log(categories);
+    console.log(this);
   }
 }

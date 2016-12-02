@@ -27,7 +27,6 @@
       </template>
     </select>
     <span class="help-block sub-little-text">可以选择父级分类</span>
-
   </div>
   <div class="form-group" [ngClass]="{'has-error': (!description.valid && description.touched), 'has-success': (description.valid && description.touched)}">
     <label for="categoryDescription">
@@ -43,5 +42,7 @@
     </textarea>
     <span class="help-block sub-little-text">该分类的描述</span>
   </div>
-  <button type="submit" class="btn btn-success"  [disabled]="!form.valid || submiting">{{ submiting ? '分类添加中' : '添加分类目录' }}</button>
+  <button type="submit" class="btn btn-success"  [disabled]="!form.valid || submitState.ing">{{ submitState.ing ? '分类添加中' : '添加分类目录' }}</button>
+  <span>&nbsp;</span>
+  <button class="btn btn-default" (click)="resetForm()">重置</button>
 </form>

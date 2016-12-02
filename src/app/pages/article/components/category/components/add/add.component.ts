@@ -10,7 +10,8 @@ import { EmailValidator, EqualPasswordsValidator } from '../../../../../../theme
 export class ArticleCategoryAdd {
 
   @Input() categories;
-  @Input() submiting:boolean;
+  @Input() submitState:any;
+  @Output() submitStateChange:EventEmitter<any> = new EventEmitter();
   @Output() submitCategory:EventEmitter<any> = new EventEmitter();
 
   public form:FormGroup;
@@ -37,7 +38,27 @@ export class ArticleCategoryAdd {
   // 级别标记
   public categoryLevelMark = level => Array.from({ length: level }, () => '');
 
+  // 重置
+  public resetForm():void {
+    this.form.reset({
+      pid: '',
+      name: '',
+      slug: '',
+      description: ''
+    });
+  }
+
+  // 提交
   public onSubmit(category:Object):void {
     if (this.form.valid) return this.submitCategory.emit(category);
+  }
+
+  ngOnChanges(changes) {
+    const submitOk = !!changes.submitState && !changes.submitState.currentValue.ing && changes.submitState.currentValue.success
+    if(submitOk) {
+      this.resetForm();
+      this.submitState.success = false;
+      this.submitStateChange.emit(this.submitState);
+    }
   }
 }

@@ -11,7 +11,9 @@
           <span>批量操作</span>
         </button>
         <ul class="dropdown-menu" dropdownMenu>
-          <li class="dropdown-item"><a href="#">彻底删除</a></li>
+          <li class="dropdown-item">
+            <a [href]="" (click)="delCategories()">彻底删除</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -63,8 +65,8 @@
         <td>
           <div class="text-center">
             <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-sm btn-warning" (click)="editCategory({ category: category, event: $event })">编辑分类</button>
-              <button type="button" class="btn btn-sm btn-danger">删除分类</button>
+              <button type="button" class="btn btn-sm btn-warning" (click)="editCategory(category)">编辑分类</button>
+              <button type="button" class="btn btn-sm btn-danger"  (click)="delCategory(category)">删除分类</button>
               <a class="btn btn-sm btn-success" href="//surmon.me/category/{{ category.slug }}" target="_blank">查看分类</a>
             </div>
           </div>
