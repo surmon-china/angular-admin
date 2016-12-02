@@ -11,6 +11,7 @@ export class ArticleCategoryList {
 
   @Input() categories;
   @Output() deleteRequest = new EventEmitter();
+  @Output() refreshList = new EventEmitter();
 
   categoriesSelectAll:boolean = false;
   selectedCategories = [];

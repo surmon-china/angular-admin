@@ -47,8 +47,19 @@ $text-color: #ffffff;
 
   > .secret-titles {
 
-    > .title {
+    > .title,
+    > .input {
+      text-align: center;
+      display: block;
       margin: 0;
+      padding: 0;
+      width: 100%;
+      border: none;
+      background: none;
+      font-size: 32px;
+      height: 35px;
+      line-height: 35px;
+      color: #fff;
     }
   }
 }

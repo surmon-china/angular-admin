@@ -23,7 +23,6 @@ export class ArticleCategory {
     const categories = this.categories.data;
     let cates = categories.filter((c, i) => !c.pid);
     let subCates = categories.filter((c, i) => !!c.pid);
-    // 构建级别
     const levelBuild = (sub, cates, level) => {
       cates.forEach(c => {
         if(Object.is(c._id, sub.pid)) {
@@ -39,7 +38,6 @@ export class ArticleCategory {
       })
     };
     subCates.forEach(sub => { levelBuild(sub, cates, 0)});
-
     let newCategories = [];
     const levelBuildOptimize = cates => {
       cates.forEach(c => {
