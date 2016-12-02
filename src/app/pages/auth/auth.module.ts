@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule }     from '../../theme/nga.module';
 import { routing }       from './auth.routing';
 
-// import { Auth }          from './components/auth.component';
+import { AuthService }   from './auth.service';
+import { Auth }          from './auth.component';
 import { AuthLogin }     from './components/login';
 import { AuthSecret }    from './components/secret';
 import { AuthRegister }  from './components/register';
@@ -17,8 +18,11 @@ import { AuthRegister }  from './components/register';
     NgaModule,
     routing
   ],
+  providers: [
+    AuthService
+  ],
   declarations: [
-    // Auth,
+    Auth,
     AuthLogin,
     AuthSecret,
     AuthRegister

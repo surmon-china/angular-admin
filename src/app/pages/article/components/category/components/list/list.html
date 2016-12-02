@@ -1,7 +1,7 @@
 <div class="clearfix">
   <div class="pull-left">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-default btn-with-icon">
+      <button type="button" class="btn btn-default btn-with-icon" (click)="refreshList.emit()">
         <i class="ion-refresh"></i>
         <span>刷新</span>
       </button>
@@ -14,22 +14,21 @@
           <li class="dropdown-item"><a href="#">彻底删除</a></li>
         </ul>
       </div>
-      <span>{{ selectedCategories }}</span>
     </div>
   </div>
 </div>
-<table class="table table-hover table-striped table-no-borders black-muted-bg table-enrich category-list">
+<table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich category-list">
   <thead class="thead-inverse">
     <tr>
       <th class="batch-checkbox">
         <ba-checkbox [(ngModel)]="categoriesSelectAll" (ngModelChange)="batchSelectChange($event)">
           <span ba-checkbox-label>
             <span>&nbsp;</span>
-            <strong>名称</strong>
+            <strong>ID</strong>
           </span>
         </ba-checkbox>
       </th>
-      <th>ID</th>
+      <th>名称</th>
       <th>描述</th>
       <th>别名</th>
       <th>文章</th>
@@ -49,15 +48,16 @@
           <ba-checkbox [(ngModel)]="category.selected" (ngModelChange)="itemSelectChange()">
             <span ba-checkbox-label>
               <span>&nbsp;</span>
-              <strong *ngFor="let num of categoryLevelMark(category.level)">—&nbsp;</strong>
-              <strong>{{ category.name }}</strong>
+              <strong>{{ category.id }}</strong>
             </span>
           </ba-checkbox>
         </td>
         <td>
-          <strong>{{ category.id }}</strong>
+          <strong *ngFor="let num of categoryLevelMark(category.level)">—&nbsp;</strong>
+          <strong>{{ category.name }}</strong>
         </td>
-        <td>{{ category.description || '暂无' }}</td>
+        <td>
+          <span [class.text-muted]="!category.description">{{ category.description || '暂无' }}</span></td>
         <td>{{ category.slug }}</td>
         <td>{{ category.articles || 0 }}</td>
         <td>

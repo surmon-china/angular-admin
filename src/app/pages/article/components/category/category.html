@@ -6,7 +6,7 @@
   </div>
   <div class="col-md-8 col-xs-8">
     <ba-card title="分类管理" baCardClass="with-scroll">
-      <article-category-list [categories]="categories"></article-category-list>
+      <article-category-list [categories]="categories" (refreshList)="_getCategories()"></article-category-list>
     </ba-card>
   </div>
 </div>

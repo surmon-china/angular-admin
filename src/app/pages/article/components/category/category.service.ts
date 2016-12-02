@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { NotificationsService } from 'angular2-notifications';
 import 'rxjs/add/operator/toPromise';
@@ -12,13 +12,12 @@ export class ArticleCategoryService {
   private _categorysUrl = `${API_ROOT}/category`;
   private handleResponse = response => {
     const data = response.json();
-    data.code && this._notificationsService.success(data.message, '', { timeOut: 500 });
+    data.code && this._notificationsService.success(data.message, data.message, { timeOut: 500 });
     data.code || this._notificationsService.error(data.message, data.debug.message);
     return data;
   }
   private handleError = error => {
     const err = JSON.parse(error._body);
-    console.log(err);
     this._notificationsService.error('请求失败', err.message || '');
     return Promise.reject(new Error(err.message));
   }
@@ -28,8 +27,10 @@ export class ArticleCategoryService {
   }
 
   getCategories(): Promise<any> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('per_page', '100');
     return this.http
-      .get(this._categorysUrl)
+      .get(this._categorysUrl, { search: params})
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
