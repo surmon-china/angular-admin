@@ -8,13 +8,16 @@
     height: 2rem;
     line-height: 2rem;
     color: #373a3c;
+    cursor: pointer;
 
     &:hover {
-      color: white;
+      color: white!important;
+      background-color: $sidebar!important;
     }
   }
 
   &:hover {
+    // color: white;
     background-color: transparent;
   }
 }

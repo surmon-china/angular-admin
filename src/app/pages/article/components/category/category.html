@@ -1,12 +1,41 @@
 <div class="row">
   <div class="col-md-4 col-xs-4">
     <ba-card title="添加分类" baCardClass="with-scroll">
-      <article-category-add [submiting]="addCategoryIng" [categories]="categories" (submitCategory)="_addCategory($event)"></article-category-add>
+      <article-category-add [(submitState)]="addCategoryState"
+                            [categories]="categories"
+                            (submitCategory)="_addCategory($event)">
+      </article-category-add>
     </ba-card>
   </div>
   <div class="col-md-8 col-xs-8">
     <ba-card title="分类管理" baCardClass="with-scroll">
-      <article-category-list [categories]="categories" (refreshList)="_getCategories()"></article-category-list>
+      <article-category-list [categories]="categories"
+                             (refreshList)="_getCategories()"
+                             (editCategoryRequest)="_putCategory($event)"
+                             (delCategoryRequest)="_delCategory($event)"
+                             (delCategoriesRequest)="_delCategories($event)">
+      </article-category-list>
     </ba-card>
   </div>
+
+  <!-- 单个删除确认 -->
+  <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="delModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">确认操作</h4>
+        </div>
+        <div class="modal-body">
+          I am a child modal, opened from parent component!
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary confirm-btn" (click)="delModal.hide()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

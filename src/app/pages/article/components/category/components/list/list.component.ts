@@ -10,40 +10,47 @@ import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angu
 export class ArticleCategoryList {
 
   @Input() categories;
-  @Output() deleteRequest = new EventEmitter();
+  @Output() delCategoryRequest = new EventEmitter();
+  @Output() delCategoriesRequest = new EventEmitter();
+  @Output() editCategoryRequest = new EventEmitter();
   @Output() refreshList = new EventEmitter();
 
-  categoriesSelectAll:boolean = false;
-  selectedCategories = [];
+  public categoriesSelectAll:boolean = false;
+  public selectedCategories = [];
 
-  constructor() {
-  }
-
-  ngOnInit() {
-    // console.log(this, '分类列表初始化完毕')
-  }
+  constructor() {}
 
   // 级别标记
   public categoryLevelMark = level => Array.from({ length: level }, () => '');
 
-  editCategory(params) {
-    // let target = event.target || event.srcElement || event.currentTarget;
-    // console.log('编辑分类', params, target, DOM);
-  }
-
   // 多选切换
-  batchSelectChange(is_select) {
+  public batchSelectChange(is_select) {
     if(!this.categories.data.length) return;
     this.selectedCategories = [];
     this.categories.data.forEach(item => { item.selected = is_select; is_select && this.selectedCategories.push(item._id) });
   }
 
   // 单个切换
-  itemSelectChange() {
+  public itemSelectChange() {
     this.selectedCategories = [];
     const categories = this.categories.data;
     categories.forEach(item => { item.selected && this.selectedCategories.push(item._id) });
     if(!this.selectedCategories.length) this.categoriesSelectAll = false;
     if(!!this.selectedCategories.length && this.selectedCategories.length == categories.length) this.categoriesSelectAll = true;
+  }
+
+  // 编辑分类
+  public editCategory(category) {
+    this.editCategoryRequest.emit(category);
+  }
+
+  // 删除分类
+  public delCategory(category) {
+    this.delCategoryRequest.emit(category);
+  }
+
+  // 批量删除
+  public delCategories() {
+    this.delCategoriesRequest.emit(this.selectedCategories);
   }
 }
