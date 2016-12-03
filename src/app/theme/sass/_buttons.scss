@@ -69,7 +69,8 @@ $hover: 24;
     > .dropdown-item {
       > a {
         &:hover {
-          background-color: $color;
+          color: white;
+          background-color: $color!important;
         }
       }
     }

@@ -29,10 +29,17 @@
           <h4 class="modal-title">确认操作</h4>
         </div>
         <div class="modal-body">
-          I am a child modal, opened from parent component!
+          <div class="message">
+            <span class="icon text-warning">
+              <i class="ion-ios-information-outline"></i>
+            </span>
+            <span>确定要删除 "Think" 分类吗？</span>
+          </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary confirm-btn" (click)="delModal.hide()">Save changes</button>
+          <button class="btn btn-warning confirm-btn" (click)="delModal.hide()">确认删除</button>
+          <span>&nbsp;</span>
+          <button class="btn btn-default confirm-btn" (click)="delModal.hide()">取消</button>
         </div>
       </div>
     </div>
