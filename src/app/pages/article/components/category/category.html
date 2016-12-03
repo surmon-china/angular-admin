@@ -1,9 +1,11 @@
 <div class="row">
   <div class="col-md-4 col-xs-4">
+    {{ editCategory ? editCategory.name : '--' }}
     <ba-card title="添加分类" baCardClass="with-scroll">
       <article-category-add [(submitState)]="addCategoryState"
+                            [(category)]="editCategory"
                             [categories]="categories"
-                            (submitCategory)="_addCategory($event)">
+                            (submitCategory)="(editCategory ? _doPutCategory($event) : _addCategory($event))">
       </article-category-add>
     </ba-card>
   </div>
@@ -17,13 +19,12 @@
       </article-category-list>
     </ba-card>
   </div>
-
-  <!-- 单个删除确认 -->
+  <!-- 删除确认弹窗 -->
   <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button class="close" aria-label="Close" (click)="delModal.hide()">
+          <button class="close" aria-label="Close" (click)="_canceldDelCategory()">
             <span aria-hidden="true">&times;</span>
           </button>
           <h4 class="modal-title">确认操作</h4>
@@ -33,16 +34,16 @@
             <span class="icon text-warning">
               <i class="ion-ios-information-outline"></i>
             </span>
-            <span>确定要删除 "Think" 分类吗？</span>
+            <span *ngIf="delCategory">确定要删除 "{{ delCategory.name }}" 分类吗？</span>
+            <span *ngIf="!delCategory">确定要删除选中分类吗？</span>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-warning confirm-btn" (click)="delModal.hide()">确认删除</button>
+          <button class="btn btn-primary confirm-btn" (click)="(delCategory ? _doDelCategory() : _doDelCategories())">确认删除</button>
           <span>&nbsp;</span>
-          <button class="btn btn-default confirm-btn" (click)="delModal.hide()">取消</button>
+          <button class="btn btn-default confirm-btn" (click)="_canceldDelCategory()">取消</button>
         </div>
       </div>
     </div>
   </div>
-
 </div>

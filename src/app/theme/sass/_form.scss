@@ -71,7 +71,7 @@ select.form-control:not([size]):not([multiple]) {
 
 select.form-control:not([multiple]) option {
   color: $dropdown-text;
-  background-color: $input-background;
+  background-color: $sidebar;
 }
 
 select.form-control[multiple] option {

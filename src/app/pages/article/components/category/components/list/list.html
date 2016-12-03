@@ -55,7 +55,8 @@
           </ba-checkbox>
         </td>
         <td>
-          <strong *ngFor="let num of categoryLevelMark(category.level)">—&nbsp;</strong>
+          <strong *ngIf="category.level">└</strong>
+          <strong *ngFor="let num of categoryLevelMark(category.level)">─&nbsp;</strong>
           <strong>{{ category.name }}</strong>
         </td>
         <td>
