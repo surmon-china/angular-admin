@@ -9,6 +9,7 @@ import { EmailValidator, EqualPasswordsValidator } from '../../../../../../theme
 
 export class ArticleCategoryAdd {
 
+  @Input() category;
   @Input() categories;
   @Input() submitState:any;
   @Output() submitStateChange:EventEmitter<any> = new EventEmitter();
@@ -46,6 +47,10 @@ export class ArticleCategoryAdd {
       slug: '',
       description: ''
     });
+    if(!!this.category) this.category = null;
+    this.submitState.ing = false;
+    this.submitState.success = false;
+    this.submitStateChange.emit(this.submitState);
   }
 
   // 提交
@@ -54,11 +59,12 @@ export class ArticleCategoryAdd {
   }
 
   ngOnChanges(changes) {
-    const submitOk = !!changes.submitState && !changes.submitState.currentValue.ing && changes.submitState.currentValue.success
-    if(submitOk) {
-      this.resetForm();
-      this.submitState.success = false;
-      this.submitStateChange.emit(this.submitState);
+    const submitOk = !!changes.submitState && !changes.submitState.currentValue.ing && changes.submitState.currentValue.success;
+    const category = !!changes.category && !!changes.category.currentValue;
+    if(submitOk) this.resetForm();
+    if(category) {
+      changes.category.currentValue.pid = changes.category.currentValue.pid || '';
+      this.form.reset(changes.category.currentValue);
     }
   }
 }

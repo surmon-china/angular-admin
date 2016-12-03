@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, URLSearchParams } from '@angular/http';
+import { Headers, Http, URLSearchParams, RequestOptions } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { NotificationsService } from 'angular2-notifications';
 import 'rxjs/add/operator/toPromise';
@@ -12,8 +12,8 @@ export class ArticleCategoryService {
   private _categorysUrl = `${API_ROOT}/category`;
   private handleResponse = response => {
     const data = response.json();
-    data.code && this._notificationsService.success(data.message, data.message, { timeOut: 500 });
-    data.code || this._notificationsService.error(data.message, data.debug.message);
+    data.code && this._notificationsService.success(data.message, '数据请求成功', { timeOut: 500 });
+    data.code || this._notificationsService.error(data.message, data.debug ? data.debug.message : data.message);
     return data;
   }
   private handleError = error => {
@@ -45,16 +45,14 @@ export class ArticleCategoryService {
   }
 
   putCategory(category: any): Promise<any> {
-    console.log(category);
     return this.http
-      .put(`${ this._categorysUrl }/${ category._id }`, JSON.stringify(category))
+      .put(`${ this._categorysUrl }/${ category._id }`, category)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
   }
 
   delCategory(category_id: string): Promise<void> {
-    console.log(category_id);
     return this.http
       .delete(`${ this._categorysUrl }/${ category_id }`)
       .toPromise()
@@ -62,9 +60,9 @@ export class ArticleCategoryService {
       .catch(this.handleError);
   }
 
-  delCategories(categories_ids: string): Promise<void> {
-    console.log(categories_ids);
-    return this.http.delete(this._categorysUrl, {  })
+  delCategories(categories: any): Promise<void> {
+    return this.http
+      .delete(this._categorysUrl, new RequestOptions({ body: { categories }}))
       .toPromise()
       .then(() => null)
       .catch(this.handleError);
