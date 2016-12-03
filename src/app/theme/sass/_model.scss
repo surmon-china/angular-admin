@@ -1,3 +1,32 @@
-.model {
-  display: flex;
+.modal {
+  // display: flex;
+  align-items: center;
+
+  .modal-dialog {
+    min-width: 500px;
+    margin: 0 auto;
+
+    .modal-content {
+      border: none;
+      background-color: #eee;
+      color: #373a3c;
+
+      .modal-body {
+
+        .message {
+          margin: 10px auto;
+          padding-left: 30px;
+          font-size: 23px;
+          height: 30px;
+          line-height: 30px;
+
+          .icon {
+            float: left;
+            // font-size: 30px;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
 }
