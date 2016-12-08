@@ -12,8 +12,9 @@ export class ArticleCategoryAdd {
   @Input() category;
   @Input() categories;
   @Input() submitState:any;
-  @Output() submitStateChange:EventEmitter<any> = new EventEmitter();
+  @Output() categoryChange:EventEmitter<any> = new EventEmitter();
   @Output() submitCategory:EventEmitter<any> = new EventEmitter();
+  @Output() submitStateChange:EventEmitter<any> = new EventEmitter();
 
   public form:FormGroup;
   public name:AbstractControl;
@@ -47,7 +48,10 @@ export class ArticleCategoryAdd {
       slug: '',
       description: ''
     });
-    if(!!this.category) this.category = null;
+    if(!!this.category) {
+      this.category = null;
+      this.categoryChange.emit(this.category);
+    }
     this.submitState.ing = false;
     this.submitState.success = false;
     this.submitStateChange.emit(this.submitState);
