@@ -29,53 +29,38 @@ export class ArticleCategory {
   private _categoryLevelBuild = () => {
 
     // 初始化数据
-    const categories = this.categories.data;
-    let cates = Array.from(categories);
-    // let cates = categories.filter((c, i) => !c.pid);
-    // let subCates = categories.filter((c, i) => !!c.pid);
+    let categories = Array.from(this.categories.data);
+    let toDoDeletes = [];
 
     // 级别数据构造
-    const levelBuild = (sub, cates, level) => {
-
-      // 遍历传入的父级分类
-      cates.forEach(c => {
-        // 如果当前分类的pid是父分类
-        if(Object.is(sub.pid, c._id)) {
-          // 则把自己加入到父分类的children中
-          // console.log(sub.slug);
-          c.level = level;
-          sub.level = level + 1;
+    categories.forEach(cate => {
+      // 找到问题数据并添加标记
+      cate.unrepaired = (!!cate.pid && !categories.find(c => Object.is(cate.pid, c._id)))
+      categories.forEach(c => {
+        if(Object.is(cate.pid, c._id)) {
           c.children = c.children || [];
-          c.children.push(sub);
-          // console.log(c)
-          // subCates.splice(subCates.findIndex((c) => Object.is(c, sub)), 1);
-        } else {
-          // 否则，如果父分类有子级，则继续递归子级
-          let hasChildren = c.children && c.children.length;
-          hasChildren && levelBuild(sub, c.children, level + 1);
-          hasChildren || (c.level = level);
+          c.children.push(cate);
+          toDoDeletes.push(cate);
         }
       })
-    };
+    });
 
-    // 执行级别数据构造
-    cates.forEach(cate => { levelBuild(cate, cates, 0)});
-
-    // 扁平数据构造
+    // 扁平数据构造（同时添加级别标示）
     const levelBuildRun = cates => {
       let newCategories = [];
-      const levelBuildOptimize = cates => {
+      const levelBuildOptimize = (cates, level) => {
         cates.forEach(c => {
+          c.level = level;
           newCategories.push(c);
-          if(c.children && c.children.length) levelBuildOptimize(c.children);
+          if(c.children && c.children.length) levelBuildOptimize(c.children, level + 1);
         })
       }
-      levelBuildOptimize(cates);
+      levelBuildOptimize(cates, 0);
       return newCategories;
     }
 
     // 开始执行
-    this.categories.data = levelBuildRun([...cates, ...[]]);
+    this.categories.data = levelBuildRun(categories.filter(c => !toDoDeletes.includes(c)));
   };
 
   // 获取分类

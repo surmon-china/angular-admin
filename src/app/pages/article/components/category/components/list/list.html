@@ -55,6 +55,10 @@
           </ba-checkbox>
         </td>
         <td>
+          <strong *ngIf="category.unrepaired" class="text-warning">
+            <i class="ion-alert"></i>
+            <span>&nbsp;</span>
+          </strong>
           <strong *ngIf="category.level">└</strong>
           <strong *ngFor="let num of categoryLevelMark(category.level)">─&nbsp;</strong>
           <strong>{{ category.name }}</strong>
