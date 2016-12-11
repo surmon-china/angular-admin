@@ -45,13 +45,18 @@
             <option>浏览次数</option>
             <option>评论条数</option>
           </select>
-          <select class="form-control c-select" id="category">
-            <option default>所有分类</option>
-            <option>- Code</option>
-            <option>- Think</option>
-            <option>-- Nothing</option>
-            <option>- Other</option>
+          <span>&nbsp;</span>
+          <select class="form-control c-select">
+            <option value="">所有分类</option>
+            <template [ngIf]="categories && categories.data.length">
+              <option *ngFor="let cate of categories.data" [ngValue]="cate._id" [disabled]="!!category && category._id == cate._id">
+                <span *ngIf="cate.level">└</span>
+                <span *ngFor="let num of categoryLevelMark(cate.level)">─</span>
+                <span>{{ cate.name }}</span>
+              </option>
+            </template>
           </select>
+          <span>&nbsp;</span>
           <select class="form-control c-select" id="tag">
             <option default>所有标签</option>
             <option>Javascript</option>
@@ -61,92 +66,105 @@
         </form>
       </div>
       <div class="table-responsive">
-        <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
-          <thead class="thead-inverse">
-            <tr>
-              <th>
-                <input type="checkbox">
-              </th>
-              <th>
-                <span>ID</span>
-              </th>
-              <th width="40%">标题</th>
-              <th>作者</th>
-              <th>分类目录</th>
-              <th width="150">标签</th>
-              <th>评论</th>
-              <th>日期</th>
-              <th>状态</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let article of articles.result.data">
-              <td>
-                <input type="checkbox">
-              </td>
-              <td>
-                <span>{{ article.id }}</span>
-              </td>
-              <td>
-                <p></p>
-                <a href="">
-                  <h4>
-                    <strong>{{ article.title }}</strong>
-                  </h4>
-                </a>
-                <small>{{ article.description }}</small>
-              </td>
-              <td>
-                <a href="">Surmon</a>
-              </td>
-              <td>
-                <ul class="list-unstyled">
-                  <li *ngFor="let category of article.category">
-                    <a href="">{{ category.name }}</a>
-                  </li>
-                </ul>
-              </td>
-              <td>
-                <ul class="list-unstyled">
-                  <li *ngFor="let tag of article.tag">
-                    <a href="">{{ tag.name }}</a>
-                  </li>
-                </ul>
-              </td>
-              <td>
-                <a href="" *ngIf="article.meta.comments > 0">{{ article.meta.comments }}条评论</a>
-                <span *ngIf="!article.meta.comments">暂无评论</span>
-              </td>
-              <td>{{ article.date }}</td>
-              <td>
-                <span [ngSwitch]="article.status">
-                  <span *ngSwitchCase="0">草稿</span>
-                  <span *ngSwitchCase="1">已发布</span>
-                  <span *ngSwitchCase="'-1'">已删除</span>
-                </span>
-              </td>
-              <td>
-                <div class="button-wrapper">
-                  <button class="btn btn-primary btn-sm"
-                          type="button">编辑文章</button>
-                </div>
-                <div class="button-wrapper">
-                  <button class="btn btn-info btn-sm"
-                          type="button">快速编辑</button>
-                </div>
-                <div class="button-wrapper">
-                  <button class="btn btn-danger btn-sm"
-                          type="button">删除文章</button>
-                </div>
-                <div class="button-wrapper">
-                  <button class="btn btn-success btn-sm"
-                          type="button">查看文章</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="article-list">
+          <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
+            <thead class="thead-inverse">
+              <tr>
+                <th>
+                  <ba-checkbox [(ngModel)]="articlesSelectAll" (ngModelChange)="batchSelectChange($event)">
+                    <span ba-checkbox-label>
+                      <span>&nbsp;</span>
+                      <strong>ID</strong>
+                    </span>
+                  </ba-checkbox>
+                </th>
+                <th width="40%">标题</th>
+                <th>作者</th>
+                <th>分类目录</th>
+                <th width="150">标签</th>
+                <th>评论</th>
+                <th>日期</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!articles || !articles.data.length">
+                <td colspan="9">
+                  <p class="text-muted text-center article-err-msg" *ngIf="articles && articles.data.length == 0">暂无数据<p>
+                  <p class="text-muted text-center article-err-msg" *ngIf="articles && articles.data.length == undefined">加载中<p>
+                </td>
+              </tr>
+              <template [ngIf]="articles && articles.data.length">
+                <tr *ngFor="let article of articles.data">
+                  <td class="batch-checkbox">
+                    <ba-checkbox [(ngModel)]="category.selected" (ngModelChange)="itemSelectChange()">
+                      <span ba-checkbox-label>
+                        <span>&nbsp;</span>
+                        <strong>{{ category.id }}</strong>
+                      </span>
+                    </ba-checkbox>
+                  </td>
+                  <td>
+                    <span>{{ article.id }}</span>
+                  </td>
+                  <td>
+                    <p></p>
+                    <a href="">
+                      <h4>
+                        <strong>{{ article.title }}</strong>
+                      </h4>
+                    </a>
+                    <small>{{ article.description }}</small>
+                  </td>
+                  <td>
+                    <a href="">Surmon</a>
+                  </td>
+                  <td>
+                    <ul class="list-unstyled">
+                      <li *ngFor="let category of article.category">
+                        <a href="">{{ category.name }}</a>
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+                    <ul class="list-unstyled">
+                      <li *ngFor="let tag of article.tag">
+                        <a href="">{{ tag.name }}</a>
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+                    <a href="" *ngIf="article.meta.comments > 0">{{ article.meta.comments }}条评论</a>
+                    <span *ngIf="!article.meta.comments">暂无评论</span>
+                  </td>
+                  <td>{{ article.date }}</td>
+                  <td>
+                    <span [ngSwitch]="article.status">
+                      <span *ngSwitchCase="0">草稿</span>
+                      <span *ngSwitchCase="1">已发布</span>
+                      <span *ngSwitchCase="'-1'">已删除</span>
+                    </span>
+                  </td>
+                  <td>
+                    <div class="button-wrapper">
+                      <button class="btn btn-primary btn-sm" type="button">编辑文章</button>
+                    </div>
+                    <div class="button-wrapper">
+                      <button class="btn btn-info btn-sm" type="button">快速编辑</button>
+                    </div>
+                    <div class="button-wrapper">
+                      <button class="btn btn-danger btn-sm" type="button">删除文章</button>
+                    </div>
+                    <div class="button-wrapper">
+                      <button class="btn btn-success btn-sm" type="button">查看文章</button>
+                    </div>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
       </div>
     </ba-card>
   </div>
