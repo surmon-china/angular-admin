@@ -65,7 +65,9 @@ export class ArticleCategory {
 
   // 获取分类
   private _getCategories() {
-    this._articleCategoryService.getCategories().then(categories => {
+    this._articleCategoryService
+    .getCategories()
+    .then(categories => {
       this.categories = categories.result;
       this._categoryLevelBuild();
     });
@@ -74,8 +76,10 @@ export class ArticleCategory {
   // 添加分类
   private _addCategory(category) {
     this.addCategoryState = { ing: true, success: false };
-    this._articleCategoryService.addCategory(category).then(_category => {
-      if(_category.code) this._getCategories();
+    this._articleCategoryService
+    .addCategory(category)
+    .then(_category => {
+      this._getCategories();
       this.addCategoryState = { ing: false, success: !!_category.code };
     });
   }
@@ -88,11 +92,11 @@ export class ArticleCategory {
   // 确认修改分类
   private _doPutCategory(category) {
     this.addCategoryState = { ing: true, success: false };
-    this._articleCategoryService.putCategory(Object.assign(this.editCategory, category)).then(category => {
-      if(category.code) {
-        this._getCategories();
-        this.editCategory = null;
-      }
+    this._articleCategoryService
+    .putCategory(Object.assign(this.editCategory, category))
+    .then(category => {
+      this._getCategories();
+      this.editCategory = null;
       this.addCategoryState = { ing: false, success: !!category.code };
     });
   }
