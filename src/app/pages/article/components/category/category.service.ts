@@ -9,7 +9,7 @@ import { API_ROOT } from 'src/config'
 @Injectable()
 export class ArticleCategoryService {
 
-  private _categorysUrl = `${API_ROOT}/category`;
+  private _apiUrl = `${API_ROOT}/category`;
 
   constructor(private http: AuthHttp,
               private _notificationsService: NotificationsService) {
@@ -36,7 +36,7 @@ export class ArticleCategoryService {
     let params: URLSearchParams = new URLSearchParams();
     params.set('per_page', '100');
     return this.http
-      .get(this._categorysUrl, { search: params})
+      .get(this._apiUrl, { search: params})
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
@@ -44,7 +44,7 @@ export class ArticleCategoryService {
 
   addCategory(category:any): Promise<any> {
     return this.http
-      .post(this._categorysUrl, category)
+      .post(this._apiUrl, category)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
@@ -52,7 +52,7 @@ export class ArticleCategoryService {
 
   putCategory(category: any): Promise<any> {
     return this.http
-      .put(`${ this._categorysUrl }/${ category._id }`, category)
+      .put(`${ this._apiUrl }/${ category._id }`, category)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
@@ -60,7 +60,7 @@ export class ArticleCategoryService {
 
   delCategory(category_id: string): Promise<void> {
     return this.http
-      .delete(`${ this._categorysUrl }/${ category_id }`)
+      .delete(`${ this._apiUrl }/${ category_id }`)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
@@ -68,7 +68,7 @@ export class ArticleCategoryService {
 
   delCategories(categories: any): Promise<void> {
     return this.http
-      .delete(this._categorysUrl, new RequestOptions({ body: { categories }}))
+      .delete(this._apiUrl, new RequestOptions({ body: { categories }}))
       .toPromise()
       .then(() => null)
       .catch(this.handleError);

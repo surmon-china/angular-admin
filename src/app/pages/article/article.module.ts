@@ -9,7 +9,7 @@ import { routing }             from './article.routing';
 
 import { ArticleTagService } from './components/tag/tag.service';
 import { ArticleListService } from './components/list/list.service';
-// import { ArticleEditService } from './components/edit/edit.service';
+import { ArticleEditService } from './components/edit/edit.service';
 import { ArticleCategoryService } from './components/category/category.service';
 
 import { Article }             from './article.component';
@@ -41,7 +41,7 @@ import { ArticleTag }           from './components/tag';
   providers: [
     ArticleTagService,
     ArticleListService,
-    // ArticleEditService,
+    ArticleEditService,
     ArticleCategoryService
   ],
   declarations: [

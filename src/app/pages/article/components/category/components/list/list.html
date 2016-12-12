@@ -5,10 +5,6 @@
         <i class="ion-refresh"></i>
         <span>刷新</span>
       </button>
-      <button type="button" class="btn btn-default btn-with-icon" (click)="refreshList.emit()" disabled>
-        <i class="ion-wrench"></i>
-        <span>修复分类</span>
-      </button>
       <div class="btn-group" dropdown>
         <button type="button" class="btn btn-default btn-with-icon" dropdownToggle addToggleClass="true" [disabled]="!selectedCategories.length">
           <i class="ion-ios-list"></i>
