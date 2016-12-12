@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 import { API_ROOT } from 'src/config'
 
 @Injectable()
-export class ArticleListService {
+export class ArticleEditService {
 
   private _apiUrl = `${API_ROOT}/article`;
 
@@ -32,7 +32,19 @@ export class ArticleListService {
     return Promise.reject(err);
   }
 
-  getArticles(): Promise<any> {
+  // 修改文章
+  putArticle(): Promise<any> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('per_page', '100');
+    return this.http
+      .get(this._apiUrl, { search: params })
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  // 发布文章
+  addArticle(): Promise<any> {
     let params: URLSearchParams = new URLSearchParams();
     params.set('per_page', '100');
     return this.http

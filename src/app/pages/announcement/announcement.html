@@ -8,7 +8,7 @@
           </label>
           <select class="form-control c-select" id="announcementType">
             <option>已发布</option>
-            <option>未发布</option>
+            <option>草稿</option>
           </select>
         </div>
         <div class="form-group">
@@ -34,7 +34,7 @@
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-default active">全部（14）</button>
             <button type="button" class="btn btn-default">已发布（10）</button>
-            <button type="button" class="btn btn-default">未发布（3）</button>
+            <button type="button" class="btn btn-default">草稿（3）</button>
           </div>
           <span>&nbsp;</span>
           <div class="btn-group" role="group" aria-label="Basic example">
@@ -48,18 +48,14 @@
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" dropdownMenu>
-                <li class="dropdown-item"><a href="#">移至回收站</a></li>
-                <li class="dropdown-item"><a href="#">彻底删除</a></li>
-                <li class="dropdown-item"><a href="#">批量还原</a></li>
-                <li class="dropdown-divider"></li>
-                <li class="dropdown-item"><a href="#">Separated link</a></li>
+                <li class="dropdown-item"><a href="#">批量删除</a></li>
               </ul>
             </div>
           </div>
         </div>
         <form class="pull-right form-inline navbar-form">
           <div class="input-group">
-            <input type="text" class="form-control with-default-addon" placeholder="公告标题、内容">
+            <input type="text" class="form-control with-default-addon" placeholder="公告内容">
             <span class="input-group-btn">
               <button class="btn btn-default" type="button">搜索</button>
             </span>
