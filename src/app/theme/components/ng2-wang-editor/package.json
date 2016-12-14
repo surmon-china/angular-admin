@@ -1,0 +1,32 @@
+{
+  "name": "ng2-wang-editor",
+  "version": "1.0.0",
+  "description": "wangEditor component for Angular2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/surmon-china/ng2-wang-editor.git"
+  },
+  "keywords": [
+    "ng2-wang-editor",
+    "ng2 text editor",
+    "ng2 web editor",
+    "ng2 editor"
+  ],
+  "author": {
+    "name": "Surmon",
+    "email": "surmon@foxmail.com",
+    "url": "http://surmon.me"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "wangeditor": "^2.1.22"
+  },
+  "bugs": {
+    "url": "https://github.com/surmon-china/ng2-wang-editor/issues"
+  },
+  "homepage": "https://github.com/surmon-china/ng2-wang-editor#readme"
+}
