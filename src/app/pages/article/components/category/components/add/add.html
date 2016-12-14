@@ -1,4 +1,4 @@
-<form name="addCatrgory" [formGroup]="form" (ngSubmit)="onSubmit(form.value)" >
+<form name="addCatrgory" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
   <div class="form-group" [ngClass]="{'has-error': (!name.valid && name.touched), 'has-success': (name.valid && name.touched)}">
     <label for="categoryName">
       <h5>名称</h5>

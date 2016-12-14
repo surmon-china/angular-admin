@@ -40,7 +40,7 @@ export class ArticleCategoryAdd {
   // 级别标记
   public categoryLevelMark = level => Array.from({ length: level }, () => '');
 
-  // 重置
+  // 重置表单
   public resetForm():void {
     this.form.reset({
       pid: '',
