@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
-    <ba-card title="添加公告" baCardClass="with-scroll">
-      <form [formGroup]="form" (ngSubmit)="submitAnnouncement(form.value)">
+    <ba-card title="添加公告" >
+      <form [formGroup]="form" (ngSubmit)="submitAnnouncement(form.value)" class="announcement-form">
         <div class="form-group"
              [ngClass]="{'has-error': (!state.valid && state.touched), 'has-success': (state.valid && state.touched)}">
           <label for="announcementType">
@@ -17,20 +17,12 @@
           <label for="announcementContent">
             <h5>公告内容</h5>
           </label>
-          <textarea name="announcementContent"
-                    id="announcementContent"
-                    class="form-control"
-                    cols="30"
-                    rows="20"
-                    placeholder="输入公告内容，支持html"
-                    [formControl]="content">
-          </textarea>
+          <quill-editor class="form-control announcement-content" [formControl]="content" [config]="editorConfig"></quill-editor>
         </div>
         <button type="submit" class="btn btn-success">{{ edit_announcement ? '修改' : '添加' }}公告</button>
         <span>&nbsp;</span>
         <button class="btn btn-default" (click)="resetForm()">重置</button>
       </form>
-      <wang-editor [(ngModel)]="data" [config]="wangEditorConfig" debounce="500"></wang-editor>
     </ba-card>
   </div>
   <div class="col-md-8 col-xs-12">
@@ -67,7 +59,10 @@
         </div>
         <form class="pull-right form-inline navbar-form">
           <div class="input-group" style="margin: 0;">
-            <input type="text" class="form-control with-default-addon" placeholder="公告内容">
+            <input type="text"
+                   placeholder="公告内容"
+                   [(NgModel)]="keyword"
+                   class="form-control with-default-addon">
             <span class="input-group-btn">
               <button class="btn btn-default" type="button">搜索</button>
             </span>

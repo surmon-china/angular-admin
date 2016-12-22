@@ -1,3 +1,22 @@
+.announcement-form {
+
+  .announcement-content {
+    padding: 0;
+
+    > .ql-toolbar,
+    > .ql-container {
+      border: none;
+      background-color: #fff;
+      color: #555;
+    }
+
+    > .ql-toolbar {
+      border-bottom: 1px solid #ccc;
+      line-height: initial;
+    }
+  }
+}
+
 .announcement-list {
 
   .batch-checkbox {
@@ -19,6 +38,10 @@
 
         .content {
           line-height: 2;
+
+          p {
+            margin: 0;
+          }
         }
       }
     }
