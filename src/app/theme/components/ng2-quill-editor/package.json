@@ -1,17 +1,17 @@
 {
-  "name": "ng2-wang-editor",
-  "version": "1.0.0",
-  "description": "wangEditor component for Angular2",
+  "name": "ng2-quill-editor",
+  "version": "0.1.0",
+  "description": "quill editor component for Angular2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/surmon-china/ng2-wang-editor.git"
+    "url": "https://github.com/surmon-china/ng2-quill-editor.git"
   },
   "keywords": [
-    "ng2-wang-editor",
+    "ng2-quill-editor",
     "ng2 text editor",
     "ng2 web editor",
     "ng2 editor"
@@ -23,10 +23,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    "wangeditor": "^2.1.22"
+    "quill": "^1.1.7"
   },
   "bugs": {
-    "url": "https://github.com/surmon-china/ng2-wang-editor/issues"
+    "url": "https://github.com/surmon-china/ng2-quill-editor/issues"
   },
-  "homepage": "https://github.com/surmon-china/ng2-wang-editor#readme"
+  "homepage": "https://github.com/surmon-china/ng2-quill-editor#readme"
 }

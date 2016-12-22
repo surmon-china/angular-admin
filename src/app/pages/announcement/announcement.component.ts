@@ -6,7 +6,7 @@ import { AnnouncementsService } from './announcement.service';
 
 @Component({
   selector: 'announcement',
-  encapsulation: ViewEncapsulation.Emulated,
+  encapsulation: ViewEncapsulation.None,
   styles: [require('./announcement.scss')],
   template: require('./announcement.html')
 })
@@ -14,31 +14,48 @@ export class Announcement {
 
   @ViewChild('delModal') delModal: ModalDirective;
 
-  public data = 'padlpasd';
-  public form:FormGroup;
-  public content:AbstractControl;
+  public keyword:string = '';
+  public editForm:FormGroup;
   public state:AbstractControl;
+  public content:AbstractControl;
   public announcements = { data: [] };
   public del_announcement:any;
   public edit_announcement:any;
   public announcementsSelectAll:boolean = false;
   public selectedAnnouncements = [];
-  public wangEditorConfig = {
-    printLog: false,
-    menus: ['source', '|', 'bold', 'underline', 'italic', 'strikethrough', 'eraser', 'forecolor', 'bgcolor', '|', 'quote', 'fontfamily', 'fontsize', 'head', 'unorderlist', 'orderlist', 'alignleft', 'aligncenter', 'alignright', '|', 'link', 'unlink', 'table', 'img', 'video', 'insertcode', '|', 'undo', 'redo', 'fullscreen'],
-    uploadImgUrl: 'asdad'
+  public editorConfig = {
+    placeholder: "输入公告内容，支持html",
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+        ['link', 'image'],
+        ['clean']
+      ]
+    }
   };
 
   constructor(private _fb:FormBuilder,
               private _announcementService:AnnouncementsService) {
 
-    this.form = _fb.group({
-      'content': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+    this.editForm = _fb.group({
+      'content': ['', Validators.compose([Validators.required])],
       'state': ['1', Validators.compose([Validators.required])]
     });
 
-    this.content = this.form.controls['content'];
-    this.state = this.form.controls['state'];
+    this.state = this.editForm.controls['state'];
+    this.content = this.editForm.controls['content'];
+  }
+
+  onEditorCreated(msg) {
+    console.log('编辑器创建好了', msg);
+  }
+
+  onContentChanged(msg) {
+    console.log('编辑器有修改', msg);
   }
 
   ngOnInit() {
@@ -63,7 +80,7 @@ export class Announcement {
 
   // 重置表单
   public resetForm():void {
-    this.form.reset({
+    this.editForm.reset({
       content: '',
       state: '1'
     });
@@ -71,7 +88,7 @@ export class Announcement {
 
   // 提交表单
   public submitAnnouncement(values:Object):void {
-    if (this.form.valid) {
+    if (this.editForm.valid) {
       this.edit_announcement ? this.doPutAnnouncement(values) : this.addAnnouncement(values);
     }
   }
@@ -97,7 +114,7 @@ export class Announcement {
   // 修改公告弹窗
   public putAnnouncementModal(announcement) {
     this.edit_announcement = announcement;
-    this.form.reset(announcement);
+    this.editForm.reset(announcement);
   }
 
   // 确认修改公告

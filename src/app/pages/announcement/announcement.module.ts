@@ -3,7 +3,7 @@ import { CommonModule }  from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { NgaModule }     from '../../theme/nga.module';
-import { WangEditorModule } from '../../theme/components/ng2-wang-editor';
+import { QuillEditorModule } from '../../theme/components/ng2-quill-editor';
 
 import { routing }       from './announcement.routing';
 
@@ -19,7 +19,7 @@ import { AnnouncementsService } from './announcement.service';
     FormsModule,
     NgaModule,
     routing,
-    WangEditorModule
+    QuillEditorModule
   ],
   providers: [
     AnnouncementsService
