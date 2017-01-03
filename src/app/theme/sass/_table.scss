@@ -171,19 +171,7 @@ input.search-input {
   max-height: 214px;
 }
 
-.pagination > li > a, .pagination > li > span {
-  background: transparent;
-}
 
-.pagination > li:first-child > a, .pagination > li:first-child > span {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
-.pagination > li:last-child > a, .pagination > li:last-child > span {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
 
 .status-button {
   width: 60px;
@@ -298,10 +286,69 @@ th {
 .table-striped > tbody > tr > td {
   border: none;
 }
+
+@mixin styleButton($color, $borderColor) {
+  background: $color;
+  border-color: $borderColor;
+}
+
+@mixin buttonColor($color, $borderColor) {
+  @include styleButton($color, $borderColor);
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] &,
+  &.disabled:hover,
+  &[disabled]:hover,
+  fieldset[disabled] &:hover,
+  &.disabled:focus,
+  &[disabled]:focus,
+  fieldset[disabled] &:focus,
+  &.disabled.focus,
+  &[disabled].focus,
+  fieldset[disabled] &.focus,
+  &.disabled:active,
+  &[disabled]:active,
+  fieldset[disabled] &:active,
+  &.disabled.active,
+  &[disabled].active,
+  fieldset[disabled] &.active {
+    @include styleButton($color, $borderColor + $hover/2);
+    &:hover {
+      transform: none;
+    }
+  }
+
+  &:focus {
+    @include styleButton($color, $borderColor);
+  }
+
+  &:hover, &.focus, &:active, &.active {
+    @include styleButton(lighten($color, 5%), lighten($borderColor, 5%));
+  }
+}
+
+
 .pagination > li > a,
-.pagination > li > span{
+.pagination > li > span {
   color: $default-text;
-  border-color: $border;
+  @include buttonColor($sidebar, $sidebar-border);
+  &.active, &:active, &:target {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: $default-text;
+  }
+}
+
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
 
@@ -324,7 +371,7 @@ th {
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
   background-color: rgba(0,0,0,.3)!important;
-  border-color: $border!important;
+  // border-color: $border!important;
 }
 
 .pagination > li > a:hover,
@@ -335,9 +382,21 @@ th {
   color: $default-text;
 }
 
-.page-item.disabled .page-link, .page-item.disabled .page-link:focus, .page-item.disabled .page-link:hover {
-  background-color: rgba(255,255,255,.1);
-  color: $default-text;
+.page-item.disabled .page-link,
+.page-item.disabled .page-link:focus,
+.page-item.disabled .page-link:hover {
+  opacity: .7;
+  cursor: no-drop;
+  @include styleButton($sidebar, $sidebar-border + $hover/2);
+  &:hover {
+    transform: none;
+  }
+}
+
+.page-item.active .page-link,
+.page-item.active .page-link:focus,
+.page-item.active .page-link:hover {
+  border-color: $sidebar-border;
 }
 
 .editable-buttons .btn-with-icon i {

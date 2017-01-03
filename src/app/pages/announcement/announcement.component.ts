@@ -14,9 +14,11 @@ export class Announcement {
 
   @ViewChild('delModal') delModal: ModalDirective;
 
-  public keyword:string = '';
+  public searchState:any = 'all';
   public editForm:FormGroup;
+  public searchForm:FormGroup;
   public state:AbstractControl;
+  public keyword:AbstractControl;
   public content:AbstractControl;
   public announcements = { data: [] };
   public del_announcement:any;
@@ -38,6 +40,22 @@ export class Announcement {
     }
   };
 
+  public totalItems:number = 64;
+  public currentPage:number = 4;
+
+  public maxSize:number = 5;
+  public bigTotalItems:number = 175;
+  public bigCurrentPage:number = 1;
+
+  public setPage(pageNo:number):void {
+    this.currentPage = pageNo;
+  }
+
+  public pageChanged(event:any):void {
+    console.log('Page changed to: ' + event.page);
+    console.log('Number items per page: ' + event.itemsPerPage);
+  }
+
   constructor(private _fb:FormBuilder,
               private _announcementService:AnnouncementsService) {
 
@@ -46,16 +64,13 @@ export class Announcement {
       'state': ['1', Validators.compose([Validators.required])]
     });
 
+    this.searchForm = _fb.group({
+      'keyword': ['', Validators.compose([Validators.required])]
+    });
+
     this.state = this.editForm.controls['state'];
     this.content = this.editForm.controls['content'];
-  }
-
-  onEditorCreated(msg) {
-    console.log('编辑器创建好了', msg);
-  }
-
-  onContentChanged(msg) {
-    console.log('编辑器有修改', msg);
+    this.keyword = this.searchForm.controls['keyword'];
   }
 
   ngOnInit() {
@@ -78,6 +93,13 @@ export class Announcement {
     if(!!this.selectedAnnouncements.length && this.selectedAnnouncements.length == announcements.length) this.announcementsSelectAll = true;
   }
 
+  // 切换公告类型
+  public switchState(state:any):void {
+    if(state == undefined || Object.is(state, this.searchState)) return;
+    this.searchState = state;
+    this.getAnnouncements();
+  }
+
   // 重置表单
   public resetForm():void {
     this.editForm.reset({
@@ -93,9 +115,22 @@ export class Announcement {
     }
   }
 
+  // 提交搜索
+  public searchAnnouncement(values:Object):void {
+    if (this.searchForm.valid) {
+      this.getAnnouncements(values);
+    }
+  }
+
   // 获取公告
-  public getAnnouncements() {
-    this._announcementService.getAnnouncements()
+  public getAnnouncements(params:any = {}) {
+    if(!params || !params.keyword) {
+      this.searchForm.reset({ content: '' });
+    }
+    if(!Object.is(this.searchState, 'all')) {
+      params.state = this.searchState
+    }
+    this._announcementService.getAnnouncements(params)
     .then(announcements => {
       this.announcements = announcements.result;
     })
@@ -108,7 +143,8 @@ export class Announcement {
     .then(_announcement => {
       this.resetForm();
       this.getAnnouncements();
-    });
+    })
+    .catch(error => {});;
   }
 
   // 修改公告弹窗
@@ -124,7 +160,8 @@ export class Announcement {
       this.getAnnouncements();
       this.edit_announcement = null;
       this.resetForm();
-    });
+    })
+    .catch(error => {});;
   }
 
   // 删除公告弹窗

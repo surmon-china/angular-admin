@@ -15,6 +15,7 @@ export class AnnouncementsService {
               private _notificationsService: NotificationsService) {
   }
 
+  // 成功处理
   private handleResponse = (response: any): Promise<any> => {
     const data = response.json();
     if(data.code) {
@@ -26,17 +27,20 @@ export class AnnouncementsService {
     }
   }
 
+  // 失败处理
   private handleError = (error: any): Promise<any> => {
-    const err = JSON.parse(error._body);
-    this._notificationsService.error('请求失败', err.message || '');
-    return Promise.reject(err);
+    error = [500].includes(error.status) ? error : JSON.parse(error._body);
+    const errmsg = error.message || error._body;
+    this._notificationsService.error('请求失败', errmsg || '');
+    return Promise.reject(error);
   }
 
-  getAnnouncements(): Promise<any> {
+  // 获取分类
+  getAnnouncements(get_params): Promise<any> {
     let params: URLSearchParams = new URLSearchParams();
-    params.set('per_page', '100');
+    if(get_params) Object.keys(get_params).forEach(k => { params.set(k, get_params[k])});
     return this.http
-      .get(this._apiUrl, { search: params})
+      .get(this._apiUrl, { search: params })
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);

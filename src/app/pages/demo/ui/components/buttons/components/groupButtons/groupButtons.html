@@ -23,4 +23,18 @@
       <button type="button" class="btn btn-primary">8</button>
     </div>
   </div>
+  <br>
+  <div class="text-center">
+      <pagination [totalItems]="bigTotalItems"
+                  [(ngModel)]="bigCurrentPage"
+                  [maxSize]="maxSize"
+                  [boundaryLinks]="true"
+                  [rotate]="false"
+                  (numPages)="numPages = $event"
+                  [firstText]="'首页'"
+                  [lastText]="'尾页'"
+                  [previousText]="'上一页'"
+                  [nextText]="'下一页'">
+      </pagination>
+    </div>
 </div>

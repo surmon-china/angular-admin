@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
     <ba-card title="添加公告" >
-      <form [formGroup]="form" (ngSubmit)="submitAnnouncement(form.value)" class="announcement-form">
+      <form [formGroup]="editForm" (ngSubmit)="submitAnnouncement(editForm.value)" class="announcement-form">
         <div class="form-group"
              [ngClass]="{'has-error': (!state.valid && state.touched), 'has-success': (state.valid && state.touched)}">
           <label for="announcementType">
@@ -30,9 +30,18 @@
       <div class="clearfix">
         <div class="pull-left">
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-default active">全部（14）</button>
-            <button type="button" class="btn btn-default">已发布（10）</button>
-            <button type="button" class="btn btn-default">草稿（3）</button>
+            <button type="button"
+                    class="btn btn-default active"
+                    [ngClass]="{ 'active': searchState == 'all'}"
+                    (click)="switchState('all')">全部（14）</button>
+            <button type="button"
+                    class="btn btn-default"
+                    [ngClass]="{ 'active': searchState == 1 }"
+                    (click)="switchState(1)">已发布（10）</button>
+            <button type="button"
+                    class="btn btn-default"
+                    [ngClass]="{ 'active': searchState == 0 }"
+                    (click)="switchState(0)">草稿（3）</button>
           </div>
           <span>&nbsp;</span>
           <div class="btn-group" role="group" aria-label="Basic example">
@@ -57,14 +66,14 @@
             </div>
           </div>
         </div>
-        <form class="pull-right form-inline navbar-form">
-          <div class="input-group" style="margin: 0;">
+        <form class="pull-right form-inline navbar-form" [formGroup]="searchForm" (ngSubmit)="searchAnnouncement(searchForm.value)" class="announcement-search-form">
+          <div class="input-group" style="margin: 0">
             <input type="text"
                    placeholder="公告内容"
-                   [(NgModel)]="keyword"
+                   [formControl]="keyword"
                    class="form-control with-default-addon">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button">搜索</button>
+              <button class="btn btn-default" type="submit">搜索</button>
             </span>
           </div>
         </form>
@@ -82,7 +91,7 @@
                     </span>
                   </ba-checkbox>
                 </th>
-                <th>内容</th>
+                <th width="50%">内容</th>
                 <th class="text-center">状态</th>
                 <th class="text-center">操作</th>
               </tr>
@@ -105,7 +114,7 @@
                     </ba-checkbox>
                   </td>
                   <td>
-                    <div class="content" [innerHTML]="announcement.content"></div>
+                    <div class="content ql-editor" [innerHTML]="announcement.content"></div>
                   </td>
                   <td align="center">{{ announcement.state == 1 ? '已发布' : '草稿' }}</td>
                   <td>
@@ -124,6 +133,20 @@
               </template>
             </tbody>
           </table>
+          <br>
+          <div class="text-center">
+            <pagination [totalItems]="bigTotalItems"
+                        [(ngModel)]="bigCurrentPage"
+                        [maxSize]="maxSize"
+                        [boundaryLinks]="true"
+                        [rotate]="false"
+                        (numPages)="numPages = $event"
+                        [firstText]="'首页'"
+                        [lastText]="'尾页'"
+                        [previousText]="'上一页'"
+                        [nextText]="'下一页'">
+            </pagination>
+          </div>
         </div>
       </div>
     </ba-card>
