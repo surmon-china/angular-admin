@@ -17,6 +17,11 @@
   }
 }
 
+.announcement-search-form {
+  float: right;
+  width: 20em;
+}
+
 .announcement-list {
 
   .batch-checkbox {
@@ -41,6 +46,11 @@
 
           p {
             margin: 0;
+          }
+
+          img {
+            max-width: 4em;
+            margin: 0 1em;
           }
         }
       }

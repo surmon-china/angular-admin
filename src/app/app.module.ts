@@ -56,8 +56,8 @@ type StoreType = {
     provideAuth({
       headerName: 'Authorization',
       headerPrefix: 'Bearer',
-      tokenName: 'id_token',
-      tokenGetter() { return localStorage.getItem('id_token')},
+      tokenName: 'token',
+      tokenGetter() { return localStorage.getItem('token')},
       globalHeaders: [{'Content-Type': 'application/json'}],
       noJwtError: true,
       noTokenScheme: true
