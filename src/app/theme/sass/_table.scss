@@ -160,18 +160,9 @@ input.search-input {
   padding-left: 8px;
 }
 
-.table .pagination {
-  margin: 4px 0 -12px 0;
-  a {
-    cursor: pointer;
-  }
-}
-
 .vertical-scroll {
   max-height: 214px;
 }
-
-
 
 .status-button {
   width: 60px;
@@ -287,81 +278,55 @@ th {
   border: none;
 }
 
-@mixin styleButton($color, $borderColor) {
-  background: $color;
-  border-color: $borderColor;
+.table .pagination {
+  margin: 4px 0 -12px 0;
+  a {
+    cursor: pointer;
+  }
 }
 
-@mixin buttonColor($color, $borderColor) {
-  @include styleButton($color, $borderColor);
+.pagination {
 
-  &.disabled,
-  &[disabled],
-  fieldset[disabled] &,
-  &.disabled:hover,
-  &[disabled]:hover,
-  fieldset[disabled] &:hover,
-  &.disabled:focus,
-  &[disabled]:focus,
-  fieldset[disabled] &:focus,
-  &.disabled.focus,
-  &[disabled].focus,
-  fieldset[disabled] &.focus,
-  &.disabled:active,
-  &[disabled]:active,
-  fieldset[disabled] &:active,
-  &.disabled.active,
-  &[disabled].active,
-  fieldset[disabled] &.active {
-    @include styleButton($color, $borderColor + $hover/2);
-    &:hover {
-      transform: none;
+  > li {
+
+    &:first-child > a, 
+    &:first-child > span {
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+
+    &:last-child > a, 
+    &:last-child > span {
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+
+    &:first-of-type > a,
+    &:first-of-type > span{
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    &:last-of-type > a,
+    &:last-of-type > span{
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    > a,
+    > span {
+      color: $default-text;
+      border-color: $sidebar-border;
+      background: $sidebar;
+
+      &:hover,
+      &:focus {
+        background-color: rgba(0,0,0,.2);
+        border-color: $sidebar-border;
+        color: $default-text;
+      }
     }
   }
-
-  &:focus {
-    @include styleButton($color, $borderColor);
-  }
-
-  &:hover, &.focus, &:active, &.active {
-    @include styleButton(lighten($color, 5%), lighten($borderColor, 5%));
-  }
-}
-
-
-.pagination > li > a,
-.pagination > li > span {
-  color: $default-text;
-  @include buttonColor($sidebar, $sidebar-border);
-  &.active, &:active, &:target {
-    background-color: rgba(0, 0, 0, 0.2);
-    color: $default-text;
-  }
-}
-
-.pagination > li:first-child > a,
-.pagination > li:first-child > span {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
-.pagination > li:last-child > a,
-.pagination > li:last-child > span {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-
-.pagination > li:first-of-type > a,
-.pagination > li:first-of-type > span{
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
-.pagination > li:last-of-type > a,
-.pagination > li:last-of-type > span{
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
 
 .pagination > .active > a,
@@ -371,32 +336,15 @@ th {
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
   background-color: rgba(0,0,0,.3)!important;
-  // border-color: $border!important;
+  border-color: $sidebar-border!important;
 }
 
-.pagination > li > a:hover,
-.pagination > li > span:hover,
-.pagination > li > a:focus,
-.pagination > li > span:focus{
+.page-item.disabled .page-link, .page-item.disabled .page-link:focus, .page-item.disabled .page-link:hover {
   background-color: rgba(0,0,0,.2);
-  color: $default-text;
-}
-
-.page-item.disabled .page-link,
-.page-item.disabled .page-link:focus,
-.page-item.disabled .page-link:hover {
-  opacity: .7;
-  cursor: no-drop;
-  @include styleButton($sidebar, $sidebar-border + $hover/2);
-  &:hover {
-    transform: none;
-  }
-}
-
-.page-item.active .page-link,
-.page-item.active .page-link:focus,
-.page-item.active .page-link:hover {
   border-color: $sidebar-border;
+  color: rgba(255, 255, 255, 0.5);
+  opacity: .6;
+  cursor: no-drop;
 }
 
 .editable-buttons .btn-with-icon i {
