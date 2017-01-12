@@ -29,9 +29,7 @@ export class AnnouncementsService {
 
   // 失败处理
   private handleError = (error: any): Promise<any> => {
-    error = [500].includes(error.status) ? error : JSON.parse(error._body);
-    const errmsg = error.message || error._body;
-    this._notificationsService.error('请求失败', errmsg || '');
+    this._notificationsService.error('请求失败', !error.ok ? error._body : JSON.parse(error._body).message);
     return Promise.reject(error);
   }
 
@@ -62,7 +60,7 @@ export class AnnouncementsService {
       .catch(this.handleError);
   }
 
-  delAnnouncement(announcement_id: string): Promise<void> {
+  delAnnouncement(announcement_id: any): Promise<void> {
     return this.http
       .delete(`${ this._apiUrl }/${ announcement_id }`)
       .toPromise()

@@ -33,19 +33,28 @@
             <button type="button"
                     class="btn btn-default active"
                     [ngClass]="{ 'active': searchState == 'all'}"
-                    (click)="switchState('all')">全部（14）</button>
+                    (click)="switchState('all')">
+              <span>全部</span>
+              <span *ngIf="searchState == 'all'">({{ announcements.pagination.total }})</span>
+            </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': searchState == 1 }"
-                    (click)="switchState(1)">已发布（10）</button>
+                    (click)="switchState(1)">
+              <span>已发布</span>
+              <span *ngIf="searchState == 1">（{{ announcements.pagination.total }}）</span>
+            </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': searchState == 0 }"
-                    (click)="switchState(0)">草稿（3）</button>
+                    (click)="switchState(0)">
+              <span>草稿</span>
+              <span *ngIf="searchState == 0">（{{ announcements.pagination.total }}）</span>
+            </button>
           </div>
           <span>&nbsp;</span>
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-default btn-with-icon" (click)="getAnnouncements()">
+            <button type="button" class="btn btn-default btn-with-icon" (click)="refreshAnnouncements()">
               <i class="ion-refresh"></i>
               <span>刷新</span>
             </button>
@@ -66,7 +75,7 @@
             </div>
           </div>
         </div>
-        <form class="pull-right form-inline navbar-form" [formGroup]="searchForm" (ngSubmit)="searchAnnouncement(searchForm.value)" class="announcement-search-form">
+        <form class="pull-right form-inline navbar-form" [formGroup]="searchForm" (ngSubmit)="searchAnnouncements(searchForm.value)" class="announcement-search-form">
           <div class="input-group" style="margin: 0">
             <input type="text"
                    placeholder="公告内容"
@@ -136,17 +145,18 @@
           <br>
           <div class="text-center">
             <pagination class="pagination-xs"
-                  firstText="首页"
-                  lastText="末页"
-                  nextText="下一页"
-                  previousText="上一页"
-                  pageBtnClass="btn-primary"
-                  [totalItems]="bigTotalItems"
-                  [(ngModel)]="bigCurrentPage"
-                  [maxSize]="maxSize"
-                  [boundaryLinks]="true"
-                  [rotate]="false"
-                  (numPages)="numPages = $event">
+                        firstText="首页"
+                        lastText="末页"
+                        nextText="下一页"
+                        previousText="上一页"
+                        pageBtnClass="btn-primary"
+                        [totalItems]="announcements.pagination.total"
+                        [itemsPerPage]="announcements.pagination.per_page"
+                        [(ngModel)]="announcements.pagination.current_page"
+                        [maxSize]="7"
+                        [boundaryLinks]="true"
+                        [rotate]="false"
+                        (pageChanged)="pageChanged($event)">
             </pagination>
           </div>
         </div>
