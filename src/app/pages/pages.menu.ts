@@ -287,18 +287,6 @@ export const PAGES_MENU = [
             path: '',
             data: {
               menu: {
-                title: '学天下',
-                url: 'http://xtx.surmon.me',
-                icon: 'ion-android-exit',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
                 title: 'Github',
                 url: 'https://github.com/surmon-china',
                 icon: 'fa fa-github',

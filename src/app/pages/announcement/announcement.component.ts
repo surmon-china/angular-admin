@@ -20,7 +20,15 @@ export class Announcement {
 	public state:AbstractControl;
 	public keyword:AbstractControl;
 	public content:AbstractControl;
-	public announcements = { data: [] };
+	public announcements = { 
+		data: [],
+		pagination: {
+			current_page: 1,
+			total_page: 0,
+			per_page: 10,
+			total: 0
+		}
+	};
 	public del_announcement:any;
 	public edit_announcement:any;
 	public announcementsSelectAll:boolean = false;
@@ -29,32 +37,11 @@ export class Announcement {
 		placeholder: "输入公告内容，支持html",
 		modules: {
 			toolbar: [
-				['bold', 'italic', 'underline', 'strike'],
-				[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-				[{ 'color': [] }, { 'background': [] }],
-				[{ 'font': [] }],
-				[{ 'align': [] }],
-				['link', 'image'],
-				['clean']
+				['bold', 'italic', 'underline', 'strike', { 'color': [] }, { 'background': [] }],
+				[{ 'font': [] }, { 'align': [] }, 'link', 'image', 'clean']
 			]
 		}
 	};
-
-	public totalItems:number = 64;
-	public currentPage:number = 4;
-
-	public maxSize:number = 5;
-	public bigTotalItems:number = 175;
-	public bigCurrentPage:number = 1;
-
-	public setPage(pageNo:number):void {
-		this.currentPage = pageNo;
-	}
-
-	public pageChanged(event:any):void {
-		console.log('Page changed to: ' + event.page);
-		console.log('Number items per page: ' + event.itemsPerPage);
-	}
 
 	constructor(private _fb:FormBuilder,
 							private _announcementService:AnnouncementsService) {
@@ -116,19 +103,35 @@ export class Announcement {
 	}
 
 	// 提交搜索
-	public searchAnnouncement(values:Object):void {
+	public searchAnnouncements(values:Object):void {
 		if (this.searchForm.valid) {
 			this.getAnnouncements(values);
 		}
 	}
 
+	// 刷新本页本类型公告
+	public refreshAnnouncements():void {
+		this.getAnnouncements({ page: this.announcements.pagination.current_page });
+	}
+
+	// 分页获取公告
+	public pageChanged(event:any):void {
+		this.getAnnouncements({ page: event.page });
+	}
+
 	// 获取公告
 	public getAnnouncements(params:any = {}) {
+		// 如果没有搜索词，则清空搜索框
 		if(!params || !params.keyword) {
 			this.searchForm.reset({ content: '' });
 		}
+		// 如果请求的是全部数据，则优化参数
 		if(!Object.is(this.searchState, 'all')) {
 			params.state = this.searchState
+		}
+		// 如果请求的是第一页，则设置翻页组件的当前页为第一页
+		if(!params.page || Object.is(params.page, 1)) {
+			this.announcements.pagination.current_page = 1;
 		}
 		this._announcementService.getAnnouncements(params)
 		.then(announcements => {

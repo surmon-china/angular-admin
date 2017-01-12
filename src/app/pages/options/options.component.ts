@@ -10,6 +10,11 @@ export class Options {
 
   public isChecked = false;
 
+  public defaultThumb = 'assets/img/theme/no-photo.png';
+  public uploaderOptions:any = {
+    // url: 'http://website.com/upload'
+  };
+
   private nodes = [
     {
       id: 1,
