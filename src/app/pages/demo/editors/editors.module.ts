@@ -14,7 +14,7 @@ import { routing }       from './editors.routing';
     CommonModule,
     FormsModule,
     NgaModule,
-    CKEditorModule,
+    // CKEditorModule,
     routing
   ],
   declarations: [

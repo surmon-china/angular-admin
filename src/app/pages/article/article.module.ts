@@ -2,7 +2,6 @@ import { NgModule }            from '@angular/core';
 import { CommonModule }        from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule }           from '../../theme/nga.module';
-import { CKEditorModule }      from 'ng2-ckeditor';
 import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 import { routing }             from './article.routing';
@@ -33,7 +32,6 @@ import { ArticleTag }           from './components/tag';
     FormsModule,
     ReactiveFormsModule,
     NgaModule,
-    CKEditorModule,
     DropdownModule,
     ModalModule,
     routing

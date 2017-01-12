@@ -15,7 +15,7 @@ const routes: Routes = [
       { path: 'linux', loadChildren: () => System.import('./linux/linux.module') },
       { path: 'demo',
         children: [
-          { path: 'editors', loadChildren: () => System.import('./demo/editors/editors.module') },
+          // { path: 'editors', loadChildren: () => System.import('./demo/editors/editors.module') },
           { path: 'components', loadChildren: () => System.import('./demo/components/components.module') }
           { path: 'charts', loadChildren: () => System.import('./demo/charts/charts.module') },
           { path: 'ui', loadChildren: () => System.import('./demo/ui/ui.module') },

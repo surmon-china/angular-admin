@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: Editors,
     children: [
-      { path: 'ckeditor', component: Ckeditor }
+      // { path: 'ckeditor', component: Ckeditor }
     ]
   }
 ];
