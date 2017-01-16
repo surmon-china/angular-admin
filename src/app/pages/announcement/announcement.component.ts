@@ -201,6 +201,8 @@ export class Announcement {
 		.then(announcements => {
 			this.delModal.hide();
 			this.getAnnouncements();
+			this.selectedAnnouncements = [];
+			this.announcementsSelectAll = false;
 		})
 		.catch(err => {
 			this.delModal.hide();

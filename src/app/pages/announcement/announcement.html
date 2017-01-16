@@ -75,7 +75,9 @@
             </div>
           </div>
         </div>
-        <form class="pull-right form-inline navbar-form" [formGroup]="searchForm" (ngSubmit)="searchAnnouncements(searchForm.value)" class="announcement-search-form">
+        <form class="pull-right form-inline navbar-form announcement-search-form" 
+              [formGroup]="searchForm" 
+              (ngSubmit)="searchAnnouncements(searchForm.value)">
           <div class="input-group" style="margin: 0">
             <input type="text"
                    placeholder="公告内容"
