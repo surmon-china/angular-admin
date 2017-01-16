@@ -1,38 +1,60 @@
 <div class="row">
   <div class="col-md-4 col-xs-4">
-    <ba-card title="热门标签" baCardClass="with-scroll">
-      乱七八糟一大堆
-    </ba-card>
     <ba-card title="添加标签" baCardClass="with-scroll">
-      <form>
-        <div class="form-group">
-          <label for="exampleInputEmail1">
-            <h5>名称</h5>
+      <form class="announcement-form"
+            [formGroup]="editForm" 
+            (ngSubmit)="submitTag(editForm.value)">
+        <div class="form-group"
+              [ngClass]="{ 
+                'has-error': (!name.valid && name.touched), 
+                'has-success': (name.valid && name.touched)
+              }">
+          <label for="tag_name">
+            <h5>标签名称</h5>
           </label>
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="标签名称">
+          <input type="text" 
+                 id="tag_name"
+                 class="form-control"
+                 placeholder="标签名称" 
+                 [formControl]="name">
           <span class="help-block sub-little-text">这将是它在站点上显示的名字</span>
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">
+        <div  class="form-group"
+              [ngClass]="{ 
+                'has-error': (!slug.valid && slug.touched), 
+                'has-success': (slug.valid && slug.touched)
+              }">
+          <label for="tag_slug">
             <h5>别名</h5>
           </label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="标签别名">
+          <input type="text" 
+                 id="tag_slug" 
+                 class="form-control" 
+                 placeholder="标签名称" 
+                 [formControl]="slug">
           <span class="help-block sub-little-text">“别名”是在URL中使用的别称，建议小写，字母、数字、连字符（-）</span>
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">
+        <div  class="form-group"
+              [ngClass]="{ 
+                'has-error': (!description.valid && description.touched), 
+                'has-success': (description.valid && description.touched)
+              }">
+          <label for="tag_description">
             <h5>描述</h5>
           </label>
-          <textarea name="announcementContent"
-                    id="announcementContent"
+          <textarea name="tagDescription"
+                    id="tag_description"
                     class="form-control"
                     cols="30"
                     rows="20"
-                    placeholder="标签描述">
+                    placeholder="标签描述"
+                    [formControl]="description">
           </textarea>
           <span class="help-block sub-little-text">该标签的描述</span>
         </div>
-        <button type="submit" class="btn btn-success">添加标签目录</button>
+        <button type="submit" class="btn btn-success">{{ edit_tag ? '修改' : '添加' }}标签</button>
+        <span>&nbsp;</span>
+        <button class="btn btn-default" (click)="resetForm()">重置</button>
       </form>
     </ba-card>
   </div>
@@ -40,18 +62,23 @@
     <ba-card title="标签管理" baCardClass="with-scroll">
       <div class="contnet-top-tools">
         <div class="pull-left">
-          <div class="btn-group" role="group" aria-label="Basic example">
+          <div class="btn-group" role="group">
             <button type="button" class="btn btn-default btn-with-icon">
               <i class="ion-refresh"></i>
               <span>刷新</span>
             </button>
             <div class="btn-group" dropdown>
-              <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
+              <button type="button" 
+                      class="btn btn-default" 
+                      addToggleClass="true"
+                      dropdownToggle>
                 <i class="ion-ios-list"></i>
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" dropdownMenu>
-                <li class="dropdown-item"><a href="#">彻底删除</a></li>
+                <li class="dropdown-item">
+                  <a [href]="">删除选中</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -65,52 +92,57 @@
           </div>
         </form>
       </div>
-      <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
-        <thead class="thead-inverse">
-          <tr>
-            <th>
-              <input type="checkbox">
-            </th>
-            <th>ID</th>
-            <th>名称</th>
-            <th>描述</th>
-            <th>别名</th>
-            <th>包含文章</th>
-            <th width="30%" class="text-center">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- <tr *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]">
-            <td>
-              <input type="checkbox">
-            </td>
-            <td>
-              <span>{{ num }}</span>
-            </td>
-            <td>
-              <a href="">
-                <h4 class="strong">- Code</h4>
-              </a>
-            </td>
-            <td>代码标签</td>
-            <td>code</td>
-            <td>34</td>
-            <td>
-               <ul class="btn-list clearfix text-center">
-                <li>
-                  <button class="btn btn-primary btn-sm" type="button">编辑标签</button>
-                </li>
-                <li>
-                  <button class="btn btn-danger btn-sm" type="button">删除标签</button>
-                </li>
-                <li>
-                  <button class="btn btn-success btn-sm" type="button">查看标签</button>
-                </li>
-              </ul>
-            </td>
-          </tr> -->
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <div class="tag-list">
+          <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
+            <thead class="thead-inverse">
+              <tr>
+                <th>
+                  <input type="checkbox">
+                </th>
+                <th>ID</th>
+                <th>名称</th>
+                <th>描述</th>
+                <th>别名</th>
+                <th>包含文章</th>
+                <th width="30%" class="text-center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]">
+                <td>
+                  <input type="checkbox">
+                </td>
+                <td>
+                  <span>{{ num }}</span>
+                </td>
+                <td>
+                  <a href="">
+                    <h4 class="strong">- Code</h4>
+                  </a>
+                </td>
+                <td>代码标签</td>
+                <td>code</td>
+                <td>34</td>
+                <td>
+                   <ul class="btn-list clearfix text-center">
+                    <li>
+                      <button class="btn btn-primary btn-sm" type="button">编辑标签</button>
+                    </li>
+                    <li>
+                      <button class="btn btn-danger btn-sm" type="button">删除标签</button>
+                    </li>
+                    <li>
+                      <button class="btn btn-success btn-sm" type="button">查看标签</button>
+                    </li>
+                  </ul>
+                </td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
     </ba-card>
   </div>
 </div>

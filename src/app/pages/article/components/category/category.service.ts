@@ -15,6 +15,7 @@ export class ArticleCategoryService {
               private _notificationsService: NotificationsService) {
   }
 
+  // 成功处理
   private handleResponse = (response: any): Promise<any> => {
     const data = response.json();
     if(data.code) {
@@ -26,10 +27,10 @@ export class ArticleCategoryService {
     }
   }
 
+  // 失败处理
   private handleError = (error: any): Promise<any> => {
-    const err = JSON.parse(error._body);
-    this._notificationsService.error('请求失败', err.message || '');
-    return Promise.reject(err);
+    this._notificationsService.error('请求失败', !error.ok ? error._body : JSON.parse(error._body).message);
+    return Promise.reject(error);
   }
 
   getCategories(): Promise<any> {

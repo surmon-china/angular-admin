@@ -2,8 +2,9 @@ import { NgModule }            from '@angular/core';
 import { CommonModule }        from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule }           from '../../theme/nga.module';
-// import { CKEditorModule }      from 'ng2-ckeditor';
 import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+
+import { PagelistService }     from './components/list/list.service';
 
 import { routing }             from './page.routing';
 
@@ -19,7 +20,6 @@ import { PageEditSubmit }      from './components/edit/components/submit';
     FormsModule,
     ReactiveFormsModule,
     NgaModule,
-    // CKEditorModule,
     DropdownModule,
     ModalModule,
     routing
@@ -30,6 +30,9 @@ import { PageEditSubmit }      from './components/edit/components/submit';
     PageEdit,
     PageEditMain,
     PageEditSubmit
+  ],
+  providers: [
+    PagelistService
   ]
 })
 export default class PageModule {

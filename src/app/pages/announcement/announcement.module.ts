@@ -8,7 +8,7 @@ import { QuillEditorModule } from 'ng2-quill-editor';
 import { routing }       from './announcement.routing';
 
 import { Announcement }  from './announcement.component';
-import { AnnouncementsService } from './announcement.service';
+import { AnnouncementService } from './announcement.service';
 
 @NgModule({
   imports: [
@@ -23,7 +23,7 @@ import { AnnouncementsService } from './announcement.service';
     QuillEditorModule
   ],
   providers: [
-    AnnouncementsService
+    AnnouncementService
   ],
   declarations: [
     Announcement

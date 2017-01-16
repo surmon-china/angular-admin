@@ -7,9 +7,9 @@ import 'rxjs/add/operator/toPromise';
 import { API_ROOT } from 'src/config'
 
 @Injectable()
-export class AnnouncementService {
+export class PagelistService {
 
-  private _apiUrl = `${API_ROOT}/announcement`;
+  private _apiUrl = `${API_ROOT}/page`;
 
   constructor(private http: AuthHttp,
               private _notificationsService: NotificationsService) {
@@ -34,7 +34,7 @@ export class AnnouncementService {
   }
 
   // 获取分类
-  getAnnouncements(get_params): Promise<any> {
+  getPages(get_params): Promise<any> {
     let params: URLSearchParams = new URLSearchParams();
     if(get_params) Object.keys(get_params).forEach(k => { params.set(k, get_params[k])});
     return this.http
@@ -44,33 +44,33 @@ export class AnnouncementService {
       .catch(this.handleError);
   }
 
-  addAnnouncement(announcement:any): Promise<any> {
+  addPage(page:any): Promise<any> {
     return this.http
-      .post(this._apiUrl, announcement)
+      .post(this._apiUrl, page)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
   }
 
-  putAnnouncement(announcement: any): Promise<any> {
+  putPage(page: any): Promise<any> {
     return this.http
-      .put(`${ this._apiUrl }/${ announcement._id }`, announcement)
+      .put(`${ this._apiUrl }/${ page._id }`, page)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
   }
 
-  delAnnouncement(announcement_id: any): Promise<void> {
+  delPage(page_id: any): Promise<void> {
     return this.http
-      .delete(`${ this._apiUrl }/${ announcement_id }`)
+      .delete(`${ this._apiUrl }/${ page_id }`)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
   }
 
-  delAnnouncements(announcements: any): Promise<void> {
+  delPages(pages: any): Promise<void> {
     return this.http
-      .delete(this._apiUrl, new RequestOptions({ body: { announcements }}))
+      .delete(this._apiUrl, new RequestOptions({ body: { pages }}))
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
