@@ -2,7 +2,7 @@ import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ModalDirective } from 'ng2-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
-import { AnnouncementsService } from './announcement.service';
+import { AnnouncementService } from './announcement.service';
 
 @Component({
 	selector: 'announcement',
@@ -44,7 +44,7 @@ export class Announcement {
 	};
 
 	constructor(private _fb:FormBuilder,
-							private _announcementService:AnnouncementsService) {
+							private _announcementService:AnnouncementService) {
 
 		this.editForm = _fb.group({
 			'content': ['', Validators.compose([Validators.required])],

@@ -1,23 +1,36 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
-    <ba-card title="添加公告" >
-      <form [formGroup]="editForm" (ngSubmit)="submitAnnouncement(editForm.value)" class="announcement-form">
+    <ba-card title="添加公告">
+      <form class="announcement-form"
+            [formGroup]="editForm" 
+            (ngSubmit)="submitAnnouncement(editForm.value)">
         <div class="form-group"
-             [ngClass]="{'has-error': (!state.valid && state.touched), 'has-success': (state.valid && state.touched)}">
+              [ngClass]="{ 
+                'has-error': (!state.valid && state.touched), 
+                'has-success': (state.valid && state.touched)
+              }">
           <label for="announcementType">
             <h5>公告状态</h5>
           </label>
-          <select class="form-control c-select" id="announcementType" [formControl]="state">
+          <select class="form-control c-select" 
+                  id="announcementType" 
+                  [formControl]="state">
             <option value="1">已发布</option>
             <option value="0">草稿</option>
           </select>
         </div>
-        <div class="form-group"
-             [ngClass]="{'has-error': (!content.valid && content.touched), 'has-success': (content.valid && content.touched)}">
+        <div  class="form-group"
+              [ngClass]="{ 
+                'has-error': (!content.valid && content.touched), 
+                'has-success': (content.valid && content.touched)
+              }">
           <label for="announcementContent">
             <h5>公告内容</h5>
           </label>
-          <quill-editor class="form-control announcement-content" [formControl]="content" [config]="editorConfig"></quill-editor>
+          <quill-editor class="form-control announcement-content" 
+                        [formControl]="content" 
+                        [config]="editorConfig">
+          </quill-editor>
         </div>
         <button type="submit" class="btn btn-success">{{ edit_announcement ? '修改' : '添加' }}公告</button>
         <span>&nbsp;</span>
@@ -29,7 +42,7 @@
     <ba-card title="全部公告" baCardClass="with-scroll">
       <div class="clearfix">
         <div class="pull-left">
-          <div class="btn-group" role="group" aria-label="Basic example">
+          <div class="btn-group" role="group">
             <button type="button"
                     class="btn btn-default active"
                     [ngClass]="{ 'active': searchState == 'all'}"
@@ -53,7 +66,7 @@
             </button>
           </div>
           <span>&nbsp;</span>
-          <div class="btn-group" role="group" aria-label="Basic example">
+          <div class="btn-group" role="group">
             <button type="button" class="btn btn-default btn-with-icon" (click)="refreshAnnouncements()">
               <i class="ion-refresh"></i>
               <span>刷新</span>
@@ -110,8 +123,8 @@
             <tbody>
               <tr *ngIf="!announcements || !announcements.data.length">
                 <td colspan="7">
-                  <p class="text-muted text-center category-err-msg" *ngIf="announcements && announcements.data.length == 0">暂无数据<p>
-                  <p class="text-muted text-center category-err-msg" *ngIf="announcements && announcements.data.length == undefined">加载中<p>
+                  <p class="text-muted text-center announcement-err-msg" *ngIf="announcements && announcements.data.length == 0">暂无数据<p>
+                  <p class="text-muted text-center announcement-err-msg" *ngIf="announcements && announcements.data.length == undefined">加载中<p>
                 </td>
               </tr>
               <template [ngIf]="announcements && announcements.data.length">
@@ -130,7 +143,7 @@
                   <td align="center">{{ announcement.state == 1 ? '已发布' : '草稿' }}</td>
                   <td>
                     <div class="text-center">
-                      <div class="btn-group" role="group" aria-label="Basic example">
+                      <div class="btn-group" role="group">
                         <button type="button"
                                 class="btn btn-sm btn-warning"
                                 (click)="putAnnouncementModal(announcement)">编辑公告</button>
@@ -166,7 +179,7 @@
     </ba-card>
   </div>
   <!-- 删除确认弹窗 -->
-  <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

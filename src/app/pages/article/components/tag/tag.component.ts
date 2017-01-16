@@ -1,11 +1,202 @@
-import {Component} from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { ModalDirective } from 'ng2-bootstrap';
+import { NotificationsService } from 'angular2-notifications';
+import { ArticleTagService } from './tag.service';
 
 @Component({
-  selector: 'article-tag',
-  template: require('./tag.html')
+	selector: 'article-tag',
+	encapsulation: ViewEncapsulation.None,
+	// styles: [require('./tag.scss')],
+	template: require('./tag.html')
 })
-
 export class ArticleTag {
-  constructor() {
-  }
+
+	@ViewChild('delModal') delModal: ModalDirective;
+
+	public editForm:FormGroup;
+	public searchForm:FormGroup;
+
+	// editForm
+	public name:AbstractControl;
+	public slug:AbstractControl;
+	public description:AbstractControl;
+
+	// searchForm
+	public keyword:AbstractControl;
+	public tags = { 
+		data: [],
+		pagination: {
+			current_page: 1,
+			total_page: 0,
+			per_page: 10,
+			total: 0
+		}
+	};
+
+	// 其他初始化
+	public del_tag:any;
+	public edit_tag:any;
+	public tagsSelectAll:boolean = false;
+	public selectedTags = [];
+
+	// 构造函数
+	constructor(private _fb:FormBuilder,
+							private _articleTagService:ArticleTagService) {
+
+		this.editForm = _fb.group({
+			'name': ['', Validators.compose([Validators.required])],
+			'slug': ['', Validators.compose([Validators.required])],
+			'description': ['', Validators.compose([Validators.required])]
+		});
+
+		this.searchForm = _fb.group({
+			'keyword': ['', Validators.compose([Validators.required])]
+		});
+
+		this.name = this.editForm.controls['name'];
+		this.slug = this.editForm.controls['slug'];
+		this.description = this.editForm.controls['description'];
+		this.keyword = this.searchForm.controls['keyword'];
+	}
+
+	ngOnInit() {
+		this.getTags();
+	}
+
+	// 多选切换
+	public batchSelectChange(is_select) {
+		if(!this.tags.data.length) return;
+		this.selectedTags = [];
+		this.tags.data.forEach(item => { item.selected = is_select; is_select && this.selectedTags.push(item._id) });
+	}
+
+	// 单个切换
+	public itemSelectChange() {
+		this.selectedTags = [];
+		const tags = this.tags.data;
+		tags.forEach(item => { item.selected && this.selectedTags.push(item._id) });
+		if(!this.selectedTags.length) this.tagsSelectAll = false;
+		if(!!this.selectedTags.length && this.selectedTags.length == tags.length) this.tagsSelectAll = true;
+	}
+
+	// 重置表单
+	public resetForm():void {
+		this.editForm.reset({
+			name: '',
+			slug: '',
+			description: ''
+		});
+	}
+
+	// 提交表单
+	public submitTag(values:Object):void {
+		if (this.editForm.valid) {
+			this.edit_tag ? this.doPutTag(values) : this.addTag(values);
+		}
+	}
+
+	// 提交搜索
+	public searchTags(values:Object):void {
+		if (this.searchForm.valid) {
+			this.getTags(values);
+		}
+	}
+
+	// 刷新本页本类型公告
+	public refreshTags():void {
+		this.getTags({ page: this.tags.pagination.current_page });
+	}
+
+	// 分页获取公告
+	public pageChanged(event:any):void {
+		this.getTags({ page: event.page });
+	}
+
+	// 获取公告
+	public getTags(params:any = {}) {
+		// 如果没有搜索词，则清空搜索框
+		if(!params || !params.keyword) {
+			this.searchForm.reset({ content: '' });
+		}
+		// 如果请求的是第一页，则设置翻页组件的当前页为第一页
+		if(!params.page || Object.is(params.page, 1)) {
+			this.tags.pagination.current_page = 1;
+		}
+		this._articleTagService.getTags(params)
+		.then(tags => {
+			this.tags = tags.result;
+		})
+		.catch(error => {});
+	}
+
+	// 添加公告
+	public addTag(tag) {
+		this._articleTagService.addTag(tag)
+		.then(_tag => {
+			this.resetForm();
+			this.getTags();
+		})
+		.catch(error => {});;
+	}
+
+	// 修改公告弹窗
+	public putTagModal(tag) {
+		this.edit_tag = tag;
+		this.editForm.reset(tag);
+	}
+
+	// 确认修改公告
+	public doPutTag(tag) {
+		this._articleTagService.putTag(Object.assign(this.edit_tag, tag))
+		.then(_tag => {
+			this.getTags();
+			this.resetForm();
+			this.edit_tag = null;
+		})
+		.catch(error => {});
+	}
+
+	// 删除公告弹窗
+	public delTagModal(tag) {
+		this.del_tag = tag;
+		this.delModal.show();
+	}
+
+	// 删除弹窗取消
+	public canceldDelTagModal(tag) {
+		this.delModal.hide();
+		this.del_tag = null;
+	}
+
+	// 确认删除公告
+	public doDelTag() {
+		this._articleTagService.delTag(this.del_tag._id)
+		.then(tag => {
+			this.delModal.hide();
+			this.del_tag = null;
+			this.getTags();
+		});
+	}
+
+	// 批量删除公告弹窗
+	public delTagsModal(tags) {
+		this.del_tag = null;
+		this.delModal.show();
+	}
+
+	// 确认批量删除
+	public doDelTags() {
+		this._articleTagService.delTags(this.selectedTags)
+		.then(tags => {
+			this.delModal.hide();
+			this.getTags();
+			this.selectedTags = [];
+			this.tagsSelectAll = false;
+		})
+		.catch(err => {
+			this.delModal.hide();
+		});
+	}
 }
+

@@ -1,0 +1,37 @@
+.page-search-form {
+  width: 20em;
+
+  .input-group {
+    margin: 0;
+  }
+}
+
+.page-list {
+
+  .batch-checkbox {
+    text-align: left;
+    padding-left: 2em;
+  }
+
+  .page-err-msg {
+    margin: 1em 0;
+  }
+
+  tbody {
+
+    tr {
+
+      td {
+        line-height: 5em;
+
+        .content {
+          line-height: 2;
+
+          p {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}

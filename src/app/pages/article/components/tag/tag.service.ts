@@ -15,6 +15,7 @@ export class ArticleTagService {
               private _notificationsService: NotificationsService) {
   }
 
+  // 成功处理
   private handleResponse = (response: any): Promise<any> => {
     const data = response.json();
     if(data.code) {
@@ -26,10 +27,10 @@ export class ArticleTagService {
     }
   }
 
+  // 失败处理
   private handleError = (error: any): Promise<any> => {
-    const err = JSON.parse(error._body);
-    this._notificationsService.error('请求失败', err.message || '');
-    return Promise.reject(err);
+    this._notificationsService.error('请求失败', !error.ok ? error._body : JSON.parse(error._body).message);
+    return Promise.reject(error);
   }
 
   getTags(): Promise<any> {
@@ -37,6 +38,49 @@ export class ArticleTagService {
     params.set('per_page', '100');
     return this.http
       .get(this._apiUrl, { search: params })
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  // 获取标签
+  getTags(get_params): Promise<any> {
+    let params: URLSearchParams = new URLSearchParams();
+    if(get_params) Object.keys(get_params).forEach(k => { params.set(k, get_params[k])});
+    return this.http
+      .get(this._apiUrl, { search: params })
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  addTag(tag:any): Promise<any> {
+    return this.http
+      .post(this._apiUrl, tag)
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  putTag(tag: any): Promise<any> {
+    return this.http
+      .put(`${ this._apiUrl }/${ tag._id }`, tag)
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  delTag(tag_id: any): Promise<void> {
+    return this.http
+      .delete(`${ this._apiUrl }/${ tag_id }`)
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  delTags(tags: any): Promise<void> {
+    return this.http
+      .delete(this._apiUrl, new RequestOptions({ body: { tags }}))
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
