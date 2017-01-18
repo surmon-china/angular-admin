@@ -150,8 +150,8 @@ export class Announcement {
 		.catch(error => {});;
 	}
 
-	// 修改公告弹窗
-	public putAnnouncementModal(announcement) {
+	// 修改公告
+	public putAnnouncement(announcement) {
 		this.edit_announcement = announcement;
 		this.editForm.reset(announcement);
 	}
