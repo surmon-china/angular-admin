@@ -7,7 +7,7 @@ import { ArticleTagService } from './tag.service';
 @Component({
 	selector: 'article-tag',
 	encapsulation: ViewEncapsulation.None,
-	// styles: [require('./tag.scss')],
+	styles: [require('./tag.scss')],
 	template: require('./tag.html')
 })
 export class ArticleTag {
@@ -66,18 +66,26 @@ export class ArticleTag {
 
 	// 多选切换
 	public batchSelectChange(is_select) {
-		if(!this.tags.data.length) return;
+		if (!this.tags.data.length) return;
 		this.selectedTags = [];
-		this.tags.data.forEach(item => { item.selected = is_select; is_select && this.selectedTags.push(item._id) });
+		this.tags.data.forEach(item => { 
+			item.selected = is_select;
+			is_select && this.selectedTags.push(item._id)
+		});
 	}
 
 	// 单个切换
 	public itemSelectChange() {
 		this.selectedTags = [];
 		const tags = this.tags.data;
-		tags.forEach(item => { item.selected && this.selectedTags.push(item._id) });
-		if(!this.selectedTags.length) this.tagsSelectAll = false;
-		if(!!this.selectedTags.length && this.selectedTags.length == tags.length) this.tagsSelectAll = true;
+		tags.forEach(item => { 
+			item.selected && this.selectedTags.push(item._id)
+		});
+		if (!this.selectedTags.length) {
+			this.tagsSelectAll = false;
+		} else if (!!this.selectedTags.length && this.selectedTags.length == tags.length) {
+			this.tagsSelectAll = true;
+		}
 	}
 
 	// 重置表单
@@ -103,26 +111,33 @@ export class ArticleTag {
 		}
 	}
 
-	// 刷新本页本类型公告
+	// 刷新本页本类型标签
 	public refreshTags():void {
-		this.getTags({ page: this.tags.pagination.current_page });
+		this.getTags();
 	}
 
-	// 分页获取公告
+	// 分页获取标签
 	public pageChanged(event:any):void {
 		this.getTags({ page: event.page });
 	}
 
-	// 获取公告
+	// 获取标签
 	public getTags(params:any = {}) {
-		// 如果没有搜索词，则清空搜索框
-		if(!params || !params.keyword) {
-			this.searchForm.reset({ content: '' });
+		// 搜索词具有高优先级
+		if (this.keyword.value) {
+			params.keyword = this.keyword.value;
 		}
 		// 如果请求的是第一页，则设置翻页组件的当前页为第一页
-		if(!params.page || Object.is(params.page, 1)) {
+		if (!params.page || Object.is(params.page, 1)) {
 			this.tags.pagination.current_page = 1;
 		}
+		// 如果没有指定页数，则请求当前页
+		if(!params.page) {
+			params.page = this.tags.pagination.current_page;
+		}
+		// 固定每页请求的数量
+		params.per_page = this.tags.pagination.per_page;
+		// 请求
 		this._articleTagService.getTags(params)
 		.then(tags => {
 			this.tags = tags.result;
@@ -130,7 +145,7 @@ export class ArticleTag {
 		.catch(error => {});
 	}
 
-	// 添加公告
+	// 添加标签
 	public addTag(tag) {
 		this._articleTagService.addTag(tag)
 		.then(_tag => {
@@ -140,13 +155,13 @@ export class ArticleTag {
 		.catch(error => {});;
 	}
 
-	// 修改公告弹窗
-	public putTagModal(tag) {
+	// 修改标签
+	public putTag(tag) {
 		this.edit_tag = tag;
 		this.editForm.reset(tag);
 	}
 
-	// 确认修改公告
+	// 确认修改标签
 	public doPutTag(tag) {
 		this._articleTagService.putTag(Object.assign(this.edit_tag, tag))
 		.then(_tag => {
@@ -157,7 +172,7 @@ export class ArticleTag {
 		.catch(error => {});
 	}
 
-	// 删除公告弹窗
+	// 删除标签弹窗
 	public delTagModal(tag) {
 		this.del_tag = tag;
 		this.delModal.show();
@@ -169,7 +184,7 @@ export class ArticleTag {
 		this.del_tag = null;
 	}
 
-	// 确认删除公告
+	// 确认删除标签
 	public doDelTag() {
 		this._articleTagService.delTag(this.del_tag._id)
 		.then(tag => {
@@ -179,8 +194,8 @@ export class ArticleTag {
 		});
 	}
 
-	// 批量删除公告弹窗
-	public delTagsModal(tags) {
+	// 批量删除标签弹窗
+	public delTagsModal() {
 		this.del_tag = null;
 		this.delModal.show();
 	}

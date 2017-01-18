@@ -29,24 +29,19 @@ export class ArticleTagService {
 
   // 失败处理
   private handleError = (error: any): Promise<any> => {
-    this._notificationsService.error('请求失败', !error.ok ? error._body : JSON.parse(error._body).message);
+    const errmsg = [500, 504].indexOf(error.status) > -1 ? error._body : JSON.parse(error._body).message;
+    this._notificationsService.error('请求失败', errmsg);
     return Promise.reject(error);
-  }
-
-  getTags(): Promise<any> {
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('per_page', '100');
-    return this.http
-      .get(this._apiUrl, { search: params })
-      .toPromise()
-      .then(this.handleResponse)
-      .catch(this.handleError);
   }
 
   // 获取标签
   getTags(get_params): Promise<any> {
     let params: URLSearchParams = new URLSearchParams();
-    if(get_params) Object.keys(get_params).forEach(k => { params.set(k, get_params[k])});
+    if (get_params) {
+      Object.keys(get_params).forEach(k => { 
+        params.set(k, get_params[k])
+      });
+    }
     return this.http
       .get(this._apiUrl, { search: params })
       .toPromise()

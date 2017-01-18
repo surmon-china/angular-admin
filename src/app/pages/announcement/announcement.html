@@ -67,7 +67,9 @@
           </div>
           <span>&nbsp;</span>
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default btn-with-icon" (click)="refreshAnnouncements()">
+            <button type="button" 
+                    class="btn btn-default btn-with-icon" 
+                    (click)="refreshAnnouncements()">
               <i class="ion-refresh"></i>
               <span>刷新</span>
             </button>
@@ -146,7 +148,7 @@
                       <div class="btn-group" role="group">
                         <button type="button"
                                 class="btn btn-sm btn-warning"
-                                (click)="putAnnouncementModal(announcement)">编辑公告</button>
+                                (click)="putAnnouncement(announcement)">编辑公告</button>
                         <button type="button"
                                 class="btn btn-sm btn-danger"
                                 (click)="delAnnouncementModal(announcement)">删除公告</button>

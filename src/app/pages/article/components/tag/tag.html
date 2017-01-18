@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-4 col-xs-4">
     <ba-card title="添加标签" baCardClass="with-scroll">
-      <form class="announcement-form"
+      <form class="tag-form"
             [formGroup]="editForm" 
             (ngSubmit)="submitTag(editForm.value)">
         <div class="form-group"
@@ -63,31 +63,45 @@
       <div class="contnet-top-tools">
         <div class="pull-left">
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default btn-with-icon">
+            <button type="button" 
+                    class="btn btn-default btn-with-icon"
+                    (click)="refreshTags()">
               <i class="ion-refresh"></i>
               <span>刷新</span>
+            </button>
+            <button type="button" 
+                    class="btn btn-default btn-with-icon"
+                    (click)="searchForm.reset({ keyword: '' })">
+              <i class="ion-trash-b"></i>
+              <span>清空关键词</span>
             </button>
             <div class="btn-group" dropdown>
               <button type="button" 
                       class="btn btn-default" 
                       addToggleClass="true"
-                      dropdownToggle>
+                      dropdownToggle
+                      [disabled]="!selectedTags.length">
                 <i class="ion-ios-list"></i>
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" dropdownMenu>
                 <li class="dropdown-item">
-                  <a [href]="">删除选中</a>
+                  <a [href]="" (click)="delTagsModal()">删除选中</a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <form class="pull-right form-inline navbar-form">
+        <form class="pull-right form-inline navbar-form tag-search-form"
+              [formGroup]="searchForm" 
+              (ngSubmit)="searchTags(searchForm.value)">
           <div class="input-group">
-            <input type="text" class="form-control with-default-addon" placeholder="搜索相关标签">
+            <input type="text" 
+                   placeholder="搜索相关标签"
+                   class="form-control with-default-addon"
+                   [formControl]="keyword">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button">搜索</button>
+              <button class="btn btn-default" type="submit">搜索</button>
             </span>
           </div>
         </form>
@@ -97,52 +111,105 @@
           <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
             <thead class="thead-inverse">
               <tr>
-                <th>
-                  <input type="checkbox">
+                <th class="batch-checkbox">
+                  <ba-checkbox [(ngModel)]="tagsSelectAll" (ngModelChange)="batchSelectChange($event)">
+                    <span ba-checkbox-label>
+                      <span>&nbsp;</span>
+                      <strong>ID</strong>
+                    </span>
+                  </ba-checkbox>
                 </th>
-                <th>ID</th>
                 <th>名称</th>
-                <th>描述</th>
                 <th>别名</th>
+                <th>描述</th>
                 <th>包含文章</th>
                 <th width="30%" class="text-center">操作</th>
               </tr>
             </thead>
             <tbody>
-              <!-- <tr *ngFor="let num of [1,2,3,4,5,6,7,8,9,10]">
-                <td>
-                  <input type="checkbox">
+              <tr *ngIf="!tags || !tags.data.length">
+                <td colspan="6">
+                  <p class="text-muted text-center tag-err-msg">暂无数据<p>
                 </td>
-                <td>
-                  <span>{{ num }}</span>
-                </td>
-                <td>
-                  <a href="">
-                    <h4 class="strong">- Code</h4>
-                  </a>
-                </td>
-                <td>代码标签</td>
-                <td>code</td>
-                <td>34</td>
-                <td>
-                   <ul class="btn-list clearfix text-center">
-                    <li>
-                      <button class="btn btn-primary btn-sm" type="button">编辑标签</button>
-                    </li>
-                    <li>
-                      <button class="btn btn-danger btn-sm" type="button">删除标签</button>
-                    </li>
-                    <li>
-                      <button class="btn btn-success btn-sm" type="button">查看标签</button>
-                    </li>
-                  </ul>
-                </td>
-              </tr> -->
+              </tr>
+              <template [ngIf]="tags && tags.data.length">
+                <tr *ngFor="let tag of tags.data">
+                  <td class="batch-checkbox">
+                    <ba-checkbox [(ngModel)]="tag.selected" (ngModelChange)="itemSelectChange()">
+                      <span ba-checkbox-label>
+                        <span>&nbsp;</span>
+                        <strong>{{ tag.id }}</strong>
+                      </span>
+                    </ba-checkbox>
+                  </td>
+                  <td>{{ tag.name }}</td>
+                  <td>{{ tag.slug }}</td>
+                  <td>{{ tag.description }}</td>
+                  <td>0</td>
+                  <td>
+                    <div class="text-center">
+                      <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" 
+                                class="btn btn-sm btn-warning" 
+                                (click)="putTag(tag)">编辑标签</button>
+                        <button type="button" 
+                                class="btn btn-sm btn-danger" 
+                                (click)="delTagModal(tag)">删除标签</button>
+                        <a class="btn btn-sm btn-success" 
+                           href="//surmon.me/tag/{{ tag.slug }}" 
+                           target="_blank">查看标签</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </template>
             </tbody>
           </table>
+          <br>
+          <div class="text-center">
+            <pagination class="pagination-xs"
+                        firstText="首页"
+                        lastText="末页"
+                        nextText="下一页"
+                        previousText="上一页"
+                        pageBtnClass="btn-primary"
+                        [totalItems]="tags.pagination.total"
+                        [itemsPerPage]="tags.pagination.per_page"
+                        [(ngModel)]="tags.pagination.current_page"
+                        [maxSize]="7"
+                        [boundaryLinks]="true"
+                        [rotate]="false"
+                        (pageChanged)="pageChanged($event)">
+            </pagination>
+          </div>
         </div>
       </div>
-      
     </ba-card>
+  </div>
+  <!-- 删除确认弹窗 -->
+  <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="canceldDelTagModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">确认操作</h4>
+        </div>
+        <div class="modal-body">
+          <div class="message">
+            <span class="icon text-warning">
+              <i class="ion-ios-information-outline"></i>
+            </span>
+            <span>确定要删除{{ del_tag ? '这个' : '选中' }}标签吗？</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary confirm-btn" (click)="(del_tag ? doDelTag() : doDelTags())">确认删除</button>
+          <span>&nbsp;</span>
+          <button class="btn btn-default confirm-btn" (click)="canceldDelTagModal()">取消</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
