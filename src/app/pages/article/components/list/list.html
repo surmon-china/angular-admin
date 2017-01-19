@@ -3,53 +3,98 @@
     <ba-card title="文章列表" baCardClass="with-scroll table-panel">
       <div class="contnet-top-tools">
         <div class="pull-left">
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-default active">全部（14）</button>
-            <button type="button" class="btn btn-default">已发布（10）</button>
-            <button type="button" class="btn btn-default">草稿（3）</button>
-            <button type="button" class="btn btn-default">回收站（1）</button>
+          <div class="btn-group">
+            <button type="button"
+                    class="btn btn-default active"
+                    [ngClass]="{ 'active': getParams.state == 'all'}"
+                    (click)="switchState('all')">
+              <span>全部</span>
+              <span *ngIf="getParams.state == 'all'">({{ articles.pagination.total || 0 }})</span>
+            </button>
+            <button type="button"
+                    class="btn btn-default"
+                    [ngClass]="{ 'active': getParams.state == 1 }"
+                    (click)="switchState(1)">
+              <span>已发布</span>
+              <span *ngIf="getParams.state == 1">({{ articles.pagination.total || 0 }})</span>
+            </button>
+            <button type="button"
+                    class="btn btn-default"
+                    [ngClass]="{ 'active': getParams.state == 0 }"
+                    (click)="switchState(0)">
+              <span>草稿</span>
+              <span *ngIf="getParams.state == 0">({{ articles.pagination.total || 0 }})</span>
+            </button>
+            <button type="button"
+                    class="btn btn-default"
+                    [ngClass]="{ 'active': getParams.state == -1 }"
+                    (click)="switchState(-1)">
+              <span>回收站</span>
+              <span *ngIf="getParams.state == -1">({{ articles.pagination.total || 0 }})</span>
+            </button>
           </div>
           <span>&nbsp;</span>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-default btn-with-icon">
+          <div class="btn-group">
+            <button type="button" 
+                    class="btn btn-default btn-with-icon"
+                    (click)="refreshArticles()">
               <i class="ion-refresh"></i>
               <span>刷新</span>
             </button>
+            <button type="button" 
+                    class="btn btn-default btn-with-icon"
+                    (click)="resetGetParams()">
+              <i class="ion-trash-b"></i>
+              <span>清空搜索条件</span>
+            </button>
             <div class="btn-group" dropdown>
-              <button type="button" class="btn btn-default" dropdownToggle addToggleClass="true">
+              <button type="button" 
+                      class="btn btn-default"
+                      addToggleClass="true"
+                      dropdownToggle
+                      [disabled]="!selectedArticles.length">
                 <i class="ion-ios-list"></i>
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" dropdownMenu>
-                <li class="dropdown-item"><a href="#">移至回收站</a></li>
-                <li class="dropdown-item"><a href="#">彻底删除</a></li>
-                <li class="dropdown-item"><a href="#">批量还原</a></li>
-                <li class="dropdown-divider"></li>
-                <li class="dropdown-item"><a href="#">Separated link</a></li>
+                <li class="dropdown-item">
+                  <a [href]="">移至回收站</a>
+                </li>
+                <li class="dropdown-item">
+                  <a [href]="">彻底删除</a>
+                </li>
+                <li class="dropdown-item">
+                  <a [href]="">批量还原</a>
+                </li>
               </ul>
             </div>
           </div>
         </div>
-        <form class="pull-right form-inline navbar-form">
+        <form class="pull-right form-inline article-get-form"
+              [formGroup]="searchForm" 
+              (ngSubmit)="searchArticles(searchForm.value)">
           <div class="input-group">
-            <input type="text" class="form-control with-default-addon" placeholder="文章标题、描述">
+            <input type="text"
+                   [formControl]="keyword" 
+                   class="form-control with-default-addon" 
+                   placeholder="文章标题、描述">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button">搜索</button>
+              <button class="btn btn-default" type="submit">搜索</button>
             </span>
           </div>
         </form>
         <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
-        <form class="pull-right form-inline navbar-form">
-          <select class="form-control c-select" id="sort">
+        <div class="pull-right form-inline">
+          <select class="form-control c-select" disabled *ngIf="false">
             <option default>创建时间</option>
             <option>浏览次数</option>
             <option>评论条数</option>
           </select>
           <span>&nbsp;</span>
-          <select class="form-control c-select">
-            <option value="">所有分类</option>
+          <select class="form-control c-select" [(ngModel)]="getParams.category">
+            <option default value="all">所有分类</option>
             <template [ngIf]="categories && categories.data.length">
-              <option *ngFor="let cate of categories.data" [ngValue]="cate._id" [disabled]="!!category && category._id == cate._id">
+              <option *ngFor="let cate of categories.data" [ngValue]="cate._id">
                 <span *ngIf="cate.level">└</span>
                 <span *ngFor="let num of categoryLevelMark(cate.level)">─</span>
                 <span>{{ cate.name }}</span>
@@ -57,13 +102,15 @@
             </template>
           </select>
           <span>&nbsp;</span>
-          <select class="form-control c-select" id="tag">
-            <option default>所有标签</option>
-            <option>Javascript</option>
-            <option>Vue</option>
-            <option>...</option>
+          <select class="form-control c-select" [(ngModel)]="getParams.tag">
+            <option default value="all">所有标签</option>
+            <template [ngIf]="tags && tags.data.length">
+              <option *ngFor="let tag of tags.data" [ngValue]="tag._id">
+                <span>{{ tag.name }}</span>
+              </option>
+            </template>
           </select>
-        </form>
+        </div>
       </div>
       <div class="table-responsive">
         <div class="article-list">
@@ -91,8 +138,8 @@
             <tbody>
               <tr *ngIf="!articles || !articles.data.length">
                 <td colspan="9">
-                  <p class="text-muted text-center article-err-msg" *ngIf="articles && articles.data.length == 0">暂无数据<p>
-                  <p class="text-muted text-center article-err-msg" *ngIf="articles && articles.data.length == undefined">加载中<p>
+                  <p class="text-muted text-center article-err-msg" 
+                     *ngIf="articles.data.length == 0">暂无数据<p>
                 </td>
               </tr>
               <template [ngIf]="articles && articles.data.length">
@@ -164,6 +211,23 @@
               </template>
             </tbody>
           </table>
+           <br>
+          <div class="text-center">
+            <pagination class="pagination-xs"
+                        firstText="首页"
+                        lastText="末页"
+                        nextText="下一页"
+                        previousText="上一页"
+                        pageBtnClass="btn-primary"
+                        [totalItems]="articles.pagination.total"
+                        [itemsPerPage]="articles.pagination.per_page"
+                        [(ngModel)]="articles.pagination.current_page"
+                        [maxSize]="7"
+                        [boundaryLinks]="true"
+                        [rotate]="false"
+                        (pageChanged)="pageChanged($event)">
+            </pagination>
+          </div>
         </div>
       </div>
     </ba-card>

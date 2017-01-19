@@ -54,7 +54,7 @@
         </div>
         <button type="submit" class="btn btn-success">{{ edit_tag ? '修改' : '添加' }}标签</button>
         <span>&nbsp;</span>
-        <button class="btn btn-default" (click)="resetForm()">重置</button>
+        <button class="btn btn-default" (click)="resetEditForm()">重置</button>
       </form>
     </ba-card>
   </div>
@@ -71,9 +71,9 @@
             </button>
             <button type="button" 
                     class="btn btn-default btn-with-icon"
-                    (click)="searchForm.reset({ keyword: '' })">
+                    (click)="resetSearchForm()">
               <i class="ion-trash-b"></i>
-              <span>清空关键词</span>
+              <span>清空搜索词</span>
             </button>
             <div class="btn-group" dropdown>
               <button type="button" 
