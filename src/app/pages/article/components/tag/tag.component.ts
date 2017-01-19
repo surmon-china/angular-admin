@@ -88,12 +88,19 @@ export class ArticleTag {
 		}
 	}
 
-	// 重置表单
-	public resetForm():void {
+	// 重置编辑表单
+	public resetEditForm():void {
 		this.editForm.reset({
 			name: '',
 			slug: '',
 			description: ''
+		});
+	}
+
+	// 重置搜索表单
+	public resetSearchForm():void {
+		this.searchForm.reset({
+			keyword: ''
 		});
 	}
 
@@ -149,7 +156,8 @@ export class ArticleTag {
 	public addTag(tag) {
 		this._articleTagService.addTag(tag)
 		.then(_tag => {
-			this.resetForm();
+			this.resetEditForm();
+			this.resetSearchForm();
 			this.getTags();
 		})
 		.catch(error => {});;
@@ -166,7 +174,7 @@ export class ArticleTag {
 		this._articleTagService.putTag(Object.assign(this.edit_tag, tag))
 		.then(_tag => {
 			this.getTags();
-			this.resetForm();
+			this.resetEditForm();
 			this.edit_tag = null;
 		})
 		.catch(error => {});

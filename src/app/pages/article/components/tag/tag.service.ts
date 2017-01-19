@@ -35,7 +35,7 @@ export class ArticleTagService {
   }
 
   // 获取标签
-  getTags(get_params): Promise<any> {
+  getTags(get_params:any): Promise<any> {
     let params: URLSearchParams = new URLSearchParams();
     if (get_params) {
       Object.keys(get_params).forEach(k => { 
@@ -49,7 +49,7 @@ export class ArticleTagService {
       .catch(this.handleError);
   }
 
-  addTag(tag:any): Promise<any> {
+  addTag(tag: any): Promise<any> {
     return this.http
       .post(this._apiUrl, tag)
       .toPromise()

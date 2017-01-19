@@ -15,6 +15,7 @@ export class ArticleListService {
               private _notificationsService: NotificationsService) {
   }
 
+  // 成功处理
   private handleResponse = (response: any): Promise<any> => {
     const data = response.json();
     if(data.code) {
@@ -26,15 +27,20 @@ export class ArticleListService {
     }
   }
 
+  // 失败处理
   private handleError = (error: any): Promise<any> => {
-    const err = JSON.parse(error._body);
-    this._notificationsService.error('请求失败', err.message || '');
-    return Promise.reject(err);
+    const errmsg = [500, 504].indexOf(error.status) > -1 ? error._body : JSON.parse(error._body).message;
+    this._notificationsService.error('请求失败', errmsg);
+    return Promise.reject(error);
   }
 
-  getArticles(): Promise<any> {
+  getArticles(get_params:any): Promise<any> {
     let params: URLSearchParams = new URLSearchParams();
-    params.set('per_page', '100');
+    if (get_params) {
+      Object.keys(get_params).forEach(k => { 
+        params.set(k, get_params[k])
+      });
+    }
     return this.http
       .get(this._apiUrl, { search: params })
       .toPromise()
