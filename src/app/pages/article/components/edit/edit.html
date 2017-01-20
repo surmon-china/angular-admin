@@ -1,21 +1,30 @@
 <div class="row">
   <div class="col-md-9">
     <ba-card title="撰写新文章" baCardClass="with-scroll">
-      <article-edit-main [article]="article"></article-edit-main>
+      <article-edit-main [(article)]="article"></article-edit-main>
     </ba-card>
   </div>
   <div class="col-md-3">
-    <ba-card title="同时发布到" baCardClass="with-scroll">
+    <!-- <ba-card title="同时发布到" baCardClass="with-scroll">
       <article-edit-duoshuo [duoshuo]="article.duoshuo"></article-edit-duoshuo>
-    </ba-card>
+    </ba-card> -->
     <ba-card title="分类目录" baCardClass="with-scroll">
-      <article-edit-category [category]="article.category"></article-edit-category>
+      <article-edit-category [(category)]="article.category"></article-edit-category>
     </ba-card>
     <ba-card title="缩略图" baCardClass="with-scroll">
-      <article-edit-thumb [articleThumb]="article.thumb"></article-edit-thumb>
+      <ba-picture-uploader 
+          [picture]="article.thumb" 
+          [defaultPicture]="defaultThumb" 
+          [uploaderOptions]="uploaderOptions">
+      </ba-picture-uploader>
     </ba-card>
     <ba-card title="发布选项" baCardClass="with-scroll">
-      <article-edit-submit [article]="article" (submitArticle)="submitArticle()"></article-edit-submit>
+      <article-edit-submit 
+          [(state)]="article.state" 
+          [(ppublic)]="article.public" 
+          [(password)]="article.password" 
+          (submitArticle)="submitArticle()">
+      </article-edit-submit>
     </ba-card>
   </div>
 </div>

@@ -1,89 +1,95 @@
-import { Component, Input } from '@angular/core';
+import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
+import { ArticleTagService } from '../../../tag/tag.service';
+import { ArticleCategoryService } from '../../../category/category.service';
 
 @Component({
   selector: 'article-edit-category',
-  template: require('./category.html')
+  encapsulation: ViewEncapsulation.None,
+  template: require('./category.html'),
+  styles: [require('./category.scss')]
 })
 
 export class ArticleEditCategory {
 
   @Input() category;
+  @Input() categories = { data: [] };
+  @Output() categoryChange: EventEmitter<any> = new EventEmitter();
 
-  public categories = [
-    {
-      "_id": "579610183b6d2f7c19ed3e46",
-      "id": 10,
-      "name": "分类1 - xg",
-      "slug": "cate2 - xg",
-      "__v": 0,
-      "extend": [],
-      "created_at": "2016-07-25T13:11:52.091Z",
-      "pid": null
-    },
-    {
-      "_id": "57961c4a0975a2dc0de4b626",
-      "id": 13,
-      "name": "分类2",
-      "slug": "cate2",
-      "__v": 0,
-      "extend": [],
-      "created_at": "2016-07-25T14:03:54.158Z",
-      "pid": "579610183b6d2f7c19ed3e46"
-    },
-    {
-      "_id": "57961c500975a2dc0de4b627",
-      "id": 14,
-      "name": "分类3",
-      "slug": "cate3",
-      "__v": 0,
-      "extend": [],
-      "created_at": "2016-07-25T14:04:00.113Z",
-      "pid": "57961c4a0975a2dc0de4b626"
-    },
-    {
-      "_id": "57977b1a8333ccc88b763355",
-      "id": 20,
-      "name": "分类9",
-      "slug": "cate9",
-      "__v": 0,
-      "extend": [],
-      "created_at": "2016-07-26T15:00:42.561Z",
-      "pid": null
-    }
-  ];
-
-  constructor() {
-  }
-
-  // 处理分类级别
-  handleCategory () {
-    let _categories = this.categories;
-    let _cates = _categories.filter(category => !category.pid);
-    let _childs = _categories.filter(category => !!category.pid);
-    _childs.forEach(category => {
-      // 找到符合条件的分类
-      let _findParent = parents => {
-        parents.forEach(cate => {
-          let is_parent = cate._id === category.pid;
-          let par_child = cate.childrens;
-          // 如果拥有符合条件的分类
-          if(is_parent) {
-            cate.childrens = cate.childrens || [];
-            cate.childrens.push(category);
-            return;
-          }
-          // 如果不拥有，则判断是否有子集
-          if(par_child && !!par_child.length) _findParent(par_child);
-        });
-      };
-      _findParent(_cates);
-    });
-    console.log(_cates);
-    this.categories = _cates;
+  constructor(private _articleTagService: ArticleTagService,
+              private _articleCategoryService: ArticleCategoryService) {
   }
 
   ngOnInit() {
+  	this.getCategories();
+  }
 
-    this.handleCategory();
+  // 分类级别标记
+  public categoryLevelMark(level): void { 
+    return Array.from({ length: level }, () => '')
+  };
+
+  // 分类级别递归排序
+  public categoryLevelBuild(): void {
+
+    // 初始化数据
+    let categories = Array.from(this.categories.data);
+    let toDoDeletes = [];
+
+    // 级别数据构造
+    categories.forEach(cate => {
+      // 找到问题数据并添加标记
+      cate.unrepaired = (!!cate.pid && !categories.find(c => Object.is(cate.pid, c._id)))
+      categories.forEach(c => {
+        if(Object.is(cate.pid, c._id)) {
+          c.children = c.children || [];
+          c.children.push(cate);
+          toDoDeletes.push(cate);
+        }
+      })
+    });
+
+    // 扁平数据构造（同时添加级别标示）
+    const levelBuildRun = cates => {
+      let newCategories = [];
+      const levelBuildOptimize = (cates, level) => {
+        cates.forEach(c => {
+          c.level = level;
+          newCategories.push(c);
+          c.checked = this.category.indexOf(c._id) > -1;
+          if(c.children && c.children.length) levelBuildOptimize(c.children, level + 1);
+        })
+      }
+      levelBuildOptimize(cates, 0);
+      return newCategories;
+    }
+
+    // 开始执行
+    this.categories.data = levelBuildRun(categories.filter(c => toDoDeletes.indexOf(c) == -1));
+  };
+
+  // 勾选动作
+  public itemSelectChange(checked, category) {
+    let cateIndex = this.category.indexOf(category._id);
+    let hasCate = !Object.is(cateIndex, -1);
+    if(checked) {
+      if(!hasCate) {
+        this.category.push(category._id);
+      }
+    } else {
+      if(hasCate) {
+        this.category.splice(cateIndex, 1);
+      }
+    }
+    this.categoryChange.emit(this.category);
+  }
+
+  // 获取所有分类
+  public getCategories() {
+  	this._articleCategoryService.getCategories()
+  	.then(categories => {
+  		this.categories = categories.result;
+  		this.categoryLevelBuild();
+  	})
+  	.catch(error => {})
   }
 }

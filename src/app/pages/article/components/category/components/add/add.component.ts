@@ -59,7 +59,9 @@ export class ArticleCategoryAdd {
 
   // 提交
   public onSubmit(category:Object):void {
-    if (this.form.valid) return this.submitCategory.emit(category);
+    if (this.form.valid) {
+      return this.submitCategory.emit(category);
+    }
   }
 
   ngOnChanges(changes) {

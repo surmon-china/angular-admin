@@ -42,6 +42,10 @@ export class BaPictureUploader {
   public onFiles():void {
     let files = this._fileUpload.nativeElement.files;
 
+    console.log(files, '图片已变更');
+
+    
+
     if (files.length) {
       const file = files[0];
       this._changePicture(file);
@@ -60,6 +64,7 @@ export class BaPictureUploader {
 
   public removePicture():boolean {
     this.picture = '';
+    console.log('图片已销毁');
     return false;
   }
 

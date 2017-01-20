@@ -33,6 +33,7 @@ export class ArticleCategoryService {
     return Promise.reject(error);
   }
 
+  // 获取分类列表
   getCategories(): Promise<any> {
     let params: URLSearchParams = new URLSearchParams();
     params.set('per_page', '100');
@@ -43,7 +44,8 @@ export class ArticleCategoryService {
       .catch(this.handleError);
   }
 
-  addCategory(category:any): Promise<any> {
+  // 添加分类
+  addCategory(category: any): Promise<any> {
     return this.http
       .post(this._apiUrl, category)
       .toPromise()
@@ -51,6 +53,7 @@ export class ArticleCategoryService {
       .catch(this.handleError);
   }
 
+  // 修改分类
   putCategory(category: any): Promise<any> {
     return this.http
       .put(`${ this._apiUrl }/${ category._id }`, category)
@@ -59,7 +62,8 @@ export class ArticleCategoryService {
       .catch(this.handleError);
   }
 
-  delCategory(category_id: string): Promise<void> {
+  // 删除单个分类
+  delCategory(category_id: any): Promise<any> {
     return this.http
       .delete(`${ this._apiUrl }/${ category_id }`)
       .toPromise()
@@ -67,7 +71,8 @@ export class ArticleCategoryService {
       .catch(this.handleError);
   }
 
-  delCategories(categories: any): Promise<void> {
+  // 批量删除分类
+  delCategories(categories: any): Promise<any> {
     return this.http
       .delete(this._apiUrl, new RequestOptions({ body: { categories }}))
       .toPromise()

@@ -15,6 +15,7 @@ export class ArticleEditService {
               private _notificationsService: NotificationsService) {
   }
 
+  // 成功处理
   private handleResponse = (response: any): Promise<any> => {
     const data = response.json();
     if(data.code) {
@@ -26,29 +27,25 @@ export class ArticleEditService {
     }
   }
 
+  // 失败处理
   private handleError = (error: any): Promise<any> => {
-    const err = JSON.parse(error._body);
-    this._notificationsService.error('请求失败', err.message || '');
-    return Promise.reject(err);
+    this._notificationsService.error('请求失败', !error.ok ? error._body : JSON.parse(error._body).message);
+    return Promise.reject(error);
   }
 
-  // 修改文章
-  putArticle(): Promise<any> {
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('per_page', '100');
+  // 发布文章
+  addArticle(article: any): Promise<any> {
     return this.http
-      .get(this._apiUrl, { search: params })
+      .post(this._apiUrl, article)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
   }
 
-  // 发布文章
-  addArticle(): Promise<any> {
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('per_page', '100');
+  // 修改文章
+  putArticle(article: any): Promise<any> {
     return this.http
-      .get(this._apiUrl, { search: params })
+      .put(`${ this._apiUrl }/${ article._id }`, article)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
