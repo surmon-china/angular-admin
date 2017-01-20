@@ -6,9 +6,9 @@ import { PaginationModule, DropdownModule, ModalModule } from 'ng2-bootstrap/ng2
 
 import { routing }             from './article.routing';
 
-import { ArticleTagService } from './components/tag/tag.service';
-import { ArticleListService } from './components/list/list.service';
-import { ArticleEditService } from './components/edit/edit.service';
+import { ArticleTagService }   from './components/tag/tag.service';
+import { ArticleListService }  from './components/list/list.service';
+import { ArticleEditService }  from './components/edit/edit.service';
 import { ArticleCategoryService } from './components/category/category.service';
 
 import { Article }             from './article.component';
@@ -18,7 +18,6 @@ import { ArticleCategoryList } from './components/category/components/list';
 
 import { ArticleEdit }          from './components/edit';
 import { ArticleEditMain }      from './components/edit/components/main';
-import { ArticleEditThumb }     from './components/edit/components/thumb';
 import { ArticleEditSubmit }    from './components/edit/components/submit';
 import { ArticleEditDuoshuo }   from './components/edit/components/duoshuo';
 import { ArticleEditCategory }  from './components/edit/components/category';
@@ -52,7 +51,6 @@ import { ArticleTag }           from './components/tag';
 
     ArticleEdit,
     ArticleEditMain,
-    ArticleEditThumb,
     ArticleEditSubmit,
     ArticleEditDuoshuo,
     ArticleEditCategory,

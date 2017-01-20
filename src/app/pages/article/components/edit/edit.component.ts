@@ -9,29 +9,41 @@ export class ArticleEdit {
 
   // 文章内容
   public article = {
-    title: '文章标题',
-    slug: 'article1',
-    content: '<p>在这里输入文章内容</p>',
-    status: 1,
-    public: 1,
-    publish: 1,
-    thumb: 'http://surmon.me/wp-content/uploads/2015/07/surmon.png',
-    tag: ['579610183b6d2f7c19ed3e46', '57961c500975a2dc0de4b627'],
-    category: ['579610183b6d2f7c19ed3e46', '57961c500975a2dc0de4b627'],
-    duoshuo: {
-      weibo: true,
-      qzone: true,
-      renren: false,
-      douban: true
-    },
-    // extend: [{}]
+    title: '',
+    keyword: [],
+    description: '',
+    content: '',
+    thumb: 'assets/img/app/profile/Nasta.png',
+    slug: '',
+    state: '-1',
+    public: '1',
+    password: '',
+    tag: [],
+    category: ['587ccc6476c440094b824390']
   }
 
-  submitArticle(event) {
-    console.log('Submit Article', this);
+  public defaultPicture = 'assets/img/theme/no-photo.png';
+  public uploaderOptions: any = {
+    // url: 'http://website.com/upload'
+  };
+
+  /*
+  var reader = new FileReader();
+   
+  // 绑定load事件
+  reader.onload = function(e) {
+    console.log(e.target.result);
   }
+ 
+  // 读取File对象的数据
+  reader.readAsDataURL(files[0]);
+  */
 
   constructor() {
+  }
+
+  public submitArticle(event) {
+    console.log('提交文章', this.article);
   }
 
   ngOnInit() {

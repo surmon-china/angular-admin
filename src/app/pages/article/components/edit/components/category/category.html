@@ -1,27 +1,15 @@
-<div class="category-lists">
-  <div [ngClass]="{ 'small': last, 'form-group': !last }"
-       *ngFor="let category of categories; let i = index; let last = last">
-    <ba-checkbox [(ngModel)]="category.checked" [label]="category.name"></ba-checkbox>
-    <p *ngIf="!last"></p>
-    <ul class="list-unstyled col-xs-offset-1" *ngIf="category.childrens && !!category.childrens.length">
-      <li [ngClass]="{ 'small': last, 'form-group': !last }"
-           *ngFor="let children of category.childrens; let i = index; let last = last">
-        <ba-checkbox [(ngModel)]="children.checked" [label]="children.name"></ba-checkbox>
-        <p></p>
-        <ul class="list-unstyled col-xs-offset-1" *ngIf="children.childrens && !!children.childrens.length">
-          <li [ngClass]="{ 'small': last, 'form-group': !last }"
-               *ngFor="let children of children.childrens; let i = index; let last = last">
-            <ba-checkbox [(ngModel)]="children.checked" [label]="children.name"></ba-checkbox>
-            <p *ngIf="!last"></p>
-            <ul class="list-unstyled col-xs-offset-1" *ngIf="children.childrens && !!children.childrens.length">
-              <li [ngClass]="{ 'small': last, 'form-group': !last }"
-                   *ngFor="let children of children.childrens; let i = index; let last = last">
-                <ba-checkbox [(ngModel)]="children.checked" [label]="children.name"></ba-checkbox>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+<div class="category-list">
+  <template [ngIf]="categories && categories.data.length">
+    <div *ngFor="let category of categories.data" class="category-item-checkbox">
+      <ba-checkbox [(ngModel)]="category.checked" (ngModelChange)="itemSelectChange($event, category)">
+        <span ba-checkbox-label>
+          <span>&nbsp;</span>
+          <span *ngIf="category.level">└</span>
+          <span *ngFor="let num of categoryLevelMark(category.level)">─</span>
+          <span>{{ category.name }}</span>
+        </span>
+      </ba-checkbox>
+      <p></p>
+    </div>
+  </template>
 </div>
