@@ -331,6 +331,9 @@ label.custom-input-danger {
   .control-label {
     color: $content-text;
   }
+  .form-control-label {
+    color: $content-text;
+  }
   .form-control {
     border: 1px solid $color;
     &:focus {

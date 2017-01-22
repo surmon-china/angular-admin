@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ArticleEditService } from './edit.service';
 
 @Component({
   selector: 'article-edit',
@@ -9,20 +10,19 @@ export class ArticleEdit {
 
   // 文章内容
   public article = {
-    title: '',
-    keyword: [],
+    title: '世界，你好！',
+    keywords: [],
     description: '',
     content: '',
-    thumb: 'assets/img/app/profile/Nasta.png',
-    slug: '',
-    state: '-1',
+    thumb: '',
+    state: '1',
     public: '1',
     password: '',
     tag: [],
-    category: ['587ccc6476c440094b824390']
+    category: []
   }
 
-  public defaultPicture = 'assets/img/theme/no-photo.png';
+  public defaultPicture = 'assets/img/theme/palette.png';
   public uploaderOptions: any = {
     // url: 'http://website.com/upload'
   };
@@ -39,11 +39,20 @@ export class ArticleEdit {
   reader.readAsDataURL(files[0]);
   */
 
-  constructor() {
-  }
+  constructor(private _articleEditService: ArticleEditService) {}
 
+  // 提交文章
   public submitArticle(event) {
-    console.log('提交文章', this.article);
+    // console.log('提交文章', this.article);
+    const { title, content } = this.article;
+    if(title && content) {
+      this._articleEditService.addArticle(this.article)
+      .then(article => {
+        this.article = article;
+        console.log(article);
+      })
+      .catch(error => {})
+    }
   }
 
   ngOnInit() {

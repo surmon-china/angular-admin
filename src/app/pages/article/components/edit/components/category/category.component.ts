@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
-import { ArticleTagService } from '../../../tag/tag.service';
 import { ArticleCategoryService } from '../../../category/category.service';
 
 @Component({
@@ -15,8 +14,7 @@ export class ArticleEditCategory {
   @Input() categories = { data: [] };
   @Output() categoryChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(private _articleTagService: ArticleTagService,
-              private _articleCategoryService: ArticleCategoryService) {
+  constructor(private _articleCategoryService: ArticleCategoryService) {
   }
 
   ngOnInit() {

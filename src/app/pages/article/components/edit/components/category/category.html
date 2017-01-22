@@ -1,6 +1,8 @@
 <div class="category-list">
   <template [ngIf]="categories && categories.data.length">
-    <div *ngFor="let category of categories.data" class="category-item-checkbox">
+    <div title="{{ category.name }}" 
+         class="category-item-checkbox" 
+         *ngFor="let category of categories.data">
       <ba-checkbox [(ngModel)]="category.checked" (ngModelChange)="itemSelectChange($event, category)">
         <span ba-checkbox-label>
           <span>&nbsp;</span>
@@ -12,4 +14,6 @@
       <p></p>
     </div>
   </template>
+  <hr>
+  <button class="btn btn-sm btn-default" (click)="getCategories()">更新分类</button>
 </div>

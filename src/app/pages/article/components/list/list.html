@@ -126,7 +126,6 @@
                   </ba-checkbox>
                 </th>
                 <th width="40%">标题</th>
-                <th>作者</th>
                 <th>分类目录</th>
                 <th width="150">标签</th>
                 <th>评论</th>
@@ -145,15 +144,12 @@
               <template [ngIf]="articles && articles.data.length">
                 <tr *ngFor="let article of articles.data">
                   <td class="batch-checkbox">
-                    <ba-checkbox [(ngModel)]="category.selected" (ngModelChange)="itemSelectChange()">
+                    <ba-checkbox [(ngModel)]="article.selected" (ngModelChange)="itemSelectChange()">
                       <span ba-checkbox-label>
                         <span>&nbsp;</span>
-                        <strong>{{ category.id }}</strong>
+                        <strong>{{ article.id }}</strong>
                       </span>
                     </ba-checkbox>
-                  </td>
-                  <td>
-                    <span>{{ article.id }}</span>
                   </td>
                   <td>
                     <p></p>
@@ -163,9 +159,6 @@
                       </h4>
                     </a>
                     <small>{{ article.description }}</small>
-                  </td>
-                  <td>
-                    <a href="">Surmon</a>
                   </td>
                   <td>
                     <ul class="list-unstyled">
@@ -182,10 +175,11 @@
                     </ul>
                   </td>
                   <td>
-                    <a href="" *ngIf="article.meta.comments > 0">{{ article.meta.comments }}条评论</a>
-                    <span *ngIf="!article.meta.comments">暂无评论</span>
+                    <span>5</span> 
+                    <!-- <a href="" *ngIf="article.meta.comments > 0">{{ article.meta.comments }}条评论</a> -->
+                    <!-- <span *ngIf="!article.meta.comments">暂无评论</span> -->
                   </td>
-                  <td>{{ article.date }}</td>
+                  <td>{{ article.date | dataToLocale }}</td>
                   <td>
                     <span [ngSwitch]="article.status">
                       <span *ngSwitchCase="0">草稿</span>

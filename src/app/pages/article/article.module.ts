@@ -3,6 +3,7 @@ import { CommonModule }        from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule }           from '../../theme/nga.module';
 import { PaginationModule, DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { QuillEditorModule } from 'ng2-quill-editor';
 
 import { routing }             from './article.routing';
 
@@ -19,7 +20,6 @@ import { ArticleCategoryList } from './components/category/components/list';
 import { ArticleEdit }          from './components/edit';
 import { ArticleEditMain }      from './components/edit/components/main';
 import { ArticleEditSubmit }    from './components/edit/components/submit';
-import { ArticleEditDuoshuo }   from './components/edit/components/duoshuo';
 import { ArticleEditCategory }  from './components/edit/components/category';
 
 import { ArticleList }          from './components/list';
@@ -34,6 +34,7 @@ import { ArticleTag }           from './components/tag';
     PaginationModule,
     DropdownModule,
     ModalModule,
+    QuillEditorModule,
     routing
   ],
   providers: [
@@ -52,7 +53,6 @@ import { ArticleTag }           from './components/tag';
     ArticleEdit,
     ArticleEditMain,
     ArticleEditSubmit,
-    ArticleEditDuoshuo,
     ArticleEditCategory,
 
     ArticleList,
