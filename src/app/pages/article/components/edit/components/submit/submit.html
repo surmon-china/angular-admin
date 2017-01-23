@@ -23,7 +23,7 @@
                 id="articlePublic" 
                 name="articlePublic" 
                 [(ngModel)]="ppublic"
-                (change)="publicChange.emit($event.target.value)">
+                (change)="ppublicChange.emit($event.target.value)">
           <option value="1">公开</option>
           <option value="0">密码访问</option>
           <option value="-1">私密</option>
@@ -72,7 +72,8 @@
   <hr>
   <div class="row">
     <div class="col-sm-12">
-       <button class="btn btn-block btn-default" (click)="submit()">{{ isEdit ? '修改' : '发布' }}文章</button>
+       <button class="btn btn-block btn-default" 
+               (click)="submitArticle.emit()">{{ isEdit ? '修改' : '发布' }}文章</button>
     </div>
   </div>
 </form>
