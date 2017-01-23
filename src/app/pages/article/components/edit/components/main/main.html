@@ -14,7 +14,7 @@
              placeholder="文章标题" 
              name="articleTitle"
              id="articleTitle"
-             [(formControl)]="_title"
+             [formControl]="_title"
              (change)="titleChangeHandle($event)">
     </div>
   </div>
@@ -31,7 +31,7 @@
              placeholder="多个关键词以 ' , ' 隔开" 
              name="articleKeywords"
              id="articleKeywords"
-             [(formControl)]="_keywords"
+             [formControl]="_keywords"
              (change)="keywordsChangeHandle($event)">
     </div>
   </div>
@@ -42,14 +42,14 @@
         }">
     <label for="articleDescription" class="col-sm-1 form-control-label text-right">文章描述</label>
     <div class="col-sm-10">
-      <textarea class="form-control form-control-lg"
+      <textarea class="form-control article-description"
                 cols="30" 
                 rows="20" 
                 name="articleDescription" 
                 id="articleDescription" 
                 title="文章描述"
                 placeholder="文章描述"
-                [(formControl)]="_description"
+                [formControl]="_description"
                 (change)="descriptionChangeHandle($event)">
       </textarea>
     </div>
@@ -80,10 +80,10 @@
         }">
     <label for="articleContent" class="col-sm-1 form-control-label text-right">文章内容</label>
     <div class="col-sm-10">
-      <quill-editor class="form-control announcement-content" 
+      <quill-editor class="form-control article-content" 
                     title="文章内容"
                     [config]="editorConfig"
-                    [(formControl)]="_content"
+                    [formControl]="_content"
                     (change)="contentChangeHandle($event)">
       </quill-editor>
     </div>

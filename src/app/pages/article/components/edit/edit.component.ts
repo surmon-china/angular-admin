@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ArticleEditService } from './edit.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'article-edit',
@@ -9,8 +10,9 @@ import { ArticleEditService } from './edit.service';
 export class ArticleEdit {
 
   // 文章内容
+  public article_id: any = null;
   public article = {
-    title: '世界，你好！',
+    title: '',
     keywords: [],
     description: '',
     content: '',
@@ -39,22 +41,34 @@ export class ArticleEdit {
   reader.readAsDataURL(files[0]);
   */
 
-  constructor(private _articleEditService: ArticleEditService) {}
+  constructor(private _route: ActivatedRoute,
+              private _articleEditService: ArticleEditService) {}
 
   // 提交文章
   public submitArticle(event) {
-    // console.log('提交文章', this.article);
     const { title, content } = this.article;
     if(title && content) {
-      this._articleEditService.addArticle(this.article)
+      this._articleEditService[this.article_id ? 'putArticle' : 'addArticle'](this.article)
       .then(article => {
-        this.article = article;
-        console.log(article);
+        this.article = article.result;
       })
       .catch(error => {})
     }
   }
 
+  // 获取文章信息
+  public getArticle(article_id: string) {
+    this._articleEditService.getArticle(article_id)
+    .then(article => {
+      this.article = article.result;
+    })
+    .catch(error => {})
+  }
+
+  // 初始化
   ngOnInit() {
+    // 如果是修改，则请求文章数据
+    this.article_id = this._route.params.value.article_id;
+    if(this.article_id) this.getArticle(this.article_id);
   }
 }

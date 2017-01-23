@@ -26,9 +26,9 @@ export class App {
   isMenuCollapsed: boolean = false;
 
   constructor(private _state: GlobalState,
-              private _imageLoader: BaImageLoaderService,
-              private _spinner: BaThemeSpinner,
               private _config: BaThemeConfig,
+              private _spinner: BaThemeSpinner,
+              private _imageLoader: BaImageLoaderService,
               private viewContainerRef: ViewContainerRef,
               private _notificationsService: NotificationsService) {
 

@@ -17,7 +17,11 @@
     }
 	}
 
-	.announcement-content {
+	.article-description {
+		line-height: 2;
+	} 
+
+	.article-content {
 		padding: 0;
 		line-height: inherit;
 		background-color: $default;
@@ -30,6 +34,10 @@
 
 		.ql-container {
 			min-height: 30rem;
+
+			.ql-editor {
+				line-height: 2;
+			}
 		}
 	}
 }

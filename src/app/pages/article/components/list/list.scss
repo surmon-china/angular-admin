@@ -14,8 +14,34 @@
 
     tr {
 
+      &.article-item {
+        height: 13em;
+      }
+
       td {
-        line-height: 5em;
+
+        &.article-content {
+          line-height: 2;
+
+          > .title {
+            margin-top: .5rem;
+            margin-bottom: 1rem;
+          }
+        }
+
+        &.article-category {
+
+          .category-list {
+            margin: 0;
+          }
+        }
+
+        &.article-tag {
+
+          .tag-list {
+            margin: 0;
+          }
+        }
       }
     }
   }

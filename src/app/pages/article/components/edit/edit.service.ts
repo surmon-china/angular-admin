@@ -12,8 +12,7 @@ export class ArticleEditService {
   private _apiUrl = `${API_ROOT}/article`;
 
   constructor(private http: AuthHttp,
-              private _notificationsService: NotificationsService) {
-  }
+              private _notificationsService: NotificationsService) {}
 
   // 成功处理
   private handleResponse = (response: any): Promise<any> => {
@@ -31,6 +30,15 @@ export class ArticleEditService {
   private handleError = (error: any): Promise<any> => {
     this._notificationsService.error('请求失败', !error.ok ? error._body : JSON.parse(error._body).message);
     return Promise.reject(error);
+  }
+
+  // 获取文章
+  getArticle(article_id: string): Promise<any> {
+    return this.http
+      .get(`${this._apiUrl}/${article_id}`)
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
   }
 
   // 发布文章

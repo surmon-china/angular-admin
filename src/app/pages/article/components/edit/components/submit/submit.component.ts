@@ -7,6 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 export class ArticleEditSubmit {
 
+  @Input() isEdit;
   @Input() state;
   @Input() ppublic;
   @Input() password;
