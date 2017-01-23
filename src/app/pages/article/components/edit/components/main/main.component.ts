@@ -50,45 +50,64 @@ export class ArticleEditMain {
   // 初始化
   ngOnInit() {
     this.getTags();
-  	this.editForm.reset({
-			_title: this.title,
-			_content: this.content,
-			_keywords: this.keywords,
-			_description: this.description
-  	});
+  	this.resetEditForm();
+  }
+
+  // 数据更新后重新初始化表单
+  ngOnChanges(changes) {
+    this.resetEditForm();
+    // console.log(changes);
+    if(changes.content && !changes.content.previousValue && !!changes.content.currentValue) {
+      // console.log('过');
+      // this.resetEditForm();
+    }
+  }
+
+  // 重置数据
+  public resetEditForm() {
+    this.editForm.reset({
+      _title: this.title,
+      // _content: this.content,
+      _keywords: this.keywords,
+      _description: this.description
+    });
   }
 
   // 标题格式化
-  titleChangeHandle(event) {
+  public titleChangeHandle(event) {
     const newTitle = event.target.value.replace(/(^\s*)|(\s*$)/g, '');
     this._title.setValue(newTitle);
     this.titleChange.emit(newTitle);
   }
 
   // 关键词格式化
-  keywordsChangeHandle(event) {
+  public keywordsChangeHandle(event) {
   	const newWords = event.target.value.replace(/\s/g, '').split(',');
   	this._keywords.setValue(newWords);
   	this.keywordsChange.emit(newWords);
   }
 
   // 描述内容格式化
-  descriptionChangeHandle(event) {
+  public descriptionChangeHandle(event) {
     const newDescription = event.target.value.replace(/(^\s*)|(\s*$)/g, '');
     this._description.setValue(newDescription);
     this.descriptionChange.emit(newDescription);
   }
 
   // 标签选择格式化
-  tagChangeHandle() {
+  public tagChangeHandle() {
     const selectedTags = Array.from(this.tags.data.filter(t => t.selected), t => t._id);
     this.tagChange.emit(selectedTags);
   }
 
   // 内容格式化
-  contentChangeHandle(event) {
-    const newContent = event.html;
-    this.contentChange.emit(newContent);
+  public contentChangeHandle({ quill, html, text }) {
+    // this.content = html;
+    // if(!Object.is(this.content, html) && !Object.is(this.content, text)) {
+      // this.contentChange.emit(html);
+    // }
+    console.log(html, this.content, this._content.value);
+    // this.contentChange.emit(html);
   }
 
   // 获取所有标签

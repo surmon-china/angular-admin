@@ -20,8 +20,9 @@ export class ArticleList {
   public searchForm:FormGroup;
   public keyword:AbstractControl;
   public getParams:any = {
-    state: 'all',
     tag: 'all',
+    state: 'all',
+    public: 'all',
     category: 'all'
   };
 
@@ -147,10 +148,9 @@ export class ArticleList {
 
   // 清空搜索条件
   public resetGetParams(): void {
-    this.searchForm.reset({
-      keyword: ''
-    });
+    this.searchForm.reset({ keyword: '' });
     this.getParams.tag = 'all';
+    this.getParams.public = 'all';
     this.getParams.category = 'all';
   }
 
@@ -204,5 +204,20 @@ export class ArticleList {
        this.categories = categories.result;
        this.categoryLevelBuild();
     });
+  }
+
+  // 移至回收站
+  delToRecycle(article: any) {
+    console.log('移至回收站', article);
+  }
+
+  // 彻底删除
+  realDelArticle(article: any) {
+    console.log('彻底删除', article);
+  }
+
+  // 恢复文章
+  recoverArticle(article: any) {
+    console.log('恢复文章', article);
   }
 }

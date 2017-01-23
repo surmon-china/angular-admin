@@ -8,13 +8,18 @@
       </div>
     </a>
   </div>
-  <ul id="al-sidebar-list" class="al-sidebar-list" baSlimScroll [baSlimScrollOptions]="{height: menuHeight}">
+  <ul id="al-sidebar-list" 
+      class="al-sidebar-list" 
+      baSlimScroll 
+      [baSlimScrollOptions]="{ height: menuHeight }">
     <ba-menu-item
       [menuItem]="item"
       (itemHover)="hoverItem($event)"
       (toggleSubMenu)="toggleSubMenu($event)"
-      *ngFor="let item of menuItems"></ba-menu-item>
+      *ngFor="let item of menuItems">
+    </ba-menu-item>
   </ul>
-  <div class="sidebar-hover-elem" [ngStyle]="{top: hoverElemTop + 'px', height: hoverElemHeight + 'px'}"
-       [ngClass]="{'show-hover-elem': showHoverElem }"></div>
+  <div class="sidebar-hover-elem" 
+       [ngClass]="{'show-hover-elem': showHoverElem }"
+       [ngStyle]="{top: hoverElemTop + 'px', height: hoverElemHeight + 'px'}"></div>
 </aside>

@@ -18,6 +18,7 @@
     </ba-card>
     <ba-card title="发布选项" baCardClass="with-scroll">
       <article-edit-submit 
+          [isEdit]="!!article_id"
           [(state)]="article.state" 
           [(ppublic)]="article.public" 
           [(password)]="article.password" 

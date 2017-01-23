@@ -110,6 +110,13 @@
               </option>
             </template>
           </select>
+          <span>&nbsp;</span>
+          <select class="form-control c-select" [(ngModel)]="getParams.public">
+            <option value="all" default>所有类型</option>
+            <option value="1">公开</option>
+            <option value="0">密码</option>
+            <option value="-1">私密</option>
+          </select>
         </div>
       </div>
       <div class="table-responsive">
@@ -125,11 +132,12 @@
                     </span>
                   </ba-checkbox>
                 </th>
-                <th width="40%">标题</th>
+                <th width="40%">文章</th>
                 <th>分类目录</th>
                 <th width="150">标签</th>
                 <th>评论</th>
                 <th>日期</th>
+                <th>公开</th>
                 <th>状态</th>
                 <th>操作</th>
               </tr>
@@ -137,12 +145,11 @@
             <tbody>
               <tr *ngIf="!articles || !articles.data.length">
                 <td colspan="9">
-                  <p class="text-muted text-center article-err-msg" 
-                     *ngIf="articles.data.length == 0">暂无数据<p>
+                  <p class="text-muted text-center article-err-msg" *ngIf="!articles.data.length">暂无数据<p>
                 </td>
               </tr>
               <template [ngIf]="articles && articles.data.length">
-                <tr *ngFor="let article of articles.data">
+                <tr *ngFor="let article of articles.data" class="article-item">
                   <td class="batch-checkbox">
                     <ba-checkbox [(ngModel)]="article.selected" (ngModelChange)="itemSelectChange()">
                       <span ba-checkbox-label>
@@ -151,26 +158,43 @@
                       </span>
                     </ba-checkbox>
                   </td>
-                  <td>
-                    <p></p>
-                    <a href="">
-                      <h4>
-                        <strong>{{ article.title }}</strong>
-                      </h4>
-                    </a>
-                    <small>{{ article.description }}</small>
+                  <td class="article-content">
+                    <h4 class="title">
+                      <strong>{{ article.title }}</strong>
+                      <i class="ion-trash-b text-danger" *ngIf="article.state == -1"></i>
+                      <i class="ion-locked text-danger" *ngIf="article.public != 1"></i>
+                    </h4>
+                    <small class="description">
+                      <span *ngIf="article.description">{{ article.description | truncate : 150 }}</span>
+                      <span *ngIf="!article.description && article.content">{{ article.content | truncate : 200 }}</span>
+                      <span *ngIf="!article.description && !article.content" class="text-muted">暂无内容</span>
+                    </small>
                   </td>
-                  <td>
-                    <ul class="list-unstyled">
+                  <td class="article-category">
+                    <ul class="list-unstyled category-list">
                       <li *ngFor="let category of article.category">
-                        <a href="">{{ category.name }}</a>
+                        <i class="ion-ios-folder"></i>
+                        <span>&nbsp;</span>
+                        <span>{{ category.name }}</span>
+                      </li>
+                      <li *ngIf="!article.category.length" class="text-muted">
+                        <i class="ion-ios-folder"></i>
+                        <span>&nbsp;</span>
+                        <span>暂无分类</span>
                       </li>
                     </ul>
                   </td>
-                  <td>
-                    <ul class="list-unstyled">
+                  <td class="article-tag">
+                    <ul class="list-unstyled tag-list">
                       <li *ngFor="let tag of article.tag">
-                        <a href="">{{ tag.name }}</a>
+                        <i class="ion-pricetags"></i>
+                        <span>&nbsp;</span>
+                        <span>{{ tag.name }}</span>
+                      </li>
+                      <li *ngIf="!article.tag.length" class="text-muted">
+                        <i class="ion-pricetags"></i>
+                        <span>&nbsp;</span>
+                        <span>暂无标签</span>
                       </li>
                     </ul>
                   </td>
@@ -181,24 +205,36 @@
                   </td>
                   <td>{{ article.date | dataToLocale }}</td>
                   <td>
-                    <span [ngSwitch]="article.status">
+                    <span [ngSwitch]="article.public">
+                      <span *ngSwitchCase="0">密码</span>
+                      <span *ngSwitchCase="1">公开</span>
+                    </span>
+                    <span *ngIf="article.public == -1">私密</span>
+                  </td>
+                  <td>
+                    <span [ngSwitch]="article.state">
                       <span *ngSwitchCase="0">草稿</span>
                       <span *ngSwitchCase="1">已发布</span>
-                      <span *ngSwitchCase="'-1'">已删除</span>
                     </span>
+                    <span *ngIf="article.state == -1">回收站</span>
                   </td>
                   <td>
                     <div class="button-wrapper">
-                      <button class="btn btn-primary btn-sm" type="button">编辑文章</button>
+                      <a class="btn btn-primary btn-sm" [routerLink]="['/article/edit/', article._id]">编辑文章</a>
+                    </div>
+                    <div class="button-wrapper" *ngIf="article.state == -1">
+                      <button class="btn btn-warning btn-sm" (click)="recoverArticle(article)">恢复文章</button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="article.state != -1">
+                      <button class="btn btn-danger btn-sm" (click)="delToRecycle(article)">移回收站</button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="article.state == -1">
+                      <button class="btn btn-danger btn-sm" (click)="realDelArticle(article)">彻底删除</button>
                     </div>
                     <div class="button-wrapper">
-                      <button class="btn btn-info btn-sm" type="button">快速编辑</button>
-                    </div>
-                    <div class="button-wrapper">
-                      <button class="btn btn-danger btn-sm" type="button">删除文章</button>
-                    </div>
-                    <div class="button-wrapper">
-                      <button class="btn btn-success btn-sm" type="button">查看文章</button>
+                      <a class="btn btn-info btn-sm"
+                         [href]="'//surmon.me/article/' + article.id"
+                         target="_blank">查看文章</a>
                     </div>
                   </td>
                 </tr>
