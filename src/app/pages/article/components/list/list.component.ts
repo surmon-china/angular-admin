@@ -160,12 +160,12 @@ export class ArticleList {
   }
 
   // 分页获取标签
-  public pageChanged(event:any):void {
+  public pageChanged(event: any):void {
     this.getArticles({ page: event.page });
   }
 
   // 获取文章列表
-  public getArticles(params:any = {}): void {
+  public getArticles(params: any = {}): void {
     // 如果没有搜索词，则清空搜索框
     if(!!this.keyword.value) {
       params.keyword = this.keyword.value;

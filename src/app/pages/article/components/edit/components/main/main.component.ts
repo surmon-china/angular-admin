@@ -1,5 +1,6 @@
 import { Component, EventEmitter, ViewEncapsulation, Input, Output } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ArticleTagService } from '../../../tag/tag.service';
 
 @Component({
@@ -25,24 +26,22 @@ export class ArticleEditMain {
   // form
   public editForm: FormGroup;
 	public _title: AbstractControl;
-	public _content: AbstractControl;
 	public _keywords: AbstractControl;
 	public _description: AbstractControl;
 
 	// init
-	public tags: any = { dta: [] };
+	public tags: any = { data: [] };
   public editorConfig: any = { placeholder: "输入文章内容，支持html" };
 
   constructor(private _fb: FormBuilder,
+              private _route: ActivatedRoute,
 							private _articleTagService: ArticleTagService) {
   	this.editForm = _fb.group({
 			'_title': ['', Validators.compose([Validators.required])],
-			'_content': ['', Validators.compose([Validators.required])],
 			'_keywords': [[], Validators.compose([Validators.required])],
 			'_description': ['', Validators.compose([Validators.required])]
 		});
 		this._title = this.editForm.controls['_title'];
-		this._content = this.editForm.controls['_content'];
 		this._keywords = this.editForm.controls['_keywords'];
 		this._description = this.editForm.controls['_description'];
   }
@@ -56,21 +55,13 @@ export class ArticleEditMain {
   // 数据更新后重新初始化表单
   ngOnChanges(changes) {
     this.resetEditForm();
-    // console.log(changes);
-    if(changes.content && !changes.content.previousValue && !!changes.content.currentValue) {
-      // console.log('过');
-      // this.resetEditForm();
-    }
   }
 
   // 重置数据
   public resetEditForm() {
-    this.editForm.reset({
-      _title: this.title,
-      // _content: this.content,
-      _keywords: this.keywords,
-      _description: this.description
-    });
+    this._title.setValue(this.title);
+    this._keywords.setValue(this.keywords);
+    this._description.setValue(this.description);
   }
 
   // 标题格式化
@@ -98,16 +89,6 @@ export class ArticleEditMain {
   public tagChangeHandle() {
     const selectedTags = Array.from(this.tags.data.filter(t => t.selected), t => t._id);
     this.tagChange.emit(selectedTags);
-  }
-
-  // 内容格式化
-  public contentChangeHandle({ quill, html, text }) {
-    // this.content = html;
-    // if(!Object.is(this.content, html) && !Object.is(this.content, text)) {
-      // this.contentChange.emit(html);
-    // }
-    console.log(html, this.content, this._content.value);
-    // this.contentChange.emit(html);
   }
 
   // 获取所有标签
