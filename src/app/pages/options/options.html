@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-8 col-xs-8">
+  <div class="col-md-6 col-xs-6">
     <ba-card title="基本设置" baCardClass="with-scroll">
       <div class="col-sm-12 col-xs-12">
         <form class="form-horizontal">
@@ -13,6 +13,18 @@
             <label for="blogDescription" class="col-sm-2 form-control-label">副标题</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="blogDescription" placeholder="副标题">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="blogDescription" class="col-sm-2 form-control-label">关键词</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="blogDescription" placeholder="关键词">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="blogDescription" class="col-sm-2 form-control-label">描述</label>
+            <div class="col-sm-10">
+              <textarea type="text" class="form-control" id="blogDescription" placeholder="描述"></textarea>
             </div>
           </div>
           <div class="form-group row">
@@ -43,44 +55,99 @@
           </div>
           <hr>
           <div class="form-group row">
+            <div class="offset-sm-2 col-sm-10">
+              <button type="submit" class="btn btn-default">保存修改</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </ba-card>
+  </div>
+  <div class="col-md-6 col-xs-6">
+    <ba-card title="个人设置" baCardClass="with-scroll">
+      <div class="col-sm-12 col-xs-12">
+        <form class="form-horizontal"
+              [formGroup]="authForm" 
+              (ngSubmit)="submitAuthForm(authForm.value)">
+          <div class="form-group row">
             <label for="blogAuthor" class="col-sm-2 form-control-label">个人头像</label>
             <div class="col-sm-10">
-              <ba-picture-uploader [picture]="articleThumb" 
+              <ba-picture-uploader class="form-control" 
+                                   [picture]="userGravatar.value" 
                                    [defaultPicture]="defaultThumb" 
                                    [uploaderOptions]="uploaderOptions">
               </ba-picture-uploader>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="blogAuthor" class="col-sm-2 form-control-label">姓名</label>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!userName.valid && userName.touched), 
+                  'has-success': (userName.valid && userName.touched)
+                }">
+            <label for="userName" class="col-sm-2 form-control-label">姓名</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="blogAuthor" placeholder="个人名字">
+              <input type="text" 
+                     class="form-control" 
+                     id="userName"
+                     placeholder="个人名字"
+                     [formControl]="userName">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="blogAuthor" class="col-sm-2 form-control-label">个人签名</label>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!userSlogan.valid && userSlogan.touched), 
+                  'has-success': (userSlogan.valid && userSlogan.touched)
+                }">
+            <label for="userSlogan" class="col-sm-2 form-control-label">个人签名</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="blogAuthor" placeholder="个人签名">
+              <input type="text" 
+                     class="form-control" 
+                     id="userSlogan" 
+                     placeholder="个人签名"
+                     [formControl]="userSlogan">
             </div>
-          </div>
-          <div class="form-group row" *ngIf="false">
-            <label for="articleListLimit" class="col-sm-2 form-control-label">随便什么设置吧</label>
-            <div class="col-sm-2">
-              <input type="number" class="form-control" id="articleListLimit" placeholder="0">
-            </div>
-            <label>篇文章</label>
           </div>
           <hr>
-          <div class="form-group row">
-            <label for="sitePassword" class="col-sm-2 form-control-label">旧密码</label>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!userPassword.valid && userPassword.touched), 
+                  'has-success': (userPassword.valid && userPassword.touched)
+                }">
+            <label for="userPassword" class="col-sm-2 form-control-label">旧密码</label>
             <div class="col-sm-6">
-              <input type="password" class="form-control" id="sitePassword" placeholder="输入旧密码">
+              <input type="password" 
+                     class="form-control" 
+                     id="userPassword" 
+                     placeholder="输入旧密码"
+                     [formControl]="userPassword">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="siteNewPassword" class="col-sm-2 form-control-label">新密码</label>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!userNewPassword.valid && userNewPassword.touched), 
+                  'has-success': (userNewPassword.valid && userNewPassword.touched)
+                }">
+            <label for="userNewPassword" class="col-sm-2 form-control-label">新密码</label>
             <div class="col-sm-6">
-              <input type="password" class="form-control" id="siteNewPassword" placeholder="输入新密码">
+              <input type="password" 
+                     class="form-control" 
+                     id="userNewPassword" 
+                     placeholder="输入新密码"
+                     [formControl]="userNewPassword">
+            </div>
+          </div>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!userRelNewPassword.valid && userRelNewPassword.touched), 
+                  'has-success': (userRelNewPassword.valid && userRelNewPassword.touched)
+                }">
+            <label for="userRelNewPassword" class="col-sm-2 form-control-label">确认新密码</label>
+            <div class="col-sm-6">
+              <input type="password" 
+                     class="form-control" 
+                     id="userRelNewPassword" 
+                     placeholder="确认新密码"
+                     [formControl]="userRelNewPassword">
             </div>
           </div>
           <hr>
@@ -90,17 +157,6 @@
             </div>
           </div>
         </form>
-      </div>
-    </ba-card>
-  </div>
-  <div class="col-md-4 col-xs-4">
-    <ba-card title="菜单设置" baCardClass="with-scroll">
-      <div class="menu" *ngFor="let menu of [1, 2, 3, 4, 5]">
-        <h4>我是一个菜单</h4>
-        <p>这里到时候爱放什么放什么</p>
-        <Tree [nodes]="nodes" [options]="options" (onMoveNode)="onMoveNode($event)"></Tree>
-        <button class="btn btn-default btn-block">保存菜单</button>
-        <hr>
       </div>
     </ba-card>
   </div>

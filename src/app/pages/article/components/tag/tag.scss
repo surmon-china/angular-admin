@@ -1,4 +1,10 @@
-.tag-form {}
+.tag-form {
+
+  .tag-description {
+    line-height: 1.8em;
+    padding: 0 .5rem;
+  }
+}
 
 .tag-search-form {
   float: right;

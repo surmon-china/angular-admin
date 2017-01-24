@@ -41,7 +41,8 @@
                 name="articlePassword" 
                 placeholder="文章密码" 
                 [(ngModel)]="password"
-                (change)="passwordChange.emit($event.target.value)">
+                (change)="passwordChange.emit($event.target.value)"
+                [disabled]="ppublic != 0">
       </div>
     </div>
   </div>

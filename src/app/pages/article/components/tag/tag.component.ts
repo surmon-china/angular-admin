@@ -114,7 +114,7 @@ export class ArticleTag {
 	// 提交搜索
 	public searchTags(values:Object):void {
 		if (this.searchForm.valid) {
-			this.getTags(values);
+			this.getTags();
 		}
 	}
 
@@ -148,6 +148,8 @@ export class ArticleTag {
 		this._articleTagService.getTags(params)
 		.then(tags => {
 			this.tags = tags.result;
+			this.selectedTags = [];
+			this.tagsSelectAll = false;
 		})
 		.catch(error => {});
 	}
@@ -169,11 +171,11 @@ export class ArticleTag {
 		this.editForm.reset(tag);
 	}
 
-	// 确认修改标签
+	// 修改标签提交
 	public doPutTag(tag) {
 		this._articleTagService.putTag(Object.assign(this.edit_tag, tag))
 		.then(_tag => {
-			this.getTags();
+			this.getTags({ page: this.tags.pagination.current_page });
 			this.resetEditForm();
 			this.edit_tag = null;
 		})
@@ -198,7 +200,7 @@ export class ArticleTag {
 		.then(tag => {
 			this.delModal.hide();
 			this.del_tag = null;
-			this.getTags();
+			this.getTags({ page: this.tags.pagination.current_page });
 		});
 	}
 
@@ -213,9 +215,7 @@ export class ArticleTag {
 		this._articleTagService.delTags(this.selectedTags)
 		.then(tags => {
 			this.delModal.hide();
-			this.getTags();
-			this.selectedTags = [];
-			this.tagsSelectAll = false;
+			this.getTags({ page: this.tags.pagination.current_page });
 		})
 		.catch(err => {
 			this.delModal.hide();

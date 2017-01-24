@@ -12,8 +12,7 @@ export class ArticleCategoryService {
   private _apiUrl = `${API_ROOT}/category`;
 
   constructor(private http: AuthHttp,
-              private _notificationsService: NotificationsService) {
-  }
+              private _notificationsService: NotificationsService) {}
 
   // 成功处理
   private handleResponse = (response: any): Promise<any> => {
@@ -29,7 +28,8 @@ export class ArticleCategoryService {
 
   // 失败处理
   private handleError = (error: any): Promise<any> => {
-    this._notificationsService.error('请求失败', !error.ok ? error._body : JSON.parse(error._body).message);
+    const errmsg = [500, 504].indexOf(error.status) > -1 ? error._body : JSON.parse(error._body).message;
+    this._notificationsService.error('请求失败', errmsg);
     return Promise.reject(error);
   }
 
