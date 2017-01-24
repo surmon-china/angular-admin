@@ -1,7 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { NgaModule }     from '../../theme/nga.module';
-import { TreeModule }    from 'angular2-tree-component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { Options }       from './options.component';
 import { routing }       from './options.routing';
@@ -9,8 +9,9 @@ import { routing }       from './options.routing';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgaModule,
-    TreeModule,
     routing
   ],
   declarations: [

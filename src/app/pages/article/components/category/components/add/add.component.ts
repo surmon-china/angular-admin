@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { EmailValidator, EqualPasswordsValidator } from '../../../../../../theme/validators';
 
 @Component({
   selector: 'article-category-add',
+  encapsulation: ViewEncapsulation.None,
+  styles: [require('./add.scss')],
   template: require('./add.html')
 })
 
@@ -16,7 +18,7 @@ export class ArticleCategoryAdd {
   @Output() submitCategory:EventEmitter<any> = new EventEmitter();
   @Output() submitStateChange:EventEmitter<any> = new EventEmitter();
 
-  public form:FormGroup;
+  public editForm:FormGroup;
   public name:AbstractControl;
   public slug:AbstractControl;
   public pid:AbstractControl;
@@ -24,17 +26,17 @@ export class ArticleCategoryAdd {
 
   constructor(fb:FormBuilder) {
 
-    this.form = fb.group({
+    this.editForm = fb.group({
       'name': ['', Validators.compose([Validators.required])],
       'slug': ['', Validators.compose([Validators.required])],
       'pid': ['', Validators.compose([])],
       'description': ['', Validators.compose([])]
     });
 
-    this.name = this.form.controls['name'];
-    this.slug = this.form.controls['slug'];
-    this.pid = this.form.controls['pid'];
-    this.description = this.form.controls['description'];
+    this.name = this.editForm.controls['name'];
+    this.slug = this.editForm.controls['slug'];
+    this.pid = this.editForm.controls['pid'];
+    this.description = this.editForm.controls['description'];
   }
 
   // 级别标记
@@ -42,7 +44,7 @@ export class ArticleCategoryAdd {
 
   // 重置表单
   public resetForm():void {
-    this.form.reset({
+    this.editForm.reset({
       pid: '',
       name: '',
       slug: '',
@@ -59,7 +61,7 @@ export class ArticleCategoryAdd {
 
   // 提交
   public onSubmit(category:Object):void {
-    if (this.form.valid) {
+    if (this.editForm.valid) {
       return this.submitCategory.emit(category);
     }
   }
@@ -70,7 +72,7 @@ export class ArticleCategoryAdd {
     if(submitOk) this.resetForm();
     if(category) {
       changes.category.currentValue.pid = changes.category.currentValue.pid || '';
-      this.form.reset(changes.category.currentValue);
+      this.editForm.reset(changes.category.currentValue);
     }
   }
 }

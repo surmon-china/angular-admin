@@ -167,7 +167,7 @@ export class ArticleList {
   // 获取文章列表
   public getArticles(params: any = {}): void {
     // 如果没有搜索词，则清空搜索框
-    if(!!this.keyword.value) {
+    if(this.keyword.value) {
       params.keyword = this.keyword.value;
     }
     // 如果请求的是全部数据，则优化参数
@@ -185,6 +185,7 @@ export class ArticleList {
     .then(articles => {
       this.articles = articles.result;
       this.articlesSelectAll = false;
+      this.selectedArticles = [];
     })
     .catch(error => {});
   }
@@ -204,7 +205,6 @@ export class ArticleList {
     .then(categories => {
        this.categories = categories.result;
        this.categoryLevelBuild();
-       this.selectedArticles = [];
     })
     .catch(error => {});
   }

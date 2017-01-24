@@ -87,12 +87,17 @@ export class Announcement {
 		this.getAnnouncements();
 	}
 
-	// 重置表单
+	// 重置编辑表单
 	public resetForm():void {
 		this.editForm.reset({
 			content: '',
 			state: '1'
 		});
+	}
+
+	// 重置搜索
+	public resetSearchForm():void {
+		this.searchForm.reset({ keyword: '' });
 	}
 
 	// 提交表单
@@ -105,7 +110,7 @@ export class Announcement {
 	// 提交搜索
 	public searchAnnouncements(values:Object):void {
 		if (this.searchForm.valid) {
-			this.getAnnouncements(values);
+			this.getAnnouncements();
 		}
 	}
 
@@ -121,9 +126,9 @@ export class Announcement {
 
 	// 获取公告
 	public getAnnouncements(params:any = {}) {
-		// 如果没有搜索词，则清空搜索框
-		if(!params || !params.keyword) {
-			this.searchForm.reset({ content: '' });
+		// 是否搜索
+		if(this.keyword.value) {
+			params.keyword = this.keyword.value;
 		}
 		// 如果请求的是全部数据，则优化参数
 		if(!Object.is(this.searchState, 'all')) {
@@ -158,11 +163,11 @@ export class Announcement {
 		this.editForm.reset(announcement);
 	}
 
-	// 确认修改公告
+	// 修改公告提交
 	public doPutAnnouncement(announcement) {
 		this._announcementService.putAnnouncement(Object.assign(this.edit_announcement, announcement))
 		.then(_announcement => {
-			this.getAnnouncements();
+			this.getAnnouncements({ page: this.announcements.pagination.current_page });
 			this.edit_announcement = null;
 			this.resetForm();
 		})
@@ -187,7 +192,7 @@ export class Announcement {
 		.then(announcement => {
 			this.delModal.hide();
 			this.del_announcement = null;
-			this.getAnnouncements();
+			this.getAnnouncements({ page: this.announcements.pagination.current_page });
 		});
 	}
 
@@ -202,9 +207,7 @@ export class Announcement {
 		this._announcementService.delAnnouncements(this.selectedAnnouncements)
 		.then(announcements => {
 			this.delModal.hide();
-			this.getAnnouncements();
-			this.selectedAnnouncements = [];
-			this.announcementsSelectAll = false;
+			this.getAnnouncements({ page: this.announcements.pagination.current_page });
 		})
 		.catch(err => {
 			this.delModal.hide();

@@ -12,8 +12,7 @@ export class AnnouncementService {
   private _apiUrl = `${API_ROOT}/announcement`;
 
   constructor(private http: AuthHttp,
-              private _notificationsService: NotificationsService) {
-  }
+              private _notificationsService: NotificationsService) {}
 
   // 成功处理
   private handleResponse = (response: any): Promise<any> => {

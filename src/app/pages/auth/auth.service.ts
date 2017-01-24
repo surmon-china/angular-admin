@@ -10,21 +10,28 @@ import { API_ROOT } from 'src/config'
 export class AuthService {
 
   private _authUrl = `${API_ROOT}/auth`;
-  private _handleResponse = response => {
+
+  // 成功处理
+  private handleResponse = (response: any): Promise<any> => {
     const data = response.json();
-    data.code && this._notificationsService.success(data.message, data.message);
-    data.code || this._notificationsService.error(data.message, data.debug.message);
-    return data;
+    if(data.code) {
+      this._notificationsService.success(data.message, '数据请求成功');
+      return Promise.resolve(data);
+    } else {
+      this._notificationsService.error(data.message, data.debug ? data.debug.message : data.message);
+      return Promise.reject(data);
+    }
   }
-  private _handleError = error => {
-    const err = JSON.parse(error._body);
-    this._notificationsService.error('请求失败', err.message || '');
-    return Promise.reject(new Error(err.message));
+
+  // 失败处理
+  private handleError = (error: any): Promise<any> => {
+    const errmsg = [500, 504].indexOf(error.status) > -1 ? error._body : JSON.parse(error._body).message;
+    this._notificationsService.error('请求失败', errmsg);
+    return Promise.reject(error);
   }
 
   constructor(private http: AuthHttp,
-              private _notificationsService: NotificationsService) {
-  }
+              private _notificationsService: NotificationsService) {}
 
   login(password): Promise<any> {
     return this.http
