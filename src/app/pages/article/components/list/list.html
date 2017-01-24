@@ -58,13 +58,16 @@
               </button>
               <ul class="dropdown-menu" dropdownMenu>
                 <li class="dropdown-item">
-                  <a [href]="">移至回收站</a>
+                  <a [href]="" (click)="moveToPublished(selectedArticles)">快速发布</a>
                 </li>
                 <li class="dropdown-item">
-                  <a [href]="">彻底删除</a>
+                  <a [href]="" (click)="moveToDraft(selectedArticles)">移至草稿</a>
                 </li>
                 <li class="dropdown-item">
-                  <a [href]="">批量还原</a>
+                  <a [href]="" (click)="moveToRecycle(selectedArticles)">移至回收站</a>
+                </li>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="delArticleModal(selectedArticles)">彻底删除</a>
                 </li>
               </ul>
             </div>
@@ -228,14 +231,25 @@
                     <div class="button-wrapper">
                       <a class="btn btn-primary btn-sm" [routerLink]="['/article/edit/', article._id]">编辑文章</a>
                     </div>
+                    <div class="button-wrapper" *ngIf="article.state == 0">
+                      <button class="btn btn-warning btn-sm" 
+                              (click)="moveToPublished([article._id])">快速发布</button>
+                    </div>
                     <div class="button-wrapper" *ngIf="article.state == -1">
-                      <button class="btn btn-warning btn-sm" (click)="recoverArticle(article)">恢复文章</button>
+                      <button class="btn btn-warning btn-sm" 
+                              (click)="moveToDraft([article._id])">恢复文章</button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="article.state == 1">
+                      <button class="btn btn-warning btn-sm" 
+                              (click)="moveToDraft([article._id])">移到草稿</button>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state != -1">
-                      <button class="btn btn-danger btn-sm" (click)="delToRecycle(article)">移回收站</button>
+                      <button class="btn btn-danger btn-sm" 
+                              (click)="moveToRecycle([article._id])">移回收站</button>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state == -1">
-                      <button class="btn btn-danger btn-sm" (click)="realDelArticle(article)">彻底删除</button>
+                      <button class="btn btn-danger btn-sm" 
+                              (click)="delArticleModal([article._id])">彻底删除</button>
                     </div>
                     <div class="button-wrapper">
                       <a class="btn btn-info btn-sm"
@@ -267,5 +281,31 @@
         </div>
       </div>
     </ba-card>
+    <!-- 删除确认弹窗 -->
+    <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" aria-label="Close" (click)="cancelArticleModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">确认操作</h4>
+          </div>
+          <div class="modal-body">
+            <div class="message">
+              <span class="icon text-warning">
+                <i class="ion-ios-information-outline"></i>
+              </span>
+              <span>确定要删除{{ del_articles ? '这篇' : '选中' }}文章吗？本操作不可逆</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary confirm-btn" (click)="delArticles()">确认删除</button>
+            <span>&nbsp;</span>
+            <button class="btn btn-default confirm-btn" (click)="cancelArticleModal()">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

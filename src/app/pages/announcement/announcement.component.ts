@@ -136,6 +136,8 @@ export class Announcement {
 		this._announcementService.getAnnouncements(params)
 		.then(announcements => {
 			this.announcements = announcements.result;
+			this.selectedAnnouncements = [];
+			this.announcementsSelectAll = false;
 		})
 		.catch(error => {});
 	}

@@ -42,11 +42,11 @@ export class App {
   // 通知配置
   public notificationsOptions = {
     position: ['top', 'right'],
-    timeOut: 1000,
+    timeOut: 300,
     lastOnBottom: true,
     clickToClose: true,
     maxLength: 0,
-    maxStack: 7,
+    maxStack: 5,
     showProgressBar: true,
     pauseOnHover: true,
     preventDuplicates: false,
