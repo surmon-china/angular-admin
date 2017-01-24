@@ -19,7 +19,7 @@ export class ArticleListService {
   private handleResponse = (response: any): Promise<any> => {
     const data = response.json();
     if(data.code) {
-      this._notificationsService.success(data.message, '数据请求成功', { timeOut: 500 });
+      this._notificationsService.success(data.message, '数据请求成功');
       return Promise.resolve(data);
     } else {
       this._notificationsService.error(data.message, data.debug ? data.debug.message : data.message);
@@ -34,7 +34,8 @@ export class ArticleListService {
     return Promise.reject(error);
   }
 
-  getArticles(get_params:any): Promise<any> {
+  // 获取文章列表
+  public getArticles(get_params:any): Promise<any> {
     let params: URLSearchParams = new URLSearchParams();
     if (get_params) {
       Object.keys(get_params).forEach(k => { 
@@ -43,6 +44,42 @@ export class ArticleListService {
     }
     return this.http
       .get(this._apiUrl, { search: params })
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  // 移至回收站
+  public moveToRecycle(articles: any) {
+    return this.http
+      .put(this._apiUrl, { articles, params: { action: 1 }})
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  // 移至草稿
+  public moveToDraft(articles: any) {
+    return this.http
+      .put(this._apiUrl, { articles, params: { action: 2 }})
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  // 移至已发布
+  public moveToPublished(articles: any) {
+    return this.http
+      .put(this._apiUrl, { articles, params: { action: 3 }})
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  // 删除文章
+  public delArticles(articles: any) {
+    return this.http
+      .delete(this._apiUrl, new RequestOptions({ body: { articles }}))
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);

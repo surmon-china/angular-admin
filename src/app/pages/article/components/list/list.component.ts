@@ -40,7 +40,7 @@ export class ArticleList {
   };
 
   // 其他数据
-  public del_article:any;
+  public del_articles:any;
   public articlesSelectAll:boolean = false;
   public selectedArticles = [];
 
@@ -180,10 +180,11 @@ export class ArticleList {
     if(!params.page || Object.is(params.page, 1)) {
       this.articles.pagination.current_page = 1;
     }
-    console.log(params);
+    // 请求文章
     this._articleListService.getArticles(params)
     .then(articles => {
       this.articles = articles.result;
+      this.articlesSelectAll = false;
     })
     .catch(error => {});
   }
@@ -203,21 +204,59 @@ export class ArticleList {
     .then(categories => {
        this.categories = categories.result;
        this.categoryLevelBuild();
-    });
+       this.selectedArticles = [];
+    })
+    .catch(error => {});
   }
 
   // 移至回收站
-  delToRecycle(article: any) {
-    console.log('移至回收站', article);
+  public moveToRecycle(articles: any) {
+    this._articleListService.moveToRecycle(articles)
+    .then(do_result => {
+      this.getArticles({ page: this.articles.pagination.current_page });
+    })
+    .catch(error => {});
   }
 
-  // 彻底删除
-  realDelArticle(article: any) {
-    console.log('彻底删除', article);
+  // 恢复文章（移至草稿）
+  public moveToDraft(articles: any) {
+    this._articleListService.moveToDraft(articles)
+    .then(do_result => {
+      this.getArticles({ page: this.articles.pagination.current_page });
+    })
+    .catch(error => {});
   }
 
-  // 恢复文章
-  recoverArticle(article: any) {
-    console.log('恢复文章', article);
+  // 快速发布（移至已发布）
+  public moveToPublished(articles: any) {
+    this._articleListService.moveToPublished(articles)
+    .then(do_result => {
+      this.getArticles({ page: this.articles.pagination.current_page });
+    })
+    .catch(error => {});
+  }
+
+  // 彻底删除文章
+  public delArticles() {
+    const articles = this.del_articles || this.selectedArticles;
+    this._articleListService.delArticles(articles)
+    .then(do_result => {
+      this.delModal.hide();
+      this.del_articles = null;
+      this.getArticles({ page: this.articles.pagination.current_page });
+    })
+    .catch(error => {});
+  }
+
+  // 弹窗
+  public delArticleModal(article) {
+    this.del_articles = article;
+    this.delModal.show();
+  }
+
+  // 弹窗取消
+  public cancelArticleModal() {
+    this.delModal.hide();
+    this.del_articles = null;
   }
 }

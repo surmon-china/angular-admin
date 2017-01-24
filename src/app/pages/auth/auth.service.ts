@@ -12,7 +12,7 @@ export class AuthService {
   private _authUrl = `${API_ROOT}/auth`;
   private _handleResponse = response => {
     const data = response.json();
-    data.code && this._notificationsService.success(data.message, data.message, { timeOut: 500 });
+    data.code && this._notificationsService.success(data.message, data.message);
     data.code || this._notificationsService.error(data.message, data.debug.message);
     return data;
   }

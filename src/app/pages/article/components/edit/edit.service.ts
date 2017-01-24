@@ -18,7 +18,7 @@ export class ArticleEditService {
   private handleResponse = (response: any): Promise<any> => {
     const data = response.json();
     if(data.code) {
-      this._notificationsService.success(data.message, '数据请求成功', { timeOut: 500 });
+      this._notificationsService.success(data.message, '数据请求成功');
       return Promise.resolve(data);
     } else {
       this._notificationsService.error(data.message, data.debug ? data.debug.message : data.message);

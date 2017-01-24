@@ -19,7 +19,7 @@ export class AnnouncementService {
   private handleResponse = (response: any): Promise<any> => {
     const data = response.json();
     if(data.code) {
-      this._notificationsService.success(data.message, '数据请求成功', { timeOut: 500 });
+      this._notificationsService.success(data.message, '数据请求成功');
       return Promise.resolve(data);
     } else {
       this._notificationsService.error(data.message, data.debug ? data.debug.message : data.message);
@@ -61,7 +61,7 @@ export class AnnouncementService {
       .catch(this.handleError);
   }
 
-  delAnnouncement(announcement_id: any): Promise<void> {
+  delAnnouncement(announcement_id: any): Promise<any> {
     return this.http
       .delete(`${ this._apiUrl }/${ announcement_id }`)
       .toPromise()
@@ -69,7 +69,7 @@ export class AnnouncementService {
       .catch(this.handleError);
   }
 
-  delAnnouncements(announcements: any): Promise<void> {
+  delAnnouncements(announcements: any): Promise<any> {
     return this.http
       .delete(this._apiUrl, new RequestOptions({ body: { announcements }}))
       .toPromise()
