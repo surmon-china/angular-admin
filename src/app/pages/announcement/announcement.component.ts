@@ -1,7 +1,6 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ModalDirective } from 'ng2-bootstrap';
-import { NotificationsService } from 'angular2-notifications';
 import { AnnouncementService } from './announcement.service';
 
 @Component({
@@ -81,14 +80,14 @@ export class Announcement {
 	}
 
 	// 切换公告类型
-	public switchState(state:any):void {
+	public switchState(state: any): void {
 		if(state == undefined || Object.is(state, this.searchState)) return;
 		this.searchState = state;
 		this.getAnnouncements();
 	}
 
 	// 重置编辑表单
-	public resetForm():void {
+	public resetForm(): void {
 		this.editForm.reset({
 			content: '',
 			state: '1'
@@ -108,24 +107,24 @@ export class Announcement {
 	}
 
 	// 提交搜索
-	public searchAnnouncements(values:Object):void {
+	public searchAnnouncements(values: Object): any {
 		if (this.searchForm.valid) {
 			this.getAnnouncements();
 		}
 	}
 
 	// 刷新本页本类型公告
-	public refreshAnnouncements():void {
+	public refreshAnnouncements(): any {
 		this.getAnnouncements({ page: this.announcements.pagination.current_page });
 	}
 
 	// 分页获取公告
-	public pageChanged(event:any):void {
+	public pageChanged(event: any): any {
 		this.getAnnouncements({ page: event.page });
 	}
 
 	// 获取公告
-	public getAnnouncements(params:any = {}) {
+	public getAnnouncements(params: any = {}) {
 		// 是否搜索
 		if(this.keyword.value) {
 			params.keyword = this.keyword.value;
@@ -193,6 +192,9 @@ export class Announcement {
 			this.delModal.hide();
 			this.del_announcement = null;
 			this.getAnnouncements({ page: this.announcements.pagination.current_page });
+		})
+		.catch(err => {
+			this.delModal.hide();
 		});
 	}
 

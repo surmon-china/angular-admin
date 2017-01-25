@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ModalDirective } from 'ng2-bootstrap';
-import { NotificationsService } from 'angular2-notifications';
 import { ArticleCategoryService } from './category.service';
 
 @Component({
@@ -18,8 +17,7 @@ export class ArticleCategory {
   public editCategory:any;
   public delCategories:any;
 
-  constructor(private _articleCategoryService:ArticleCategoryService,
-              private _notificationsService: NotificationsService) {}
+  constructor(private _articleCategoryService: ArticleCategoryService) {}
 
   ngOnInit() {
     this._getCategories();
