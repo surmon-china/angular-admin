@@ -46,9 +46,11 @@
     "ng2-bootstrap": "1.1.14",
     "ng2-quill-editor": "^1.1.0",
     "ng2-smart-table": "^0.3.2",
-    "ng2-uploader": "1.1.0",
+    "ngx-uploader": "^2.0.24",
     "normalize.css": "^4.1.1",
+    "plupload": "^2.2.1",
     "postcss-loader": "^1.0.0",
+    "qiniu-js": "^1.0.14-beta",
     "rxjs": "5.0.0-beta.12",
     "tether": "^1.2.4",
     "zone.js": "~0.6.25"

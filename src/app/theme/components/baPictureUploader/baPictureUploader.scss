@@ -2,33 +2,39 @@
 
 .picture-group {
   border: 1px dashed #b8b8b8;
-  width: 202px;
-  height: 202px;
+  width: 100%;
+  height: 100%;
   position: relative;
   cursor: pointer;
+
   .picture-wrapper {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   img {
     max-width: 100%;
     max-height: 100%;
   }
+
   i {
     display: none;
     position: absolute;
-    font-size: 32px;
+    font-size: 35px;
+    line-height: 29px;
     background: $default;
     cursor: pointer;
     color: $primary;
     top: -11px;
     right: -11px;
-    height: 26px;
+    height: 28px;
+    width: 28px;
     border-radius: 50%;
+
     &:before {
       line-height: 26px;
     }
@@ -36,19 +42,21 @@
       color: $danger;
     }
   }
+
   a.change-picture {
     display: none;
-    width: 202px;
+    width: 100%;
     background: rgba(0, 0, 0, 0.7);
     transition: all 200ms ease-in-out;
     color: $default-text;
     text-decoration: none;
     position: absolute;
-    bottom: -1px;
-    left: -1px;
+    bottom: 0;
+    left: 0;
     line-height: 32px;
     text-align: center;
   }
+  
   &:hover {
     i {
       display: block;
@@ -66,11 +74,19 @@
     position: absolute;
     justify-content: center;
     align-items: center;
-  }
-  .spinner {
-    width: 60px;
-    height: 60px;
-    position: relative;
+    background-color: rgba(210, 210, 210, 0.9);
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      position: relative;
+    }
+
+    .load-progress {
+      position: absolute;
+      bottom: 5%;
+      color: black;
+    }
   }
 
   .double-bounce1, .double-bounce2 {

@@ -29,18 +29,6 @@ export class ArticleEdit {
     // url: 'http://website.com/upload'
   };
 
-  /*
-  var reader = new FileReader();
-   
-  // 绑定load事件
-  reader.onload = function(e) {
-    console.log(e.target.result);
-  }
- 
-  // 读取File对象的数据
-  reader.readAsDataURL(files[0]);
-  */
-
   constructor(private _route: ActivatedRoute,
               private _articleEditService: ArticleEditService) {}
 

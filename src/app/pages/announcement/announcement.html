@@ -32,7 +32,9 @@
                         [config]="editorConfig">
           </quill-editor>
         </div>
-        <button type="submit" class="btn btn-success">{{ edit_announcement ? '修改' : '添加' }}公告</button>
+        <button type="submit"
+                class="btn btn-success"
+                [disabled]="!editForm.valid">{{ edit_announcement ? '修改' : '添加' }}公告</button>
         <span>&nbsp;</span>
         <button class="btn btn-default" (click)="resetForm()">重置</button>
       </form>
@@ -105,7 +107,9 @@
                    [formControl]="keyword"
                    class="form-control with-default-addon">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="submit">搜索</button>
+              <button class="btn btn-default" 
+                      type="submit"
+                      [disabled]="!searchForm.valid">搜索</button>
             </span>
           </div>
         </form>

@@ -52,7 +52,9 @@
           </textarea>
           <span class="help-block sub-little-text">该标签的描述</span>
         </div>
-        <button type="submit" class="btn btn-success">{{ edit_tag ? '修改' : '添加' }}标签</button>
+        <button type="submit" 
+                class="btn btn-success"
+                [disabled]="!editForm.valid">{{ edit_tag ? '修改' : '添加' }}标签</button>
         <span>&nbsp;</span>
         <button class="btn btn-default" (click)="resetEditForm()">重置</button>
       </form>
@@ -101,7 +103,9 @@
                    class="form-control with-default-addon"
                    [formControl]="keyword">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="submit">搜索</button>
+              <button class="btn btn-default" 
+                      type="submit"
+                      [disabled]="!searchForm.valid">搜索</button>
             </span>
           </div>
         </form>
