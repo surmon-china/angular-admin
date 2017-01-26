@@ -44,8 +44,7 @@ export class Options {
 	}
 
 	public handleAuthChange = userAuthPromise => {
-		userAuthPromise.then(({ name, slogan, gravatar }) => {
-			console.log({ name, slogan, gravatar });
+		userAuthPromise.then(({ result: { name, slogan, gravatar }}) => {
 			this.authForm.reset({
 				name,
 				slogan,
