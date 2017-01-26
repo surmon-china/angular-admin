@@ -71,19 +71,19 @@
               (ngSubmit)="submitAuthForm(authForm.value)">
           <div class="form-group row"
                 [ngClass]="{ 
-                  'has-error': (!userGravatar.valid && userGravatar.touched), 
-                  'has-success': (userGravatar.valid && userGravatar.touched)
+                  'has-error': (!gravatar.valid && gravatar.touched), 
+                  'has-success': (gravatar.valid && gravatar.touched)
                 }">
             <label class="col-sm-2 form-control-label">个人头像</label>
             <div class="col-sm-10">
-              <ba-picture-uploader class="form-control auth-gravatar" [formControl]="userGravatar">
+              <ba-picture-uploader class="form-control auth-gravatar" [formControl]="gravatar">
               </ba-picture-uploader>
             </div>
           </div>
           <div class="form-group row"
                 [ngClass]="{ 
-                  'has-error': (!userName.valid && userName.touched), 
-                  'has-success': (userName.valid && userName.touched)
+                  'has-error': (!name.valid && name.touched), 
+                  'has-success': (name.valid && name.touched)
                 }">
             <label for="userName" class="col-sm-2 form-control-label">姓名</label>
             <div class="col-sm-10">
@@ -91,13 +91,13 @@
                      class="form-control" 
                      id="userName"
                      placeholder="个人名字"
-                     [formControl]="userName">
+                     [formControl]="name">
             </div>
           </div>
           <div class="form-group row"
                 [ngClass]="{ 
-                  'has-error': (!userSlogan.valid && userSlogan.touched), 
-                  'has-success': (userSlogan.valid && userSlogan.touched)
+                  'has-error': (!slogan.valid && slogan.touched), 
+                  'has-success': (slogan.valid && slogan.touched)
                 }">
             <label for="userSlogan" class="col-sm-2 form-control-label">个人签名</label>
             <div class="col-sm-10">
@@ -105,14 +105,14 @@
                      class="form-control" 
                      id="userSlogan" 
                      placeholder="个人签名"
-                     [formControl]="userSlogan">
+                     [formControl]="slogan">
             </div>
           </div>
           <hr>
           <div class="form-group row"
                 [ngClass]="{ 
-                  'has-error': (!userPassword.valid && userPassword.touched), 
-                  'has-success': (userPassword.valid && userPassword.touched)
+                  'has-error': (!password.valid && password.touched), 
+                  'has-success': (password.valid && password.touched)
                 }">
             <label for="userPassword" class="col-sm-2 form-control-label">旧密码</label>
             <div class="col-sm-6">
@@ -120,13 +120,13 @@
                      class="form-control" 
                      id="userPassword" 
                      placeholder="输入旧密码"
-                     [formControl]="userPassword">
+                     [formControl]="password">
             </div>
           </div>
           <div class="form-group row"
                 [ngClass]="{ 
-                  'has-error': (!userNewPassword.valid && userNewPassword.touched), 
-                  'has-success': (userNewPassword.valid && userNewPassword.touched)
+                  'has-error': (!newPassword.valid && newPassword.touched), 
+                  'has-success': (newPassword.valid && newPassword.touched)
                 }">
             <label for="userNewPassword" class="col-sm-2 form-control-label">新密码</label>
             <div class="col-sm-6">
@@ -134,13 +134,13 @@
                      class="form-control" 
                      id="userNewPassword" 
                      placeholder="输入新密码"
-                     [formControl]="userNewPassword">
+                     [formControl]="newPassword">
             </div>
           </div>
           <div class="form-group row"
                 [ngClass]="{ 
-                  'has-error': (!userRelNewPassword.valid && userRelNewPassword.touched), 
-                  'has-success': (userRelNewPassword.valid && userRelNewPassword.touched)
+                  'has-error': (!relNewPassword.valid && relNewPassword.touched), 
+                  'has-success': (relNewPassword.valid && relNewPassword.touched)
                 }">
             <label for="userRelNewPassword" class="col-sm-2 form-control-label">确认新密码</label>
             <div class="col-sm-6">
@@ -148,7 +148,7 @@
                      class="form-control" 
                      id="userRelNewPassword" 
                      placeholder="确认新密码"
-                     [formControl]="userRelNewPassword">
+                     [formControl]="relNewPassword">
             </div>
           </div>
           <hr>

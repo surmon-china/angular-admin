@@ -75,36 +75,6 @@ export const PAGES_MENU = [
         ]
       },
       {
-        path: 'page',
-        data: {
-          menu: {
-            title: '页面管理',
-            icon: 'ion-document-text',
-            order: 3,
-          }
-        },
-        children: [
-          {
-            path: 'list',
-            data: {
-              menu: {
-                icon: 'ion-ios-list-outline',
-                title: '所有页面',
-              }
-            }
-          },
-          {
-            path: 'post',
-            data: {
-              menu: {
-                icon: 'ion-compose',
-                title: '新建页面',
-              }
-            }
-          }
-        ]
-      },
-      {
         path: 'comment',
         data: {
           menu: {
@@ -251,18 +221,6 @@ export const PAGES_MENU = [
             path: '',
             data: {
               menu: {
-                title: 'Wordpress',
-                url: 'http://wordpress.surmon.me',
-                icon: 'fa fa-wordpress',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
                 title: 'NodePress',
                 url: 'http://api.surmon.me',
                 icon: 'ion-android-exit',
@@ -306,36 +264,7 @@ export const PAGES_MENU = [
             expanded: false,
             order: 650,
           }
-        },
-        children: [
-          {
-            path: 'secret',
-            data: {
-              menu: {
-                icon: 'ion-person',
-                title: '私密'
-              }
-            }
-          },
-          {
-            path: 'login',
-            data: {
-              menu: {
-                icon: 'ion-person',
-                title: '登陆'
-              }
-            }
-          },
-          {
-            path: 'register',
-            data: {
-              menu: {
-                icon: 'ion-person',
-                title: '注册'
-              }
-            }
-          }
-        ]
+        }
       },
       {
         path: 'demo',
@@ -360,50 +289,6 @@ export const PAGES_MENU = [
                 target: '_blank'
               }
             }
-          },
-          {
-            path: 'editors',
-            data: {
-              menu: {
-                title: '编辑器',
-                icon: 'ion-edit',
-                selected: false,
-                expanded: false,
-                order: 100,
-              }
-            },
-            children: [
-              {
-                path: 'ckeditor',
-                data: {
-                  menu: {
-                    title: 'CKEditor',
-                  }
-                }
-              }
-            ]
-          },
-          {
-           path: 'components',
-           data: {
-             menu: {
-               title: '组件库',
-               icon: 'ion-gear-a',
-               selected: false,
-               expanded: false,
-               order: 250,
-             }
-           },
-           children: [
-             {
-               path: 'treeview',
-               data: {
-                 menu: {
-                   title: 'Tree View',
-                 }
-               }
-             }
-           ]
           },
           {
             path: 'charts',

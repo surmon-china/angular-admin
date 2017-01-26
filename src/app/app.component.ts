@@ -5,6 +5,8 @@ import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './theme/
 import { layoutPaths } from './theme/theme.constants';
 import { BaThemeConfig } from './theme/theme.config';
 import { NotificationsService } from 'angular2-notifications';
+import { tokenNotExpired } from 'angular2-jwt';
+import { Router } from '@angular/router';
 
 /*
  * 顶级入口组件
@@ -26,6 +28,7 @@ export class App {
   isMenuCollapsed: boolean = false;
 
   constructor(private _state: GlobalState,
+              private _router: Router,
               private _config: BaThemeConfig,
               private _spinner: BaThemeSpinner,
               private _imageLoader: BaImageLoaderService,
@@ -66,12 +69,17 @@ export class App {
     BaThemePreloader.registerLoader(this._imageLoader.load(layoutPaths.images.root + 'sky-bg.jpg'));
   }
 
-  /*
-  ngOnInit() {
-    setInterval(() => {
-      console.log(this._notificationsService);
-      this._notificationsService.error('数据请求失败', 'this.content');
-    }, 2000)
+  loggedIn() {
+    return tokenNotExpired();
   }
-  */
+  
+  // 初始化时重置路由
+  ngOnInit() {
+    if(!this.loggedIn()) {
+      setTimeout(() => {
+        this._notificationsService.error('误闯禁地', '...', { timeOut: 1000 });
+        this._router.navigate(['/auth']);
+      }, 0);
+    }
+  }
 }
