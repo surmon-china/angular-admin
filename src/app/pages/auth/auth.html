@@ -11,7 +11,7 @@
              *ngIf="editMode"
              [(ngModel)]="password"
              (keyup.esc)="quitEdit($event)"
-             (keyup.enter)="onEnter(password.value)"
+             (keyup.enter)="onEnter($event)"
              (dblclick)="toEditMode($event)">
     </div>
   </div>

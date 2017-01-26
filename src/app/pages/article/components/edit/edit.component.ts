@@ -24,11 +24,6 @@ export class ArticleEdit {
     category: []
   }
 
-  public defaultPicture = 'assets/img/theme/palette.png';
-  public uploaderOptions: any = {
-    // url: 'http://website.com/upload'
-  };
-
   constructor(private _route: ActivatedRoute,
               private _articleEditService: ArticleEditService) {}
 

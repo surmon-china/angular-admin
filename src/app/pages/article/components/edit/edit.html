@@ -26,11 +26,7 @@
       </article-edit-submit>
     </ba-card>
     <ba-card title="缩略图" baCardClass="with-scroll">
-      <ba-picture-uploader 
-          [picture]="article.thumb" 
-          [defaultPicture]="defaultThumb" 
-          [uploaderOptions]="uploaderOptions">
-      </ba-picture-uploader>
+      <ba-picture-uploader [(ngModel)]="article.thumb"></ba-picture-uploader>
     </ba-card>
   </div>
 </div>

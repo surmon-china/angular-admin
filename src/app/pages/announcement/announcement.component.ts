@@ -153,7 +153,7 @@ export class Announcement {
 			this.resetForm();
 			this.getAnnouncements();
 		})
-		.catch(error => {});;
+		.catch(error => {});
 	}
 
 	// 修改公告

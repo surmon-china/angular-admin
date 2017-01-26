@@ -56,19 +56,18 @@ type StoreType = {
     provideAuth({
       headerName: 'Authorization',
       headerPrefix: 'Bearer',
-      tokenName: 'token',
-      tokenGetter() { return localStorage.getItem('token')},
+      tokenName: 'id_token',
+      tokenGetter() { return localStorage.getItem('id_token')},
       globalHeaders: [{'Content-Type': 'application/json'}],
-      noJwtError: true,
-      noTokenScheme: true
+      noJwtError: false,
+      noTokenScheme: false
     })
   ]
 })
 
 export class AppModule {
 
-  constructor(public appRef: ApplicationRef, public appState: AppState) {
-  }
+  constructor(public appRef: ApplicationRef, public appState: AppState) {}
 
   hmrOnInit(store: StoreType) {
     if (!store || !store.state) return;

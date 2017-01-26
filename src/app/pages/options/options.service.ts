@@ -43,6 +43,15 @@ export class OptionsService {
       .catch(this.handleError);
   }
 
+  // 获取用户信息
+  getUser(): Promise<any> {
+    return this.http
+      .get(this._authApiUrl)
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
   // 更新权限和用户信息
   putAuth(auth: any): Promise<any> {
     return this.http

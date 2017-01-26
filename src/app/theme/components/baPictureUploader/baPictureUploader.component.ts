@@ -130,7 +130,7 @@ export class BaPictureUploader implements ControlValueAccessor, OnChanges {
     }
 
     // 如果图片小于10K，则输出base64，否则上传
-    if(file.size <= 100000) {
+    if(file.size <= 10000) {
       let reader = new FileReader();
       reader.onload = event => {
         const imgBase64 = event.target.result;

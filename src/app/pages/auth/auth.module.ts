@@ -6,9 +6,6 @@ import { routing }       from './auth.routing';
 
 import { AuthService }   from './auth.service';
 import { Auth }          from './auth.component';
-import { AuthLogin }     from './components/login';
-import { AuthSecret }    from './components/secret';
-import { AuthRegister }  from './components/register';
 
 @NgModule({
   imports: [
@@ -22,10 +19,7 @@ import { AuthRegister }  from './components/register';
     AuthService
   ],
   declarations: [
-    Auth,
-    AuthLogin,
-    AuthSecret,
-    AuthRegister
+    Auth
   ]
 })
 export default class AuthModule {

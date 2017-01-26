@@ -11,59 +11,64 @@ import { OptionsService } from './options.service';
 export class Options {
 
 	public authForm:FormGroup;
-	public userName:AbstractControl;
-	public userSlogan:AbstractControl;
-	public userGravatar:AbstractControl;
-	public userPassword:AbstractControl;
-	public userNewPassword:AbstractControl;
-	public userRelNewPassword:AbstractControl;
+	public name:AbstractControl;
+	public slogan:AbstractControl;
+	public gravatar:AbstractControl;
+	public password:AbstractControl;
+	public newPassword:AbstractControl;
+	public relNewPassword:AbstractControl;
 
   constructor(private _fb: FormBuilder,
   						private _optionsService: OptionsService) {
 		this.authForm = _fb.group({
-			'userName': ['', Validators.compose([Validators.required])],
-			'userSlogan': ['', Validators.compose([Validators.required])],
-			'userGravatar': ['', Validators.compose([Validators.required])],
-			'userPassword': [''],
-			'userNewPassword': [''],
-			'userRelNewPassword': [''],
+			'name': ['', Validators.compose([Validators.required])],
+			'slogan': ['', Validators.compose([Validators.required])],
+			'gravatar': ['', Validators.compose([Validators.required])],
+			'password': [''],
+			'newPassword': [''],
+			'relNewPassword': [''],
 		});
-		this.userName = this.authForm.controls['userName'];
-		this.userSlogan = this.authForm.controls['userSlogan'];
-		this.userGravatar = this.authForm.controls['userGravatar'];
-		this.userPassword = this.authForm.controls['userPassword'];
-		this.userNewPassword = this.authForm.controls['userNewPassword'];
-		this.userRelNewPassword = this.authForm.controls['userRelNewPassword'];
+		this.name = this.authForm.controls['name'];
+		this.slogan = this.authForm.controls['slogan'];
+		this.gravatar = this.authForm.controls['gravatar'];
+		this.password = this.authForm.controls['password'];
+		this.newPassword = this.authForm.controls['newPassword'];
+		this.relNewPassword = this.authForm.controls['relNewPassword'];
 	}
-
-  public uploadCompleted() {
-  	console.log('上传图片完成');
-  }
 
 	// 提交权限表单
 	public submitAuthForm(values: any) {
 		if (this.authForm.valid) {
-			console.log(this.authForm);
-			// this.putAuth(this.authForm.value);
+			this.putAuth(this.authForm.value);
 		}
 	}
 
-	// 更新权限
-
-	// 更新设置
-	public putAuth(auth: any) {
-		this._optionsService.putAuth(auth)
-		.then(_auth => {
-			console.log(_auth);
+	public handleAuthChange = userAuthPromise => {
+		userAuthPromise.then(({ name, slogan, gravatar }) => {
+			console.log({ name, slogan, gravatar });
 			this.authForm.reset({
-				userName: _auth.name,
-				userSlogan: _auth.slogan,
-				userGravatar: _auth.gravatar,
-				userPassword: '',
-				userNewPassword: '',
-				userRelNewPassword: ''
+				name,
+				slogan,
+				gravatar,
+				password: '',
+				newPassword: '',
+				relNewPassword: ''
 			});
 		})
 		.catch(error => {});;
+	}
+
+	// 获取用户
+	public getUserAuth() {
+		this.handleAuthChange(this._optionsService.getUser());
+	}
+
+	// 更新用户
+	public putAuth(auth: any) {
+		this.handleAuthChange(this._optionsService.putAuth(auth));
+	}
+
+	ngOnInit () {
+		this.getUserAuth();
 	}
 }
