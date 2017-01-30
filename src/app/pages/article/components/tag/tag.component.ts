@@ -201,6 +201,9 @@ export class ArticleTag {
 			this.delModal.hide();
 			this.del_tag = null;
 			this.getTags({ page: this.tags.pagination.current_page });
+		})
+		.catch(err => {
+			this.delModal.hide();
 		});
 	}
 

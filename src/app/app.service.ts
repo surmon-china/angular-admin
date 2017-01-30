@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 export type InternalStateType = {
   [key: string]: any
@@ -6,10 +7,18 @@ export type InternalStateType = {
 
 @Injectable()
 export class AppState {
-  _state: InternalStateType = {};
 
-  constructor() {
-  }
+  adminInfoChange: Subject<string> = new Subject<string>();
+
+  _state:InternalStateType = {
+    adminInfo: {
+      gravatar: 'assets/img/app/profile/Admin.jpg',
+      name: '管理员',
+      slogan: '博客管理后台'
+    }
+  };
+
+  constructor() {}
 
   // already return a clone of the current state
   get state() {
@@ -29,7 +38,10 @@ export class AppState {
 
   set(prop: string, value: any) {
     // internally mutate our state
-    return this._state[prop] = value;
+    this._state[prop] = value;
+    console.log('set', this._state.adminInfo);
+    this.adminInfoChange.next('this._state.adminInfo');
+    return;
   }
 
   private _clone(object: InternalStateType) {

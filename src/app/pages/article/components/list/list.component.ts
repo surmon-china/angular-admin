@@ -245,7 +245,9 @@ export class ArticleList {
       this.del_articles = null;
       this.getArticles({ page: this.articles.pagination.current_page });
     })
-    .catch(error => {});
+    .catch(error => {
+      this.delModal.hide();
+    });
   }
 
   // 弹窗
