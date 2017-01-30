@@ -2,61 +2,130 @@
   <div class="col-md-6 col-xs-6">
     <ba-card title="基本设置" baCardClass="with-scroll">
       <div class="col-sm-12 col-xs-12">
-        <form class="form-horizontal option-form">
-          <div class="form-group row">
-            <label for="blogName" class="col-sm-2 form-control-label">站点标题</label>
+        <form class="form-horizontal option-form"
+              [formGroup]="optionForm" 
+              (ngSubmit)="submitOptionForm(optionForm.value)">
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!title.valid && title.touched), 
+                  'has-success': (title.valid && title.touched)
+                }">
+            <label for="blogTitle" class="col-sm-2 form-control-label">站点标题</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="blogName" placeholder="站点标题">
+              <input type="text" 
+                     class="form-control" 
+                     id="blogTitle" 
+                     placeholder="站点标题"
+                     [formControl]="title">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="blogDescription" class="col-sm-2 form-control-label">副标题</label>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!sub_title.valid && sub_title.touched), 
+                  'has-success': (sub_title.valid && sub_title.touched)
+                }">
+            <label for="blogSubTitle" class="col-sm-2 form-control-label">副标题</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="blogDescription" placeholder="副标题">
+              <input type="text" 
+                     class="form-control" 
+                     id="blogSubTitle" 
+                     placeholder="副标题"
+                     [formControl]="sub_title">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="blogDescription" class="col-sm-2 form-control-label">关键词</label>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!keywords.valid && keywords.touched), 
+                  'has-success': (keywords.valid && keywords.touched)
+                }">
+            <label for="blogKeywords" class="col-sm-2 form-control-label">关键词</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="blogDescription" placeholder="关键词">
+              <input type="text" 
+                     class="form-control" 
+                     id="blogKeywords" 
+                     placeholder="关键词"
+                     [formControl]="keywords"
+                     (change)="keywordsChangeHandle($event)">
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!description.valid && description.touched), 
+                  'has-success': (description.valid && description.touched)
+                }">
             <label for="blogDescription" class="col-sm-2 form-control-label">描述</label>
             <div class="col-sm-10">
-              <textarea type="text" class="form-control" id="blogDescription" placeholder="描述"></textarea>
+              <textarea type="text" 
+                        class="form-control blog-description" 
+                        id="blogDescription" 
+                        placeholder="描述"
+                        [formControl]="description">
+              </textarea>
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!site_url.valid && site_url.touched), 
+                  'has-success': (site_url.valid && site_url.touched)
+                }">
             <label for="siteUrl" class="col-sm-2 form-control-label">站点地址</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="siteUrl" placeholder="站点地址（URL）">
+              <input type="text" 
+                     class="form-control" 
+                     id="siteUrl" 
+                     placeholder="站点地址（URL）"
+                     [formControl]="site_url">
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!site_email.valid && site_email.touched), 
+                  'has-success': (site_email.valid && site_email.touched)
+                }">
             <label for="siteEmail" class="col-sm-2 form-control-label">电子邮件地址</label>
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="siteEmail" placeholder="博客邮件地址">
+              <input type="text" 
+                     class="form-control" 
+                     id="siteEmail" 
+                     placeholder="博客邮件地址"
+                     [formControl]="site_email">
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!site_icp.valid && site_icp.touched), 
+                  'has-success': (site_icp.valid && site_icp.touched)
+                }">
             <label for="icpID" class="col-sm-2 form-control-label">ICP备案号</label>
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="icpID" placeholder="如：陕ICP备0000000号">
+              <input type="text" 
+                     class="form-control" 
+                     id="icpID" 
+                     placeholder="如：陕ICP备0000000号"
+                     [formControl]="site_icp">
             </div>
           </div>
-          <div class="form-group row">
-            <label for="pingSites" class="col-sm-2 form-control-label">搜索引擎更新服务</label>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!ping_sites.valid && ping_sites.touched), 
+                  'has-success': (ping_sites.valid && ping_sites.touched)
+                }">
+            <label for="pingSites" class="col-sm-2 form-control-label">SEO更新服务</label>
             <div class="col-sm-10">
-              <textarea class="form-control"
-                        id="pingSites"
-                        placeholder="在发表新文章时，NodePress会自动通知站点更新服务。用换行分隔多个服务URL。"></textarea>
+              <textarea id="pingSites"
+                        class="form-control blog-ping-sites"
+                        placeholder="在发表新文章时，NodePress会自动通知站点更新服务。用换行分隔多个服务URL。"
+                        [formControl]="ping_sites"
+                        (change)="pingSitesChangeHandle($event)">
+              </textarea>
             </div>
           </div>
           <hr>
           <div class="form-group row">
             <div class="offset-sm-2 col-sm-10">
-              <button type="submit" class="btn btn-default">保存修改</button>
+              <button type="submit" 
+                      class="btn btn-default"
+                      [disabled]="!optionForm.valid">保存修改</button>
             </div>
           </div>
         </form>
@@ -125,8 +194,8 @@
           </div>
           <div class="form-group row"
                 [ngClass]="{ 
-                  'has-error': (!newPassword.valid && newPassword.touched), 
-                  'has-success': (newPassword.valid && newPassword.touched)
+                  'has-error': (!new_password.valid && new_password.touched), 
+                  'has-success': (new_password.valid && new_password.touched)
                 }">
             <label for="userNewPassword" class="col-sm-2 form-control-label">新密码</label>
             <div class="col-sm-6">
@@ -134,13 +203,13 @@
                      class="form-control" 
                      id="userNewPassword" 
                      placeholder="输入新密码"
-                     [formControl]="newPassword">
+                     [formControl]="new_password">
             </div>
           </div>
           <div class="form-group row"
                 [ngClass]="{ 
-                  'has-error': (!relNewPassword.valid && relNewPassword.touched), 
-                  'has-success': (relNewPassword.valid && relNewPassword.touched)
+                  'has-error': (!rel_new_password.valid && rel_new_password.touched), 
+                  'has-success': (rel_new_password.valid && rel_new_password.touched)
                 }">
             <label for="userRelNewPassword" class="col-sm-2 form-control-label">确认新密码</label>
             <div class="col-sm-6">
@@ -148,7 +217,7 @@
                      class="form-control" 
                      id="userRelNewPassword" 
                      placeholder="确认新密码"
-                     [formControl]="relNewPassword">
+                     [formControl]="rel_new_password">
             </div>
           </div>
           <hr>

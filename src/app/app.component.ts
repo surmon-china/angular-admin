@@ -8,6 +8,8 @@ import { NotificationsService } from 'angular2-notifications';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Router } from '@angular/router';
 
+import { AppState } from './app.service';
+import { OptionsService } from './pages/options/options.service';
 /*
  * 顶级入口组件
  */
@@ -21,13 +23,16 @@ import { Router } from '@angular/router';
       <div class="additional-bg"></div>
       <router-outlet></router-outlet>
     </main>
-  `
+  `,
+  providers: [OptionsService, AppState]
 })
 export class App {
 
   isMenuCollapsed: boolean = false;
 
   constructor(private _state: GlobalState,
+              public appState: AppState,
+              private _optionsService: OptionsService,
               private _router: Router,
               private _config: BaThemeConfig,
               private _spinner: BaThemeSpinner,
@@ -40,6 +45,18 @@ export class App {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
+  }
+
+  // 初始化时拉取全局设置
+  public initAppOptions():void {
+    this._optionsService.getUserAuth()
+    .then(({ result: adminInfo }) => {
+      // console.log(adminInfo);
+      // this.appState.adminInfo = adminInfo;
+      this.appState.set('adminInfo', adminInfo);
+      console.log(this.appState);
+    })
+    .catch(error => {});
   }
 
   // 通知配置
@@ -80,6 +97,8 @@ export class App {
         this._notificationsService.error('误闯禁地', '...', { timeOut: 1000 });
         this._router.navigate(['/auth']);
       }, 0);
+    } else {
+      this.initAppOptions();
     }
   }
 }

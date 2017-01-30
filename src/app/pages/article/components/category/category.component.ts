@@ -68,7 +68,8 @@ export class ArticleCategory {
     .then(categories => {
       this.categories = categories.result;
       this._categoryLevelBuild();
-    });
+    })
+    .catch(error => {});
   }
 
   // 添加分类
@@ -79,7 +80,8 @@ export class ArticleCategory {
     .then(_category => {
       this._getCategories();
       this.addCategoryState = { ing: false, success: !!_category.code };
-    });
+    })
+    .catch(error => {});
   }
 
   // 修改分类
@@ -96,6 +98,9 @@ export class ArticleCategory {
       this._getCategories();
       this.editCategory = null;
       this.addCategoryState = { ing: false, success: !!category.code };
+    })
+    .catch(error => {
+      this.addCategoryState = { ing: false, success: false };
     });
   }
 
@@ -113,10 +118,14 @@ export class ArticleCategory {
 
   // 确认删除分类
   private _doDelCategory() {
-    this._articleCategoryService.delCategory(this.delCategory._id).then(category => {
+    this._articleCategoryService.delCategory(this.delCategory._id)
+    .then(category => {
       this.delCategory = null;
       this.delModal.hide();
       this._getCategories();
+    })
+    .catch(error => {
+      this.delModal.hide();
     });
   }
 
@@ -129,10 +138,14 @@ export class ArticleCategory {
 
   // 确认批量删除
   private _doDelCategories() {
-    this._articleCategoryService.delCategories(this.delCategories).then(categories => {
+    this._articleCategoryService.delCategories(this.delCategories)
+    .then(categories => {
       this.delCategories = null;
       this.delModal.hide();
       this._getCategories();
+    })
+    .catch(error => {
+      this.delModal.hide();
     });
   }
 }

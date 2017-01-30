@@ -130,7 +130,7 @@ a.al-sidebar-user {
   > .al-sidebar-user-profile {
     display: block;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 1em;
 
     > .al-sidebar-user-name {
       margin-bottom: 10px;
@@ -139,6 +139,7 @@ a.al-sidebar-user {
     }
 
     > .al-sidebar-user-slogan {
+      text-align: center;
       @include text-truncate();
       display: block;
     }

@@ -10,7 +10,7 @@ import { API_ROOT } from 'src/config'
 export class OptionsService {
 
   private _authApiUrl = `${API_ROOT}/auth`;
-  private _optionApiUrl = `${API_ROOT}/options`;
+  private _optionApiUrl = `${API_ROOT}/option`;
 
   constructor(private http: AuthHttp,
               private _notificationsService: NotificationsService) {}
@@ -34,6 +34,15 @@ export class OptionsService {
     return Promise.reject(error);
   }
 
+  // 获取设置
+  getOptions(): Promise<any> {
+    return this.http
+      .get(this._optionApiUrl)
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
   // 更新设置
   putOptions(options: any): Promise<any> {
     return this.http
@@ -44,7 +53,7 @@ export class OptionsService {
   }
 
   // 获取用户信息
-  getUser(): Promise<any> {
+  getUserAuth(): Promise<any> {
     return this.http
       .get(this._authApiUrl)
       .toPromise()

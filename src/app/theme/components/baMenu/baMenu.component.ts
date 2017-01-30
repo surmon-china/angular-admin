@@ -1,9 +1,10 @@
-import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
-import {Router, Routes, NavigationEnd} from '@angular/router';
-import {Subscription} from 'rxjs/Rx';
+import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { Router, Routes, NavigationEnd } from '@angular/router';
+import { Subscription} from 'rxjs/Rx';
 
-import {BaMenuService} from './baMenu.service';
-import {GlobalState} from '../../../global.state';
+import { AppState } from '../../../app.service';
+import { BaMenuService } from './baMenu.service';
+import { GlobalState } from '../../../global.state';
 
 @Component({
   selector: 'ba-menu',
@@ -27,7 +28,10 @@ export class BaMenu {
   protected _onRouteChange:Subscription;
   public outOfArea:number = -200;
 
-  constructor(private _router:Router, private _service:BaMenuService, private _state:GlobalState) {
+  constructor(private _router:Router, 
+              private _service:BaMenuService, 
+              private _state:GlobalState,
+              public appState:AppState) {
     this._onRouteChange = this._router.events.subscribe((event) => {
 
       if (event instanceof NavigationEnd) {
@@ -38,6 +42,9 @@ export class BaMenu {
           setTimeout(() => this.selectMenuAndNotify());
         }
       }
+    });
+    this.appState.adminInfoChange.subscribe((value) => { 
+      console.log('change', value);
     });
   }
 
