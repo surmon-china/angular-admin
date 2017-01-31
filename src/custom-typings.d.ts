@@ -32,6 +32,9 @@
  *
  */
 
+declare var mOxie:any;
+declare var plupload:any;
+declare var Qiniu:any;
 declare var jQuery:any;
 declare var GoogleMapsLoader:any;
 declare var L:any;

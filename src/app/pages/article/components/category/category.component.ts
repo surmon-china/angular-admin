@@ -58,7 +58,7 @@ export class ArticleCategory {
     }
 
     // 开始执行
-    this.categories.data = levelBuildRun(categories.filter(c => !toDoDeletes.includes(c)));
+    this.categories.data = levelBuildRun(categories.filter(c => toDoDeletes.indexOf(c) == -1));
   };
 
   // 获取分类

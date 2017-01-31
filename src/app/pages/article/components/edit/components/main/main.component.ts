@@ -87,7 +87,7 @@ export class ArticleEditMain {
 
   // 标签选择格式化
   public tagChangeHandle() {
-    const selectedTags = Array.from(this.tags.data.filter(t => t.selected), t => t._id);
+    const selectedTags = Array.from(this.tags.data.filter(t => t.selected), t => (<any>t)._id);
     this.tagChange.emit(selectedTags);
   }
 

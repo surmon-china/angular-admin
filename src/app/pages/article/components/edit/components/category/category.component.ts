@@ -22,12 +22,12 @@ export class ArticleEditCategory {
   }
 
   // 分类级别标记
-  public categoryLevelMark(level): void { 
+  public categoryLevelMark(level):any { 
     return Array.from({ length: level }, () => '')
   };
 
   // 分类级别递归排序
-  public categoryLevelBuild(): void {
+  public categoryLevelBuild():void {
 
     // 初始化数据
     let categories = Array.from(this.categories.data);

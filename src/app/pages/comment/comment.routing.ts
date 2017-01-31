@@ -10,7 +10,6 @@ const routes: Routes = [
     { path: 'tools', data: { name: 'tools' }, component: Comment },
     { path: 'statistics', data: { name: 'statistics' }, component: Comment },
     { path: 'user', data: { name: 'user' }, component: Comment }
-  }
 ];
 
 export const routing = RouterModule.forChild(routes);

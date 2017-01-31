@@ -7,6 +7,8 @@
  */
 (function($) {
 
+  var t, pageY, currTop;
+
   $.fn.extend({
     slimScroll: function(options) {
 
@@ -288,7 +290,7 @@
             // see how far user swiped
             var diff = (touchDif - e.originalEvent.touches[0].pageY) / o.touchScrollStep;
             // scroll content
-            scrollContent(diff, true);
+            scrollContent(diff, true, false);
             touchDif = e.originalEvent.touches[0].pageY;
           }
         });
@@ -301,7 +303,7 @@
         {
           // scroll content to bottom
           bar.css({ top: me.outerHeight() - bar.outerHeight() });
-          scrollContent(0, true);
+          scrollContent(0, true, false);
         }
         else if (o.start !== 'top')
         {
@@ -329,7 +331,7 @@
           var target = e.target || e.srcTarget || e.srcElement;
           if ($(target).closest('.' + o.wrapperClass).is(me.parent())) {
             // scroll content
-            scrollContent(delta, true);
+            scrollContent(delta, true, false);
           }
 
           // stop window scroll
@@ -395,7 +397,7 @@
           }
           else
           {
-            document.attachEvent("onmousewheel", _onWheel)
+            // window.document.attachEvent("onmousewheel", _onWheel)
           }
         }
 

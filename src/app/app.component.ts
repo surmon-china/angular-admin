@@ -29,9 +29,10 @@ import { OptionsService } from './pages/options/options.service';
 export class App {
 
   isMenuCollapsed: boolean = false;
+  optionIsInited: boolean = false;
 
   constructor(private _state: GlobalState,
-              public appState: AppState,
+              private _appState: AppState,
               private _optionsService: OptionsService,
               private _router: Router,
               private _config: BaThemeConfig,
@@ -45,16 +46,22 @@ export class App {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
+
+    // 路由拦截器
+    this._router.events.subscribe((event) => {
+      const url = this._router.url;
+      if(!Object.is(url, '/') && !Object.is(url, '/auth')) {
+        this.routeCheck();
+      }
+    });
   }
 
   // 初始化时拉取全局设置
   public initAppOptions():void {
+    this.optionIsInited = true;
     this._optionsService.getUserAuth()
     .then(({ result: adminInfo }) => {
-      // console.log(adminInfo);
-      // this.appState.adminInfo = adminInfo;
-      this.appState.set('adminInfo', adminInfo);
-      console.log(this.appState);
+      this._appState.set('adminInfo', adminInfo);
     })
     .catch(error => {});
   }
@@ -89,16 +96,21 @@ export class App {
   loggedIn() {
     return tokenNotExpired();
   }
-  
-  // 初始化时重置路由
-  ngOnInit() {
+
+  // 路由检查
+  routeCheck() {
     if(!this.loggedIn()) {
       setTimeout(() => {
         this._notificationsService.error('误闯禁地', '...', { timeOut: 1000 });
         this._router.navigate(['/auth']);
       }, 0);
-    } else {
+    } else if (!this.optionIsInited) {
       this.initAppOptions();
     }
+  }
+  
+  // 初始化时重置路由
+  ngOnInit() {
+    this.routeCheck();
   }
 }

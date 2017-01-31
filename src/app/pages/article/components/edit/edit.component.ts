@@ -51,7 +51,9 @@ export class ArticleEdit {
   // 初始化
   ngOnInit() {
     // 如果是修改，则请求文章数据
-    this.article_id = this._route.params.value.article_id;
-    if(this.article_id) this.getArticle(this.article_id);
+    this._route.params.subscribe(({ article_id }) => {
+      this.article_id = article_id;
+      if(article_id) this.getArticle(article_id);
+    });
   }
 }

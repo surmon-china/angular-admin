@@ -90,7 +90,7 @@ export class ArticleList {
   }
 
   // 分类级别标记
-  public categoryLevelMark(level): void { 
+  public categoryLevelMark(level):any { 
     return Array.from({ length: level }, () => '')
   };
 
@@ -129,7 +129,7 @@ export class ArticleList {
     }
 
     // 开始执行
-    this.categories.data = levelBuildRun(categories.filter(c => !toDoDeletes.includes(c)));
+    this.categories.data = levelBuildRun(categories.filter(c => toDoDeletes.indexOf(c) == -1));
   };
 
   // 切换文章类型

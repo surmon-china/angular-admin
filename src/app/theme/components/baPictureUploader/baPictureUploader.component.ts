@@ -12,9 +12,9 @@ import './baPictureUploader.loader.ts';
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => BaPictureUploader),
     multi: true
-  }
+  }]
 })
-export class BaPictureUploader implements ControlValueAccessor, OnChanges {
+export class BaPictureUploader implements ControlValueAccessor {
 
    // 元素域
   @ViewChild('fileUpload') protected _fileUpload:ElementRef;
@@ -115,7 +115,7 @@ export class BaPictureUploader implements ControlValueAccessor, OnChanges {
       }
     }, this.uploaderOptions));
   }
-
+ 
   // 要上传的文件变更时（组件拦截）
   public onFiles():any {
 
@@ -133,7 +133,7 @@ export class BaPictureUploader implements ControlValueAccessor, OnChanges {
     if(file.size <= 10000) {
       let reader = new FileReader();
       reader.onload = event => {
-        const imgBase64 = event.target.result;
+        const imgBase64 = (<any>event).target.result;
         this.emitPicture(imgBase64);
       }
       reader.readAsDataURL(file);
