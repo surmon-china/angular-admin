@@ -1,5 +1,6 @@
-export const API_ROOT = (process.env.NODE_ENV === 'production')
-      ? 'https://api.surmon.me'
-      :'/api'
+const devApi = '/api';
+const prodApi = 'https://api.surmon.me';
+const staticApi = 'http://static.surmon.me';
 
-export const STATIC_URL = 'http://static.surmon.me'
+export const API_ROOT = (function(){ try { if(process) { return devApi } else { return prodApi }} catch(err) { return prodApi }})();
+export const STATIC_URL = staticApi;
