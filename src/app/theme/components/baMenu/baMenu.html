@@ -1,6 +1,6 @@
 <aside class="al-sidebar" (mouseleave)="hoverElemTop=outOfArea" sidebarResize>
   <div class="al-sidebar-list-item" [hidden]="sidebarCollapsed">
-    <a href="/pages/userprofile" class="al-sidebar-user">
+    <a [routerLink]="['/options']" class="al-sidebar-user">
       <img src="{{ _appState.state.adminInfo.gravatar }}" class="al-sidebar-user-gravatar">
       <div class="al-sidebar-user-profile">
         <p class="al-sidebar-user-name">{{ _appState.state.adminInfo.name }}</p>
