@@ -1,6 +1,8 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {GlobalState} from '../../../global.state';
+import { GlobalState } from '../../../global.state';
+import { AppState } from '../../../app.service';
 
 @Component({
   selector: 'ba-page-top',
@@ -13,10 +15,18 @@ export class BaPageTop {
   public isScrolled:boolean = false;
   public isMenuCollapsed:boolean = false;
 
-  constructor(private _state:GlobalState) {
+  constructor(private _router: Router,
+              private _state:GlobalState,
+              private _appState:AppState) {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
+  }
+
+  public logout() {
+    // console.log('退出登录');
+    localStorage.removeItem('id_token');
+    this._router.navigate(['/auth']);
   }
 
   public toggleMenu() {

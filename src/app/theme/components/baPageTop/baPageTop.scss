@@ -33,9 +33,11 @@ a.al-logo {
   line-height: $top-height;
   width: $sidebar-width;
   text-align: center;
+  font-weight: bolder;
+  font-family: monospace;
 
   span {
-    margin-right: 5px;
+    margin-right: 2px;
     color: $primary;
   }
 }

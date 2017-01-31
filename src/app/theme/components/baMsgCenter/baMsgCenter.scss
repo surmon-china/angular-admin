@@ -209,22 +209,26 @@
     width: 145px;
     top: 55px;
     right: -25px;
+    
     a {
       text-align: left;
       border: none;
       text-decoration: none;
       color: $dropdown-text;
-      padding: 4px 16px 4px 20px;
+
       &.signout {
         border-top: 1px solid $default;
       }
+
       i {
         margin-right: 10px;
       }
+
       &:hover {
         background: #f4fcff;
       }
     }
+
     i.dropdown-arr {
       right: 25px;
     }
