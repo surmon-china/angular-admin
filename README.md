@@ -3,6 +3,13 @@
 Admin panel framework based on Angular 2, Bootstrap 4 and Webpack
 
 
+# Todos
+- 标签项，需要增加icon自定义字段
+- 仪表盘信息聚合（系统信息聚合、百度统计api信息聚合、多说信息聚合）
+- 文章发布后自动ping给搜索引擎xml
+- 所有无用组件/代码的清理
+- 程序截图 + 文档撰写
+
 # 目录结构
 ```
 angular-admin/
