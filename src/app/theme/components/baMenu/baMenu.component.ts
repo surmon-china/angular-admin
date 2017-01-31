@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { Router, Routes, NavigationEnd } from '@angular/router';
-import { Subscription} from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Rx';
 
 import { AppState } from '../../../app.service';
 import { BaMenuService } from './baMenu.service';
@@ -31,7 +31,7 @@ export class BaMenu {
   constructor(private _router:Router, 
               private _service:BaMenuService, 
               private _state:GlobalState,
-              public appState:AppState) {
+              private _appState:AppState) {
     this._onRouteChange = this._router.events.subscribe((event) => {
 
       if (event instanceof NavigationEnd) {
@@ -42,9 +42,6 @@ export class BaMenu {
           setTimeout(() => this.selectMenuAndNotify());
         }
       }
-    });
-    this.appState.adminInfoChange.subscribe((value) => { 
-      console.log('change', value);
     });
   }
 

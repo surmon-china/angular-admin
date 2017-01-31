@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Rx';
 
 export type InternalStateType = {
   [key: string]: any
@@ -8,7 +9,8 @@ export type InternalStateType = {
 @Injectable()
 export class AppState {
 
-  adminInfoChange: Subject<string> = new Subject<string>();
+  private stateChange = new Subject();
+  state$ = this.stateChange.asObservable();
 
   _state:InternalStateType = {
     adminInfo: {
@@ -38,10 +40,8 @@ export class AppState {
 
   set(prop: string, value: any) {
     // internally mutate our state
-    this._state[prop] = value;
-    console.log('set', this._state.adminInfo);
-    this.adminInfoChange.next('this._state.adminInfo');
-    return;
+    this.stateChange.next(value);
+    return this._state[prop] = value;
   }
 
   private _clone(object: InternalStateType) {

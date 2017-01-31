@@ -10,18 +10,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class Comment implements OnInit {
 
-  iframeSrc:String = '';
-  iframeBaseSrc:String = 'http://wordpress-surmon.duoshuo.com/admin/';
+  iframeSrc:any = '';
+  iframeBaseSrc:any = 'http://wordpress-surmon.duoshuo.com/admin/';
   constructor(private router: ActivatedRoute, private domSanitizer : DomSanitizer) {}
 
   ngOnInit() {
-    const path = this.router.data.value.name;
-    if(path == 'manage') {
-      this.iframeSrc = this.domSanitizer.bypassSecurityTrustResourceUrl(this.iframeBaseSrc);
-    } else if(path == 'user') {
-      this.iframeSrc = this.domSanitizer.bypassSecurityTrustResourceUrl('http://duoshuo.com/settings/');
-    } else {
-      this.iframeSrc = this.domSanitizer.bypassSecurityTrustResourceUrl(`${this.iframeBaseSrc}${(path == 'preferences' ? 'settings' : path)}/`);
-    }
+    this.router.data.subscribe(({ name: path }) => {
+      if(path == 'manage') {
+        this.iframeSrc = this.domSanitizer.bypassSecurityTrustResourceUrl(this.iframeBaseSrc);
+      } else if(path == 'user') {
+        this.iframeSrc = this.domSanitizer.bypassSecurityTrustResourceUrl('http://duoshuo.com/settings/');
+      } else {
+        this.iframeSrc = this.domSanitizer.bypassSecurityTrustResourceUrl(`${this.iframeBaseSrc}${(path == 'preferences' ? 'settings' : path)}/`);
+      }
+    });
+    
   }
 }

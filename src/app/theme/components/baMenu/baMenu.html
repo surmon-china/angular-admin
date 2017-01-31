@@ -1,10 +1,10 @@
 <aside class="al-sidebar" (mouseleave)="hoverElemTop=outOfArea" sidebarResize>
   <div class="al-sidebar-list-item" [hidden]="sidebarCollapsed">
     <a href="/pages/userprofile" class="al-sidebar-user">
-      <img src="{{ appState.state.adminInfo.gravatar }}" class="al-sidebar-user-gravatar">
+      <img src="{{ _appState.state.adminInfo.gravatar }}" class="al-sidebar-user-gravatar">
       <div class="al-sidebar-user-profile">
-        <p class="al-sidebar-user-name">{{ appState.state.adminInfo.name }}</p>
-        <small class="al-sidebar-user-slogan text-muted">{{ appState.state.adminInfo.slogan }}</small>
+        <p class="al-sidebar-user-name">{{ _appState.state.adminInfo.name }}</p>
+        <small class="al-sidebar-user-slogan text-muted">{{ _appState.state.adminInfo.slogan }}</small>
       </div>
     </a>
   </div>

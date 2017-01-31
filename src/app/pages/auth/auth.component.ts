@@ -46,7 +46,7 @@ export class Auth {
   }
 
   ngAfterViewChecked() {
-    const input = this.elem.nativeElement.children[0].children[0].children[0].children[0]);
+    const input = this.elem.nativeElement.children[0].children[0].children[0].children[0];
     input.focus();
   }
 }
