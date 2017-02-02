@@ -219,7 +219,7 @@ label.custom-radio {
     &:checked {
       & + span {
         &:before {
-          content: "\f00c";
+          content: "\f383";
           font-weight: $font-light;
         }
       }
@@ -246,7 +246,7 @@ label.custom-radio {
     width: 100%;
     &:before {
       cursor: pointer;
-      font-family: fontAwesome;
+      font-family: "Ionicons";
       font-weight: $font-light;
       font-size: 12px;
       color: $content-text;
@@ -638,7 +638,7 @@ label.custom-checkbox {
     &:checked {
       & + span {
         &:before {
-          content: "\f00c";
+          content: "\f383";
           font-weight: $font-light;
         }
       }
@@ -665,7 +665,7 @@ label.custom-checkbox {
     width: 100%;
     &:before {
       cursor: pointer;
-      font-family: fontAwesome;
+      font-family: "Ionicons";
       font-weight: $font-light;
       font-size: 12px;
       color: $content-text;

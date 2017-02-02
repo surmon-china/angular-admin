@@ -4,6 +4,22 @@
     line-height: 1.8em;
     padding: 0 .5rem;
   }
+
+  .tag-extend {
+    overflow: hidden;
+    margin-bottom: 1em;
+
+    .extend-key,
+    .extend-value {
+      float: left;
+      width: 41%;
+      margin-right: 3%;
+    }
+    
+    .extend-del {
+      float: right;
+    }
+  }
 }
 
 .tag-search-form {

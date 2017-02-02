@@ -52,11 +52,52 @@
           </textarea>
           <span class="help-block sub-little-text">该标签的描述</span>
         </div>
-        <button type="submit" 
-                class="btn btn-success"
-                [disabled]="!editForm.valid">{{ edit_tag ? '修改' : '添加' }}标签</button>
-        <span>&nbsp;</span>
-        <button class="btn btn-default" (click)="resetEditForm()">重置</button>
+        <div  class="form-group"
+              [ngClass]="{ 
+                'has-error': (!extends.valid && extends.touched), 
+                'has-success': (extends.valid && extends.touched)
+              }">
+          <label for="tag_extends">
+            <h5>自定义扩展</h5>
+          </label>
+          <div class="tag-extend" *ngFor="let extend of extends.value; let i = index">
+            <div class="extend-key">
+              <input type="text" 
+                     id="tag_name"
+                     class="form-control"
+                     placeholder="key" 
+                     [(ngModel)]="extend.name"
+                     [ngModelOptions]="{ standalone: true }"/>
+            </div>
+            <div class="extend-value">
+              <input type="text" 
+                     id="tag_name"
+                     class="form-control"
+                     placeholder="value" 
+                     [(ngModel)]="extend.value"
+                     [ngModelOptions]="{ standalone: true }">
+            </div>
+            <div class="extend-del">
+              <button class="btn btn-warning" 
+                      (click)="delExtendItem(i)"
+                      [disabled]="extends.value.length < 2">
+                <i class="ion-trash-b"></i>
+              </button>
+            </div>
+          </div>
+          <a [href]="" class="btn btn-default btn-sm btn-block" (click)="addExtendItem()">增加扩展</a>
+          <span class="help-block sub-little-text">可以为当前标签扩展自定义扩展属性</span>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-xs-8">
+            <button type="submit" class="btn btn-success btn-block"
+                    [disabled]="!editForm.valid">{{ edit_tag ? '修改' : '添加' }}标签</button>
+          </div>
+          <div class="col-xs-4">
+            <button class="btn btn-default btn-block" (click)="resetEditForm()">重置</button>
+          </div>
+        </div>
       </form>
     </ba-card>
   </div>

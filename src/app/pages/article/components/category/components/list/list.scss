@@ -5,7 +5,6 @@
     text-align: left;
     padding-left: 2em;
   }
-
   .category-err-msg {
     margin: 1em 0;
   }
@@ -16,6 +15,14 @@
 
       td {
         line-height: 5em;
+
+        &.category-description {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
       }
     }
   }

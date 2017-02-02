@@ -2,12 +2,17 @@
 # angular-admin
 Admin panel framework based on Angular 2, Bootstrap 4 and Webpack
 
-# Todos
-- 标签项，需要增加icon自定义字段
+# Todos && Issues
+- ~~首次登陆，数据库无数据时，个人头像，名字等均为展示默认值~~
+- ~~分类列表页的分类描述，超出一行之后，P标签的行间距过大~~
+- ~~发布文章页的分类目录选中图标，应该替换为ionic里的图标~~
+- ~~标签项，需要增加icon自定义字段~~
+- 所有涉及发布的内容项，都需要增加自定义字段
 - 发布文章页，在标签和分类为空时缺少提示信息，文章的默认缩略图需调整
 - 仪表盘信息聚合（系统信息聚合、百度统计api信息聚合、多说信息聚合）
+- 仪表盘图表组件和echarts整合
 - 文章发布后自动ping给搜索引擎xml
-- 所有无用组件/代码的清理
+- ~~所有无用组件/代码的清理~~
 - 程序截图 + 文档撰写
 
 # 程序结构
@@ -51,7 +56,7 @@ Admin panel framework based on Angular 2, Bootstrap 4 and Webpack
    - 由于设置了防盗链导致的403错误
 
 ## 表单验证构造和使用
-   - 依赖哪些组件、类
+   - 依赖哪些组件、类、基本类、验证类、...
    - 基本的构造方法是怎样的
    - 自定义正则验证规则
 
@@ -61,9 +66,9 @@ Admin panel framework based on Angular 2, Bootstrap 4 and Webpack
    - service属工具性质，本项目中用来获取/管理资源/状态
    - service可以抽象为公共服务，但是多次注入会被多次实例化，导致无法订阅数据流，暂没找到更好方法
 
-## ts一些要注意的坑
+## 一些要注意的坑
    - 变量声明（声明前的判断，和调用时可能出现的错误）
-   - ```(<any>window).aaa = {}```;
+   - ```(<any>window).aaa = {}```，这里不能用global判断，global在webpack中是可用的，本项目也依赖了虚拟的dom对象，编译后global关键字被自动替换为window引入，所以只能如上写法，当然还有一种try catch的方法也能做到
    - 在项目中使用jquery，或其他js库
    - 暴露类的构造和意义，如ngOnInit这样的钩子函数
    - cnpm和npm安装的区别，会导致重复引用无法编译的问题，主要是由于cnpm的版本管理机制不一样导致的，cnpm是空文件夹+快捷方式的方法乱搞
