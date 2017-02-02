@@ -44,13 +44,13 @@ npm-debug.log
 /tsd_typings/
 
 # Dist #
-/dist
+# /dist
 /public/__build__/
 /src/*/__build__/
 /__build__/**
-/public/dist/
+# /public/dist/
 /src/*/dist/
-/dist/**
+# /dist/**
 .webpack.json
 /build
 /build/**
