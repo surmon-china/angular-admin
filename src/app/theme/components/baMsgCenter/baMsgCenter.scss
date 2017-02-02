@@ -21,6 +21,10 @@
   list-style: none;
   margin: 13px 47px 0 0;
 
+  a {
+    color: $primary;
+  }
+
   li {
     list-style: none;
     float: left;
@@ -114,29 +118,34 @@
   right: -47px;
   top: 26px;
   @include scrollbars(.4em, rgba(0,0,0,0.5), #fff);
+
   .header {
     padding: 10px 12px;
     border-bottom: 1px solid $default;
     font-size: 12px;
+
     strong {
       float: left;
       color: $dropdown-text;
     }
+
     & > a {
       float: right;
       margin-left: 12px;
       text-decoration: none;
+
       &:hover {
         color: $dropdown-text;
       }
     }
   }
+
   .msg-list {
     max-height: 296px;
     overflow: scroll;
     overflow-x: hidden;
+
     & > a {
-      border-top: 1px solid $default;
       padding: 10px 12px;
       display: block;
       text-decoration: none;
@@ -148,13 +157,16 @@
       .img-area {
         float: left;
         width: 36px;
+
         img {
           width: 36px;
           height: 36px;
+
           &.photo-msg-item{
             border-radius: 18px;
           }
         }
+
         & > div {
           width: 36px;
           height: 36px;

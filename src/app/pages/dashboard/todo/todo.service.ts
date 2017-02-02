@@ -1,19 +1,17 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TodoService {
 
   private _todoList = [
-    { text: 'Check me out' },
-    { text: 'Lorem ipsum dolor sit amet, possit denique oportere at his, etiam corpora deseruisse te pro' },
-    { text: 'Ex has semper alterum, expetenda dignissim' },
-    { text: 'Vim an eius ocurreret abhorreant, id nam aeque persius ornatus.' },
-    { text: 'Simul erroribus ad usu' },
-    { text: 'Ei cum solet appareat, ex est graeci mediocritatem' },
+    { text: '标签项，需要增加icon自定义字段' },
+    { text: '发布文章页，在标签和分类为空时缺少提示信息，文章的默认缩略图需调整' },
+    { text: '仪表盘信息聚合（系统信息聚合、百度统计api信息聚合、多说信息聚合）' },
+    { text: '文章发布后自动ping给搜索引擎xml' },
+    { text: '所有无用组件/代码的清理' },
+    { text: '程序截图 + 文档撰写' },
     { text: 'Get in touch with akveo team' },
-    { text: 'Write email to business cat' },
-    { text: 'Have fun with blur admin' },
-    { text: 'What do you think?' },
+    { text: '...' }
   ];
 
   getTodoList() {

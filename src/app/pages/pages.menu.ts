@@ -198,32 +198,8 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: '公网IP',
-                url: 'http://121.42.55.33/',
-                icon: 'fa fa-sitemap',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: '部署服务器',
-                url: 'http://deploy.surmon.me',
-                icon: 'fa fa-git',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: 'NodePress',
-                url: 'http://api.surmon.me',
-                icon: 'ion-android-exit',
+                url: 'http://121.42.55.33',
+                icon: 'ion-android-globe',
                 order: 800,
                 target: '_blank'
               }
@@ -234,7 +210,7 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: 'Vue-Blog',
-                url: 'http://n.surmon.me',
+                url: 'http://surmon.me',
                 icon: 'ion-android-exit',
                 order: 800,
                 target: '_blank'
@@ -247,24 +223,12 @@ export const PAGES_MENU = [
               menu: {
                 title: 'Github',
                 url: 'https://github.com/surmon-china',
-                icon: 'fa fa-github',
+                icon: 'ion-social-github',
                 target: '_blank'
               }
             }
           }
         ]
-      },
-      {
-        path: 'auth',
-        data: {
-          menu: {
-            title: '权限页面',
-            icon: 'ion-document',
-            selected: false,
-            expanded: false,
-            order: 650,
-          }
-        }
       },
       {
         path: 'demo',
@@ -291,28 +255,6 @@ export const PAGES_MENU = [
             }
           },
           {
-            path: 'charts',
-            data: {
-              menu: {
-                title: '图表',
-                icon: 'ion-stats-bars',
-                selected: false,
-                expanded: false,
-                order: 200,
-              }
-            },
-            children: [
-              {
-                path: 'chartist-js',
-                data: {
-                  menu: {
-                    title: 'Chartist.Js',
-                  }
-                }
-              }
-            ]
-          },
-          {
             path: 'ui',
             data: {
               menu: {
@@ -337,14 +279,6 @@ export const PAGES_MENU = [
                 data: {
                   menu: {
                     title: '按钮',
-                  }
-                }
-              },
-              {
-                path: 'icons',
-                data: {
-                  menu: {
-                    title: '图表',
                   }
                 }
               },
@@ -421,52 +355,6 @@ export const PAGES_MENU = [
                 data: {
                   menu: {
                     title: '小型表格',
-                  }
-                }
-              }
-            ]
-          },
-          {
-            path: 'maps',
-            data: {
-              menu: {
-                title: '地图',
-                icon: 'ion-ios-location-outline',
-                selected: false,
-                expanded: false,
-                order: 600,
-              }
-            },
-            children: [
-              {
-                path: 'googlemaps',
-                data: {
-                  menu: {
-                    title: 'Google Maps',
-                  }
-                }
-              },
-              {
-                path: 'leafletmaps',
-                data: {
-                  menu: {
-                    title: 'Leaflet Maps',
-                  }
-                }
-              },
-              {
-                path: 'bubblemaps',
-                data: {
-                  menu: {
-                    title: 'Bubble Maps',
-                  }
-                }
-              },
-              {
-                path: 'linemaps',
-                data: {
-                  menu: {
-                    title: 'Line Maps',
                   }
                 }
               }
