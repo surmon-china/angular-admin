@@ -1,0 +1,58 @@
+.announcement-form {
+
+  .announcement-content {
+    padding: 0;
+
+    > .ql-toolbar,
+    > .ql-container {
+      border: none;
+      background-color: #fff;
+      color: #555;
+    }
+
+    > .ql-toolbar {
+      border-bottom: 1px solid #ccc;
+      line-height: initial;
+    }
+  }
+}
+
+.announcement-search-form {
+  float: right;
+  width: 20em;
+}
+
+.announcement-list {
+
+  .batch-checkbox {
+    text-align: left;
+    padding-left: 2em;
+  }
+
+  .announcement-err-msg {
+    margin: 1em 0;
+  }
+
+  tbody {
+
+    tr {
+
+      td {
+        line-height: 5em;
+
+        .content {
+          line-height: 2;
+
+          p {
+            margin: 0;
+          }
+
+          img {
+            max-width: 4em;
+            margin: 0 1em;
+          }
+        }
+      }
+    }
+  }
+}
