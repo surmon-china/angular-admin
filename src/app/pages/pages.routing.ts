@@ -15,11 +15,9 @@ const routes: Routes = [
       { path: 'auth', loadChildren: () => System.import('./auth/auth.module') },
       { path: 'demo',
         children: [
-          { path: 'charts', loadChildren: () => System.import('./demo/charts/charts.module') },
           { path: 'ui', loadChildren: () => System.import('./demo/ui/ui.module') },
           { path: 'forms', loadChildren: () => System.import('./demo/forms/forms.module') },
-          { path: 'tables', loadChildren: () => System.import('./demo/tables/tables.module') },
-          { path: 'maps', loadChildren: () => System.import('./demo/maps/maps.module') }
+          { path: 'tables', loadChildren: () => System.import('./demo/tables/tables.module') }
         ]
       }
     ]
