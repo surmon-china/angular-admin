@@ -21,6 +21,7 @@ export class ArticleTag {
 	public name:AbstractControl;
 	public slug:AbstractControl;
 	public description:AbstractControl;
+	public extends:AbstractControl;
 
 	// searchForm
 	public keyword:AbstractControl;
@@ -47,7 +48,8 @@ export class ArticleTag {
 		this.editForm = _fb.group({
 			'name': ['', Validators.compose([Validators.required])],
 			'slug': ['', Validators.compose([Validators.required])],
-			'description': ['', Validators.compose([Validators.required])]
+			'description': ['', Validators.compose([Validators.required])],
+			'extends': [[{ name: 'icon', value: 'icon-tag'}]]
 		});
 
 		this.searchForm = _fb.group({
@@ -57,11 +59,22 @@ export class ArticleTag {
 		this.name = this.editForm.controls['name'];
 		this.slug = this.editForm.controls['slug'];
 		this.description = this.editForm.controls['description'];
+		this.extends = this.editForm.controls['extends'];
 		this.keyword = this.searchForm.controls['keyword'];
 	}
 
 	ngOnInit() {
 		this.getTags();
+	}
+
+	// 删除自定义配置项目
+	public delExtendItem(index) {
+		this.extends.value.splice(index, 1);
+	}
+
+	// 增加自定义配置项目
+	public addExtendItem() {
+		this.extends.setValue([...this.extends.value, {}]);
 	}
 
 	// 多选切换
@@ -93,7 +106,8 @@ export class ArticleTag {
 		this.editForm.reset({
 			name: '',
 			slug: '',
-			description: ''
+			description: '',
+			extends: [{ name: 'icon', value: 'icon-tag'}]
 		});
 	}
 

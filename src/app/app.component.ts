@@ -61,7 +61,9 @@ export class App {
     this.optionIsInited = true;
     this._optionsService.getUserAuth()
     .then(({ result: adminInfo }) => {
-      this._appState.set('adminInfo', adminInfo);
+      if(!!Object.keys(adminInfo).length) {
+        this._appState.set('adminInfo', adminInfo);
+      }
     })
     .catch(error => {});
   }

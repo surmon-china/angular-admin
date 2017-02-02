@@ -36,8 +36,8 @@
               </span>
             </ba-checkbox>
           </th>
-          <th>名称</th>
-          <th>描述</th>
+          <th width="20%">名称</th>
+          <th width="30%">描述</th>
           <th>别名</th>
           <th>文章</th>
           <th width="30%" class="text-center">操作</th>
@@ -69,7 +69,7 @@
               <strong *ngFor="let num of categoryLevelMark(category.level)">─&nbsp;</strong>
               <strong>{{ category.name }}</strong>
             </td>
-            <td>
+            <td class="category-description" title="{{ category.description }}">
               <span [class.text-muted]="!category.description">{{ category.description || '暂无' }}</span></td>
             <td>{{ category.slug }}</td>
             <td>{{ category.articles || 0 }}</td>
