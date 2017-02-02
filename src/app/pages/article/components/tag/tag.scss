@@ -1,0 +1,47 @@
+.tag-form {
+
+  .tag-description {
+    line-height: 1.8em;
+    padding: 0 .5rem;
+  }
+}
+
+.tag-search-form {
+  float: right;
+  width: 20em;
+}
+
+.tag-list {
+
+  .batch-checkbox {
+    text-align: left;
+    padding-left: 2em;
+  }
+
+  .tag-err-msg {
+    margin: 1em 0;
+  }
+
+  tbody {
+
+    tr {
+
+      td {
+        line-height: 5em;
+
+        .content {
+          line-height: 2;
+
+          p {
+            margin: 0;
+          }
+
+          img {
+            max-width: 4em;
+            margin: 0 1em;
+          }
+        }
+      }
+    }
+  }
+}

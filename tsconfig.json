@@ -1,0 +1,92 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    // 目标代码版本
+    "target": "ES5",
+    // "outDir": "dist",
+    // "sourceRoot": "src",
+    // 指定生成哪个模块系统代码：'commonjs'，'amd'，'system'，或 'umd'或'es2015'。只有'amd'和'system'能和--outFile一起使用。当目标是ES5或以下的时候不能使用'es2015'。
+    "module": "commonjs",
+    // 决定如何处理模块。或者是'node'对于Node.js/io.js，或者是'classic'（默认）
+    "moduleResolution": "node",
+    // 给源码里的装饰器声明加上设计类型元数据
+    "emitDecoratorMetadata": true,
+    // 实验性启用ES7装饰器支持
+    "experimentalDecorators": true,
+    // 允许从没有设置默认导出的模块中默认导入。这并不影响代码的显示，仅为了类型检查。
+    "allowSyntheticDefaultImports": true,
+    // 不在输出文件中生成用户自定义的帮助函数代码，如__extends。
+    "noEmitHelpers": true,
+    // 在严格的null检查模式下，null和undefined值不包含在任何类型里，只允许用它们自己和any来赋值（有个例外，undefined可以赋值到void）。
+    "strictNullChecks": false,
+    // 解析非相对模块名的基准目录
+    "baseUrl": "./src",
+    // 模块名到基于baseUrl的路径映射的列表
+    "paths": {},
+    // 不报告执行不到的代码错误。
+    "allowUnreachableCode": true,
+    // 不报告未使用的标签错误。
+    "allowUnusedLabels": true,
+    // 生成相应的'.map'文件
+    "sourceMap": false,
+    // 生成单个sourcemaps文件，而不是将每sourcemaps生成不同的文件。
+    "inlineSourceMap": false,
+    // 将代码与sourcemaps生成到一个文件中，要求同时设置了--inlineSourceMap或--sourceMap属性。
+    "inlineSources": false,
+    /*
+    编译过程中需要引入的库文件的列表。
+    可能的值为： 
+    ► es5 
+    ► es6 
+    ► es2015 
+    ► es7 
+    ► es2016 
+    ► es2017 dom webworker scripthost 
+    ► es2015.core 
+    ► es2015.collection 
+    ► es2015.generator 
+    ► es2015.iterable 
+    ► es2015.promise 
+    ► es2015.proxy 
+    ► es2015.reflect 
+    ► es2015.symbol 
+    ► es2015.symbol.wellknown 
+    ► es2016.array.include 
+    ► es2017.object 
+    ► es2017.sharedmemory 
+    注意：如果--lib没有指定默认库。默认库是
+    ► For --target ES5: dom,es5,scripthost
+    ► For --target ES6: dom,es6,dom.iterable,scripthost
+    */
+    "lib": [
+      "dom",
+      "es6"
+    ],
+    "types": [
+      "hammerjs",
+      "node",
+      "source-map",
+      "uglify-js",
+      "webpack"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "typings",
+    "typings/index.d.ts",
+    "dist",
+    "src/app/theme/directives/baSlimScroll/baSlimScroll.lib.ts"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "forkChecker": true,
+    "useWebpackText": true
+  },
+  // 在最顶层设置compileOnSave标记，可以让IDE在保存文件的时候根据tsconfig.json重新生成文件。
+  // 要想支持这个特性需要Visual Studio 2015， TypeScript1.8.4以上并且安装atom-typescript插件。
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": { "rewriteTsconfig": false }
+}

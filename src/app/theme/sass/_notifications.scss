@@ -1,0 +1,57 @@
+@import 'conf/conf';
+
+.simple-notification {
+  padding: 20px!important;
+
+  svg {
+    top: 10px!important;
+    right: 10px!important;
+  }
+
+  .sn-progress-loader {
+  }
+
+  .sn-title {
+    margin-bottom: 10px!important;
+  }
+
+  &.error {
+    background-color: $danger!important;
+
+    .sn-progress-loader span {
+      background-color: lighten($danger, 10%)!important;
+    }
+  }
+
+  &.info {
+    background-color: $info!important;
+
+    .sn-progress-loader span {
+      background-color: lighten($info, 10%)!important;
+    }
+  }
+
+  &.bare {
+    background-color: $primary!important;
+
+    .sn-progress-loader span {
+      background-color: lighten($primary, 10%)!important;
+    }
+  }
+
+  &.alert {
+    background-color: $warning!important;
+
+    .sn-progress-loader span {
+      background-color: lighten($warning, 10%)!important;
+    }
+  }
+
+  &.success {
+    background-color: $success!important;
+
+    .sn-progress-loader span {
+      background-color: lighten($success, 10%)!important;
+    }
+  }
+}

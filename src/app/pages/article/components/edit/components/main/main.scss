@@ -1,0 +1,44 @@
+@import '../../../../../../theme/sass/conf/conf';
+.article-editor-main-form {
+
+	.article-tags {
+
+    .tags-list {
+    	// padding-top: .5rem;
+			// padding-left: .5rem;
+	    display: flex;
+	    justify-content: flex-start;
+	    flex-wrap: wrap;
+
+    	.article-tag-item {
+				margin-right: .5rem;
+	    	margin-bottom: .5rem;
+			}
+    }
+	}
+
+	.article-description {
+		line-height: 1.8em;
+    padding: 0 .5rem;
+	} 
+
+	.article-content {
+		padding: 0;
+		line-height: inherit;
+		background-color: $default;
+
+		.ql-toolbar,
+		.ql-container {
+			color: $sidebar-sublist;
+			background-color: $default;
+		}
+
+		.ql-container {
+			min-height: 30rem;
+
+			.ql-editor {
+				line-height: 2;
+			}
+		}
+	}
+}
