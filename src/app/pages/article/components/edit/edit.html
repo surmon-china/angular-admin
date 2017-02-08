@@ -12,9 +12,10 @@
   </div>
   <div class="col-md-3">
     <ba-card title="分类目录" baCardClass="with-scroll">
-      <article-edit-category 
-          [(category)]="article.category">
-      </article-edit-category>
+      <article-edit-category [(category)]="article.category"></article-edit-category>
+    </ba-card>
+    <ba-card title="自定义扩展" baCardClass="with-scroll">
+      <article-edit-extend [(extends)]="article.extends"></article-edit-extend>
     </ba-card>
     <ba-card title="发布选项" baCardClass="with-scroll">
       <article-edit-submit 

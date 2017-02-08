@@ -1,4 +1,5 @@
 <div class="category-list">
+  <p class="text-muted" *ngIf="!categories.data.length">暂无分类</p>
   <template [ngIf]="categories && categories.data.length">
     <div title="{{ category.name }}" 
          class="category-item-checkbox" 

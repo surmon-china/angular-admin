@@ -11,14 +11,18 @@ import { ArticleCategoryService } from '../../../category/category.service';
 export class ArticleEditCategory {
 
   @Input() category;
-  @Input() categories = { data: [] };
   @Output() categoryChange: EventEmitter<any> = new EventEmitter();
 
-  constructor(private _articleCategoryService: ArticleCategoryService) {
-  }
+  public categories = { data: [] };
+
+  constructor(private _articleCategoryService: ArticleCategoryService) {}
 
   ngOnInit() {
   	this.getCategories();
+  }
+
+  ngOnChange() {
+    this.categoryLevelBuild();
   }
 
   // 分类级别标记
@@ -26,7 +30,7 @@ export class ArticleEditCategory {
     return Array.from({ length: level }, () => '')
   };
 
-  // 分类级别递归排序
+  // 分类级别递归排序,同时构造勾选
   public categoryLevelBuild():void {
 
     // 初始化数据

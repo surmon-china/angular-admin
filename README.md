@@ -7,13 +7,18 @@ Admin panel framework based on Angular 2, Bootstrap 4 and Webpack
 - ~~分类列表页的分类描述，超出一行之后，P标签的行间距过大~~
 - ~~发布文章页的分类目录选中图标，应该替换为ionic里的图标~~
 - ~~标签项，需要增加icon自定义字段~~
-- 所有涉及发布的内容项，都需要增加自定义字段
-- 发布文章页，在标签和分类为空时缺少提示信息，文章的默认缩略图需调整，由于数据的准确性没有测试，分类和标签列表的与文章内容的先后顺序不同会导致标签和分类不会被勾选
-- 取消文章在列表页的密码和缩略内容/内容字段
-- 仪表盘信息聚合（系统信息聚合、百度统计api信息聚合、多说信息聚合）
-- 仪表盘图表组件和echarts整合
+- ~~取消文章在列表页的密码和缩略内容/内容字段~~
+- ~~仪表盘图表组件和echarts整合~~
 - ~~所有无用组件/代码的清理~~
-- 程序截图 + 文档撰写
+- ~~数据结构变动如article的count，data字段~~
+- ~~首页无用的都删掉~~
+- ~~发布文章页，在标签和分类为空时缺少提示信息，文章的默认缩略图需调整~~
+- ~~所有涉及发布的内容项，都需要增加自定义字段~~
+- ~~程序截图 + 文档撰写 readme~~
+
+- ~~由于数据的准确性没有测试，分类和标签列表的与文章内容的先后顺序不同会导致标签和分类不会被勾选~~
+- 仪表盘信息聚合（系统/文章信息聚合，echarts）
+- 评论管理，增删改查功能
 
 # 程序结构
 
@@ -102,21 +107,15 @@ angular-admin/
    │   │
    │   ├──webpack.test.js        * webpack测试环境配置
    │   │
-   │   ├──electron/              * electron webpack config（桌面客户端配置）
-   │   │
    │   └──html-elements-plugin/  * html elements plugin
    │
    ├──src/                       * 源文件最终编译为javascript
    │   |
    │   ├──custom-typings.d.ts    * 第三方模块的自定义类型
    │   │
-   │   ├──desktop.ts             * electron窗口的初始化入口文件
-   │   │
    │   ├──index.html             * 入口文件
    │   │
    │   ├──main.browser.ts        * 浏览器环境入口文件
-   │   │
-   │   ├──package.json           * electrons项目
    │   │
    │   ├──polyfills.browser.ts   * 浏览器降级支持polyfills file
    │   │

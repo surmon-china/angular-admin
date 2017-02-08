@@ -19,6 +19,7 @@ import { ArticleCategoryList } from './components/category/components/list';
 
 import { ArticleEdit }          from './components/edit';
 import { ArticleEditMain }      from './components/edit/components/main';
+import { ArticleEditExtend }    from './components/edit/components/extend';
 import { ArticleEditSubmit }    from './components/edit/components/submit';
 import { ArticleEditCategory }  from './components/edit/components/category';
 
@@ -53,6 +54,7 @@ import { ArticleTag }           from './components/tag';
     ArticleEdit,
     ArticleEditMain,
     ArticleEditSubmit,
+    ArticleEditExtend,
     ArticleEditCategory,
 
     ArticleList,

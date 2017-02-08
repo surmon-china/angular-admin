@@ -72,7 +72,7 @@
             <td class="category-description" title="{{ category.description }}">
               <span [class.text-muted]="!category.description">{{ category.description || '暂无' }}</span></td>
             <td>{{ category.slug }}</td>
-            <td>{{ category.articles || 0 }}</td>
+            <td>{{ category.count || 0 }}</td>
             <td>
               <div class="text-center">
                 <div class="btn-group" role="group" aria-label="Basic example">

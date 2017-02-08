@@ -67,7 +67,7 @@
                      class="form-control"
                      placeholder="key" 
                      [(ngModel)]="extend.name"
-                     [ngModelOptions]="{ standalone: true }"/>
+                     [ngModelOptions]="{ standalone: true }">
             </div>
             <div class="extend-value">
               <input type="text" 
@@ -90,12 +90,11 @@
         </div>
         <hr>
         <div class="row">
-          <div class="col-xs-8">
-            <button type="submit" class="btn btn-success btn-block"
+          <div class="col-xs-12">
+            <button type="submit" class="btn btn-success"
                     [disabled]="!editForm.valid">{{ edit_tag ? '修改' : '添加' }}标签</button>
-          </div>
-          <div class="col-xs-4">
-            <button class="btn btn-default btn-block" (click)="resetEditForm()">重置</button>
+            <span>&nbsp;</span>
+            <button class="btn btn-default" (click)="resetEditForm()">重置</button>
           </div>
         </div>
       </form>
@@ -167,7 +166,7 @@
                 <th>名称</th>
                 <th>别名</th>
                 <th>描述</th>
-                <th>包含文章</th>
+                <th>文章</th>
                 <th width="30%" class="text-center">操作</th>
               </tr>
             </thead>
@@ -190,7 +189,7 @@
                   <td>{{ tag.name }}</td>
                   <td>{{ tag.slug }}</td>
                   <td>{{ tag.description }}</td>
-                  <td>0</td>
+                  <td>{{ tag.count || 0 }}</td>
                   <td>
                     <div class="text-center">
                       <div class="btn-group" role="group" aria-label="Basic example">

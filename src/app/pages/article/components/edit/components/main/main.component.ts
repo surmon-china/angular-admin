@@ -55,6 +55,7 @@ export class ArticleEditMain {
   // 数据更新后重新初始化表单
   ngOnChanges(changes) {
     this.resetEditForm();
+    if(changes.tag) this.buildTagsCheck();
   }
 
   // 重置数据
@@ -91,16 +92,21 @@ export class ArticleEditMain {
     this.tagChange.emit(selectedTags);
   }
 
+  // 选择标签
+  public buildTagsCheck() {
+    this.tags.data.forEach(tag => {
+      if(this.tag.includes(tag._id)) {
+        tag.selected = true;
+      }
+    });
+  }
+
   // 获取所有标签
   public getTags() {
   	this._articleTagService.getTags({ per_page: 1000 })
   	.then(tags => {
   		this.tags = tags.result;
-      this.tags.data.forEach(tag => {
-        if(this.tag.includes(tag._id)) {
-          tag.selected = true;
-        }
-      });
+      this.buildTagsCheck();
   	})
   	.catch(error => {})
   }
