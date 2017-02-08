@@ -175,6 +175,18 @@ export const PAGES_MENU = [
         path: '',
         data: {
           menu: {
+            title: '百度统计',
+            url: 'http://tongji.baidu.com/web',
+            icon: 'ion-ios-pie',
+            order: 800,
+            target: '_blank'
+          }
+        }
+      },
+      {
+        path: '',
+        data: {
+          menu: {
             title: 'Web-OS',
             url: 'http://os.surmon.me',
             icon: 'ion-social-windows',
@@ -354,7 +366,7 @@ export const PAGES_MENU = [
                 path: 'smarttables',
                 data: {
                   menu: {
-                    title: '小型表格',
+                    title: '智能表格',
                   }
                 }
               }

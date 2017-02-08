@@ -21,7 +21,8 @@ export class ArticleEdit {
     public: '1',
     password: '',
     tag: [],
-    category: []
+    category: [],
+    extends: [{}]
   }
 
   constructor(private _route: ActivatedRoute,
