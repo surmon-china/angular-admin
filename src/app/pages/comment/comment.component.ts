@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class Comment implements OnInit {
 
   iframeSrc:any = '';
-  iframeBaseSrc:any = 'http://wordpress-surmon.duoshuo.com/admin/';
+  iframeBaseSrc:any = 'https://surmon.duoshuo.com/admin/';
   constructor(private router: ActivatedRoute, private domSanitizer : DomSanitizer) {}
 
   ngOnInit() {
@@ -19,7 +19,7 @@ export class Comment implements OnInit {
       if(path == 'manage') {
         this.iframeSrc = this.domSanitizer.bypassSecurityTrustResourceUrl(this.iframeBaseSrc);
       } else if(path == 'user') {
-        this.iframeSrc = this.domSanitizer.bypassSecurityTrustResourceUrl('http://duoshuo.com/settings/');
+        this.iframeSrc = this.domSanitizer.bypassSecurityTrustResourceUrl('https://duoshuo.com/settings/');
       } else {
         this.iframeSrc = this.domSanitizer.bypassSecurityTrustResourceUrl(`${this.iframeBaseSrc}${(path == 'preferences' ? 'settings' : path)}/`);
       }

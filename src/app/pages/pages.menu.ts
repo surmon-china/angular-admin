@@ -176,7 +176,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '百度统计',
-            url: 'http://tongji.baidu.com/web',
+            url: 'https://tongji.baidu.com/web',
             icon: 'ion-ios-pie',
             order: 800,
             target: '_blank'
@@ -188,7 +188,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Web-OS',
-            url: 'http://os.surmon.me',
+            url: 'https://os.surmon.me',
             icon: 'ion-social-windows',
             order: 800,
             target: '_blank'
@@ -222,7 +222,7 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: 'Vue-Blog',
-                url: 'http://surmon.me',
+                url: 'https://surmon.me',
                 icon: 'ion-android-exit',
                 order: 800,
                 target: '_blank'
