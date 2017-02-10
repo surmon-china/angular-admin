@@ -175,8 +175,8 @@ export const PAGES_MENU = [
         path: '',
         data: {
           menu: {
-            title: '百度统计',
-            url: 'https://tongji.baidu.com/web',
+            title: 'Google Analytics',
+            url: 'https://analytics.google.com',
             icon: 'ion-ios-pie',
             order: 800,
             target: '_blank'
