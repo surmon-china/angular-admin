@@ -80,18 +80,25 @@
   </div>
   <div class="form-group row"
        [ngClass]="{ 
-          'has-error': !content && editForm.touched,
-          'has-success': !!content && editForm.touched
+          'has-danger': (!_content.valid && _content.touched), 
+          'has-success': (_content.valid && _content.touched)
         }">
     <label for="articleContent" class="col-sm-1 form-control-label text-right">文章内容</label>
     <div class="col-sm-10">
-      <quill-editor class="form-control article-content" 
-                    title="文章内容"
-                    [config]="editorConfig"
-                    [(ngModel)]="content"
-                    [ngModelOptions]="{ standalone: true }"
-                    (change)="contentChange.emit($event.html)">
-      </quill-editor>
+      <textarea name="articleContent" 
+                id="articleContent" 
+                cols="30" 
+                rows="10"
+                title="文章内容"
+                class="form-control article-content" 
+                [formControl]="_content"
+                (change)="contentChange.emit($event.target.value)"></textarea>
+      <br>
+      <markdown-editor  class="form-control article-content" 
+                        title="文章内容"
+                        [formControl]="_content"
+                        (change)="contentChangeHandle($event)">
+      </markdown-editor>
     </div>
   </div>
 </form>

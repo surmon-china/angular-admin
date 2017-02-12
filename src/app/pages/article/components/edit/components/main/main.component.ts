@@ -25,23 +25,25 @@ export class ArticleEditMain {
 
   // form
   public editForm: FormGroup;
-	public _title: AbstractControl;
+  public _title: AbstractControl;
+	public _content: AbstractControl;
 	public _keywords: AbstractControl;
 	public _description: AbstractControl;
 
 	// init
 	public tags: any = { data: [] };
-  public editorConfig: any = { placeholder: "输入文章内容，支持html" };
 
   constructor(private _fb: FormBuilder,
               private _route: ActivatedRoute,
 							private _articleTagService: ArticleTagService) {
   	this.editForm = _fb.group({
 			'_title': ['', Validators.compose([Validators.required])],
+      '_content': [[], Validators.compose([Validators.required])],
 			'_keywords': [[], Validators.compose([Validators.required])],
 			'_description': ['', Validators.compose([Validators.required])]
 		});
-		this._title = this.editForm.controls['_title'];
+    this._title = this.editForm.controls['_title'];
+		this._content = this.editForm.controls['_content'];
 		this._keywords = this.editForm.controls['_keywords'];
 		this._description = this.editForm.controls['_description'];
   }
@@ -61,6 +63,7 @@ export class ArticleEditMain {
   // 重置数据
   public resetEditForm() {
     this._title.setValue(this.title);
+    this._content.setValue(this.content);
     this._keywords.setValue(this.keywords);
     this._description.setValue(this.description);
   }
@@ -84,6 +87,11 @@ export class ArticleEditMain {
     const newDescription = event.target.value.replace(/(^\s*)|(\s*$)/g, '');
     this._description.setValue(newDescription);
     this.descriptionChange.emit(newDescription);
+  }
+
+  // 文章内容格式化
+  public contentChangeHandle(event) {
+    this.contentChange.emit(event.content);
   }
 
   // 标签选择格式化

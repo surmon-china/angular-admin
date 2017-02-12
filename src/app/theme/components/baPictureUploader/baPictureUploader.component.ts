@@ -73,7 +73,7 @@ export class BaPictureUploader implements ControlValueAccessor {
       chunk_size: '4mb',
       // 选择文件后自动上传，若关闭需要自己绑定事件触发上传
       auto_start: true,
-      log_level: 5,
+      log_level: 0,
       // 回调函数              
       init: {
         // 文件添加进队列后,处理相关的事情
