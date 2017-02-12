@@ -92,6 +92,7 @@ export class Announcement {
 			content: '',
 			state: '1'
 		});
+		this.edit_announcement = null;
 	}
 
 	// 重置搜索

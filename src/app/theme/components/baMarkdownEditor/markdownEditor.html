@@ -1,0 +1,29 @@
+<div class="markdown-editor">
+	<div class="editor-toolbar">
+	  <ul class="menus">
+	  	<li class="bold"></li>
+	  	<li class="italic"></li>
+	  	<li class="quote"></li>
+	  	<li class="unordered-list"></li>
+	  	<li class="ordered-list"></li>
+	  	<li class="link"></li>
+	  	<li class="image"></li>
+	  </ul>
+	  <ul class="right">
+	  	<li class="preview-full" (click)="previewMode = 2">全预览</li>
+	  	<li class="preview-both" (click)="previewMode = 1">半预览</li>
+	  	<li class="preview-none" (click)="previewMode = 0">不预览</li>
+	  	<li class="fullscreen">全屏</li>
+	  </ul>
+	</div>
+	<div class="editor-content"
+			 [ngClass]="{ 
+          'preview-full': previewMode == 2, 
+          'preview-both': previewMode == 1
+       }">
+		<div class="editor">
+			<textarea id="editor"></textarea>
+		</div>
+		<div class="marked">预览</div>
+	</div>
+</div>

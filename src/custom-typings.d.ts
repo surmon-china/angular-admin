@@ -32,6 +32,8 @@
  *
  */
 
+// declare var editormd:any;
+// declare var editormd:any;
 declare var mOxie:any;
 declare var plupload:any;
 declare var Qiniu:any;

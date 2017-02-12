@@ -9,3 +9,4 @@ export * from './baBackTop';
 export * from './baPictureUploader';
 export * from './baCheckbox';
 export * from './baMultiCheckbox';
+export * from './baMarkdownEditor';

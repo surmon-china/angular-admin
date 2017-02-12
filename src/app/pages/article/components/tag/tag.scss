@@ -2,7 +2,6 @@
 
   .tag-description {
     line-height: 1.8em;
-    padding: 0 .5rem;
   }
 
   .tag-extend {
@@ -44,6 +43,14 @@
 
       td {
         line-height: 5em;
+
+        &.tag-description {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
 
         .content {
           line-height: 2;

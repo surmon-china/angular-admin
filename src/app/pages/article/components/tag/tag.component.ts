@@ -109,6 +109,7 @@ export class ArticleTag {
 			description: '',
 			extends: [{ name: 'icon', value: 'icon-tag'}]
 		});
+		this.edit_tag = null;
 	}
 
 	// 重置搜索表单

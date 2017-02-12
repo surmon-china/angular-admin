@@ -4,8 +4,7 @@
 	.article-tags {
 
     .tags-list {
-    	// padding-top: .5rem;
-			// padding-left: .5rem;
+    	margin-top: .5em;
 	    display: flex;
 	    justify-content: flex-start;
 	    flex-wrap: wrap;
@@ -19,13 +18,11 @@
 
 	.article-description {
 		line-height: 1.8em;
-    padding: 0 .5rem;
 	} 
 
 	.article-content {
 		padding: 0;
 		line-height: inherit;
-		background-color: $default;
 
 		.ql-toolbar,
 		.ql-container {
