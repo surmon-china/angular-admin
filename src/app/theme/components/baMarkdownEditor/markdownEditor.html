@@ -1,29 +1,33 @@
-<div class="markdown-editor">
+<div class="markdown-editor" 
+		 [ngClass]="{ 'fullscreen': fullscreen }">
 	<div class="editor-toolbar">
 	  <ul class="menus">
-	  	<li class="bold"></li>
-	  	<li class="italic"></li>
-	  	<li class="quote"></li>
-	  	<li class="unordered-list"></li>
-	  	<li class="ordered-list"></li>
-	  	<li class="link"></li>
-	  	<li class="image"></li>
+	  	<li class="bold" 					 (click)="toggleBold()">粗体</li>
+	  	<li class="italic" 				 (click)="toggleItalic()">斜体</li>
+	  	<li class="quote" 				 (click)="drawQuote()">引用</li>
+	  	<li class="code" 					 (click)="drawCode()">代码</li>
+	  	<li class="link"  				 (click)="drawLink()">链接</li>
+	  	<li class="image" 				 (click)="drawImage()">图片</li>
+	  	<li class="-h3" 					 (click)="drawH3Title('\n' + '### ')">H3</li>
+	  	<li class="save" 					 (click)="saveAsMarkdown()">保存</li>
 	  </ul>
 	  <ul class="right">
-	  	<li class="preview-full" (click)="previewMode = 2">全预览</li>
-	  	<li class="preview-both" (click)="previewMode = 1">半预览</li>
-	  	<li class="preview-none" (click)="previewMode = 0">不预览</li>
-	  	<li class="fullscreen">全屏</li>
-	  </ul>
+	  	<li class="preview-full" (click)="previewMode = 2;parseMarked();">Full</li>
+	  	<li class="preview-both" (click)="previewMode = 1;parseMarked();">Both</li>
+	  	<li class="preview-none" (click)="previewMode = 0">None</li>
+	  	<li class="fullscreen"   (click)="fullscreen = !fullscreen">
+	  		<span *ngIf="fullscreen">exit</span>
+	  		<span>Fullscreen</span>
+	  	</ul>
 	</div>
 	<div class="editor-content"
 			 [ngClass]="{ 
           'preview-full': previewMode == 2, 
           'preview-both': previewMode == 1
        }">
-		<div class="editor">
+		<div class="editor" (keyup)="keyDownListen($event)">
 			<textarea id="editor"></textarea>
 		</div>
-		<div class="marked">预览</div>
+		<div class="marked" [innerHTML]="markedHtml"></div>
 	</div>
 </div>

@@ -78,21 +78,21 @@ export class BaPictureUploader implements ControlValueAccessor {
       init: {
         // 文件添加进队列后,处理相关的事情
         'FilesAdded'(up, files) {
-          console.log('文件添加进队列', files);
+          // console.log('文件添加进队列', files);
         },
         // 每个文件上传前,处理相关的事情
         'BeforeUpload'(up, file) {
-          console.log('文件上传前', file);
+          // console.log('文件上传前', file);
         },
         // 每个文件上传时,处理相关的事情
         'UploadProgress': (up, file) => {
-          console.log('文件上传时', file);
+          // console.log('文件上传时', file);
           this.uploadInProgress = true;
           this.uploadProgress = file.percent;
         },
         // 每个文件上传成功后,处理相关的事情
         'FileUploaded': (up, file, info) => {
-          console.log('文件上传成功后', file);
+          // console.log('文件上传成功后', file);
           this.uploadInProgress = false;
           const data = `${STATIC_URL}/${JSON.parse(info).key}`;
           this.onUploadCompleted.emit(data);
@@ -168,7 +168,7 @@ export class BaPictureUploader implements ControlValueAccessor {
   protected changePictureFromDataURL(file:File):any {
     const reader = new FileReader();
     reader.addEventListener('load', (event:Event) => {
-      console.log(event);
+      // console.log(event);
       this.picture = (<any> event.target).result;
     }, false);
     reader.readAsDataURL(file);

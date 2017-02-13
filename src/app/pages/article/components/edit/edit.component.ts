@@ -32,7 +32,7 @@ export class ArticleEdit {
   public submitArticle(event) {
     const { title, content } = this.article;
     if(title && content) {
-      this._articleEditService[this.article._id ? 'putArticle' : 'addArticle'](this.article)
+      this._articleEditService[(<any>this.article)._id ? 'putArticle' : 'addArticle'](this.article)
       .then(article => {
         this.article = article.result;
       })
