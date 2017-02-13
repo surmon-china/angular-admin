@@ -91,7 +91,9 @@ export class ArticleEditMain {
 
   // 文章内容格式化
   public contentChangeHandle(event) {
-    this.contentChange.emit(event.content);
+    if(event.content != undefined) {
+      this.contentChange.emit(event.content);
+    }
   }
 
   // 标签选择格式化

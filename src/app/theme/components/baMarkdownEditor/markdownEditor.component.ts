@@ -13,7 +13,9 @@ import {
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 const marked = require('marked');
+const hljs = require('highlight.js');
 const CodeMirror = require('codemirror');
+(<any>window).hljs = hljs;
 (<any>window).marked = marked;
 (<any>window).CodeMirror = CodeMirror;
 
@@ -47,14 +49,13 @@ require('codemirror/addon/mode/overlay.js');
 require('codemirror/addon/edit/closetag.js')
 require('codemirror/addon/edit/continuelist.js');
 require('codemirror/addon/edit/closebrackets.js');
-require('codemirror/addon/display/fullscreen.js');
 require('codemirror/addon/scroll/annotatescrollbar.js')
 require('codemirror/addon/selection/active-line.js');
 require('codemirror/addon/selection/mark-selection.js');
-require('codemirror/addon/search/searchcursor.js');
-require('codemirror/addon/search/matchesonscrollbar.js')；
-require('codemirror/addon/search/searchcursor.js');
-require('codemirror/addon/search/match-highlighter.js');
+// require('codemirror/addon/search/searchcursor.js');
+// require('codemirror/addon/search/matchesonscrollbar.js')；
+// require('codemirror/addon/search/searchcursor.js');
+// require('codemirror/addon/search/match-highlighter.js');
 require('codemirror/addon/fold/foldcode.js');
 require('codemirror/addon/fold/xml-fold.js');
 require('codemirror/addon/fold/foldgutter.js');
@@ -63,14 +64,28 @@ require('codemirror/addon/fold/indent-fold.js');
 require('codemirror/addon/fold/brace-fold.js');
 require('codemirror/addon/fold/markdown-fold.js');
 
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false,
+  highlight(code, lang, callback) {
+    return hljs.highlightAuto(code).value;
+  }
+});
+
 @Component({
   selector: 'markdown-editor',
   template: require('./markdownEditor.html'),
   styles: [
     require('./markdownEditor.component.scss'),
+    require('highlight.js/styles/ocean.css'),
     require('codemirror/lib/codemirror.css'),
     require('codemirror/theme/base16-dark.css'),
-    require('codemirror/addon/display/fullscreen.css'),
     require('codemirror/addon/fold/foldgutter.css')
   ],
   providers: [{
@@ -85,9 +100,11 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   // 基本数据
   editor:any;
   content:any = '';
+  markedHtml:any = '';
   editorElem:HTMLElement;
 
   previewMode:number = 0;
+  fullscreen:any = false;
 
   // 传入配置
   @Input() config: Object = {};
@@ -101,7 +118,7 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   onModelTouched: Function = () => {};
 
   // 注入Dom
-  constructor(private elementRef: ElementRef) { }
+  constructor(private elementRef: ElementRef) {}
 
   // 视图加载完成后执行初始化
   ngAfterViewInit() {
@@ -124,20 +141,14 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
       // 自动闭合标签
       autoCloseTags: true,
       // 自动高亮所有选中单词
-      styleSelectedText: true,
-      highlightSelectionMatches: { showToken: /w/, annotateScrollbar: true },
+      // styleSelectedText: true,
+      // highlightSelectionMatches: { showToken: /w/, annotateScrollbar: true },
       // 展开折叠
       foldGutter: true,
       gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
       // 回车键自动补全上一步格式
       extraKeys: { 
-        "Enter": "newlineAndIndentContinueMarkdownList",
-        "F11"(cm) {
-          cm.setOption("fullScreen", !cm.getOption("fullScreen"));
-        },
-        "Esc"(cm) {
-          if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
-        }
+        "Enter": "newlineAndIndentContinueMarkdownList"
       }
     });
     this.editor.on('change', cm => {
@@ -148,16 +159,276 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
           editor: this.editor,
           content: this.content
         });
+        if(this.previewMode != 0) {
+          this.parseMarked();
+        }
       }
     });
+    /*
+    const dropZone = this.elementRef.nativeElement.children[0].children[1];
+    dropZone.addEventListener('drop', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      let reader = new FileReader();
+      reader.onload = e => {
+        console.log(e);
+        // this.editor.setValue(e.target.result);
+      };
+      reader.readAsText(event.dataTransfer.files[0]);
+    }, false);
+    */
+  }
+
+  // 解析markeddown
+  parseMarked() {
+    this.markedHtml = marked(this.content);
   }
 
   // 写数据
   writeValue(currentValue: any = '') {
     if (currentValue && !Object.is(currentValue, this.content)) {
       this.content = currentValue;
-      this.editor.setValue(this.content)
+      this.editor.setValue(this.content);
+      this.markedHtml = marked(this.content);
     }
+  }
+
+  // 保存文件
+  saveFile(code, name) {
+    const blob = new Blob([code], { type: 'text/plain' });
+    if ((<any>window).saveAs) {
+      (<any>window).saveAs(blob, name);
+    } else if ((<any>navigator).saveBlob){
+      (<any>navigator).saveBlob(blob, name);
+    } else {
+      const url = URL.createObjectURL(blob);
+      let link = document.createElement("a");
+      link.setAttribute("href",url);
+      link.setAttribute("download",name);
+      let event = document.createEvent('MouseEvents');
+      event.initMouseEvent('click', true, true, (<any>window), 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+      link.dispatchEvent(event);
+    }
+  }
+
+  // 保存为markdown
+  saveAsMarkdown(){
+    this.saveFile(this.content, "untitled.md");
+  }
+
+  // 按键listen
+  keyDownListen(event) {
+
+    // 退出全屏
+    if(Object.is(event.keyCode, 27)) {
+      this.fullscreen = false;
+    }
+
+    // 全屏
+    if(Object.is(event.keyCode, 122)) {
+      this.fullscreen = !this.fullscreen;
+    }
+
+    // 保存
+    if(event.keyCode == 83 && (event.ctrlKey || event.metaKey || event.shiftKey)){
+      this.saveAsMarkdown();
+      event.preventDefault();
+      return false;
+    }
+  }
+
+  // 插入内容
+  updateCodeMirror(data) {
+    const codemirror = this.editor;
+    codemirror.replaceSelection(data);
+    const startPoint = codemirror.getCursor('start');
+    const endPoint = codemirror.getCursor('end');
+    codemirror.setSelection(startPoint, endPoint);
+    codemirror.focus();
+    /*
+    let doc = codemirror.getDoc();
+    let cursor = doc.getCursor(); // gets the line number in the cursor position
+    let line = doc.getLine(cursor.line); // get the line contents
+    let pos = { // create a new object to avoid mutation of the original selection
+      line: cursor.line,
+      ch: line.length - 1 // set the character position to the end of the line
+    }
+    doc.replaceRange('\n' + data + '\n', pos); // adds a new line
+    */
+  }
+
+  // 替换光标选中项内容
+  replaceSelection(cm, active, start, end) {
+    let text;
+    let startPoint = cm.getCursor('start');
+    let endPoint = cm.getCursor('end');
+    if (active) {
+      text = cm.getLine(startPoint.line);
+      start = text.slice(0, startPoint.ch);
+      end = text.slice(startPoint.ch);
+      cm.setLine(startPoint.line, start + end);
+    } else {
+      text = cm.getSelection();
+      cm.replaceSelection(start + text + end);
+      startPoint.ch += start.length;
+      endPoint.ch += start.length;
+    }
+    cm.setSelection(startPoint, endPoint);
+    cm.focus();
+  }
+
+  // 分析编辑器当前的光标位置
+  getState(cm, pos) {
+    pos = pos || cm.getCursor('start');
+    let stat = cm.getTokenAt(pos);
+    if (!stat.type) return {};
+
+    let types = stat.type.split(' ');
+
+    let ret = {}, data, text;
+    for (let i = 0; i < types.length; i++) {
+      data = types[i];
+      if (data === 'strong') {
+        (<any>ret).bold = true;
+      } else if (data === 'letiable-2') {
+        text = cm.getLine(pos.line);
+        if (/^\s*\d+\.\s/.test(text)) {
+          ret['ordered-list'] = true;
+        } else {
+          ret['unordered-list'] = true;
+        }
+      } else if (data === 'atom') {
+        (<any>ret).quote = true;
+      } else if (data === 'em') {
+        (<any>ret).italic = true;
+      }
+    }
+    return ret;
+  }
+
+  // 粗体
+  toggleBold() {
+    const codemirror = this.editor;
+    const stat = this.getState(codemirror, codemirror.getCursor());
+
+    let text;
+    let start = '**';
+    let end = '**';
+
+    let startPoint = codemirror.getCursor('start');
+    let endPoint = codemirror.getCursor('end');
+    if ((<any>stat).bold) {
+      /*
+      text = codemirror.getLine(startPoint.line);
+      start = text.slice(0, startPoint.ch);
+      end = text.slice(startPoint.ch);
+
+      start = start.replace(/^(.*)?(\*|\_){2}(\S+.*)?$/, '$1$3');
+      end = end.replace(/^(.*\S+)?(\*|\_){2}(\s+.*)?$/, '$1$3');
+      startPoint.ch -= 2;
+      endPoint.ch -= 2;
+      // console.log('text', text, 'start', start, 'end', end, startPoint, endPoint);
+      // codemirror.setLine(startPoint.line, start + end);
+      // codemirror.replaceRange(end, endPoint);
+      */
+    } else {
+      text = codemirror.getSelection();
+      codemirror.replaceSelection(start + text + end);
+
+      startPoint.ch += 2;
+      endPoint.ch += 2;
+    }
+    codemirror.setSelection(startPoint, endPoint);
+    codemirror.focus();
+  }
+
+  // 斜体
+  toggleItalic() {
+    const codemirror = this.editor;
+    const stat = this.getState(codemirror, codemirror.getCursor());
+
+    let text;
+    let start = '*';
+    let end = '*';
+
+    let startPoint = codemirror.getCursor('start');
+    let endPoint = codemirror.getCursor('end');
+    if ((<any>stat).italic) {
+      /*
+      text = codemirror.getLine(startPoint.line);
+      start = text.slice(0, startPoint.ch);
+      end = text.slice(startPoint.ch);
+
+      start = start.replace(/^(.*)?(\*|\_)(\S+.*)?$/, '$1$3');
+      end = end.replace(/^(.*\S+)?(\*|\_)(\s+.*)?$/, '$1$3');
+      startPoint.ch -= 1;
+      endPoint.ch -= 1;
+      // codemirror.setLine(startPoint.line, start + end);
+      */
+    } else {
+      text = codemirror.getSelection();
+      codemirror.replaceSelection(start + text + end);
+
+      startPoint.ch += 1;
+      endPoint.ch += 1;
+    }
+    codemirror.setSelection(startPoint, endPoint);
+    codemirror.focus();
+  }
+
+  // 插入链接
+  drawLink() {
+    const codemirror = this.editor;
+    const position = codemirror.getCursor();
+    const stat = this.getState(codemirror, position);
+    this.replaceSelection(codemirror, (<any>stat).link, '[', '](https://)');
+  }
+
+  // 插入图片
+  drawImage() {
+    const codemirror = this.editor;
+    const position = codemirror.getCursor();
+    const stat = this.getState(codemirror, position);
+    this.replaceSelection(codemirror, (<any>stat).image, '![](', ')');
+  }
+
+  // 插入引用
+  drawQuote() {
+    const codemirror = this.editor;
+    const position = codemirror.getCursor();
+    const stat = this.getState(codemirror, position);
+    this.replaceSelection(codemirror, (<any>stat).quote, '> ', '\n');
+  }
+
+  // 插入代码
+  drawCode() {
+    const codemirror = this.editor;
+    const position = codemirror.getCursor();
+    const stat = this.getState(codemirror, position);
+    this.replaceSelection(codemirror, (<any>stat).code, '```\n', '\n```');
+  }
+
+  // 插入h3标题
+  drawH3Title(data) {
+    const codemirror = this.editor;
+    const position = codemirror.getCursor();
+    const stat = this.getState(codemirror, position);
+    this.replaceSelection(codemirror, (<any>stat).h3, '### ', '\n');
+    // this.updateCodeMirror(data);
+  }
+
+  // 撤销
+  undo() {
+    const codemirror = this.editor;
+    codemirror.undo();
+    codemirror.focus();
+  }
+
+  // 回退
+  redo() {
+    const codemirror = this.editor;
+    codemirror.redo();
+    codemirror.focus();
   }
 
   // 注册事件

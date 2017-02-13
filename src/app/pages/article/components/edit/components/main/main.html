@@ -85,15 +85,6 @@
         }">
     <label for="articleContent" class="col-sm-1 form-control-label text-right">文章内容</label>
     <div class="col-sm-10">
-      <textarea name="articleContent" 
-                id="articleContent" 
-                cols="30" 
-                rows="10"
-                title="文章内容"
-                class="form-control article-content" 
-                [formControl]="_content"
-                (change)="contentChange.emit($event.target.value)"></textarea>
-      <br>
       <markdown-editor  class="form-control article-content" 
                         title="文章内容"
                         [formControl]="_content"

@@ -5,10 +5,10 @@ Admin panel framework based on Angular 2, Bootstrap 4 and Webpack
 # Todos && Issues
 - 仪表盘信息聚合（系统/文章信息聚合，echarts）
 - 评论管理，增删改查功能
-- 标签列表页，描述限制为一行超出隐藏
-- 使用codemirror创建一个markdown编辑器 https://github.com/jbt/markdown-editor/blob/master/index.html
-可以适当性创建一些按钮，如图片、连接、标题、全屏、预览切换，highlight.js + marked用于预览时的解析，
-codemirror用于编辑模式下的编辑器，引入所有语言的语言包，
+- ~~标签列表页，描述限制为一行超出隐藏~~
+- ~~使用codemirror创建一个markdown编辑器 https://github.com/jbt/markdown-editor/blob/master/index.html~~
+- ~~可以适当性创建一些按钮，如图片、连接、标题、全屏、预览切换，highlight.js + marked用于预览时的解析，~~
+- ~~codemirror用于编辑模式下的编辑器，引入所有语言的语言包，~~
 
 - ~~首次登陆，数据库无数据时，个人头像，名字等均为展示默认值~~
 - ~~分类列表页的分类描述，超出一行之后，P标签的行间距过大~~
