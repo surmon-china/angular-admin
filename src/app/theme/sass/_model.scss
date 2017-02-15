@@ -1,6 +1,7 @@
 .modal {
   // display: flex;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
 
   &.fade {
 
@@ -75,6 +76,10 @@
   &.in {
     transition: opacity .15s ease-in-out;
   }
+}
+
+.modal-backdrop {
+  display: none;
 }
 
 @keyframes scaleIn {
