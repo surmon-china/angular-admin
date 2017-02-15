@@ -23,19 +23,5 @@
 	.article-content {
 		padding: 0;
 		line-height: inherit;
-
-		.ql-toolbar,
-		.ql-container {
-			color: $sidebar-sublist;
-			background-color: $default;
-		}
-
-		.ql-container {
-			min-height: 30rem;
-
-			.ql-editor {
-				line-height: 2;
-			}
-		}
 	}
 }

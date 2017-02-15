@@ -32,15 +32,6 @@ export class Announcement {
 	public edit_announcement:any;
 	public announcementsSelectAll:boolean = false;
 	public selectedAnnouncements = [];
-	public editorConfig = {
-		placeholder: "输入公告内容，支持html",
-		modules: {
-			toolbar: [
-				['bold', 'italic', 'underline', 'strike', { 'color': [] }, { 'background': [] }],
-				[{ 'font': [] }, { 'align': [] }, 'link', 'image', 'clean']
-			]
-		}
-	};
 
 	constructor(private _fb:FormBuilder,
 							private _announcementService:AnnouncementService) {

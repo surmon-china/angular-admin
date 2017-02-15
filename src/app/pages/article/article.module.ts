@@ -3,7 +3,6 @@ import { CommonModule }        from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule }           from '../../theme/nga.module';
 import { PaginationModule, DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
-import { QuillEditorModule } from 'ng2-quill-editor';
 
 import { routing }             from './article.routing';
 
@@ -35,7 +34,6 @@ import { ArticleTag }           from './components/tag';
     PaginationModule,
     DropdownModule,
     ModalModule,
-    QuillEditorModule,
     routing
   ],
   providers: [
