@@ -27,10 +27,11 @@
           <label for="announcementContent">
             <h5>公告内容</h5>
           </label>
-          <quill-editor class="form-control announcement-content" 
-                        [formControl]="content" 
-                        [config]="editorConfig">
-          </quill-editor>
+          <markdown-editor class="form-control announcement-content" 
+                           title="文章内容"
+                           [config]="{ lineWrapping: true }"
+                           [formControl]="content">
+          </markdown-editor>
         </div>
         <button type="submit"
                 class="btn btn-success"

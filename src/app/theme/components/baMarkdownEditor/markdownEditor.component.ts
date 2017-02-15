@@ -107,7 +107,7 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   fullscreen:any = false;
 
   // 传入配置
-  @Input() config: Object = {};
+  @Input() config: Object;
 
   // 派发事件
   @Output() ready: EventEmitter<any> = new EventEmitter();
@@ -123,7 +123,7 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   // 视图加载完成后执行初始化
   ngAfterViewInit() {
     this.editorElem = this.elementRef.nativeElement.children[0].children[1].children[0].children[0];
-    this.editor = CodeMirror.fromTextArea(this.editorElem, {
+    this.editor = CodeMirror.fromTextArea(this.editorElem, Object.assign({
       // 语言模式 github markdown扩展
       mode: 'gfm',
       // 行号
@@ -150,6 +150,9 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
       extraKeys: { 
         "Enter": "newlineAndIndentContinueMarkdownList"
       }
+    }, this.config));
+    this.editor.on('blur', cm => {
+      this.onModelTouched();
     });
     this.editor.on('change', cm => {
       const content = cm.getValue();
@@ -159,6 +162,7 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
           editor: this.editor,
           content: this.content
         });
+        this.onModelChange(this.content);
         if(this.previewMode != 0) {
           this.parseMarked();
         }
@@ -185,8 +189,8 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   }
 
   // 写数据
-  writeValue(currentValue: any = '') {
-    if (currentValue && !Object.is(currentValue, this.content)) {
+  writeValue(currentValue: any) {
+    if (!Object.is(currentValue, undefined) && !Object.is(currentValue, this.content)) {
       this.content = currentValue;
       this.editor.setValue(this.content);
       this.markedHtml = marked(this.content);

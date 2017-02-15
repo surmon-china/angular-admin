@@ -3,16 +3,21 @@
   .announcement-content {
     padding: 0;
 
-    > .ql-toolbar,
-    > .ql-container {
-      border: none;
-      background-color: #fff;
-      color: #555;
-    }
+    > .markdown-editor {
 
-    > .ql-toolbar {
-      border-bottom: 1px solid #ccc;
-      line-height: initial;
+      > .editor-toolbar {
+
+        > .menus {
+
+          .quote,
+          .code,
+          .-h3,
+          .image,
+          .save {
+            display: none;
+          }
+        }
+      }
     }
   }
 }

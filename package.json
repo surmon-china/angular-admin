@@ -36,7 +36,6 @@
     "lodash": "^4.12.0",
     "marked": "^0.3.6",
     "ng2-bootstrap": "1.1.14",
-    "ng2-quill-editor": "^1.1.0",
     "ng2-smart-table": "^0.3.2",
     "normalize.css": "^4.1.1",
     "plupload": "^2.2.1",
