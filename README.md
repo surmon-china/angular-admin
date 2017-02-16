@@ -8,19 +8,23 @@ If you want to run the applaction, you need install the [nodepress](https://gith
 
 标签管理
 
-![](https://static.surmon.me/17-2-17/37280683-file_1487275342161_2d93.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/tag-list.png)
 
 发布文章
 
-![发布文章][1]
+![发布文章](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/submit-article.png)
 
 全局设置
 
-![](https://static.surmon.me/17-2-17/4168864-file_1487275360136_13981.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/setting.png)
 
 文章列表
 
-![](https://static.surmon.me/17-2-17/4168864-file_1487275360136_13981.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/article-list.png)
+
+markdown编辑器
+
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/markdown.png)
 
 # Todos && Issues 更新维护记录
 
@@ -208,7 +212,6 @@ angular-admin/
 ```
 
 
-  [1]: https://static.surmon.me/17-2-17/51159403-file_1487270589249_b3b9.png
   [2]: https://github.com/auth0/angular2-jwt
   [3]: https://github.com/surmon-china/angular-admin/blob/master/src/app/theme/components/baMarkdownEditor/markdownEditor.component.ts
   [4]: https://github.com/auth0/angular2-jwt
