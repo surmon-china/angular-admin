@@ -4,6 +4,24 @@ Admin panel framework based on Angular 2, Bootstrap 4 and Webpack
 
 If you want to run the applaction, you need install the [nodepress](https://github.com/surmon-china/nodepress) service 
 
+# 上几张图
+
+标签管理
+
+![](https://static.surmon.me/17-2-17/37280683-file_1487275342161_2d93.png)
+
+发布文章
+
+![发布文章][1]
+
+全局设置
+
+![](https://static.surmon.me/17-2-17/4168864-file_1487275360136_13981.png)
+
+文章列表
+
+![](https://static.surmon.me/17-2-17/4168864-file_1487275360136_13981.png)
+
 # Todos && Issues 更新维护记录
 
 - 仪表盘信息聚合（系统/文章信息聚合，echarts）
@@ -35,13 +53,13 @@ If you want to run the applaction, you need install the [nodepress](https://gith
    - 一堆方法
    - 返回promise
    - 用第三方组件配合来实现res/err的处理
-   - 定制化的http服务是需要自己封装的，如果你想实现拦截器，auth控制的话，必须封装，项目中用了三方的[angular2-jwt][1]
+   - 定制化的http服务是需要自己封装的，如果你想实现拦截器，auth控制的话，必须封装，项目中用了三方的[angular2-jwt][2]
 
 ## 自定义组件的双向绑定如何实现
    - 框架基本都同质化了，和vue实现原理相差无几
    - "盒子里的香蕉" [(ngModel)] = [ngModelChange] + (model)
    - 一句话：用既定内置的api做预期的事
-   - [看这里有实现文件][2]
+   - [看这里有实现文件][3]
 
 ## 路由管理和拦截
    - 路由管理可以集中内聚管理，也可以模块化碎片化，项目中两者都有
@@ -49,8 +67,8 @@ If you want to run the applaction, you need install the [nodepress](https://gith
    - 因为我暂时没找到管方提供的类似拦截的api，欢迎pr
 
 ## auth验证
-   - 本地token库[angular2-jwt][1]会验证两点，1：是否存在 2：是否有效 3：是否过期
-   - 可选一些配置，见作者[github][1]
+   - 本地token库[angular2-jwt][4]会验证两点，1：是否存在 2：是否有效 3：是否过期
+   - 可选一些配置，见作者[github][5]
    - 在登录页，需要使用ng2的http服务，否则无法发起请求，原因：
         1：token不存在，存在也被验证为失效，不然怎么来登录页的，怎么初始化的
         2：angular2-jwt只要验证不通过就return false了，当然你可以配置
@@ -190,5 +208,8 @@ angular-admin/
 ```
 
 
-  [1]: https://github.com/auth0/angular2-jwt
-  [2]: https://github.com/surmon-china/angular-admin/blob/master/src/app/theme/components/baMarkdownEditor/markdownEditor.component.ts
+  [1]: https://static.surmon.me/17-2-17/51159403-file_1487270589249_b3b9.png
+  [2]: https://github.com/auth0/angular2-jwt
+  [3]: https://github.com/surmon-china/angular-admin/blob/master/src/app/theme/components/baMarkdownEditor/markdownEditor.component.ts
+  [4]: https://github.com/auth0/angular2-jwt
+  [5]: https://github.com/auth0/angular2-jwt
