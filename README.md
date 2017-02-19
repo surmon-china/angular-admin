@@ -1,8 +1,8 @@
 
 # angular-admin
-Admin panel framework based on Angular 2, Bootstrap 4 and Webpack
+Admin panel framework based on Angular 2, Bootstrap 4 and Webpack.
 
-If you want to run the applaction, you need install the [nodepress](https://github.com/surmon-china/nodepress) service 
+If you want to run the applaction, you need install the [nodepress](https://github.com/surmon-china/nodepress) service.
 
 # 上几张图
 

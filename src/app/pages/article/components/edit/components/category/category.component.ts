@@ -21,8 +21,10 @@ export class ArticleEditCategory {
   	this.getCategories();
   }
 
-  ngOnChange() {
-    this.categoryLevelBuild();
+  ngOnChanges(changes) {
+    if(changes.category) {
+      this.categoryLevelBuild();
+    }
   }
 
   // 分类级别标记
