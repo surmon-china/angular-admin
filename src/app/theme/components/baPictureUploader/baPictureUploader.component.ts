@@ -73,7 +73,7 @@ export class BaPictureUploader implements ControlValueAccessor {
       chunk_size: '4mb',
       // 选择文件后自动上传，若关闭需要自己绑定事件触发上传
       auto_start: true,
-      log_level: 0,
+      log_level: -1,
       // 回调函数              
       init: {
         // 文件添加进队列后,处理相关的事情
@@ -81,8 +81,9 @@ export class BaPictureUploader implements ControlValueAccessor {
           // console.log('文件添加进队列', files);
         },
         // 每个文件上传前,处理相关的事情
-        'BeforeUpload'(up, file) {
-          // console.log('文件上传前', file);
+        'BeforeUpload': (up, file) => {
+          // console.log('文件上传前', this);
+          this._notificationsService.info('开始上传', '文件正在上传', { timeOut: 850 });
         },
         // 每个文件上传时,处理相关的事情
         'UploadProgress': (up, file) => {
@@ -97,6 +98,7 @@ export class BaPictureUploader implements ControlValueAccessor {
           const data = `${STATIC_URL}/${JSON.parse(info).key}`;
           this.onUploadCompleted.emit(data);
           this.changePictureFromURL(data);
+          this._notificationsService.success('上传成功', '图片上传成功', { timeOut: 850 });
         },
         // 上传出错时,处理相关的事情
         'Error': (up, err, errTip) => {
@@ -158,7 +160,7 @@ export class BaPictureUploader implements ControlValueAccessor {
       this.emitPicture(url);
     };
     image.onerror = event => {
-      this._notificationsService.error('预览失败', '七牛太垃圾！', { timeOut: 800 });
+      this._notificationsService.error('预览失败', '七牛问题！', { timeOut: 800 });
       this.emitPicture(url);
     };
     image.src = url;
