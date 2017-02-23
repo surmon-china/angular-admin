@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ViewChild,
   Component,
   ElementRef,
   EventEmitter,
@@ -11,11 +12,14 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { ModalDirective } from 'ng2-bootstrap/ng2-bootstrap';
 
 const marked = require('marked');
 const hljs = require('highlight.js');
 const CodeMirror = require('codemirror');
+const { store } = require('./libs/store.js');
 (<any>window).hljs = hljs;
+(<any>window).store = store;
 (<any>window).marked = marked;
 (<any>window).CodeMirror = CodeMirror;
 
@@ -97,6 +101,8 @@ marked.setOptions({
 })
 export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAccessor {
 
+  @ViewChild('bakModal') bakModal: ModalDirective;
+
   // 基本数据
   editor:any;
   content:any = '';
@@ -117,8 +123,25 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   onModelChange: Function = () => {};
   onModelTouched: Function = () => {};
 
+  public timer = null;
+
   // 注入Dom
   constructor(private elementRef: ElementRef) {}
+
+  // 使用本地草稿
+  useArticleBak() {
+    this.content = store.get(location.pathname);
+    this.editor.setValue(this.content);
+    this.markedHtml = marked(this.content);
+    this.bakModal.hide();
+  }
+
+  // 关闭草稿弹窗
+  cancelBakModal() {
+    this.editor.setValue(this.content);
+    this.markedHtml = marked(this.content);
+    this.bakModal.hide();
+  }
 
   // 视图加载完成后执行初始化
   ngAfterViewInit() {
@@ -167,7 +190,29 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
           this.parseMarked();
         }
       }
+      // 自动保存草稿
+      if (!!this.timer) clearTimeout(this.timer);
+      if(!Object.is(content, store.get(location.pathname))) {
+        this.timer = setTimeout(() => {
+          store.set(location.pathname, content)
+        }, 1600);
+      };
     });
+    // 如果是发布页面，有本地存储，则直接读取存储
+    if(Object.is('/article/post', location.pathname) || Object.is('/announcement', location.pathname)) {
+      this.content = store.get(location.pathname);
+      this.editor.setValue(this.content);
+      this.markedHtml = marked(this.content);
+    } else {
+    // 如果是编辑页面，没有弹窗，则设置
+      setTimeout(() => {
+        if(!this.bakModal.isShown) {
+          this.editor.setValue(this.content);
+          this.markedHtml = marked(this.content);
+        }
+      }, 1000)
+    }
+    
     /*
     const dropZone = this.elementRef.nativeElement.children[0].children[1];
     dropZone.addEventListener('drop', event => {
@@ -190,10 +235,20 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
 
   // 写数据
   writeValue(currentValue: any) {
+    const bak = store.get(location.pathname);
     if (!Object.is(currentValue, undefined) && !Object.is(currentValue, this.content)) {
+      // 如果是公告页就啥也不干
+      if(Object.is(location.pathname, '/announcement')) {
+        this.content = currentValue;
+        this.editor.setValue(this.content);
+        return false;
+      }
+      if (!!bak && !Object.is(currentValue, bak)) {
+        this.bakModal.show();
+      }
       this.content = currentValue;
-      this.editor.setValue(this.content);
-      this.markedHtml = marked(this.content);
+    } else if (!!bak) {
+      this.content = bak;
     }
   }
 
