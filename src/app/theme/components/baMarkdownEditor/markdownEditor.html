@@ -30,4 +30,30 @@
 		</div>
 		<div class="marked" [innerHTML]="markedHtml"></div>
 	</div>
+	<!-- 删除确认弹窗 -->
+	<div bsModal #bakModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button class="close" aria-label="Close" (click)="cancelBakModal()">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	        <h4 class="modal-title">确认操作</h4>
+	      </div>
+	      <div class="modal-body">
+	        <div class="message">
+	          <span class="icon text-warning">
+	            <i class="ion-ios-information-outline"></i>
+	          </span>
+	          <span>发现本地有不同版本的草稿，是否使用？</span>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button class="btn btn-primary confirm-btn" (click)="useArticleBak()">确认使用</button>
+	        <span>&nbsp;</span>
+	        <button class="btn btn-default confirm-btn" (click)="cancelBakModal()">不使用</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </div>

@@ -28,9 +28,11 @@ markdown编辑器
 
 # Todos && Issues 更新维护记录
 
-- 仪表盘信息聚合（系统/文章信息聚合，echarts）
-- 评论管理，增删改查功能
+- 仪表盘信息聚合（系统/文章信息聚合，echarts）？
+- 评论管理，增删改查功能？
+- 需要增加一个数据库导出功能？
 
+- ~~增加Markdown编辑器实时本地备份功能~~
 - ~~弹窗的遮罩层把行为层挡住了~~
 - ~~标签列表页，描述限制为一行超出隐藏~~
 - ~~使用codemirror创建一个markdown编辑器 https://github.com/jbt/markdown-editor/blob/master/index.html~~

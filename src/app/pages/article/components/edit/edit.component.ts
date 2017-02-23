@@ -22,7 +22,7 @@ export class ArticleEdit {
     password: '',
     tag: [],
     category: [],
-    extends: [{}]
+    extends: []
   }
 
   constructor(private _route: ActivatedRoute,

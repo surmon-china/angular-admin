@@ -215,7 +215,7 @@
                     <span *ngIf="article.comment.length">{{ article.comments.length }}条评论</span>
                     <span class="text-muted" *ngIf="!article.comment.length">暂无评论</span>
                   </td>
-                  <td>{{ article.create_time | dataToLocale }}</td>
+                  <td>{{ article.create_at | dataToLocale }}</td>
                   <td>
                     <span [ngSwitch]="article.public">
                       <span *ngSwitchCase="0">密码</span>

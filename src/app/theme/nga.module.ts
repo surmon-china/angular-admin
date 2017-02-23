@@ -1,6 +1,7 @@
 import { NgModule, ModuleWithProviders }      from '@angular/core';
-import { CommonModule }  from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { CommonModule }  from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import {
@@ -103,6 +104,7 @@ const NGA_VALIDATORS = [
   imports: [
     CommonModule,
     RouterModule,
+    ModalModule,
     FormsModule,
     ReactiveFormsModule,
   ],
