@@ -145,6 +145,7 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
 
   // 视图加载完成后执行初始化
   ngAfterViewInit() {
+    if(this.editor) return false;
     this.editorElem = this.elementRef.nativeElement.children[0].children[1].children[0].children[0];
     this.editor = CodeMirror.fromTextArea(this.editorElem, Object.assign({
       // 语言模式 github markdown扩展
@@ -200,9 +201,12 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
     });
     // 如果是发布页面，有本地存储，则直接读取存储
     if(Object.is('/article/post', location.pathname) || Object.is('/announcement', location.pathname)) {
-      this.content = store.get(location.pathname);
-      this.editor.setValue(this.content);
-      this.markedHtml = marked(this.content);
+      let bak = store.get(location.pathname);
+      if(!!bak) {
+        this.content = bak;
+        this.editor.setValue(this.content);
+        this.markedHtml = marked(this.content);
+      }
     } else {
     // 如果是编辑页面，没有弹窗，则设置
       setTimeout(() => {
@@ -340,10 +344,8 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   getState(cm, pos) {
     pos = pos || cm.getCursor('start');
     let stat = cm.getTokenAt(pos);
-    if (!stat.type) return {};
-
+    if (!stat.type || !stat.type.split) return {};
     let types = stat.type.split(' ');
-
     let ret = {}, data, text;
     for (let i = 0; i < types.length; i++) {
       data = types[i];
