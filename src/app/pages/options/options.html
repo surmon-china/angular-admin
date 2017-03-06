@@ -107,16 +107,61 @@
           </div>
           <div class="form-group row"
                 [ngClass]="{ 
-                  'has-error': (!ping_sites.valid && ping_sites.touched), 
-                  'has-success': (ping_sites.valid && ping_sites.touched)
+                  'has-error': (!seo_ping_sites.valid && seo_ping_sites.touched), 
+                  'has-success': (seo_ping_sites.valid && seo_ping_sites.touched)
                 }">
             <label for="pingSites" class="col-sm-2 form-control-label">SEO更新服务</label>
             <div class="col-sm-10">
               <textarea id="pingSites"
                         class="form-control blog-ping-sites"
                         placeholder="在发表新文章时，NodePress会自动通知站点更新服务。用换行分隔多个服务URL。"
-                        [formControl]="ping_sites"
+                        [formControl]="seo_ping_sites"
                         (change)="pingSitesChangeHandle($event)">
+              </textarea>
+            </div>
+          </div>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!blacklist_ips.valid && blacklist_ips.touched), 
+                  'has-success': (blacklist_ips.valid && blacklist_ips.touched)
+                }">
+            <label for="blacklistIps" class="col-sm-2 form-control-label">黑名单 - IP</label>
+            <div class="col-sm-10">
+              <textarea id="blacklistIps"
+                        class="form-control blog-ping-sites"
+                        placeholder="这些IP来源的评论将被拒绝，用换行分隔多个IP地址。"
+                        [formControl]="blacklist_ips"
+                        (change)="commentBlacklistIpsChangeHandle($event)">
+              </textarea>
+            </div>
+          </div>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!blacklist_mails.valid && blacklist_mails.touched), 
+                  'has-success': (blacklist_mails.valid && blacklist_mails.touched)
+                }">
+            <label for="blacklistMails" class="col-sm-2 form-control-label">黑名单 - 邮箱</label>
+            <div class="col-sm-10">
+              <textarea id="blacklistMails"
+                        class="form-control blog-ping-sites"
+                        placeholder="这些邮箱来源的评论将被拒绝，用换行分隔多个邮箱地址。"
+                        [formControl]="blacklist_mails"
+                        (change)="commentBlacklistMailsChangeHandle($event)">
+              </textarea>
+            </div>
+          </div>
+          <div class="form-group row"
+                [ngClass]="{ 
+                  'has-error': (!blacklist_keywords.valid && blacklist_keywords.touched), 
+                  'has-success': (blacklist_keywords.valid && blacklist_keywords.touched)
+                }">
+            <label for="blacklistKeywords" class="col-sm-2 form-control-label">黑名单 - 关键字</label>
+            <div class="col-sm-10">
+              <textarea id="blacklistKeywords"
+                        class="form-control blog-ping-sites"
+                        placeholder="包含这些关键字的的评论将被拒绝，用换行分隔多个关键词。"
+                        [formControl]="blacklist_keywords"
+                        (change)="commentBlacklistKeywordsChangeHandle($event)">
               </textarea>
             </div>
           </div>

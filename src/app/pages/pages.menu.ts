@@ -78,6 +78,16 @@ export const PAGES_MENU = [
         path: 'comment',
         data: {
           menu: {
+            title: '评论管理',
+            icon: 'ion-chatbox-working',
+            order: 4
+          }
+        }
+      },
+      {
+        path: 'duoshuo',
+        data: {
+          menu: {
             title: '多说评论',
             icon: 'ion-chatbox-working',
             order: 4
