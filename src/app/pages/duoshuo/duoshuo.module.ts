@@ -1,9 +1,8 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { NgaModule }     from '../../theme/nga.module';
-import { routing }       from './comment.routing';
-
-import { Comment }       from './comment.component';
+import { routing }       from './duoshuo.routing';
+import { Duoshuo }       from './duoshuo.component';
 
 @NgModule({
   imports: [
@@ -12,7 +11,7 @@ import { Comment }       from './comment.component';
     routing
   ],
   declarations: [
-    Comment
+    Duoshuo
   ]
 })
-export default class CommentModule {}
+export default class DuoshuoModule {}

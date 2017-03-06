@@ -3,12 +3,12 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'comment',
+  selector: 'duoshuo',
   encapsulation: ViewEncapsulation.Emulated,
-  styles: [require('./comment.scss')],
-  template: require('./comment.html'),
+  styles: [require('./duoshuo.scss')],
+  template: require('./duoshuo.html'),
 })
-export class Comment implements OnInit {
+export class Duoshuo implements OnInit {
 
   iframeSrc:any = '';
   iframeBaseSrc:any = 'https://surmon.duoshuo.com/admin/';
