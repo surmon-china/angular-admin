@@ -82,7 +82,45 @@ export const PAGES_MENU = [
             icon: 'ion-chatbox-working',
             order: 4
           }
-        }
+        },
+        children: [
+          {
+            path: 'list',
+            data: {
+              menu: {
+                title: '所有评论',
+                icon: 'ion-ios-list-outline'
+              }
+            }
+          },
+          {
+            path: 'post',
+            data: {
+              menu: {
+                title: '文章评论',
+                icon: 'ion-ios-list-outline'
+              }
+            }
+          },
+          {
+            path: 'guestbook',
+            data: {
+              menu: {
+                title: '留言评论',
+                icon: 'ion-ios-list-outline'
+              }
+            }
+          },
+          {
+            path: 'detail',
+            data: {
+              menu: {
+                title: '评论详情',
+                icon: 'ion-ios-list-outline'
+              }
+            }
+          }
+         ]
       },
       {
         path: 'duoshuo',
