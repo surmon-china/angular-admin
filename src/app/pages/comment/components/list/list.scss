@@ -1,0 +1,30 @@
+.comment-list {
+
+  .batch-checkbox {
+
+    text-align: left;
+    padding-left: 2em;
+  }
+
+  .comment-err-msg {
+    margin: 1em 0;
+  }
+
+  tbody {
+
+    tr {
+
+      &.comment-item {
+        height: 13em;
+      }
+
+      td {
+
+        &.comment-content {
+          line-height: 2;
+          word-break: break-word;
+        }
+      }
+    }
+  }
+}

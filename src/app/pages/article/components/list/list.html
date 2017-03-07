@@ -143,10 +143,11 @@
                     </span>
                   </ba-checkbox>
                 </th>
-                <th width="40%">文章</th>
+                <th width="30%">文章</th>
                 <th>分类目录</th>
                 <th width="150">标签</th>
                 <th>评论</th>
+                <th>喜欢</th>
                 <th>日期</th>
                 <th>公开</th>
                 <th>状态</th>
@@ -212,8 +213,14 @@
                     </ul>
                   </td>
                   <td>
-                    <span *ngIf="article.comment.length">{{ article.comments.length }}条评论</span>
-                    <span class="text-muted" *ngIf="!article.comment.length">暂无评论</span>
+                    <span *ngIf="article.meta.comments">
+                      <a [routerLink]="['/comment/post/', article.id]">{{ article.meta.comments }}条评论</a>
+                    </span>
+                    <span class="text-muted" *ngIf="!article.meta.comments">暂无评论</span>
+                  </td>
+                  <td>
+                    <span *ngIf="article.meta.likes">{{ article.meta.likes }}人喜欢</span>
+                    <span class="text-muted" *ngIf="!article.meta.likes">无人喜欢</span>
                   </td>
                   <td>{{ article.create_at | dataToLocale }}</td>
                   <td>

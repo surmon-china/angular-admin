@@ -51,7 +51,7 @@ export class ArticleListService {
   // 移至回收站
   public moveToRecycle(articles: any) {
     return this.http
-      .put(this._apiUrl, { articles, params: { action: 1 }})
+      .patch(this._apiUrl, { articles, action: 1 })
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
@@ -60,7 +60,7 @@ export class ArticleListService {
   // 移至草稿
   public moveToDraft(articles: any) {
     return this.http
-      .put(this._apiUrl, { articles, params: { action: 2 }})
+      .patch(this._apiUrl, { articles, action: 2 })
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
@@ -69,7 +69,7 @@ export class ArticleListService {
   // 移至已发布
   public moveToPublished(articles: any) {
     return this.http
-      .put(this._apiUrl, { articles, params: { action: 3 }})
+      .patch(this._apiUrl, { articles, action: 3 })
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);

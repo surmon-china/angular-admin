@@ -1,0 +1,20 @@
+<div class="category-list">
+  <p class="text-muted" *ngIf="!categories.data.length">暂无分类</p>
+  <template [ngIf]="categories && categories.data.length">
+    <div title="{{ category.name }}" 
+         class="category-item-checkbox" 
+         *ngFor="let category of categories.data">
+      <ba-checkbox [(ngModel)]="category.checked" (ngModelChange)="itemSelectChange($event, category)">
+        <span ba-checkbox-label>
+          <span>&nbsp;</span>
+          <span *ngIf="category.level">└</span>
+          <span *ngFor="let num of categoryLevelMark(category.level)">─</span>
+          <span>{{ category.name }}</span>
+        </span>
+      </ba-checkbox>
+      <p></p>
+    </div>
+  </template>
+  <hr>
+  <button class="btn btn-sm btn-default" (click)="getCategories()">更新分类</button>
+</div>
