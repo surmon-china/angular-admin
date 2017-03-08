@@ -10,8 +10,7 @@ import { CommentService }      from './comment.service';
 
 import { Comment }             from './comment.component';
 import { CommentList }         from './components/list';
-// import { CommentPost }         from './components/post';
-// import { CommentDetail }       from './components/detail';
+import { CommentDetail }       from './components/detail';
 
 @NgModule({
   imports: [
@@ -30,8 +29,7 @@ import { CommentList }         from './components/list';
   declarations: [
     Comment,
     CommentList,
-    // CommentPost,
-    // CommentDetail
+    CommentDetail
   ]
 })
 export default class CommentModule {

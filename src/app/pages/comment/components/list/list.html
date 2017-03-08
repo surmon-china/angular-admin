@@ -4,6 +4,12 @@
       <div class="contnet-top-tools">
         <div class="pull-left">
           <div class="btn-group">
+            <button class="btn btn-success" *ngIf="post_id == 0">
+              <strong>留言板评论列表</strong>
+            </button>
+            <button class="btn btn-info" *ngIf="!!post_id && post_id != 0">
+              <strong>文章 {{ post_id }} 评论列表</strong>
+            </button>
             <button type="button"
                     class="btn btn-default active"
                     [ngClass]="{ 'active': getParams.state == 'all'}"
@@ -65,16 +71,16 @@
               </button>
               <ul class="dropdown-menu" dropdownMenu>
                 <li class="dropdown-item">
-                  <a [href]="" (click)="updateCommentState(selectedComments, 1)">审核通过</a>
+                  <a [href]="" (click)="updateCommentState(selectedComments, selectedPostIds, 1)">审核通过</a>
                 </li>
                 <li class="dropdown-item">
-                  <a [href]="" (click)="updateCommentState(selectedComments, 0)">移至待审核</a>
+                  <a [href]="" (click)="updateCommentState(selectedComments, selectedPostIds, 0)">移至待审核</a>
                 </li>
                 <li class="dropdown-item">
-                  <a [href]="" (click)="updateCommentState(selectedComments, -1)">移至回收站</a>
+                  <a [href]="" (click)="updateCommentState(selectedComments, selectedPostIds, -1)">移至回收站</a>
                 </li>
                 <li class="dropdown-item">
-                  <a [href]="" (click)="updateCommentState(selectedComments, -2)">标为垃圾</a>
+                  <a [href]="" (click)="updateCommentState(selectedComments, selectedPostIds, -2)">标为垃圾评论</a>
                 </li>
                 <li class="dropdown-item">
                   <a [href]="" (click)="delCommentModal(selectedComments)">彻底删除</a>
@@ -218,19 +224,19 @@
                     </div>
                     <div class="button-wrapper" *ngIf="comment.state == 0">
                       <button class="btn btn-warning btn-sm" 
-                              (click)="updateCommentState([comment._id], 1)">审核通过</button>
+                              (click)="updateCommentState([comment._id], [comment.post_id], 1)">审核通过</button>
                     </div>
                     <div class="button-wrapper" *ngIf="comment.state < 0">
                       <button class="btn btn-warning btn-sm" 
-                              (click)="updateCommentState([comment._id], 0)">恢复评论</button>
+                              (click)="updateCommentState([comment._id], [comment.post_id], 0)">恢复评论</button>
                     </div>
                     <div class="button-wrapper" *ngIf="comment.state == 1">
                       <button class="btn btn-danger btn-sm" 
-                              (click)="updateCommentState([comment._id], -2)">标为垃圾</button>
+                              (click)="updateCommentState([comment._id], [comment.post_id], -2)">标为垃圾</button>
                     </div>
                     <div class="button-wrapper" *ngIf="comment.state != -1">
                       <button class="btn btn-danger btn-sm" 
-                              (click)="updateCommentState([comment._id], -1)">移回收站</button>
+                              (click)="updateCommentState([comment._id], [comment.post_id], -1)">移回收站</button>
                     </div>
                     <div class="button-wrapper" *ngIf="comment.state == -1">
                       <button class="btn btn-danger btn-sm" 

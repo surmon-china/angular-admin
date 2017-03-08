@@ -97,25 +97,7 @@ export const PAGES_MENU = [
             path: 'post',
             data: {
               menu: {
-                title: '文章评论',
-                icon: 'ion-ios-list-outline'
-              }
-            }
-          },
-          {
-            path: 'guestbook',
-            data: {
-              menu: {
                 title: '留言评论',
-                icon: 'ion-ios-list-outline'
-              }
-            }
-          },
-          {
-            path: 'detail',
-            data: {
-              menu: {
-                title: '评论详情',
                 icon: 'ion-ios-list-outline'
               }
             }
