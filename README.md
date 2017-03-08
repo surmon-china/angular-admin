@@ -22,6 +22,10 @@ If you want to run the applaction, you need install the [nodepress](https://gith
 
 ![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/article-list.png)
 
+评论管理
+
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/comment.png)
+
 markdown编辑器
 
 ![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/markdown.png)
@@ -29,9 +33,9 @@ markdown编辑器
 # Todos && Issues 更新维护记录
 
 - 仪表盘信息聚合（系统/文章信息聚合，echarts）？
-- 评论管理，增删改查功能？
-- 需要增加一个数据库导出功能？
+- 需要增加一个数据库导出功能
 
+- ~~评论管理，增删改查功能~~
 - ~~增加黑名单功能，优化设置部分表单体验~~
 - ~~增加Markdown编辑器实时本地备份功能~~
 - ~~弹窗的遮罩层把行为层挡住了~~
