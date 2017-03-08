@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
@@ -26,8 +27,7 @@ export class CommentList {
   };
 
   // 初始化数据
-  public tags = { data: [] };
-  public categories = { data: [] };
+  public post_id: any = null;
   public comments = { 
     data: [],
     pagination: {
@@ -42,8 +42,10 @@ export class CommentList {
   public del_comments:any;
   public commentsSelectAll:boolean = false;
   public selectedComments = [];
+  public selectedPostIds = [];
 
   constructor(private _fb:FormBuilder,
+              private _route: ActivatedRoute,
               private _commentService:CommentService) {
 
     this.searchForm = _fb.group({
@@ -55,25 +57,33 @@ export class CommentList {
 
   // 初始化
   ngOnInit() {
-    this.getComments();
+    // 如果是修改，则请求文章数据
+    this._route.params.subscribe(({ post_id }) => {
+      this.post_id = post_id;
+      this.getComments();
+    });
   }
 
   // 评论列表多选切换
   public batchSelectChange(is_select): void {
     if(!this.comments.data.length) return;
     this.selectedComments = [];
+    this.selectedPostIds = [];
     this.comments.data.forEach(item => { 
       item.selected = is_select;
       is_select && this.selectedComments.push(item._id);
+      is_select && this.selectedPostIds.push(item.post_id);
     });
   }
 
   // 评论列表单个切换
   public itemSelectChange(): void {
     this.selectedComments = [];
+    this.selectedPostIds = [];
     const comments = this.comments.data;
     comments.forEach(item => { 
       item.selected && this.selectedComments.push(item._id);
+      item.selected && this.selectedPostIds.push(item.post_id);
     });
     if(!this.selectedComments.length) {
       this.commentsSelectAll = false;
@@ -82,49 +92,6 @@ export class CommentList {
       this.commentsSelectAll = true;
     }
   }
-
-  // 分类级别标记
-  public categoryLevelMark(level):any { 
-    return Array.from({ length: level }, () => '')
-  };
-
-  // 分类级别递归排序
-  public categoryLevelBuild(): void {
-
-    // 初始化数据
-    let categories = Array.from(this.categories.data);
-    let toDoDeletes = [];
-
-    // 级别数据构造
-    categories.forEach(cate => {
-      // 找到问题数据并添加标记
-      cate.unrepaired = (!!cate.pid && !categories.find(c => Object.is(cate.pid, c._id)))
-      categories.forEach(c => {
-        if(Object.is(cate.pid, c._id)) {
-          c.children = c.children || [];
-          c.children.push(cate);
-          toDoDeletes.push(cate);
-        }
-      })
-    });
-
-    // 扁平数据构造（同时添加级别标示）
-    const levelBuildRun = cates => {
-      let newCategories = [];
-      const levelBuildOptimize = (cates, level) => {
-        cates.forEach(c => {
-          c.level = level;
-          newCategories.push(c);
-          if(c.children && c.children.length) levelBuildOptimize(c.children, level + 1);
-        })
-      }
-      levelBuildOptimize(cates, 0);
-      return newCategories;
-    }
-
-    // 开始执行
-    this.categories.data = levelBuildRun(categories.filter(c => toDoDeletes.indexOf(c) == -1));
-  };
 
   // 切换评论类型
   public switchState(state:any):void {
@@ -172,19 +139,24 @@ export class CommentList {
     if(!params.page || Object.is(params.page, 1)) {
       this.comments.pagination.current_page = 1;
     }
+    // 请求的是否为某post页面的列表
+    if(this.post_id) {
+      params.post_id = this.post_id;
+    }
     // 请求评论
     this._commentService.getComments(params)
     .then(comments => {
       this.comments = comments.result;
       this.commentsSelectAll = false;
       this.selectedComments = [];
+      this.selectedPostIds = [];
     })
     .catch(error => {});
   }
 
   // 更新评论状态
-  public updateCommentState(comments: any, state: number) {
-    this._commentService.updateCommentState(comments, state)
+  public updateCommentState(comments: any, post_ids: any, state: number) {
+    this._commentService.updateCommentState(comments, post_ids, state)
     .then(do_result => {
       this.getComments({ page: this.comments.pagination.current_page });
     })
@@ -194,7 +166,16 @@ export class CommentList {
   // 彻底删除评论
   public delComments() {
     const comments = this.del_comments || this.selectedComments;
-    this._commentService.delComments(comments)
+    let post_ids = [];
+    if(Object.is(comments.length, 1)) {
+      let currentComment = this.comments.data.find(c => Object.is(comments[0], c._id));
+      if(!!currentComment) {
+        post_ids = [currentComment.post_id];
+      }
+    } else {
+      post_ids = this.selectedPostIds;
+    }
+    this._commentService.delComments(comments, post_ids)
     .then(do_result => {
       this.delModal.hide();
       this.del_comments = null;

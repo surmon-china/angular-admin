@@ -2,8 +2,7 @@ import { Routes, RouterModule }  from '@angular/router';
 
 import { Comment }               from './comment.component';
 import { CommentList }          from './components/list';
-// import { CommentPost }           from './components/post';
-// import { CommentDetail }          from './components/detail';
+import { CommentDetail }          from './components/detail';
 
 const routes: Routes = [
   {
@@ -12,8 +11,9 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'list', pathMatch: 'full' },
       { path: 'list', component: CommentList },
-      // { path: 'post', component: CommentPost },
-      // { path: 'detail/:comment_id', component: CommentDetail }
+      { path: 'post', redirectTo: 'post/0', pathMatch: 'full' },
+      { path: 'post/:post_id', component: CommentList },
+      { path: 'detail/:comment_id', component: CommentDetail }
     ]
   }
 ];

@@ -48,44 +48,59 @@ export class CommentService {
       .catch(this.handleError);
   }
 
+  public unique(arr, newArr) {
+    let num;
+    if (-1 == arr.indexOf(num = arr.shift())) newArr.push(num);
+    arr.length && this.unique(arr, newArr);
+   }
+
   // 对状态进行各种操作
   // state:（0待审核/1通过正常/-1已删除/-2标为垃圾评论）
-  public updateCommentState(comments: any, state) {
+  public updateCommentState(comments: any, post_ids: any, state: any) {
+    let _post_ids = [];
+    this.unique(post_ids, _post_ids);
+    post_ids = _post_ids;
     return this.http
-      .patch(this._apiUrl,{ comments, state })
+      .patch(this._apiUrl, { comments, post_ids, state })
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
   }
 
   // 彻底删除评论
-  public delComments(comments: any) {
+  public delComments(comments: any, post_ids: any) {
+    let _post_ids = [];
+    this.unique(post_ids, _post_ids);
+    post_ids = _post_ids;
     return this.http
-      .delete(this._apiUrl, new RequestOptions({ body: { comments }}))
+      .delete(this._apiUrl, new RequestOptions({ body: { comments, post_ids }}))
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
   }
 
-  // 根据id获取和自己相关的所有评论，并树状展示
-  public getCommentDetail(get_params) {
-    let params: URLSearchParams = new URLSearchParams();
-    if (get_params) {
-      Object.keys(get_params).forEach(k => { 
-        params.set(k, get_params[k])
-      });
-    }
+  // 获取评论详情
+  public getCommentDetail(comment_id) {
     return this.http
-      .get(`this._apiUrl/${ get_params.comment_id }`, { search: params })
+      .get(`${this._apiUrl}/${comment_id}`)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
   }
 
   // 更新评论信息
-  public updateCommentDetail(comments) {
+  public updateCommentDetail(comment) {
     return this.http
-      .put(this._apiUrl, { comments })
+      .put(`${this._apiUrl}/${comment._id}`, comment)
+      .toPromise()
+      .then(this.handleResponse)
+      .catch(this.handleError);
+  }
+
+  // 获取文章信息
+  public getCommentArticleDetail(post_id) {
+    return this.http
+      .get(`${API_ROOT}/article/${post_id}`)
       .toPromise()
       .then(this.handleResponse)
       .catch(this.handleError);
