@@ -142,7 +142,9 @@
             <select class="form-control c-select" [formControl]="pid">
               <option default value="0">无父级评论</option>
               <template [ngIf]="comment.id && comments && comments.data.length">
-                <option *ngFor="let item of comments.data" [ngValue]="item.id">
+                <option *ngFor="let item of comments.data" 
+                        [ngValue]="item.id"
+                        [disabled]="item.id == comment.id">
                   <span>ID：{{ item.id }}  -  {{ item.author.name }}：{{ item.content | truncate : 160 }}</span>
                 </option>
               </template>
