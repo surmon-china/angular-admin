@@ -2,6 +2,8 @@
 # angular-admin
 Admin panel framework based on Angular 2, Bootstrap 4 and Webpack.
 
+Project forkd from [ng2-admin](https://akveo.github.io/ng2-admin/)
+
 If you want to run the applaction, you need install the [nodepress](https://github.com/surmon-china/nodepress) service.
 
 # 上几张图
