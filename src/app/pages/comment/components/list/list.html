@@ -189,7 +189,7 @@
                     </div>
                     <div>
                       <strong>地理位置：</strong>
-                      <span *ngIf="comment.ip_location">{{ comment.ip_location.country + comment.ip_location.city }}</span>
+                      <span *ngIf="comment.ip_location">{{ comment.ip_location.country + ' - ' + comment.ip_location.city }}</span>
                       <span *ngIf="!comment.ip_location" class="text-muted">未知</span>
                     </div>
                     <div>
