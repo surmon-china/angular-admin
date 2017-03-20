@@ -44,7 +44,7 @@ type StoreType = {
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    SimpleNotificationsModule,
+    SimpleNotificationsModule.forRoot(),
     NgaModule.forRoot(),
     PagesModule,
     routing
