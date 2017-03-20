@@ -44,12 +44,15 @@
       td {
         line-height: 5em;
 
-        &.tag-description {
+        > .tag-slug,
+        > .tag-description {
+          width: 10em;
           overflow: hidden;
           text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
+          -o-text-overflow: ellipsis;
+          -webkit-text-overflow: ellipsis;
+          -moz-text-overflow: ellipsis;
+          white-space:nowrap;
         }
 
         .content {
