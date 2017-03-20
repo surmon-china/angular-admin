@@ -187,8 +187,12 @@
                     </ba-checkbox>
                   </td>
                   <td>{{ tag.name }}</td>
-                  <td>{{ tag.slug }}</td>
-                  <td class="tag-description" [title]="tag.description">{{ tag.description }}</td>
+                  <td>
+                    <div class="tag-slug">{{ tag.slug }}</div>
+                  </td>
+                  <td>
+                    <div class="tag-description" [title]="tag.description">{{ tag.description }}</div>
+                  </td>
                   <td>{{ tag.count || 0 }}</td>
                   <td>
                     <div class="text-center">
