@@ -65,7 +65,11 @@ export class App {
         this._appState.set('adminInfo', adminInfo);
       }
     })
-    .catch(error => {});
+    .catch(error => {
+      if(Object.is(error.status, 403)) {
+        this._router.navigate(['/auth']);
+      }
+    });
   }
 
   // 通知配置

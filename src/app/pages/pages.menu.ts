@@ -239,19 +239,7 @@ export const PAGES_MENU = [
             path: '',
             data: {
               menu: {
-                title: '公网IP',
-                url: 'http://121.42.55.33',
-                icon: 'ion-android-globe',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: 'Vue-Blog',
+                title: 'Surmon.me',
                 url: 'https://surmon.me',
                 icon: 'ion-android-exit',
                 order: 800,
