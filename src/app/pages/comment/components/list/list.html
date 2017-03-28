@@ -213,7 +213,7 @@
                     <i class="ion-nuclear text-danger" *ngIf="comment.state == -2"></i>
                     <span [ngSwitch]="comment.state">
                       <span *ngSwitchCase="0">待审核</span>
-                      <span *ngSwitchCase="1">审核通过</span>
+                      <span *ngSwitchCase="1">已发布</span>
                     </span>
                     <span *ngIf="comment.state == -1">已删除</span>
                     <span *ngIf="comment.state == -2">垃圾评论</span>

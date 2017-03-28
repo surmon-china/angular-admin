@@ -14,6 +14,7 @@ let _decorateModuleRef = function identity<T>(value: T): T { return value; };
 
 if ('production' === ENV || 'renderer' === ENV) {
   // Production
+  // Issues https://github.com/qdouble/angular-webpack2-starter/issues/263
   // disableDebugTools();
   enableProdMode();
 
