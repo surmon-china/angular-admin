@@ -1,8 +1,8 @@
 
 # Angular-Admin
-Admin panel framework based on Angular 4, Bootstrap 4 and Webpack.
+Admin panel framework based on Angular4, Bootstrap4 and Webpack2.
 
-Project forked from [ng2-admin](https://akveo.github.io/ng2-admin/).
+The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/).
 
 The api of this project is accompanied by the [nodepress](https://github.com/surmon-china/nodepress) program, and if you want to run up, you need to install [nodepress](https://github.com/surmon-china/nodepress).
 
@@ -62,6 +62,7 @@ markdown编辑器
 - ~~所有涉及发布的内容项，都需要增加自定义字段~~
 - ~~程序截图 + 文档撰写 readme~~
 - ~~由于数据的准确性没有测试，分类和标签列表的与文章内容的先后顺序不同会导致标签和分类不会被勾选~~
+- ~~升级至Angular4 and Bootstrap 4最新测试版 ~~
 
 # 程序结构（踩坑记录）
 
