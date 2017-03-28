@@ -116,7 +116,7 @@ export class CommentDetail {
       // return false;
       this._commentService.updateCommentDetail(this.comment)
       .then(comment => {
-        this.comment = comment.result;
+        this.comment = (<any>comment).result;
       })
       .catch(error => {})
     }
@@ -126,7 +126,7 @@ export class CommentDetail {
   public getComments(params) {
     this._commentService.getComments(params)
     .then(comments => {
-      this.comments = comments.result;
+      this.comments = (<any>comments).result;
     })
     .catch(error => {})
   }
@@ -135,7 +135,7 @@ export class CommentDetail {
   public getCommentDetail() {
     this._commentService.getCommentDetail(this.comment_id)
     .then(comment => {
-      this.comment = comment.result;
+      this.comment = (<any>comment).result;
       this.updateEditForm();
       if(!Object.is(this.comment.post_id, 0)) {
         this.getCommentArticleDetail();
@@ -149,7 +149,7 @@ export class CommentDetail {
   public getCommentArticleDetail() {
     this._commentService.getCommentArticleDetail(this.comment.post_id)
     .then(article => {
-      this.article = article.result;
+      this.article = (<any>article).result;
     })
     .catch(error => {})
   }

@@ -24,7 +24,11 @@
   </div>
 </div>
 <div>
-  <ba-checkbox [(ngModel)]="isDisabled" [baCheckboxClass]="'disabled'" [label]="'Disabled checkbox'" [disabled]="true"></ba-checkbox>
+  <ba-checkbox [(ngModel)]="isDisabled" 
+               [baCheckboxClass]="'disabled'" 
+               [label]="'Disabled checkbox'" 
+               [disabled]="true">
+  </ba-checkbox>
   <div class="radio disabled">
     <label class="custom-radio nowrap">
       <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled>

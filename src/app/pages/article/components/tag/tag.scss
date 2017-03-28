@@ -22,8 +22,13 @@
 }
 
 .tag-search-form {
-  float: right;
-  width: 20em;
+
+  > .input-group {
+
+    > .form-control {
+      width: 18em;
+    }
+  }
 }
 
 .tag-list {

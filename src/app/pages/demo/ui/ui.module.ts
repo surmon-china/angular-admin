@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../../theme/nga.module';
 
 import { routing }       from './ui.routing';
-import { PaginationModule, DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { PaginationModule, DropdownModule, ModalModule } from 'ng2-bootstrap';
 import { Ui } from './ui.component';
 import { Buttons } from './components/buttons/buttons.component';
 import { Grid } from './components/grid/grid.component';
-// import { Icons } from './components/icons/icons.component';
+import { Icons } from './components/icons/icons.component';
 import { Modals } from './components/modals/modals.component';
 import { Typography } from './components/typography/typography.component';
 
@@ -20,7 +20,7 @@ import { IconButtons } from './components/buttons/components/iconButtons';
 import { LargeButtons } from './components/buttons/components/largeButtons';
 import { DropdownButtons } from './components/buttons/components/dropdownButtons';
 import { GroupButtons } from './components/buttons/components/groupButtons';
-// import { IconsService } from './components/icons/icons.service';
+import { IconsService } from './components/icons/icons.service';
 
 
 @NgModule({
@@ -28,15 +28,15 @@ import { GroupButtons } from './components/buttons/components/groupButtons';
     CommonModule,
     FormsModule,
     NgaModule,
-    PaginationModule,
-    DropdownModule,
-    ModalModule,
+    PaginationModule.forRoot(),
+    DropdownModule.forRoot(),
+    ModalModule.forRoot(),
     routing
   ],
   declarations: [
     Buttons,
     Grid,
-    // Icons,
+    Icons,
     Modals,
     Typography,
     Ui,
@@ -50,7 +50,7 @@ import { GroupButtons } from './components/buttons/components/groupButtons';
     GroupButtons
   ],
   providers: [
-    // IconsService
+    IconsService
   ]
 })
 export default class UiModule {

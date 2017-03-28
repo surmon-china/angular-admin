@@ -1,75 +1,45 @@
 <form name="articleSubmit" class="form-horizontal">
   <div class="form-group row">
-    <div class="col-sm-12">
-      <label for="articleStatus" class="col-sm-3 form-control-label">状态</label>
-      <div class="col-sm-6">
-        <select class="form-control c-select" 
-                id="articleStatus" 
-                name="articleStatus" 
-                [(ngModel)]="state"
-                (change)="stateChange.emit($event.target.value)">
-          <option value="1">直接发布</option>
-          <option value="0">存为草稿</option>
-          <option value="-1">已删除</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="form-group row">
-    <div class="col-sm-12">
-      <label for="articlePublic" class="col-sm-3 form-control-label">公开度</label>
-      <div class="col-sm-6">
-        <select class="form-control c-select" 
-                id="articlePublic" 
-                name="articlePublic" 
-                [(ngModel)]="ppublic"
-                (change)="ppublicChange.emit($event.target.value)">
-          <option value="1">公开</option>
-          <option value="0">密码访问</option>
-          <option value="-1">私密</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="form-group row">
-    <div class="col-sm-12">
-      <label for="articlePassword" class="col-sm-3 form-control-label">文章密码</label>
-      <div class="col-sm-6">
-         <input type="password" 
-                class="form-control" 
-                id="articlePassword" 
-                name="articlePassword" 
-                placeholder="文章密码" 
-                [(ngModel)]="password"
-                (change)="passwordChange.emit($event.target.value)"
-                [disabled]="ppublic != 0">
-      </div>
-    </div>
-  </div>
-  <!-- <div class="form-group row" *ngIf="false">
-    <label for="articlePublish" class="col-sm-3 form-control-label">发布类型</label>
-    <div class="col-sm-6">
+    <label for="articleStatus" class="col-3 text-center form-control-label">状态</label>
+    <div class="col-6">
       <select class="form-control c-select" 
-              id="articlePublish" 
-              name="articlePublish" 
-              [(ngModel)]="article.publish">
-        <option value="1" default>立即发布</option>
-        <option value="2">定时发布</option>
+              id="articleStatus" 
+              name="articleStatus" 
+              [(ngModel)]="state"
+              (change)="stateChange.emit($event.target.value)">
+        <option value="1">直接发布</option>
+        <option value="0">存为草稿</option>
+        <option value="-1">已删除</option>
       </select>
     </div>
   </div>
-  <div class="form-group row" *ngIf="false">
-    <label for="articleTimestamp" class="col-sm-3 form-control-label">发布时间</label>
-    <div class="col-sm-6">
-       <input type="text" 
-              class="form-control" 
-              id="articleTimestamp" 
-              placeholder="文章发布时间" 
-              name="articleTimestamp" 
-              [(ngModel)]="article.timestamp"
-              [disabled]="article.publish != 2">
+  <div class="form-group row">
+    <label for="articlePublic" class="col-3 text-center form-control-label">公开度</label>
+    <div class="col-6">
+      <select class="form-control c-select" 
+              id="articlePublic" 
+              name="articlePublic" 
+              [(ngModel)]="ppublic"
+              (change)="ppublicChange.emit($event.target.value)">
+        <option value="1">公开</option>
+        <option value="0">密码访问</option>
+        <option value="-1">私密</option>
+      </select>
     </div>
-  </div> -->
+  </div>
+  <div class="form-group row">
+    <label for="articlePassword" class="col-3 text-center form-control-label">文章密码</label>
+    <div class="col-6">
+       <input type="password" 
+              class="form-control" 
+              id="articlePassword" 
+              name="articlePassword" 
+              placeholder="文章密码" 
+              [(ngModel)]="password"
+              (change)="passwordChange.emit($event.target.value)"
+              [disabled]="ppublic != 0">
+    </div>
+  </div>
   <hr>
   <div class="row">
     <div class="col-sm-12">

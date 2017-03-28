@@ -176,7 +176,7 @@
                   <p class="text-muted text-center tag-err-msg">暂无数据<p>
                 </td>
               </tr>
-              <template [ngIf]="tags && tags.data.length">
+              <ng-template [ngIf]="tags && tags.data.length">
                 <tr *ngFor="let tag of tags.data">
                   <td class="batch-checkbox">
                     <ba-checkbox [(ngModel)]="tag.selected" (ngModelChange)="itemSelectChange()">
@@ -210,7 +210,7 @@
                     </div>
                   </td>
                 </tr>
-              </template>
+              </ng-template>
             </tbody>
           </table>
           <br>

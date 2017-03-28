@@ -1,7 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PaginationModule, DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { PaginationModule, DropdownModule, ModalModule } from 'ng2-bootstrap';
 import { NgaModule }     from '../../theme/nga.module';
 
 import { routing }       from './announcement.routing';
@@ -13,9 +13,9 @@ import { AnnouncementService } from './announcement.service';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    PaginationModule,
-    DropdownModule,
-    ModalModule,
+    PaginationModule.forRoot(),
+    DropdownModule.forRoot(),
+    ModalModule.forRoot(),
     FormsModule,
     NgaModule,
     routing

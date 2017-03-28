@@ -23,8 +23,13 @@
 }
 
 .announcement-search-form {
-  float: right;
-  width: 20em;
+
+  > .input-group {
+
+    > .form-control {
+      width: 16em;
+    }
+  }
 }
 
 .announcement-list {
@@ -46,7 +51,8 @@
         line-height: 5em;
 
         .content {
-          line-height: 2;
+          word-break: break-all;
+          line-height: 2.6;
 
           p {
             margin: 0;

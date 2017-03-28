@@ -42,7 +42,7 @@
     </label>
     <select class="form-control c-select" id="categoryParent" [formControl]="pid">
       <option value="">无</option>
-      <template [ngIf]="categories && categories.data.length">
+      <ng-template [ngIf]="categories && categories.data.length">
         <option *ngFor="let cate of categories.data" 
                 [ngValue]="cate._id" 
                 [disabled]="!!category && category._id == cate._id">
@@ -50,7 +50,7 @@
           <span *ngFor="let num of categoryLevelMark(cate.level)">─</span>
           <span>{{ cate.name }}</span>
         </option>
-      </template>
+      </ng-template>
     </select>
     <span class="help-block sub-little-text">可以选择父级分类</span>
   </div>
@@ -110,7 +110,7 @@
   </div>
   <hr>
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-sm-12">
       <button type="submit" 
           class="btn btn-success" 
           [disabled]="!editForm.valid || submitState.ing">

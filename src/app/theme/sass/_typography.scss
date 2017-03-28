@@ -17,6 +17,11 @@ body a {
   }
 }
 
+*,
+*:focus {
+  outline: none;
+}
+
 h1 {
   font-size: 32px;
   margin-bottom: 0.5rem;

@@ -50,7 +50,7 @@
             <p class="text-muted text-center category-err-msg" *ngIf="categories && categories.data.length == undefined">加载中<p>
           </td>
         </tr>
-        <template [ngIf]="categories && categories.data.length">
+        <ng-template [ngIf]="categories && categories.data.length">
           <tr *ngFor="let category of categories.data">
             <td class="batch-checkbox">
               <ba-checkbox [(ngModel)]="category.selected" (ngModelChange)="itemSelectChange()">
@@ -83,7 +83,7 @@
               </div>
             </td>
           </tr>
-        </template>
+        </ng-template>
       </tbody>
     </table>
   </div>

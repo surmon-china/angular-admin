@@ -10,7 +10,6 @@ const routes: Routes = [
       { path: 'announcement', loadChildren: () => System.import('./announcement/announcement.module') },
       { path: 'article', loadChildren: () => System.import('./article/article.module') },
       { path: 'comment', loadChildren: () => System.import('./comment/comment.module') },
-      { path: 'duoshuo', loadChildren: () => System.import('./duoshuo/duoshuo.module') },
       { path: 'options', loadChildren: () => System.import('./options/options.module') },
       { path: 'linux', loadChildren: () => System.import('./linux/linux.module') },
       { path: 'auth', loadChildren: () => System.import('./auth/auth.module') },
