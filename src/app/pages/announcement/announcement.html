@@ -33,11 +33,14 @@
                            [formControl]="content">
           </markdown-editor>
         </div>
-        <button type="submit"
-                class="btn btn-success"
-                [disabled]="!editForm.valid">{{ edit_announcement ? '修改' : '添加' }}公告</button>
-        <span>&nbsp;</span>
-        <button class="btn btn-default" (click)="resetForm()">重置</button>
+        <hr>
+        <div class="col-sm-12">
+          <button type="submit"
+                  class="btn btn-success"
+                  [disabled]="!editForm.valid">{{ edit_announcement ? '修改' : '添加' }}公告</button>
+          <span>&nbsp;</span>
+          <button class="btn btn-default" (click)="resetForm()">重置</button>
+        </div>
       </form>
     </ba-card>
   </div>
@@ -142,7 +145,7 @@
                      *ngIf="announcements && announcements.data.length == undefined">加载中<p>
                 </td>
               </tr>
-              <template [ngIf]="announcements && announcements.data.length">
+              <ng-template [ngIf]="announcements && announcements.data.length">
                 <tr *ngFor="let announcement of announcements.data">
                   <td class="batch-checkbox">
                     <ba-checkbox [(ngModel)]="announcement.selected" (ngModelChange)="itemSelectChange()">
@@ -174,7 +177,7 @@
                     </div>
                   </td>
                 </tr>
-              </template>
+              </ng-template>
             </tbody>
           </table>
           <br>

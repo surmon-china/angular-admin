@@ -21,9 +21,7 @@ import 'rxjs/add/operator/mergeMap';
 
 // Web dependencies
 import 'jquery';
-// import 'editor.md/editormd.js';
 import 'bootstrap-loader';
-// import 'font-awesome-sass-loader';
 import 'lodash';
 
 if ('production' === ENV) {

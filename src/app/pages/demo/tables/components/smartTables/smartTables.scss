@@ -54,6 +54,11 @@
 }
 
 nav.ng2-smart-pagination-nav {
+  margin-top: 2em;
   display: flex;
   justify-content: center;
+
+  > .ng2-smart-pagination {
+    display: flex;
+  }
 }

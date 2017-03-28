@@ -89,7 +89,7 @@
             </div>
           </div>
         </div>
-        <form class="pull-right form-inline comment-get-form"
+        <form class="pull-right form-inline comment-search-form"
               [formGroup]="searchForm" 
               (ngSubmit)="searchComments(searchForm.value)">
           <div class="input-group">
@@ -146,7 +146,7 @@
                   <p class="text-muted text-center comment-err-msg" *ngIf="!comments.data.length">暂无数据<p>
                 </td>
               </tr>
-              <template [ngIf]="comments && comments.data.length">
+              <ng-template [ngIf]="comments && comments.data.length">
                 <tr *ngFor="let comment of comments.data" class="comment-item">
                   <td class="batch-checkbox">
                     <ba-checkbox [(ngModel)]="comment.selected" (ngModelChange)="itemSelectChange()">
@@ -247,7 +247,7 @@
                     </div>
                   </td>
                 </tr>
-              </template>
+              </ng-template>
             </tbody>
           </table>
            <br>

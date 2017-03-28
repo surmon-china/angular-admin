@@ -166,8 +166,7 @@ module.exports = function (options) {
       },
       historyApiFallback: {
         index: '/index.html'
-      },
-      outputPath: helpers.root('dist')
+      }
     },
 
     /*

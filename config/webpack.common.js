@@ -93,6 +93,8 @@ module.exports = function (options) {
      */
     module: {
 
+      exprContextCritical: false,
+
       rules: [
         {
           test: /\.ts$/,
@@ -129,7 +131,7 @@ module.exports = function (options) {
          */
         {
           test: /\.json$/,
-          loader: 'json-loader'
+          use: 'json-loader'
         },
 
         /*
@@ -150,23 +152,23 @@ module.exports = function (options) {
 
         {
           test: /initial\.scss$/,
-          loader: ExtractTextPlugin.extract({
-            fallbackLoader: 'style-loader',
-            loader: 'css-loader!sass-loader?sourceMap'
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: 'css-loader!sass-loader?sourceMap'
           })
         },
 
         {
-          test: /\.woff(2)?(\?v=.+)?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+          test: /\.woff(2)?(\?v=.+)?$/, use: 'url-loader?limit=10000&mimetype=application/font-woff'
         },
 
         {
-          test: /\.(ttf|eot|svg)(\?v=.+)?$/, loader: 'file-loader'
+          test: /\.(ttf|eot|svg)(\?v=.+)?$/, use: 'file-loader'
         },
 
         {
           test: /bootstrap\/dist\/js\/umd\//,
-          loader: 'imports?jQuery=jquery'
+          use: 'imports-loader?jQuery=jquery'
         },
 
         /* Raw loader support for *.html
@@ -176,7 +178,7 @@ module.exports = function (options) {
          */
         {
           test: /\.html$/,
-          loader: 'raw-loader',
+          use: 'raw-loader',
           exclude: [helpers.root('src/index.html')]
         },
 
@@ -184,7 +186,7 @@ module.exports = function (options) {
          */
         {
           test: /\.(jpg|png|gif)$/,
-          loader: 'file'
+          use: 'file-loader'
         }
       ]
     },
@@ -195,6 +197,12 @@ module.exports = function (options) {
      * See: http://webpack.github.io/docs/configuration.html#plugins
      */
     plugins: [
+
+      new webpack.ContextReplacementPlugin(
+        /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+        __dirname
+      ),
+    
       new ExtractTextPlugin({filename: 'initial.css', allChunks: true}),
 
       new AssetsPlugin({
@@ -317,17 +325,17 @@ module.exports = function (options) {
         "window.jQuery": "jquery",
         Tether: "tether",
         "window.Tether": "tether",
-        Tooltip: "exports?Tooltip!bootstrap/js/dist/tooltip",
-        Alert: "exports?Alert!bootstrap/js/dist/alert",
-        Button: "exports?Button!bootstrap/js/dist/button",
-        Carousel: "exports?Carousel!bootstrap/js/dist/carousel",
-        Collapse: "exports?Collapse!bootstrap/js/dist/collapse",
-        Dropdown: "exports?Dropdown!bootstrap/js/dist/dropdown",
-        Modal: "exports?Modal!bootstrap/js/dist/modal",
-        Popover: "exports?Popover!bootstrap/js/dist/popover",
-        Scrollspy: "exports?Scrollspy!bootstrap/js/dist/scrollspy",
-        Tab: "exports?Tab!bootstrap/js/dist/tab",
-        Util: "exports?Util!bootstrap/js/dist/util"
+        Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
+        Alert: "exports-loader?Alert!bootstrap/js/dist/alert",
+        Button: "exports-loader?Button!bootstrap/js/dist/button",
+        Carousel: "exports-loader?Carousel!bootstrap/js/dist/carousel",
+        Collapse: "exports-loader?Collapse!bootstrap/js/dist/collapse",
+        Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown",
+        Modal: "exports-loader?Modal!bootstrap/js/dist/modal",
+        Popover: "exports-loader?Popover!bootstrap/js/dist/popover",
+        Scrollspy: "exports-loader?Scrollspy!bootstrap/js/dist/scrollspy",
+        Tab: "exports-loader?Tab!bootstrap/js/dist/tab",
+        Util: "exports-loader?Util!bootstrap/js/dist/util"
       })
     ],
 

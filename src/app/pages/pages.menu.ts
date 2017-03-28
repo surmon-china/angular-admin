@@ -105,81 +105,6 @@ export const PAGES_MENU = [
          ]
       },
       {
-        path: 'duoshuo',
-        data: {
-          menu: {
-            title: '多说评论',
-            icon: 'ion-chatbox-working',
-            order: 4
-          }
-        },
-        children: [
-          {
-            path: 'manage',
-            data: {
-              menu: {
-                title: '评论管理',
-                icon: 'ion-ios-list-outline'
-              }
-            }
-          },
-          {
-            path: 'thread',
-            data: {
-              menu: {
-                title: '多说文章',
-                icon: 'ion-ios-list-outline'
-              }
-            }
-          },
-          {
-            path: 'users',
-            data: {
-              menu: {
-                title: '多说用户',
-                icon: 'ion-ios-list-outline'
-              }
-            }
-          },
-          {
-            path: 'preferences',
-            data: {
-              menu: {
-                title: '个性化设置',
-                icon: 'ion-ios-flame'
-              }
-            }
-          },
-          {
-            path: 'tools',
-            data: {
-              menu: {
-                title: '开发工具',
-                icon: 'ion-wrench'
-              }
-            }
-          },
-          {
-            path: 'statistics',
-            data: {
-              menu: {
-                title: '评论统计',
-                icon: 'ion-stats-bars'
-              }
-            }
-          },
-          {
-            path: 'user',
-            data: {
-              menu: {
-                title: '个人资料',
-                icon: 'ion-person'
-              }
-            }
-          }
-         ]
-      },
-      {
         path: 'options',
         data: {
           menu: {
@@ -239,7 +164,7 @@ export const PAGES_MENU = [
             path: '',
             data: {
               menu: {
-                title: 'Surmon.me',
+                title: 'Blog',
                 url: 'https://surmon.me',
                 icon: 'ion-android-exit',
                 order: 800,
@@ -325,6 +250,14 @@ export const PAGES_MENU = [
                 data: {
                   menu: {
                     title: '栅格',
+                  }
+                }
+              },
+              {
+                path: 'icons',
+                data: {
+                  menu: {
+                    title: '图标',
                   }
                 }
               },

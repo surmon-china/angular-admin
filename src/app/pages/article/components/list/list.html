@@ -95,31 +95,31 @@
             <option>浏览次数</option>
             <option>评论条数</option>
           </select>
-          <span>&nbsp;</span>
+          <span>&nbsp;&nbsp;</span>
           <select class="form-control c-select" 
                   [(ngModel)]="getParams.category"
                   (ngModelChange)="getArticles()">
             <option default value="all">所有分类</option>
-            <template [ngIf]="categories && categories.data.length">
+            <ng-template [ngIf]="categories && categories.data.length">
               <option *ngFor="let cate of categories.data" [ngValue]="cate._id">
                 <span *ngIf="cate.level">└</span>
                 <span *ngFor="let num of categoryLevelMark(cate.level)">─</span>
                 <span>{{ cate.name }}</span>
               </option>
-            </template>
+            </ng-template>
           </select>
-          <span>&nbsp;</span>
+          <span>&nbsp;&nbsp;</span>
           <select class="form-control c-select" 
                   [(ngModel)]="getParams.tag"
                   (ngModelChange)="getArticles()">
             <option default value="all">所有标签</option>
-            <template [ngIf]="tags && tags.data.length">
+            <ng-template [ngIf]="tags && tags.data.length">
               <option *ngFor="let tag of tags.data" [ngValue]="tag._id">
                 <span>{{ tag.name }}</span>
               </option>
-            </template>
+            </ng-template>
           </select>
-          <span>&nbsp;</span>
+          <span>&nbsp;&nbsp;</span>
           <select class="form-control c-select" 
                   [(ngModel)]="getParams.public"
                   (ngModelChange)="getArticles()">
@@ -160,7 +160,7 @@
                   <p class="text-muted text-center article-err-msg" *ngIf="!articles.data.length">暂无数据<p>
                 </td>
               </tr>
-              <template [ngIf]="articles && articles.data.length">
+              <ng-template [ngIf]="articles && articles.data.length">
                 <tr *ngFor="let article of articles.data" class="article-item">
                   <td class="batch-checkbox">
                     <ba-checkbox [(ngModel)]="article.selected" (ngModelChange)="itemSelectChange()">
@@ -268,7 +268,7 @@
                     </div>
                   </td>
                 </tr>
-              </template>
+              </ng-template>
             </tbody>
           </table>
            <br>

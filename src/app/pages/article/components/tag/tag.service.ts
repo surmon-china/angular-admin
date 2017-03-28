@@ -64,7 +64,7 @@ export class ArticleTagService {
       .catch(this.handleError);
   }
 
-  delTag(tag_id: any): Promise<void> {
+  delTag(tag_id: any): Promise<any> {
     return this.http
       .delete(`${ this._apiUrl }/${ tag_id }`)
       .toPromise()
@@ -72,7 +72,7 @@ export class ArticleTagService {
       .catch(this.handleError);
   }
 
-  delTags(tags: any): Promise<void> {
+  delTags(tags: any): Promise<any> {
     return this.http
       .delete(this._apiUrl, new RequestOptions({ body: { tags }}))
       .toPromise()

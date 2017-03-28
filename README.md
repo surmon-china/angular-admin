@@ -1,6 +1,6 @@
 
-# angular-admin
-Admin panel framework based on Angular 2, Bootstrap 4 and Webpack.
+# Angular-Admin
+Admin panel framework based on Angular 4, Bootstrap 4 and Webpack.
 
 Project forked from [ng2-admin](https://akveo.github.io/ng2-admin/).
 
@@ -11,7 +11,7 @@ If you only need to demonstrate the project locally, you need to comment on the 
 - [src/app/app.component.ts:114](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L114)
 - [src/app/app.component.ts:120](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L120)
 
-# 上几张图
+# Screenshots
 
 标签管理
 
@@ -70,13 +70,13 @@ markdown编辑器
    - 一堆方法
    - 返回promise
    - 用第三方组件配合来实现res/err的处理
-   - 定制化的http服务是需要自己封装的，如果你想实现拦截器，auth控制的话，必须封装，项目中用了三方的[angular2-jwt][2]
+   - 定制化的http服务是需要自己封装的，如果你想实现拦截器，auth控制的话，必须封装，项目中用了三方的[angular2-jwt](https://github.com/auth0/angular2-jwt)
 
 ## 自定义组件的双向绑定如何实现
    - 框架基本都同质化了，和vue实现原理相差无几
    - "盒子里的香蕉" [(ngModel)] = [ngModelChange] + (model)
    - 一句话：用既定内置的api做预期的事
-   - [看这里有实现文件][3]
+   - [看这里有实现文件](https://github.com/surmon-china/angular-admin/blob/master/src/app/theme/components/baMarkdownEditor/markdownEditor.component.ts)
 
 ## 路由管理和拦截
    - 路由管理可以集中内聚管理，也可以模块化碎片化，项目中两者都有
@@ -84,8 +84,8 @@ markdown编辑器
    - 因为我暂时没找到管方提供的类似拦截的api，欢迎pr
 
 ## auth验证
-   - 本地token库[angular2-jwt][4]会验证两点，1：是否存在 2：是否有效 3：是否过期
-   - 可选一些配置，见作者[github][5]
+   - 本地token库[angular2-jwt](https://github.com/auth0/angular2-jwt)会验证两点，1：是否存在 2：是否有效 3：是否过期
+   - 可选一些配置，见作者[github](https://github.com/auth0/angular2-jwt)
    - 在登录页，需要使用ng2的http服务，否则无法发起请求，原因：
         1：token不存在，存在也被验证为失效，不然怎么来登录页的，怎么初始化的
         2：angular2-jwt只要验证不通过就return false了，当然你可以配置
@@ -169,13 +169,13 @@ angular-admin/
    │   |
    │   ├──custom-typings.d.ts    * 第三方模块的自定义类型
    │   │
-   │   ├──index.html             * 入口文件
+   │   ├──index.html             * html入口文件
    │   │
-   │   ├──main.browser.ts        * 浏览器环境入口文件
+   │   ├──main.browser.ts        * app入口文件
    │   │
    │   ├──polyfills.browser.ts   * 浏览器降级支持polyfills file
    │   │
-   │   ├──vendor.browser.ts      * 基础模块（供应商）
+   │   ├──vendor.browser.ts      * 需要集中打包的模块（一般为核心/第三方模块）
    │   │
    │   ├──app/                   * application code - our working directory
    │   │   │
@@ -224,8 +224,3 @@ angular-admin/
 
 ```
 
-
-  [2]: https://github.com/auth0/angular2-jwt
-  [3]: https://github.com/surmon-china/angular-admin/blob/master/src/app/theme/components/baMarkdownEditor/markdownEditor.component.ts
-  [4]: https://github.com/auth0/angular2-jwt
-  [5]: https://github.com/auth0/angular2-jwt

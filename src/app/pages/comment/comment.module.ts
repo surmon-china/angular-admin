@@ -2,7 +2,7 @@ import { NgModule }            from '@angular/core';
 import { CommonModule }        from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule }           from '../../theme/nga.module';
-import { PaginationModule, DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { PaginationModule, DropdownModule, ModalModule } from 'ng2-bootstrap';
 
 import { routing }             from './comment.routing';
 
@@ -18,9 +18,9 @@ import { CommentDetail }       from './components/detail';
     FormsModule,
     ReactiveFormsModule,
     NgaModule,
-    PaginationModule,
-    DropdownModule,
-    ModalModule,
+    PaginationModule.forRoot(),
+    DropdownModule.forRoot(),
+    ModalModule.forRoot(),
     routing
   ],
   providers: [
