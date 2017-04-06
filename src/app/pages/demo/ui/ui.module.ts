@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../../theme/nga.module';
 
 import { routing }       from './ui.routing';
-import { PaginationModule, DropdownModule, ModalModule } from 'ng2-bootstrap';
+import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 import { Ui } from './ui.component';
 import { Buttons } from './components/buttons/buttons.component';
 import { Grid } from './components/grid/grid.component';
@@ -29,7 +29,7 @@ import { IconsService } from './components/icons/icons.service';
     FormsModule,
     NgaModule,
     PaginationModule.forRoot(),
-    DropdownModule.forRoot(),
+    BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     routing
   ],

@@ -1,7 +1,8 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { ModalDirective } from 'ng2-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap';
 import { AnnouncementService } from './announcement.service';
+const marked = require('marked');
 
 @Component({
 	selector: 'announcement',
@@ -51,7 +52,22 @@ export class Announcement {
 	}
 
 	ngOnInit() {
+		marked.setOptions({
+			renderer: new marked.Renderer(),
+			gfm: true,
+			tables: true,
+			breaks: false,
+			pedantic: false,
+			sanitize: false,
+			smartLists: true,
+			smartypants: false
+		});
 		this.getAnnouncements();
+	}
+
+	// 解析Markdown
+	public parseMarkdown(content) {
+		return marked(content);
 	}
 
 	// 多选切换

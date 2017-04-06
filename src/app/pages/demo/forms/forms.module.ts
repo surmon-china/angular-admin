@@ -5,7 +5,7 @@ import { NgaModule } from '../../../theme/nga.module';
 
 import { routing }       from './forms.routing';
 
-import { RatingModule } from 'ng2-bootstrap';
+import { RatingModule } from 'ngx-bootstrap';
 import { Forms } from './forms.component';
 import { Inputs } from './components/inputs';
 import { Layouts } from './components/layouts';

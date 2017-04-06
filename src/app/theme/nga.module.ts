@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders }      from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ModalModule } from 'ng2-bootstrap';
+import { ModalModule } from 'ngx-bootstrap';
 import { CommonModule }  from '@angular/common';
 import { RouterModule } from '@angular/router';
 

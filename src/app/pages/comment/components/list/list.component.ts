@@ -2,7 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
-import { ModalDirective } from 'ng2-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap';
 import { CommentService } from '../../comment.service';
 import { UAParse, OSParse } from '../../comment.ua';
 
@@ -14,7 +14,7 @@ import { UAParse, OSParse } from '../../comment.ua';
 })
 export class CommentList {
 
-  @ViewChild('delModal') delModal: ModalDirective;
+  @ViewChild('delModal') public delModal: ModalDirective;
 
   // 搜索参数
   public UAParse = UAParse;

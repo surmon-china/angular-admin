@@ -85,16 +85,14 @@
               <i class="ion-trash-b"></i>
               <span>清空关键词</span>
             </button>
-            <div class="btn-group" dropdown>
+            <div class="btn-group" dropdown [isDisabled]="!selectedAnnouncements.length">
               <button type="button"
-                      class="btn btn-default"
-                      dropdownToggle
-                      addToggleClass="true"
-                      [disabled]="!selectedAnnouncements.length">
+                      class="btn btn-default btn-with-icon dropdown-toggle"
+                      dropdownToggle>
                 <i class="ion-ios-list"></i>
                 <span>批量操作</span>
               </button>
-              <ul class="dropdown-menu" dropdownMenu>
+              <ul class="dropdown-menu" *dropdownMenu>
                 <li class="dropdown-item">
                   <a [href]="" (click)="delAnnouncementsModal()">批量删除</a>
                 </li>
@@ -156,7 +154,8 @@
                     </ba-checkbox>
                   </td>
                   <td>
-                    <div class="content ql-editor" [innerHTML]="announcement.content"></div>
+                    <div class="content ql-editor" 
+                         [innerHTML]="parseMarkdown(announcement.content)"></div>
                   </td>
                   <td align="center">
                     <span>{{ announcement.state == 1 ? '已发布' : '草稿' }}</span>

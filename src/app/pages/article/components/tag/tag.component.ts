@@ -1,6 +1,6 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { ModalDirective } from 'ng2-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap';
 import { NotificationsService } from 'angular2-notifications';
 import { ArticleTagService } from './tag.service';
 
