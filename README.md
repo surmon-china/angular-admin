@@ -63,6 +63,7 @@ markdown编辑器
 - ~~程序截图 + 文档撰写 readme~~
 - ~~由于数据的准确性没有测试，分类和标签列表的与文章内容的先后顺序不同会导致标签和分类不会被勾选~~
 - ~~升级至Angular4 and Bootstrap 4最新测试版 ~~
+- ~~升级至ngx-bootstrap，并优化markdown~~
 
 # 程序结构（踩坑记录）
 
@@ -145,7 +146,7 @@ npm start
 npm run build:prod
 
 # 生产，可以用nginx映射dist，不必要开node进程
-npm run serve:prod
+npm run server:prod
 ```
 
 # 目录结构

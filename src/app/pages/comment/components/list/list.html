@@ -60,16 +60,14 @@
               <i class="ion-trash-b"></i>
               <span>清空搜索条件</span>
             </button>
-            <div class="btn-group" dropdown>
+            <div class="btn-group" dropdown [isDisabled]="!selectedComments.length">
               <button type="button" 
-                      class="btn btn-default"
-                      addToggleClass="true"
-                      dropdownToggle
-                      [disabled]="!selectedComments.length">
+                      class="btn btn-default btn-with-icon dropdown-toggle"
+                      dropdownToggle>
                 <i class="ion-ios-list"></i>
                 <span>批量操作</span>
               </button>
-              <ul class="dropdown-menu" dropdownMenu>
+              <ul class="dropdown-menu" *dropdownMenu>
                 <li class="dropdown-item">
                   <a [href]="" (click)="updateCommentState(selectedComments, selectedPostIds, 1)">审核通过</a>
                 </li>

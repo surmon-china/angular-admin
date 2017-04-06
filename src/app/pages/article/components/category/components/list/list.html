@@ -5,16 +5,14 @@
         <i class="ion-refresh"></i>
         <span>刷新</span>
       </button>
-      <div class="btn-group" dropdown>
+      <div class="btn-group" dropdown [isDisabled]="!selectedCategories.length">
         <button type="button"
-                class="btn btn-default btn-with-icon"
-                dropdownToggle
-                addToggleClass="true"
-                [disabled]="!selectedCategories.length">
+                class="btn btn-default  btn-with-icon dropdown-toggle"
+                dropdownToggle>
           <i class="ion-ios-list"></i>
           <span>批量操作</span>
         </button>
-        <ul class="dropdown-menu" dropdownMenu>
+        <ul class="dropdown-menu" *dropdownMenu>
           <li class="dropdown-item">
             <a [href]="" (click)="delCategories()">删除选中</a>
           </li>

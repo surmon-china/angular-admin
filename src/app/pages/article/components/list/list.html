@@ -47,16 +47,14 @@
               <i class="ion-trash-b"></i>
               <span>清空搜索条件</span>
             </button>
-            <div class="btn-group" dropdown>
+            <div class="btn-group" dropdown [isDisabled]="!selectedArticles.length">
               <button type="button" 
-                      class="btn btn-default"
-                      addToggleClass="true"
-                      dropdownToggle
-                      [disabled]="!selectedArticles.length">
+                      class="btn btn-default btn-with-icon dropdown-toggle"
+                      dropdownToggle>
                 <i class="ion-ios-list"></i>
                 <span>批量操作</span>
               </button>
-              <ul class="dropdown-menu" dropdownMenu>
+              <ul class="dropdown-menu" *dropdownMenu>
                 <li class="dropdown-item">
                   <a [href]="" (click)="moveToPublished(selectedArticles)">快速发布</a>
                 </li>
