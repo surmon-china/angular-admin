@@ -142,9 +142,9 @@ export const PAGES_MENU = [
         path: '',
         data: {
           menu: {
-            title: 'Web-OS',
-            url: 'https://os.surmon.me',
-            icon: 'ion-social-windows',
+            title: 'Blog',
+            url: 'https://surmon.me',
+            icon: 'ion-android-exit',
             order: 800,
             target: '_blank'
           }
@@ -154,36 +154,12 @@ export const PAGES_MENU = [
         path: '',
         data: {
           menu: {
-            title: '子站快链',
-            icon: 'ion-android-apps',
-            order: 700,
+            title: 'Github',
+            url: 'https://github.com/surmon-china',
+            icon: 'ion-social-github',
+            target: '_blank'
           }
-        },
-        children: [
-          {
-            path: '',
-            data: {
-              menu: {
-                title: 'Blog',
-                url: 'https://surmon.me',
-                icon: 'ion-android-exit',
-                order: 800,
-                target: '_blank'
-              }
-            }
-          },
-          {
-            path: '',
-            data: {
-              menu: {
-                title: 'Github',
-                url: 'https://github.com/surmon-china',
-                icon: 'ion-social-github',
-                target: '_blank'
-              }
-            }
-          }
-        ]
+        }
       },
       {
         path: 'demo',

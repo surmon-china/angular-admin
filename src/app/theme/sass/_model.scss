@@ -6,10 +6,10 @@
   &.fade {
 
     .modal-dialog {
-      transform: translate(0, 0);
       animation-name: scaleOut;
       animation-duration: .15s;
       animation-timing-function: ease-in-out;
+      transform: translate3d(-50%, -50%, 0);
     }
 
     &.in {
@@ -18,6 +18,7 @@
         animation-name: scaleIn;
         animation-duration: .15s;
         animation-timing-function: ease-in-out;
+        transform: translate3d(-50%, -50%, 0);
       }
     }
   }
@@ -25,6 +26,9 @@
   .modal-dialog {
     min-width: 500px;
     margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 
     .modal-content {
       border: none;
@@ -84,22 +88,22 @@
 
 @keyframes scaleIn {
   from {
-    transform: scale(1.2);
+    transform: translate3d(-50%, -50%, 0) scale(1.2);
     opacity: 0;
   }
   to {
-    transform: scale(1);
+    transform: translate3d(-50%, -50%, 0) scale(1);
     opacity: 1;
   }
 }
 
 @keyframes scaleOut {
   from {
-    transform: scale(1);
+    transform: translate3d(-50%, -50%, 0) scale(1);
     opacity: 1;
   }
   to {
-    transform: scale(0.8);
+    transform: translate3d(-50%, -50%, 0) scale(0.8);
     opacity: 0;
   }
 }

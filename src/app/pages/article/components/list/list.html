@@ -154,7 +154,7 @@
             </thead>
             <tbody>
               <tr *ngIf="!articles || !articles.data.length">
-                <td colspan="9">
+                <td colspan="10">
                   <p class="text-muted text-center article-err-msg" *ngIf="!articles.data.length">暂无数据<p>
                 </td>
               </tr>
@@ -177,8 +177,8 @@
                       <i class="ion-locked text-danger" *ngIf="article.public != 1"></i>
                     </h4>
                     <small class="description">
-                      <span *ngIf="article.description">{{ article.description | truncate : 160 }}</span>
-                      <span *ngIf="!article.description && article.content">{{ article.content | truncate : 160 }}</span>
+                      <span *ngIf="article.description">{{ article.description | truncate : 128 }}</span>
+                      <span *ngIf="!article.description && article.content">{{ article.content | truncate : 128 }}</span>
                       <span *ngIf="!article.description && !article.content" class="text-muted">暂无内容</span>
                     </small>
                   </td>
