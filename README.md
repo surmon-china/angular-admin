@@ -1,5 +1,11 @@
 
 # Angular-Admin
+
+[![](https://badge.juejin.im/entry/58a5f28eac502e006cbed110/likes.svg?style=flat-square)](https://juejin.im/entry/58a5f28eac502e006cbed110/detail)
+[![GitHub issues](https://img.shields.io/github/issues/surmon-china/angular-admin.svg?style=flat-square)](https://github.com/surmon-china/angular-admin/issues)
+[![GitHub forks](https://img.shields.io/github/forks/surmon-china/angular-admin.svg?style=flat-square)](https://github.com/surmon-china/angular-admin/network)
+[![GitHub stars](https://img.shields.io/github/stars/surmon-china/angular-admin.svg?style=flat-square)](https://github.com/surmon-china/angular-admin/stargazers)
+
 Admin panel framework based on Angular4, Bootstrap4 and Webpack2.
 
 The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/).
