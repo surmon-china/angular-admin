@@ -93,8 +93,14 @@ export class BaPictureUploader implements ControlValueAccessor {
         },
         // 每个文件上传成功后,处理相关的事情
         'FileUploaded': (up, file, info) => {
-          // console.log('文件上传成功后', file);
+          console.log('文件上传成功后', file, info);
           this.uploadInProgress = false;
+          if (typeof info === 'object') {
+            if (info.status !== 200) {
+              this._notificationsService.error('上传失败', JSON.parse(info.response).error, { timeOut: 850 });
+              return false;
+            }
+          };
           const data = `${STATIC_URL}/${JSON.parse(info).key}`;
           this.onUploadCompleted.emit(data);
           this.changePictureFromURL(data);
