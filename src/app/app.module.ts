@@ -7,6 +7,8 @@ import { provideAuth } from 'angular2-jwt'
 import { RouterModule } from '@angular/router';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
+import { enableProdMode } from '@angular/core';
+enableProdMode();
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -18,7 +20,7 @@ import { routing } from './app.routing';
 import { App } from './app.component';
 import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
-import { NgaModule } from './theme/nga.module';
+import { NgaModule } from './nga.module';
 import { PagesModule } from './pages/pages.module';
 
 // Application wide providers

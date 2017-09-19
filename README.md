@@ -13,27 +13,27 @@ If you only need to demonstrate the project locally, you need to comment on the 
 
 # Screenshots
 
-标签管理
+**标签管理**
 
 ![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/tag-list.png)
 
-发布文章
+**发布文章**
 
 ![发布文章](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/submit-article.png)
 
-全局设置
+**全局设置**
 
 ![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/setting.png)
 
-文章列表
+**文章列表**
 
 ![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/article-list.png)
 
-评论管理
+**评论管理**
 
 ![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/comment.png)
 
-markdown编辑器
+**markdown编辑器**
 
 ![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/markdown.png)
 
@@ -136,8 +136,8 @@ markdown编辑器
 
 # 执行命令
 ```bash
-# 能用npm还是不要用cnpm的好
-cnpm install
+# install
+cnpm i --python=python2.7
 
 # 开发
 npm start
