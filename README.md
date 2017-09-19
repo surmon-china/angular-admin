@@ -70,6 +70,7 @@ If you only need to demonstrate the project locally, you need to comment on the 
 - ~~由于数据的准确性没有测试，分类和标签列表的与文章内容的先后顺序不同会导致标签和分类不会被勾选~~
 - ~~升级至Angular4 and Bootstrap 4最新测试版 ~~
 - ~~升级至ngx-bootstrap，并优化markdown~~
+- ~~全部升级为最新，一键安装构建~~
 
 # 程序结构（踩坑记录）
 
