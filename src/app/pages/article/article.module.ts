@@ -1,7 +1,7 @@
 import { NgModule }            from '@angular/core';
 import { CommonModule }        from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgaModule }           from '../../theme/nga.module';
+import { NgaModule }           from 'app/nga.module';
 import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 
 import { routing }             from './article.routing';

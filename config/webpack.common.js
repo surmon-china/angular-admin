@@ -9,13 +9,14 @@ const helpers = require('./helpers');
 const AssetsPlugin = require('assets-webpack-plugin');
 const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+// const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 const HtmlElementsPlugin = require('./html-elements-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 /*
  * Webpack Constants
@@ -78,10 +79,10 @@ module.exports = function (options) {
       modules: [helpers.root('src'), 'node_modules'],
 
       alias: {
+        '@': path.resolve(__dirname, '../src'),
         'src': path.resolve(__dirname, '../src'),
         'app': path.resolve(__dirname, '../src/app'),
-        'pages': path.resolve(__dirname, '../src/app/pages'),
-        'theme': path.resolve(__dirname, '../src/app/theme')
+        'assets': path.resolve(__dirname, '../src/app/assets')
       }
 
     },
@@ -198,6 +199,8 @@ module.exports = function (options) {
      */
     plugins: [
 
+      // new BundleAnalyzerPlugin(),
+
       new webpack.ContextReplacementPlugin(
         /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
         __dirname
@@ -217,7 +220,7 @@ module.exports = function (options) {
        *
        * See: https://github.com/s-panferov/awesome-typescript-loader#forkchecker-boolean-defaultfalse
        */
-      new ForkCheckerPlugin(),
+      // new ForkCheckerPlugin(),
       /*
        * Plugin: CommonsChunkPlugin
        * Description: Shares common code between the pages.
@@ -323,6 +326,7 @@ module.exports = function (options) {
         $: "jquery",
         jQuery: "jquery",
         "window.jQuery": "jquery",
+        Popper: ['popper.js', 'default'],
         Tether: "tether",
         "window.Tether": "tether",
         Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",

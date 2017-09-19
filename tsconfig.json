@@ -2,7 +2,7 @@
   "compilerOptions": {
     "declaration": false,
     // 目标代码版本
-    "target": "ES5",
+    "target": "es5",
     // "outDir": "dist",
     // "sourceRoot": "src",
     // 指定生成哪个模块系统代码：'commonjs'，'amd'，'system'，或 'umd'或'es2015'。只有'amd'和'system'能和--outFile一起使用。当目标是ES5或以下的时候不能使用'es2015'。
@@ -33,6 +33,7 @@
     "inlineSourceMap": false,
     // 将代码与sourcemaps生成到一个文件中，要求同时设置了--inlineSourceMap或--sourceMap属性。
     "inlineSources": false,
+    "skipLibCheck": true,
     /*
     编译过程中需要引入的库文件的列表。
     可能的值为： 
