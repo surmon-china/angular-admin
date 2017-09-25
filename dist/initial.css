@@ -40,8 +40,7 @@
     height: 150px;
     margin: -75px 0 0 -75px;
     border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #e74c3c;
+    box-shadow: 0 5px 5px 0 #e74c3c !important;
     transform: translate3d(0, 0, 0);
     animation: spin 2s linear infinite;
     /* Chrome, Firefox 16+, IE 10+, Opera */ }
@@ -53,8 +52,7 @@
       right: 5px;
       bottom: 5px;
       border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: #017170;
+      box-shadow: 0 5px 5px 0 #017170 !important;
       -webkit-animation: spin 3s linear infinite;
       /* Chrome, Opera 15+, Safari 5+ */
       animation: spin 3s linear infinite;
@@ -67,8 +65,7 @@
       right: 15px;
       bottom: 15px;
       border-radius: 50%;
-      border: 3px solid transparent;
-      border-top-color: #f39c12;
+      box-shadow: 0 5px 5px 0 #f39c12 !important;
       animation: spin 1.5s linear infinite;
       /* Chrome, Firefox 16+, IE 10+, Opera */ }
 
