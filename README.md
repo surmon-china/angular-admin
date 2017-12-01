@@ -1,12 +1,14 @@
 
 # Angular-Admin
 
-[![](https://badge.juejin.im/entry/58a5f28eac502e006cbed110/likes.svg?style=flat-square)](https://juejin.im/entry/58a5f28eac502e006cbed110/detail)
+[![GitHub stars](https://img.shields.io/github/stars/surmon-china/angular-admin.svg?style=flat-square)](https://github.com/surmon-china/angular-admin/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/surmon-china/angular-admin.svg?style=flat-square)](https://github.com/surmon-china/angular-admin/issues)
 [![GitHub forks](https://img.shields.io/github/forks/surmon-china/angular-admin.svg?style=flat-square)](https://github.com/surmon-china/angular-admin/network)
-[![GitHub stars](https://img.shields.io/github/stars/surmon-china/angular-admin.svg?style=flat-square)](https://github.com/surmon-china/angular-admin/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=flat-square)](https://github.com/surmon-china/angular-admin)
+[![](https://badge.juejin.im/entry/58a5f28eac502e006cbed110/likes.svg?style=flat-square)](https://juejin.im/entry/58a5f28eac502e006cbed110/detail)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/surmon-china/angular-admin.svg?style=flat-square)](https://twitter.com/intent/tweet?url=https://github.com/surmon-china/angular-admin)
 
-Admin panel framework based on Angular4, Bootstrap4 and Webpack2.
+My blog admin client by Angular, Bootstrap4.
 
 The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/).
 
@@ -42,35 +44,6 @@ If you only need to demonstrate the project locally, you need to comment on the 
 **markdown编辑器**
 
 ![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/markdown.png)
-
-# Todos && Issues 更新维护记录
-
-- ~~仪表盘信息聚合（系统/文章信息聚合，echarts）？[won't fix]~~
-- ~~需要增加一个数据库导出功能~~
-- ~~评论管理，增删改查功能~~
-- ~~增加黑名单功能，优化设置部分表单体验~~
-- ~~增加Markdown编辑器实时本地备份功能~~
-- ~~弹窗的遮罩层把行为层挡住了~~
-- ~~标签列表页，描述限制为一行超出隐藏~~
-- ~~使用codemirror创建一个markdown编辑器 https://github.com/jbt/markdown-editor/blob/master/index.html~~
-- ~~可以适当性创建一些按钮，如图片、连接、标题、全屏、预览切换，highlight.js + marked用于预览时的解析，~~
-- ~~codemirror用于编辑模式下的编辑器，引入所有语言的语言包，~~
-- ~~首次登陆，数据库无数据时，个人头像，名字等均为展示默认值~~
-- ~~分类列表页的分类描述，超出一行之后，P标签的行间距过大~~
-- ~~发布文章页的分类目录选中图标，应该替换为ionic里的图标~~
-- ~~标签项，需要增加icon自定义字段~~
-- ~~取消文章在列表页的密码和缩略内容/内容字段~~
-- ~~仪表盘图表组件和echarts整合~~
-- ~~所有无用组件/代码的清理~~
-- ~~数据结构变动如article的count，data字段~~
-- ~~首页无用的都删掉~~
-- ~~发布文章页，在标签和分类为空时缺少提示信息，文章的默认缩略图需调整~~
-- ~~所有涉及发布的内容项，都需要增加自定义字段~~
-- ~~程序截图 + 文档撰写 readme~~
-- ~~由于数据的准确性没有测试，分类和标签列表的与文章内容的先后顺序不同会导致标签和分类不会被勾选~~
-- ~~升级至Angular4 and Bootstrap 4最新测试版 ~~
-- ~~升级至ngx-bootstrap，并优化markdown~~
-- ~~全部升级为最新，一键安装构建~~
 
 # 程序结构（踩坑记录）
 
@@ -141,6 +114,36 @@ If you only need to demonstrate the project locally, you need to comment on the 
    - cnpm和npm安装文件结构不一样，会导致重复引用无法编译的问题，主要是由于cnpm的版本管理机制不一样导致的，cnpm是空文件夹+快捷方式的方法乱搞，所以遇到模块引用的错误，一般删掉对应文件夹，用npm重装就可以了
 
 
+# Todos && Issues 更新维护记录
+
+- ~~仪表盘信息聚合（系统/文章信息聚合，echarts）？[won't fix]~~
+- ~~需要增加一个数据库导出功能~~
+- ~~评论管理，增删改查功能~~
+- ~~增加黑名单功能，优化设置部分表单体验~~
+- ~~增加Markdown编辑器实时本地备份功能~~
+- ~~弹窗的遮罩层把行为层挡住了~~
+- ~~标签列表页，描述限制为一行超出隐藏~~
+- ~~使用codemirror创建一个markdown编辑器 https://github.com/jbt/markdown-editor/blob/master/index.html~~
+- ~~可以适当性创建一些按钮，如图片、连接、标题、全屏、预览切换，highlight.js + marked用于预览时的解析，~~
+- ~~codemirror用于编辑模式下的编辑器，引入所有语言的语言包，~~
+- ~~首次登陆，数据库无数据时，个人头像，名字等均为展示默认值~~
+- ~~分类列表页的分类描述，超出一行之后，P标签的行间距过大~~
+- ~~发布文章页的分类目录选中图标，应该替换为ionic里的图标~~
+- ~~标签项，需要增加icon自定义字段~~
+- ~~取消文章在列表页的密码和缩略内容/内容字段~~
+- ~~仪表盘图表组件和echarts整合~~
+- ~~所有无用组件/代码的清理~~
+- ~~数据结构变动如article的count，data字段~~
+- ~~首页无用的都删掉~~
+- ~~发布文章页，在标签和分类为空时缺少提示信息，文章的默认缩略图需调整~~
+- ~~所有涉及发布的内容项，都需要增加自定义字段~~
+- ~~程序截图 + 文档撰写 readme~~
+- ~~由于数据的准确性没有测试，分类和标签列表的与文章内容的先后顺序不同会导致标签和分类不会被勾选~~
+- ~~升级至Angular4 and Bootstrap 4最新测试版 ~~
+- ~~升级至ngx-bootstrap，并优化markdown~~
+- ~~全部升级为最新，一键安装构建~~
+
+
 # 执行命令
 ```bash
 # install
@@ -155,6 +158,7 @@ npm run build:prod
 # 生产，可以用nginx映射dist，不必要开node进程
 npm run server:prod
 ```
+
 
 # 目录结构
 ```
