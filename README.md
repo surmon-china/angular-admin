@@ -23,11 +23,11 @@ If you only need to demonstrate the project locally, you need to comment on the 
 
 **标签管理**
 
-![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/tag-list.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/tag.list.png)
 
 **发布文章**
 
-![发布文章](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/submit-article.png)
+![发布文章](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/submit.article.png)
 
 **全局设置**
 
@@ -35,7 +35,7 @@ If you only need to demonstrate the project locally, you need to comment on the 
 
 **文章列表**
 
-![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/article-list.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshot/article.list.png)
 
 **评论管理**
 
