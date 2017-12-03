@@ -126,7 +126,7 @@
                     </span>
                   </ba-checkbox>
                 </th>
-                <th>PID</th>
+                <th>PID2</th>
                 <th>POST</th>
                 <th width="23%">评论内容</th>
                 <th>个人信息</th>
@@ -141,7 +141,10 @@
             <tbody>
               <tr *ngIf="!comments || !comments.data.length">
                 <td colspan="11">
-                  <p class="text-muted text-center comment-err-msg" *ngIf="!comments.data.length">暂无数据<p>
+                  <p class="text-muted text-center comment-err-msg" *ngIf="!comments.data.length">
+                    <span *ngIf="fetching.comment">数据请求中...</span>
+                    <span *ngIf="!fetching.comment">暂无数据</span>
+                  <p>
                 </td>
               </tr>
               <ng-template [ngIf]="comments && comments.data.length">
@@ -169,12 +172,12 @@
                     </span>
                   </td>
                   <td class="comment-user">
-                    <div><strong>名字：</strong>{{ comment.author.name }}</div>
-                    <div>
+                    <div class="name"><strong>名字：</strong>{{ comment.author.name }}</div>
+                    <div class="email">
                       <strong>邮箱：</strong>
                       <a [href]="'mailto:' + comment.author.email" target="_blank">{{ comment.author.email }}</a>
                     </div>
-                    <div>
+                    <div class="site">
                       <strong>网址：</strong>
                       <a [href]="comment.author.site" target="_blank">{{ comment.author.site || '无' }}</a>
                     </div>

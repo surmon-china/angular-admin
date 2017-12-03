@@ -171,7 +171,10 @@
             <tbody>
               <tr *ngIf="!tags || !tags.data.length">
                 <td colspan="6">
-                  <p class="text-muted text-center tag-err-msg">暂无数据<p>
+                  <p class="text-muted text-center tag-err-msg">
+                    <span *ngIf="fetching.tag">数据请求中...</span>
+                    <span *ngIf="!fetching.tag">暂无数据</span>
+                  <p>
                 </td>
               </tr>
               <ng-template [ngIf]="tags && tags.data.length">

@@ -40,6 +40,9 @@ export class ArticleTag {
 	public edit_tag:any;
 	public tagsSelectAll:boolean = false;
 	public selectedTags = [];
+	public fetching = {
+		tag: false
+	};
 
 	// 构造函数
 	constructor(private _fb:FormBuilder,
@@ -160,13 +163,17 @@ export class ArticleTag {
 		// 固定每页请求的数量
 		params.per_page = this.tags.pagination.per_page;
 		// 请求
+		this.fetching.tag = true;
 		this._articleTagService.getTags(params)
 		.then(tags => {
 			this.tags = tags.result;
 			this.selectedTags = [];
 			this.tagsSelectAll = false;
+			this.fetching.tag = false;
 		})
-		.catch(error => {});
+		.catch(error => {
+			this.fetching.tag = false;
+		});
 	}
 
 	// 添加标签

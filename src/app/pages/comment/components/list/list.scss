@@ -1,3 +1,5 @@
+@import "~@/app/theme/sass/conf/conf";
+
 .comment-search-form {
   
   > .input-group {
@@ -33,6 +35,16 @@
         &.comment-content {
           line-height: 2;
           word-break: break-word;
+        }
+
+        &.comment-user {
+
+          > .name,
+          > .email,
+          > .site {
+            max-width: 200px;
+            @include text-truncate();
+          }
         }
       }
     }

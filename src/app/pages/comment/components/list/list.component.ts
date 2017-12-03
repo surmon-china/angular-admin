@@ -27,7 +27,7 @@ export class CommentList {
   };
 
   // 初始化数据
-  public post_id: any = null;
+  public post_id:any = null;
   public comments = { 
     data: [],
     pagination: {
@@ -36,6 +36,10 @@ export class CommentList {
       per_page: 50,
       total: 0
     }
+  };
+
+  public fetching = {
+    comment: false
   };
 
   // 其他数据
@@ -143,6 +147,7 @@ export class CommentList {
     if(this.post_id) {
       params.post_id = this.post_id;
     }
+    this.fetching.comment = true;
     // 请求评论
     this._commentService.getComments(params)
     .then(comments => {
@@ -150,8 +155,11 @@ export class CommentList {
       this.commentsSelectAll = false;
       this.selectedComments = [];
       this.selectedPostIds = [];
+      this.fetching.comment = false;
     })
-    .catch(error => {});
+    .catch(error => {
+      this.fetching.comment = false;
+    });
   }
 
   // 更新评论状态
