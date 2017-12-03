@@ -39,6 +39,10 @@ export class ArticleList {
     }
   };
 
+   public fetching = {
+     article: false
+   };
+
   // 其他数据
   public del_articles:any;
   public articlesSelectAll:boolean = false;
@@ -180,14 +184,18 @@ export class ArticleList {
     if(!params.page || Object.is(params.page, 1)) {
       this.articles.pagination.current_page = 1;
     }
+    this.fetching.article = true;
     // 请求文章
     this._articleListService.getArticles(params)
     .then(articles => {
       this.articles = articles.result;
       this.articlesSelectAll = false;
       this.selectedArticles = [];
+      this.fetching.article = false;
     })
-    .catch(error => {});
+    .catch(error => {
+      this.fetching.article = false;
+    });
   }
 
   // 获取标签列表

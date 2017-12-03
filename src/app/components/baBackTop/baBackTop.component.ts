@@ -4,7 +4,7 @@ import {Component, ViewChild, HostListener, Input, ElementRef} from '@angular/co
   selector: 'ba-back-top',
   styles: [require('./baBackTop.scss')],
   template: `
-    <i #baBackTop class="fa fa-angle-up back-top ba-back-top" title="Back to Top"></i>
+    <i #baBackTop class="back-top ba-back-top ion-chevron-up" title="Back to Top"></i>
   `
 })
 export class BaBackTop {

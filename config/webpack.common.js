@@ -23,8 +23,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
  */
 const HMR = helpers.hasProcessFlag('hot');
 const METADATA = {
-  title: 'NodePress - Admin',
-  description: 'Free Angular 2 and Bootstrap 4 Admin Template',
+  title: 'Surmon.me - Admin',
+  description: 'Surmon.me Admin client powered by Angular and Bootstrap 4',
   baseUrl: '/',
   isDevServer: helpers.isWebpackDevServer()
 };

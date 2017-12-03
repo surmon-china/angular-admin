@@ -137,10 +137,10 @@
             <tbody>
               <tr *ngIf="!announcements || !announcements.data.length">
                 <td colspan="7">
-                  <p class="text-muted text-center announcement-err-msg" 
-                     *ngIf="announcements && announcements.data.length == 0">暂无数据<p>
-                  <p class="text-muted text-center announcement-err-msg" 
-                     *ngIf="announcements && announcements.data.length == undefined">加载中<p>
+                  <p class="text-muted text-center announcement-err-msg">
+                    <span *ngIf="fetching.announcement">数据请求中...</span>
+                    <span *ngIf="!fetching.announcement">暂无数据</span>
+                  <p>
                 </td>
               </tr>
               <ng-template [ngIf]="announcements && announcements.data.length">

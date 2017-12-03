@@ -1,6 +1,6 @@
 <div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
      [ngClass]="{scrolled: isScrolled}">
-  <a routerLink="/dashboard" class="al-logo clearfix"><span>Node</span>Press</a>
+  <a routerLink="/dashboard" class="al-logo clearfix">Surmon.me</a>
   <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
 
   <div class="search">
@@ -17,13 +17,13 @@
         <li class="dropdown-item"><i class="dropdown-arr"></i></li>
         <li class="dropdown-item">
           <a routerLink="/options">
-            <i class="fa fa-cog"></i>
+            <i class="ion-wrench"></i>
             <span>设置/资料</span>
           </a>
         </li>
         <li class="dropdown-item">
           <a class="signout" [href]="" (click)="logout()">
-            <i class="fa fa-power-off"></i>
+            <i class="ion-log-out"></i>
             <span>退出登录</span>
           </a>
         </li>

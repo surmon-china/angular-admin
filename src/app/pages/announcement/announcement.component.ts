@@ -29,6 +29,9 @@ export class Announcement {
 			total: 0
 		}
 	};
+	public fetching = {
+		announcement: false
+	};
 	public del_announcement:any;
 	public edit_announcement:any;
 	public announcementsSelectAll:boolean = false;
@@ -145,13 +148,17 @@ export class Announcement {
 		if(!params.page || Object.is(params.page, 1)) {
 			this.announcements.pagination.current_page = 1;
 		}
+		this.fetching.announcement = true;
 		this._announcementService.getAnnouncements(params)
 		.then(announcements => {
 			this.announcements = announcements.result;
 			this.selectedAnnouncements = [];
 			this.announcementsSelectAll = false;
+			this.fetching.announcement = false;
 		})
-		.catch(error => {});
+		.catch(error => {
+			this.fetching.announcement = false;
+		});
 	}
 
 	// 添加公告
