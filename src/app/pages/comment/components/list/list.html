@@ -244,7 +244,11 @@
                               (click)="delCommentModal([comment._id])">彻底删除</button>
                     </div>
                      <div class="button-wrapper">
-                      <a class="btn btn-info btn-sm" [routerLink]="['/comment/post/', comment.post_id]">宿主页面</a>
+                      <a class="btn btn-info btn-sm"
+                         target="_blank"
+                         [href]="comment.post_id === 0 ? 'https://surmon.me/guestbook' : ('https://surmon.me/article/' + comment.post_id)">
+                        <span>宿主页面</span>
+                      </a>
                     </div>
                   </td>
                 </tr>
