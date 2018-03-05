@@ -55,7 +55,7 @@ If you only need to demonstrate the project locally, you need to comment on the 
    - 定制化的http服务是需要自己封装的，如果你想实现拦截器，auth控制的话，必须封装，项目中用了三方的[angular2-jwt](https://github.com/auth0/angular2-jwt)
 
 ## 自定义组件的双向绑定如何实现
-   - 框架基本都同质化了，和vue实现原理相差无几
+   - 框架基本都同质化了，和vue实现方式相差无几，但实现原理是不同的，Angular 内置了 Zone.js 对所有全局的异步 API 进行了高级包装，并抽象出了异步任务管理层，用以驱动 Angular 的数据检测
    - "盒子里的香蕉" [(ngModel)] = [ngModelChange] + (model)
    - 一句话：用既定内置的api做预期的事
    - [看这里有实现文件](https://github.com/surmon-china/angular-admin/blob/master/src/app/theme/components/baMarkdownEditor/markdownEditor.component.ts)
