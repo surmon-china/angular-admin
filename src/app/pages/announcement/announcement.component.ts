@@ -1,7 +1,7 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
-import { AnnouncementService } from './announcement.service';
+import { ApiService } from '@app/api.service';
 const marked = require('marked');
 
 @Component({
@@ -13,6 +13,8 @@ const marked = require('marked');
 export class Announcement {
 
 	@ViewChild('delModal') delModal: ModalDirective;
+
+  private _apiUrl = '/announcement';
 
 	public searchState:any = 'all';
 	public editForm:FormGroup;
@@ -38,7 +40,7 @@ export class Announcement {
 	public selectedAnnouncements = [];
 
 	constructor(private _fb:FormBuilder,
-							private _announcementService:AnnouncementService) {
+							private _apiService:ApiService) {
 
 		this.editForm = _fb.group({
 			'content': ['', Validators.compose([Validators.required])],
@@ -149,7 +151,7 @@ export class Announcement {
 			this.announcements.pagination.current_page = 1;
 		}
 		this.fetching.announcement = true;
-		this._announcementService.getAnnouncements(params)
+		this._apiService.get(this._apiUrl, params)
 		.then(announcements => {
 			this.announcements = announcements.result;
 			this.selectedAnnouncements = [];
@@ -163,7 +165,7 @@ export class Announcement {
 
 	// 添加公告
 	public addAnnouncement(announcement) {
-		this._announcementService.addAnnouncement(announcement)
+		this._apiService.post(this._apiUrl, announcement)
 		.then(_announcement => {
 			this.resetForm();
 			this.getAnnouncements();
@@ -179,7 +181,10 @@ export class Announcement {
 
 	// 修改公告提交
 	public doPutAnnouncement(announcement) {
-		this._announcementService.putAnnouncement(Object.assign(this.edit_announcement, announcement))
+		this._apiService.put(
+			`${this._apiUrl}/${this.edit_announcement._id}`,
+			Object.assign(this.edit_announcement, announcement)
+		)
 		.then(_announcement => {
 			this.getAnnouncements({ page: this.announcements.pagination.current_page });
 			this.edit_announcement = null;
@@ -202,7 +207,7 @@ export class Announcement {
 
 	// 确认删除公告
 	public doDelAnnouncement() {
-		this._announcementService.delAnnouncement(this.del_announcement._id)
+		this._apiService.delete(`${this._apiUrl}/${this.del_announcement._id}`)
 		.then(announcement => {
 			this.delModal.hide();
 			this.del_announcement = null;
@@ -221,7 +226,7 @@ export class Announcement {
 
 	// 确认批量删除
 	public doDelAnnouncements() {
-		this._announcementService.delAnnouncements(this.selectedAnnouncements)
+		this._apiService.delete(this._apiUrl, { announcements: this.selectedAnnouncements })
 		.then(announcements => {
 			this.delModal.hide();
 			this.getAnnouncements({ page: this.announcements.pagination.current_page });

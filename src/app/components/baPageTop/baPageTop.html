@@ -1,29 +1,23 @@
 <div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
      [ngClass]="{scrolled: isScrolled}">
   <a routerLink="/dashboard" class="al-logo clearfix">Surmon.me</a>
-  <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
-
-  <div class="search">
-    <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
-    <input id="searchInput" type="text" placeholder="Search for...">
-  </div>
-
+  <a href (click)="toggleMenu()" class="collapse-menu-link ion-md-menu"></a>
   <div class="user-profile clearfix">
     <div class="dropdown al-user-profile">
-      <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
+      <a class="profile-toggle-link dropdown-toggle" (click)="toggleProfileMenu()">
         <img src="{{ _appState.state.adminInfo.gravatar }}">
       </a>
-      <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
+      <ul class="dropdown-menu top-dropdown-menu profile-dropdown" [ngClass]="{ show: isProfileCollapsed }">
         <li class="dropdown-item"><i class="dropdown-arr"></i></li>
         <li class="dropdown-item">
           <a routerLink="/options">
-            <i class="ion-wrench"></i>
+            <i class="ion-md-settings"></i>
             <span>设置/资料</span>
           </a>
         </li>
         <li class="dropdown-item">
           <a class="signout" [href]="" (click)="logout()">
-            <i class="ion-log-out"></i>
+            <i class="ion-md-power"></i>
             <span>退出登录</span>
           </a>
         </li>

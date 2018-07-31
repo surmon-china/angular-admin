@@ -36,10 +36,16 @@
         <hr>
         <div class="col-sm-12">
           <button type="submit"
-                  class="btn btn-success"
-                  [disabled]="!editForm.valid">{{ edit_announcement ? '修改' : '添加' }}公告</button>
-          <span>&nbsp;</span>
-          <button class="btn btn-default" (click)="resetForm()">重置</button>
+                  class="btn btn-success btn-with-icon"
+                  [disabled]="!editForm.valid">
+            <i class="ion-md-done-all"></i>
+            <span>{{ edit_announcement ? '修改' : '添加' }}公告</span>
+          </button>
+          <span>&nbsp;&nbsp;</span>
+          <button class="btn btn-default btn-with-icon" (click)="resetForm()">
+            <i class="ion-md-refresh"></i>
+            <span>重置</span>
+          </button>
         </div>
       </form>
     </ba-card>
@@ -54,42 +60,42 @@
                     [ngClass]="{ 'active': searchState == 'all'}"
                     (click)="switchState('all')">
               <span>全部</span>
-              <span *ngIf="searchState == 'all'">({{ announcements.pagination.total }})</span>
+              <span *ngIf="searchState == 'all'">&nbsp;({{ announcements.pagination.total }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': searchState == 1 }"
                     (click)="switchState(1)">
               <span>已发布</span>
-              <span *ngIf="searchState == 1">（{{ announcements.pagination.total }}）</span>
+              <span *ngIf="searchState == 1">&nbsp;({{ announcements.pagination.total }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': searchState == 0 }"
                     (click)="switchState(0)">
               <span>草稿</span>
-              <span *ngIf="searchState == 0">（{{ announcements.pagination.total }}）</span>
+              <span *ngIf="searchState == 0">&nbsp;({{ announcements.pagination.total }})</span>
             </button>
           </div>
-          <span>&nbsp;</span>
+          <span>&nbsp;&nbsp;</span>
           <div class="btn-group" role="group">
             <button type="button" 
                     class="btn btn-default btn-with-icon" 
                     (click)="refreshAnnouncements()">
-              <i class="ion-refresh"></i>
+              <i class="ion-md-refresh"></i>
               <span>刷新</span>
             </button>
             <button type="button" 
                     class="btn btn-default btn-with-icon"
                     (click)="resetSearchForm()">
-              <i class="ion-trash-b"></i>
+              <i class="ion-md-trash"></i>
               <span>清空关键词</span>
             </button>
             <div class="btn-group" dropdown [isDisabled]="!selectedAnnouncements.length">
               <button type="button"
                       class="btn btn-default btn-with-icon dropdown-toggle"
                       dropdownToggle>
-                <i class="ion-ios-list"></i>
+                <i class="ion-md-list"></i>
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" *dropdownMenu>
@@ -159,9 +165,9 @@
                   </td>
                   <td align="center">
                     <span>{{ announcement.state == 1 ? '已发布' : '草稿' }}</span>
-                    <span *ngIf="announcement.state == 0">&nbsp;</span>
-                    <i class="ion-checkmark text-success" *ngIf="announcement.state == 1"></i>
-                    <i class="ion-edit text-warning" *ngIf="announcement.state == 0"></i>
+                    <span>&nbsp;&nbsp;</span>
+                    <i class="ion-md-checkmark text-success" *ngIf="announcement.state == 1"></i>
+                    <i class="ion-md-create text-warning" *ngIf="announcement.state == 0"></i>
                   </td>
                   <td>
                     <div class="text-center">
@@ -213,14 +219,14 @@
         <div class="modal-body">
           <div class="message">
             <span class="icon text-warning">
-              <i class="ion-ios-information-outline"></i>
+              <i class="ion-md-information-circle-outline"></i>
             </span>
             <span>确定要删除{{ del_announcement ? '这条' : '选中' }}公告吗？</span>
           </div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary confirm-btn" (click)="(del_announcement ? doDelAnnouncement() : doDelAnnouncements())">确认删除</button>
-          <span>&nbsp;</span>
+          <span>&nbsp;&nbsp;</span>
           <button class="btn btn-default confirm-btn" (click)="canceldDelAnnouncementModal()">取消</button>
         </div>
       </div>

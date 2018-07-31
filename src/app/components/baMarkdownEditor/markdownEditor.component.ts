@@ -18,6 +18,7 @@ const marked = require('marked');
 const hljs = require('highlight.js');
 const CodeMirror = require('codemirror');
 const { store } = require('./libs/store.js');
+
 (<any>window).hljs = hljs;
 (<any>window).store = store;
 (<any>window).marked = marked;
@@ -145,7 +146,10 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
 
   // 视图加载完成后执行初始化
   ngAfterViewInit() {
-    if(this.editor) return false;
+    if (this.editor) {
+      return false;
+    }
+
     this.editorElem = this.elementRef.nativeElement.children[0].children[1].children[0].children[0];
     this.editor = CodeMirror.fromTextArea(this.editorElem, Object.assign({
       // 语言模式 github markdown扩展
@@ -175,9 +179,11 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
         "Enter": "newlineAndIndentContinueMarkdownList"
       }
     }, this.config));
+
     this.editor.on('blur', cm => {
       this.onModelTouched();
     });
+
     this.editor.on('change', cm => {
       const content = cm.getValue();
       if(!Object.is(content, this.content)) {
@@ -189,6 +195,7 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
         this.onModelChange(this.content);
         if(this.previewMode != 0) {
           this.parseMarked();
+          // console.log('应该是发现了本地数据的变化');
         }
       }
       // 自动保存草稿
@@ -199,13 +206,14 @@ export class BaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
         }, 1600);
       };
     });
+
     // 如果是发布页面，有本地存储，则直接读取存储
-    if(Object.is('/article/post', location.pathname) || Object.is('/announcement', location.pathname)) {
+    if(['/article/post', '/announcement'].includes(location.pathname)) {
       let bak = store.get(location.pathname);
       if(!!bak) {
         this.content = bak;
         this.editor.setValue(this.content);
-        this.markedHtml = marked(this.content);
+        // this.markedHtml = marked(this.content);
       }
     } else {
     // 如果是编辑页面，没有弹窗，则设置

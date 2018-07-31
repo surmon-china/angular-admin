@@ -1,8 +1,8 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+
 import { ModalDirective } from 'ngx-bootstrap';
-import { NotificationsService } from 'angular2-notifications';
-import { ArticleTagService } from './tag.service';
+import { ApiService } from '@app/api.service';
 
 @Component({
 	selector: 'article-tag',
@@ -13,6 +13,9 @@ import { ArticleTagService } from './tag.service';
 export class ArticleTag {
 
 	@ViewChild('delModal') delModal: ModalDirective;
+
+  // _apiUrl
+  private _apiUrl = '/tag';
 
 	public editForm:FormGroup;
 	public searchForm:FormGroup;
@@ -46,7 +49,7 @@ export class ArticleTag {
 
 	// 构造函数
 	constructor(private _fb:FormBuilder,
-							private _articleTagService:ArticleTagService) {
+							private _apiService:ApiService) {
 
 		this.editForm = _fb.group({
 			'name': ['', Validators.compose([Validators.required])],
@@ -164,7 +167,7 @@ export class ArticleTag {
 		params.per_page = this.tags.pagination.per_page;
 		// 请求
 		this.fetching.tag = true;
-		this._articleTagService.getTags(params)
+		this._apiService.get(this._apiUrl, params)
 		.then(tags => {
 			this.tags = tags.result;
 			this.selectedTags = [];
@@ -178,13 +181,13 @@ export class ArticleTag {
 
 	// 添加标签
 	public addTag(tag) {
-		this._articleTagService.addTag(tag)
+		this._apiService.post(this._apiUrl, tag)
 		.then(_tag => {
 			this.resetEditForm();
 			this.resetSearchForm();
 			this.getTags();
 		})
-		.catch(error => {});;
+		.catch(error => {});
 	}
 
 	// 修改标签
@@ -195,7 +198,8 @@ export class ArticleTag {
 
 	// 修改标签提交
 	public doPutTag(tag) {
-		this._articleTagService.putTag(Object.assign(this.edit_tag, tag))
+		tag = Object.assign(this.edit_tag, tag);
+		this._apiService.put(`${this._apiUrl}/${tag._id}`, tag)
 		.then(_tag => {
 			this.getTags({ page: this.tags.pagination.current_page });
 			this.resetEditForm();
@@ -218,7 +222,7 @@ export class ArticleTag {
 
 	// 确认删除标签
 	public doDelTag() {
-		this._articleTagService.delTag(this.del_tag._id)
+		this._apiService.delete(`${this._apiUrl}/${this.del_tag._id}`)
 		.then(tag => {
 			this.delModal.hide();
 			this.del_tag = null;
@@ -237,7 +241,7 @@ export class ArticleTag {
 
 	// 确认批量删除
 	public doDelTags() {
-		this._articleTagService.delTags(this.selectedTags)
+		this._apiService.delete(this._apiUrl, { tags: this.selectedTags })
 		.then(tags => {
 			this.delModal.hide();
 			this.getTags({ page: this.tags.pagination.current_page });

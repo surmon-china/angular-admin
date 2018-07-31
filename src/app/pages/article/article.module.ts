@@ -1,15 +1,11 @@
 import { NgModule }            from '@angular/core';
 import { CommonModule }        from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { NgaModule }           from 'app/nga.module';
 import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 
 import { routing }             from './article.routing';
-
-import { ArticleTagService }   from './components/tag/tag.service';
-import { ArticleListService }  from './components/list/list.service';
-import { ArticleEditService }  from './components/edit/edit.service';
-import { ArticleCategoryService } from './components/category/category.service';
 
 import { Article }             from './article.component';
 import { ArticleCategory }     from './components/category';
@@ -35,12 +31,6 @@ import { ArticleTag }           from './components/tag';
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     routing
-  ],
-  providers: [
-    ArticleTagService,
-    ArticleListService,
-    ArticleEditService,
-    ArticleCategoryService
   ],
   declarations: [
     Article,

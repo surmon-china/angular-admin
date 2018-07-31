@@ -1,22 +1,25 @@
-import './app.loader.ts';
+import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+
+import { NotificationsService } from 'angular2-notifications';
+
 import { GlobalState } from './global.state';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './services';
 import { layoutPaths } from './theme/theme.constants';
 import { BaThemeConfig } from './theme/theme.config';
-import { NotificationsService } from 'angular2-notifications';
-import { tokenNotExpired } from 'angular2-jwt';
-import { Router } from '@angular/router';
 
 import { AppState } from './app.service';
-import { OptionsService } from './pages/options/options.service';
+import { checkTokenIsOk } from './token.service';
+import { ApiService } from '@app/api.service';
+
 /*
  * 顶级入口组件
  */
+ 
 @Component({
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('normalize.css'), require('./app.scss')],
+  styles: [require('normalize.css'), require('./theme/initial.scss'), require('./app.scss')],
   template: `
     <main [ngClass]="{'menu-collapsed': isMenuCollapsed}" baThemeRun>
       <simple-notifications [options]="notificationsOptions"></simple-notifications>
@@ -24,7 +27,7 @@ import { OptionsService } from './pages/options/options.service';
       <router-outlet></router-outlet>
     </main>
   `,
-  providers: [OptionsService, AppState]
+  providers: [AppState]
 })
 export class App {
 
@@ -33,7 +36,7 @@ export class App {
 
   constructor(private _state: GlobalState,
               private _appState: AppState,
-              private _optionsService: OptionsService,
+              private _apiService: ApiService,
               private _router: Router,
               private _config: BaThemeConfig,
               private _spinner: BaThemeSpinner,
@@ -48,7 +51,7 @@ export class App {
     });
 
     // 路由拦截器
-    this._router.events.subscribe((event) => {
+    this._router.events.subscribe(event => {
       const url = this._router.url;
       if(!Object.is(url, '/') && !Object.is(url, '/auth')) {
         this.routeCheck();
@@ -59,9 +62,9 @@ export class App {
   // 初始化时拉取全局设置
   public initAppOptions():void {
     this.optionIsInited = true;
-    this._optionsService.getUserAuth()
+    this._apiService.get('/option')
     .then(({ result: adminInfo }) => {
-      if(!!Object.keys(adminInfo).length) {
+      if(Object.keys(adminInfo).length) {
         this._appState.set('adminInfo', adminInfo);
       }
     })
@@ -96,22 +99,22 @@ export class App {
 
   private _loadImages(): void {
     // register some loaders
-    // BaThemePreloader.registerLoader(this._imageLoader.load(layoutPaths.images.root + 'sky-bg.jpg'));
-  }
-
-  loggedIn() {
-    return tokenNotExpired();
+    const imageLoaer = this._imageLoader.load(layoutPaths.images.root + 'background.jpg');
+    BaThemePreloader.registerLoader(imageLoaer);
   }
 
   // 路由检查
   routeCheck() {
-    if(!this.loggedIn()) {
+    // 如果 token 不存在 或 存在不合法，则拦截路由
+    if(!checkTokenIsOk()) {
+      localStorage.removeItem('id_token');
       setTimeout(() => {
         this._notificationsService.error('误闯禁地', '...', { timeOut: 1000 });
         this._router.navigate(['/auth']);
       }, 0);
     } else if (!this.optionIsInited) {
       this.initAppOptions();
+      // 因为检查 token 无效后没有删除 Token，所以如果这里跳首页，会导致无限循环
     }
   }
   

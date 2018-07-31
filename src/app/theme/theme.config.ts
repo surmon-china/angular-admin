@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {BaThemeConfigProvider} from './theme.configProvider';
-import {colorHelper} from './theme.constants';
+import { Injectable } from '@angular/core';
+import { BaThemeConfigProvider } from './theme.configProvider';
+import { colorHelper } from './theme.constants';
 
 @Injectable()
 export class BaThemeConfig {
@@ -10,7 +10,7 @@ export class BaThemeConfig {
   }
 
   private _config() {
-    this._baConfig.changeTheme({name: 'dark'});
+    this._baConfig.changeTheme({ name: 'dark' });
 
     // let colorScheme = {
     //   primary: '#209e91',

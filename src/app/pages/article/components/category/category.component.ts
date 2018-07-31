@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+
 import { ModalDirective } from 'ngx-bootstrap';
-import { ArticleCategoryService } from './category.service';
+import { ApiService } from '@app/api.service';
 
 @Component({
   selector: 'article-category',
@@ -11,13 +12,16 @@ export class ArticleCategory {
 
   @ViewChild('delModal') delModal: ModalDirective;
 
+  // _apiUrl
+  private _apiUrl = '/category';
+
   public categories = { data: [] };
   public addCategoryState = { ing: false, success: false };
   public delCategory:any;
   public editCategory:any;
   public delCategories:any;
 
-  constructor(private _articleCategoryService: ArticleCategoryService) {}
+  constructor(private _apiService: ApiService) {}
 
   ngOnInit() {
     this._getCategories();
@@ -63,8 +67,7 @@ export class ArticleCategory {
 
   // 获取分类
   private _getCategories() {
-    this._articleCategoryService
-    .getCategories()
+    this._apiService.get(this._apiUrl, { per_page: 100 })
     .then(categories => {
       this.categories = categories.result;
       this._categoryLevelBuild();
@@ -75,8 +78,7 @@ export class ArticleCategory {
   // 添加分类
   private _addCategory(category) {
     this.addCategoryState = { ing: true, success: false };
-    this._articleCategoryService
-    .addCategory(category)
+    this._apiService.post(this._apiUrl, category)
     .then(_category => {
       this._getCategories();
       this.addCategoryState = { ing: false, success: !!_category.code };
@@ -92,8 +94,8 @@ export class ArticleCategory {
   // 确认修改分类
   private _doPutCategory(category) {
     this.addCategoryState = { ing: true, success: false };
-    this._articleCategoryService
-    .putCategory(Object.assign(this.editCategory, category))
+    category = Object.assign(this.editCategory, category);
+    this._apiService.put(`${ this._apiUrl }/${ category._id }`, category)
     .then(category => {
       this._getCategories();
       this.editCategory = null;
@@ -118,7 +120,7 @@ export class ArticleCategory {
 
   // 确认删除分类
   private _doDelCategory() {
-    this._articleCategoryService.delCategory(this.delCategory._id)
+    this._apiService.delete(`${ this._apiUrl }/${ this.delCategory._id }`)
     .then(category => {
       this.delCategory = null;
       this.delModal.hide();
@@ -138,7 +140,7 @@ export class ArticleCategory {
 
   // 确认批量删除
   private _doDelCategories() {
-    this._articleCategoryService.delCategories(this.delCategories)
+    this._apiService.delete(this._apiUrl, { categories: this.delCategories })
     .then(categories => {
       this.delCategories = null;
       this.delModal.hide();

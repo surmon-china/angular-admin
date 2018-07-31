@@ -1,7 +1,8 @@
 import { Component, EventEmitter, ViewEncapsulation, Input, Output } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ArticleTagService } from '../../../tag/tag.service';
+
+import { ApiService } from '@app/api.service';
 
 @Component({
   selector: 'article-edit-main',
@@ -35,7 +36,7 @@ export class ArticleEditMain {
 
   constructor(private _fb: FormBuilder,
               private _route: ActivatedRoute,
-							private _articleTagService: ArticleTagService) {
+							private _apiService: ApiService) {
   	this.editForm = _fb.group({
 			'_title': ['', Validators.compose([Validators.required])],
       '_content': [[], Validators.compose([Validators.required])],
@@ -113,7 +114,7 @@ export class ArticleEditMain {
 
   // 获取所有标签
   public getTags() {
-  	this._articleTagService.getTags({ per_page: 1000 })
+  	this._apiService.get('/tag', { per_page: 1000 })
   	.then(tags => {
   		this.tags = tags.result;
       this.buildTagsCheck();

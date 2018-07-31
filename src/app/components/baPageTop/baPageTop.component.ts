@@ -14,6 +14,7 @@ export class BaPageTop {
 
   public isScrolled:boolean = false;
   public isMenuCollapsed:boolean = false;
+  public isProfileCollapsed:boolean = false;
 
   constructor(private _router: Router,
               private _state:GlobalState,
@@ -24,7 +25,7 @@ export class BaPageTop {
   }
 
   public logout() {
-    // console.log('退出登录');
+    console.log('退出系统');
     localStorage.removeItem('id_token');
     this._router.navigate(['/auth']);
   }
@@ -32,6 +33,11 @@ export class BaPageTop {
   public toggleMenu() {
     this.isMenuCollapsed = !this.isMenuCollapsed;
     this._state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
+    return false;
+  }
+
+  public toggleProfileMenu() {
+    this.isProfileCollapsed = !this.isProfileCollapsed;
     return false;
   }
 

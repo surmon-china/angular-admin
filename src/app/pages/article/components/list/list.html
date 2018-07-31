@@ -9,49 +9,49 @@
                     [ngClass]="{ 'active': getParams.state == 'all'}"
                     (click)="switchState('all')">
               <span>全部</span>
-              <span *ngIf="getParams.state == 'all'">({{ articles.pagination.total || 0 }})</span>
+              <span *ngIf="getParams.state == 'all'">&nbsp;({{ articles.pagination.total || 0 }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': getParams.state == 1 }"
                     (click)="switchState(1)">
               <span>已发布</span>
-              <span *ngIf="getParams.state == 1">({{ articles.pagination.total || 0 }})</span>
+              <span *ngIf="getParams.state == 1">&nbsp;({{ articles.pagination.total || 0 }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': getParams.state == 0 }"
                     (click)="switchState(0)">
               <span>草稿</span>
-              <span *ngIf="getParams.state == 0">({{ articles.pagination.total || 0 }})</span>
+              <span *ngIf="getParams.state == 0">&nbsp;({{ articles.pagination.total || 0 }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': getParams.state == -1 }"
                     (click)="switchState(-1)">
               <span>回收站</span>
-              <span *ngIf="getParams.state == -1">({{ articles.pagination.total || 0 }})</span>
+              <span *ngIf="getParams.state == -1">&nbsp;({{ articles.pagination.total || 0 }})</span>
             </button>
           </div>
-          <span>&nbsp;</span>
+          <span>&nbsp;&nbsp;</span>
           <div class="btn-group">
             <button type="button" 
                     class="btn btn-default btn-with-icon"
                     (click)="refreshArticles()">
-              <i class="ion-refresh"></i>
+              <i class="ion-md-refresh"></i>
               <span>刷新</span>
             </button>
             <button type="button" 
                     class="btn btn-default btn-with-icon"
                     (click)="resetGetParams()">
-              <i class="ion-trash-b"></i>
+              <i class="ion-md-trash"></i>
               <span>清空搜索条件</span>
             </button>
             <div class="btn-group" dropdown [isDisabled]="!selectedArticles.length">
               <button type="button" 
                       class="btn btn-default btn-with-icon dropdown-toggle"
                       dropdownToggle>
-                <i class="ion-ios-list"></i>
+                <i class="ion-md-list"></i>
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" *dropdownMenu>
@@ -126,6 +126,15 @@
             <option value="0">密码</option>
             <option value="-1">私密</option>
           </select>
+          <span>&nbsp;&nbsp;</span>
+          <select class="form-control c-select" 
+                  [(ngModel)]="getParams.origin"
+                  (ngModelChange)="getArticles()">
+            <option value="all" default>所有来源</option>
+            <option value="0">原创</option>
+            <option value="1">转载</option>
+            <option value="2">混合</option>
+          </select>
         </div>
       </div>
       <div class="table-responsive">
@@ -180,10 +189,14 @@
                         <a [href]="'//surmon.me/article/' + article.id" target="_blank">
                           <strong>{{ article.title }}</strong>
                         </a>
-                        <i class="ion-checkmark text-success" *ngIf="article.state == 1"></i>
-                        <i class="ion-edit text-warning" *ngIf="article.state == 0"></i>
-                        <i class="ion-trash-b text-danger" *ngIf="article.state == -1"></i>
-                        <i class="ion-locked text-danger" *ngIf="article.public != 1"></i>
+                        <span>&nbsp;&nbsp;</span>
+                        <i class="ion-md-done-all text-success" *ngIf="article.state == 1"></i>
+                        <span>&nbsp;</span>
+                        <i class="ion-md-create text-warning" *ngIf="article.state == 0"></i>
+                        <span>&nbsp;</span>
+                        <i class="ion-md-trash text-danger" *ngIf="article.state == -1"></i>
+                        <span>&nbsp;</span>
+                        <i class="ion-md-lock text-danger" *ngIf="article.public != 1"></i>
                       </h4>
                       <small class="description">
                         <span *ngIf="article.description">{{ article.description | truncate : 128 }}</span>
@@ -195,12 +208,12 @@
                   <td class="article-category">
                     <ul class="list-unstyled category-list">
                       <li *ngFor="let category of article.category">
-                        <i class="ion-ios-folder"></i>
+                        <i class="ion-md-folder"></i>
                         <span>&nbsp;</span>
                         <span>{{ category.name }}</span>
                       </li>
                       <li *ngIf="!article.category.length" class="text-muted">
-                        <i class="ion-ios-folder"></i>
+                        <i class="ion-md-folder"></i>
                         <span>&nbsp;</span>
                         <span>暂无分类</span>
                       </li>
@@ -209,12 +222,12 @@
                   <td class="article-tag">
                     <ul class="list-unstyled tag-list">
                       <li *ngFor="let tag of article.tag">
-                        <i class="ion-pricetags"></i>
+                        <i class="ion-md-pricetags"></i>
                         <span>&nbsp;</span>
                         <span>{{ tag.name }}</span>
                       </li>
                       <li *ngIf="!article.tag.length" class="text-muted">
-                        <i class="ion-pricetags"></i>
+                        <i class="ion-md-pricetags"></i>
                         <span>&nbsp;</span>
                         <span>暂无标签</span>
                       </li>
@@ -228,7 +241,7 @@
                   </td>
                   <td>
                     <span *ngIf="article.meta.likes">{{ article.meta.likes }}人喜欢</span>
-                    <span class="text-muted" *ngIf="!article.meta.likes">无人喜欢</span>
+                    <span class="text-muted" *ngIf="!article.meta.likes">无人问津</span>
                   </td>
                   <td>{{ article.create_at | dataToLocale }}</td>
                   <td>
@@ -247,32 +260,54 @@
                   </td>
                   <td>
                     <div class="button-wrapper">
-                      <a class="btn btn-success btn-sm" [routerLink]="['/article/edit/', article._id]">编辑文章</a>
+                      <a class="btn btn-success btn-sm btn-with-icon" 
+                         [routerLink]="['/article/edit/', article._id]">
+                        <i class="ion-md-create"></i>
+                        <span>编辑文章</span>
+                      </a>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state == 0">
-                      <button class="btn btn-warning btn-sm" 
-                              (click)="moveToPublished([article._id])">快速发布</button>
+                      <button class="btn btn-warning btn-sm btn-with-icon" 
+                              (click)="moveToPublished([article._id])">
+                        <i class="ion-md-done-all"></i>
+                        <span>快速发布</span>
+                      </button>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state == -1">
-                      <button class="btn btn-warning btn-sm" 
-                              (click)="moveToDraft([article._id])">恢复文章</button>
+                      <button class="btn btn-warning btn-sm btn-with-icon" 
+                              (click)="moveToDraft([article._id])">
+                        <i class="ion-md-checkmark-circle-outline"></i>
+                        <span>恢复文章</span>
+                      </button>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state == 1">
-                      <button class="btn btn-warning btn-sm" 
-                              (click)="moveToDraft([article._id])">移到草稿</button>
+                      <button class="btn btn-warning btn-sm btn-with-icon" 
+                              (click)="moveToDraft([article._id])">
+                        <i class="ion-md-checkmark-circle-outline"></i>
+                        <span>移到草稿</span>
+                      </button>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state != -1">
-                      <button class="btn btn-danger btn-sm" 
-                              (click)="moveToRecycle([article._id])">移回收站</button>
+                      <button class="btn btn-danger btn-sm btn-with-icon" 
+                              (click)="moveToRecycle([article._id])">
+                        <i class="ion-md-pint"></i>
+                        <span>移回收站</span>
+                      </button>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state == -1">
-                      <button class="btn btn-danger btn-sm" 
-                              (click)="delArticleModal([article._id])">彻底删除</button>
+                      <button class="btn btn-danger btn-sm btn-with-icon" 
+                              (click)="delArticleModal([article._id])">
+                        <i class="ion-md-trash"></i>
+                        <span>彻底删除</span>
+                      </button>
                     </div>
                     <div class="button-wrapper">
-                      <a class="btn btn-info btn-sm"
+                      <a class="btn btn-info btn-sm btn-with-icon"
                          [href]="'//surmon.me/article/' + article.id"
-                         target="_blank">查看文章</a>
+                         target="_blank">
+                        <i class="ion-md-redo"></i>
+                        <span>查看文章</span>
+                      </a>
                     </div>
                   </td>
                 </tr>
@@ -312,7 +347,7 @@
           <div class="modal-body">
             <div class="message">
               <span class="icon text-warning">
-                <i class="ion-ios-information-outline"></i>
+                <i class="ion-md-information-circle-outline"></i>
               </span>
               <span>确定要删除{{ del_articles ? '这篇' : '选中' }}文章吗？本操作不可逆</span>
             </div>

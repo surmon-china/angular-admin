@@ -1,16 +1,15 @@
-import { NgModule, ModuleWithProviders }      from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { ModalModule } from 'ngx-bootstrap';
 import { CommonModule }  from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import {
-  BaThemeConfig
-} from './theme/theme.config';
+import { ModalModule } from 'ngx-bootstrap';
 
-import {
-  BaThemeConfigProvider
-} from './theme/theme.configProvider';
+import { BaThemeConfig } from './theme/theme.config';
+import { BaThemeConfigProvider } from './theme/theme.configProvider';
+
+import { BaScrollPosition, BaThemeRun} from './directives';
+import { BaCardBlur } from './components/baCard/baCardBlur.directive';
 
 import {
   BaBackTop,
@@ -26,14 +25,6 @@ import {
   BaSidebar,
   BaMarkdownEditorComponent
 } from './components';
-
-import { BaCardBlur } from './components/baCard/baCardBlur.directive';
-
-import {
-  BaScrollPosition,
-  BaSlimScroll,
-  BaThemeRun
-} from './directives';
 
 import {
   BaAppPicturePipe,
@@ -71,7 +62,6 @@ const NGA_COMPONENTS = [
 
 const NGA_DIRECTIVES = [
   BaScrollPosition,
-  BaSlimScroll,
   BaThemeRun,
   BaCardBlur
 ];

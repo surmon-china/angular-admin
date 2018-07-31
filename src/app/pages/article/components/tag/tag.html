@@ -81,20 +81,28 @@
               <button class="btn btn-warning" 
                       (click)="delExtendItem(i)"
                       [disabled]="extends.value.length < 2">
-                <i class="ion-trash-b"></i>
+                <i class="ion-md-trash"></i>
               </button>
             </div>
           </div>
-          <a [href]="" class="btn btn-default btn-sm btn-block" (click)="addExtendItem()">增加扩展</a>
+          <a [href]="" class="btn btn-default btn-sm btn-block btn-with-icon" (click)="addExtendItem()">
+            <i class="ion-md-add"></i>
+            <span>增加扩展</span>
+          </a>
           <span class="help-block sub-little-text">可以为当前标签扩展自定义扩展属性</span>
         </div>
         <hr>
         <div class="row">
           <div class="col-md-12">
-            <button type="submit" class="btn btn-success"
-                    [disabled]="!editForm.valid">{{ edit_tag ? '修改' : '添加' }}标签</button>
-            <span>&nbsp;</span>
-            <button class="btn btn-default" (click)="resetEditForm()">重置</button>
+            <button type="submit" class="btn btn-success btn-with-icon" [disabled]="!editForm.valid">
+              <i class="ion-md-done-all"></i>
+              <span>{{ edit_tag ? '修改' : '添加' }}标签</span>
+            </button>
+            <span>&nbsp;&nbsp;</span>
+            <button class="btn btn-default btn-with-icon" (click)="resetEditForm()">
+              <i class="ion-md-refresh"></i>
+              <span>重置</span>
+            </button>
           </div>
         </div>
       </form>
@@ -108,20 +116,20 @@
             <button type="button" 
                     class="btn btn-default btn-with-icon"
                     (click)="refreshTags()">
-              <i class="ion-refresh"></i>
+              <i class="ion-md-refresh"></i>
               <span>刷新</span>
             </button>
             <button type="button" 
                     class="btn btn-default btn-with-icon"
                     (click)="resetSearchForm()">
-              <i class="ion-trash-b"></i>
+              <i class="ion-md-trash"></i>
               <span>清空搜索词</span>
             </button>
             <div class="btn-group" dropdown [isDisabled]="!selectedTags.length">
               <button type="button" 
                       class="btn btn-default btn-with-icon dropdown-toggle"
                       dropdownToggle>
-                <i class="ion-ios-list"></i>
+                <i class="ion-md-list"></i>
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" *dropdownMenu>
@@ -248,7 +256,7 @@
         <div class="modal-body">
           <div class="message">
             <span class="icon text-warning">
-              <i class="ion-ios-information-outline"></i>
+              <i class="ion-md-information-circle-outline"></i>
             </span>
             <span>确定要删除{{ del_tag ? '这个' : '选中' }}标签吗？</span>
           </div>

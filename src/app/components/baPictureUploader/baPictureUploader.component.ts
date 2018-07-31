@@ -1,8 +1,12 @@
 import { Component, ViewChild, Input, Output, forwardRef, EventEmitter, ElementRef, Renderer, OnChanges } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { ApiService } from '@app/api.service';
+
 import { NotificationsService } from 'angular2-notifications';
-import { API_ROOT, STATIC_URL } from 'src/config'
-import './baPictureUploader.loader.ts';
+import { API_ROOT, STATIC_URL } from '@config';
+
+import * as qiniu from 'qiniu-js';
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'ba-picture-uploader',
@@ -21,7 +25,6 @@ export class BaPictureUploader implements ControlValueAccessor {
 
   // 输入
   @Input() canDelete: boolean = true;
-  @Input() uploaderOptions:any = {};
   @Input() uploadSizeLimit: number = 3000000;
   @Input() defaultPicture:string = 'assets/img/theme/no-photo.png';
 
@@ -31,101 +34,43 @@ export class BaPictureUploader implements ControlValueAccessor {
   @Output() onUploadCompleted:EventEmitter<any> = new EventEmitter();
 
   // 初始化
+  public  uptoken:string = '';
   public  picture:string = '';
-  private qiniuUploader:any;
-  private uploadProgress:number = 0;
+  public  tokenOk:boolean = false;
+  private uploadProgress:string = '0';
   public  uploadInProgress:boolean = false;
   public  onModelChange:Function = () => {};
   public  onModelTouched:Function = () => {};
 
   // 构造函数
-  constructor(private renderer:Renderer,
+  constructor(private _apiService: ApiService,
+              private _renderer:Renderer,
               private _notificationsService:NotificationsService) {}
 
   ngOnInit() {
-    // console.log(Qiniu, plupload, mOxie);
-    this.qiniuUploader = Qiniu.uploader(Object.assign({
-      // 设置一次只能选择一个文件
-      multi_selection: false,
-      // 上传模式,依次退化
-      runtimes: 'html5 ,html4',
-      // 上传选择的点选按钮，required
-      browse_button: 'uploadFileBtn',
-      // Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
-      uptoken_url: `${API_ROOT}/qiniu`,
-      // 默认 false，key为文件名。若开启该选项，SDK为自动生成上传成功后的key（文件名）。
-      unique_names: false,
-      // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK会忽略对key的处理
-      save_key: false,
-      // bucket 域名，下载资源时用到，required
-      domain: 'http://upload.qiniu.com/',
-      // 设置上传文件的时候是否每次都重新获取新的token
-      get_new_uptoken: false,
-      // 最大文件体积限制
-      max_file_size: '10mb',
-      // 上传失败最大重试次数
-      max_retries: 3,
-      // 开启可拖曳上传               
-      dragdrop: false,
-      // 拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
-      // drop_element: 'container',
-      // 分块上传时，每片的体积
-      chunk_size: '4mb',
-      // 选择文件后自动上传，若关闭需要自己绑定事件触发上传
-      auto_start: true,
-      log_level: 0,
-      // 回调函数              
-      init: {
-        // 文件添加进队列后,处理相关的事情
-        'FilesAdded'(up, files) {
-          // console.log('文件添加进队列', files);
-        },
-        // 每个文件上传前,处理相关的事情
-        'BeforeUpload': (up, file) => {
-          // console.log('文件上传前', this);
-          this._notificationsService.info('开始上传', '文件正在上传', { timeOut: 850 });
-        },
-        // 每个文件上传时,处理相关的事情
-        'UploadProgress': (up, file) => {
-          // console.log('文件上传时', file);
-          this.uploadInProgress = true;
-          this.uploadProgress = file.percent;
-        },
-        // 每个文件上传成功后,处理相关的事情
-        'FileUploaded': (up, file, info) => {
-          // console.log('文件上传成功后', file, info);
-          this.uploadInProgress = false;
-          if (typeof info === 'object') {
-            if (info.status === 200) {
-              const data = `${STATIC_URL}/${JSON.parse(info.response).key}`;
-              this.onUploadCompleted.emit(data);
-              this.changePictureFromURL(data);
-              this._notificationsService.success('上传成功', '图片上传成功', { timeOut: 850 });
-            } else {
-              this._notificationsService.error('上传失败', JSON.parse(info.response).error, { timeOut: 850 });
-            }
-          };
-        },
-        // 上传出错时,处理相关的事情
-        'Error': (up, err, errTip) => {
-          this.uploadInProgress = false;
-          this._notificationsService.error('上传失败', JSON.parse(err.response).error, { timeOut: 850 });
-        },
-        // 队列文件处理完毕后,处理相关的事情
-        'UploadComplete': () => {
-          this.uploadInProgress = false;
-          // console.log('文件全部上传完毕');
-        },
-        // 若想在前端对每个文件的key进行个性化处理，可以配置该函数，该配置必须要在 unique_names: false , save_key: false 时才生效
-        'Key'(up, file) {
-          return `nodepress/image/${file.name}`;
-        }
+    this.getUpToken();
+  }
+
+  // 获取上传 token
+  public getUpToken():any {
+    this._apiService.get('/qiniu').then((res: any) => {
+      if (res && res.result && res.result.uptoken) {
+        this.tokenOk = true;
+        this.uptoken = res.result.uptoken;
       }
-    }, this.uploaderOptions));
+    }).catch(err => {
+      this.tokenOk = false;
+    });
   }
  
   // 要上传的文件变更时（组件拦截）
   public onFiles():any {
+
+    // 如果选择文件时 Token 是不可用的，再再试一次
+    if (!this.tokenOk) {
+      this.getUpToken();
+      return false;
+    }
 
     // 当前文件
     const file = this._fileUpload.nativeElement.files[0];
@@ -148,14 +93,75 @@ export class BaPictureUploader implements ControlValueAccessor {
       return false;
     }
 
-    // 否则添加进队列，执行七牛上传
-    this.qiniuUploader.addFile(file);
+    // 判断完成调用 SDK 上传
+    this.qiniuUploadPicture(file);
   }
 
-  // 点击自定义上传空间元素的时候调用input的click方法
+  // 文件上传
+  public qiniuUploadPicture(file):  any {
+
+    // 上传
+    const doUpload = (upFile) => {
+
+      this._notificationsService.info('开始上传', '文件开始上传', { timeOut: 850 });
+
+      const keyName = `nodepress/image/${upFile.name.replace(/ /ig, '')}`;
+      const putExtra = { 
+        params: {},
+        fname: upFile.name,
+        mimeType: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']
+      };
+
+      const upOptions = {
+        useCdnDomain: true
+      };
+
+      // 开始上传
+      const observable = qiniu.upload(upFile, keyName, this.uptoken, putExtra, upOptions);
+
+      this.uploadInProgress = true;
+
+      // 监听上传流
+      const subscription = observable.subscribe({
+        next: res => {
+          console.info('上传有一个新进度', res);
+          this.uploadInProgress = true;
+          if (res.total && res.total.percent) {
+            this.uploadProgress = (res.total.percent || '').toString().slice(0, 5);
+          }
+        },
+        error: err => {
+          console.warn('上传失败', err);
+          this.uploadInProgress = false;
+          this._notificationsService.error('上传失败', err.message, { timeOut: 850 });
+        },
+        complete: res => {
+          console.log('上传完成', res);
+          const picture_url = `${STATIC_URL}/${res.key}`;
+          this.uploadInProgress = false;
+          this.onUploadCompleted.emit(picture_url);
+          this.changePictureFromURL(picture_url);
+          this._notificationsService.success('上传成功', '图片上传成功', { timeOut: 850 });
+        }
+      });
+    }
+
+    // 压缩
+    qiniu.compressImage(file, {
+      quality: 0.92,
+      noCompressIfLarger: true
+    })
+    .then(data => doUpload(data.dist))
+    .catch(err => doUpload(file));
+  }
+
+  // 点击自定义上传空间元素的时候调用 input 的 click 方法
   public bringFileSelector():any {
+    if (this.uploadInProgress) {
+      return false;
+    }
     this.onModelTouched();
-    this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
+    this._renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
     return false;
   }
 

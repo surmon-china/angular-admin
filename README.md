@@ -19,6 +19,9 @@ If you only need to demonstrate the project locally, you need to comment on the 
 - [src/app/app.component.ts:114](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L114)
 - [src/app/app.component.ts:120](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L120)
 
+[CHANGELOG](https://github.com/surmon-china/angular-admin/blob/master/CHANGELOG.md)
+
+
 # Screenshots
 
 **标签管理**
@@ -52,7 +55,7 @@ If you only need to demonstrate the project locally, you need to comment on the 
    - 一堆方法
    - 返回promise
    - 用第三方组件配合来实现res/err的处理
-   - 定制化的http服务是需要自己封装的，如果你想实现拦截器，auth控制的话，必须封装，项目中用了三方的[angular2-jwt](https://github.com/auth0/angular2-jwt)
+   - 定制化的http服务是需要自己封装的，如果你想实现拦截器，Auth 控制的话，必须封装，项目中用了三方的[angular2-jwt](https://github.com/auth0/angular2-jwt)
 
 ## 自定义组件的双向绑定如何实现
    - 框架基本都同质化了，和vue实现方式相差无几，但实现原理是不同的，Angular 内置了 Zone.js 对所有全局的异步 API 进行了高级包装，并抽象出了异步任务管理层，用以驱动 Angular 的数据检测
@@ -114,49 +117,32 @@ If you only need to demonstrate the project locally, you need to comment on the 
    - cnpm和npm安装文件结构不一样，会导致重复引用无法编译的问题，主要是由于cnpm的版本管理机制不一样导致的，cnpm是空文件夹+快捷方式的方法乱搞，所以遇到模块引用的错误，一般删掉对应文件夹，用npm重装就可以了
 
 
-# Todos && Issues 更新维护记录
-
-- ~~仪表盘信息聚合（系统/文章信息聚合，echarts）？[won't fix]~~
-- ~~需要增加一个数据库导出功能~~
-- ~~评论管理，增删改查功能~~
-- ~~增加黑名单功能，优化设置部分表单体验~~
-- ~~增加Markdown编辑器实时本地备份功能~~
-- ~~弹窗的遮罩层把行为层挡住了~~
-- ~~标签列表页，描述限制为一行超出隐藏~~
-- ~~使用codemirror创建一个markdown编辑器 https://github.com/jbt/markdown-editor/blob/master/index.html~~
-- ~~可以适当性创建一些按钮，如图片、连接、标题、全屏、预览切换，highlight.js + marked用于预览时的解析，~~
-- ~~codemirror用于编辑模式下的编辑器，引入所有语言的语言包，~~
-- ~~首次登陆，数据库无数据时，个人头像，名字等均为展示默认值~~
-- ~~分类列表页的分类描述，超出一行之后，P标签的行间距过大~~
-- ~~发布文章页的分类目录选中图标，应该替换为ionic里的图标~~
-- ~~标签项，需要增加icon自定义字段~~
-- ~~取消文章在列表页的密码和缩略内容/内容字段~~
-- ~~仪表盘图表组件和echarts整合~~
-- ~~所有无用组件/代码的清理~~
-- ~~数据结构变动如article的count，data字段~~
-- ~~首页无用的都删掉~~
-- ~~发布文章页，在标签和分类为空时缺少提示信息，文章的默认缩略图需调整~~
-- ~~所有涉及发布的内容项，都需要增加自定义字段~~
-- ~~程序截图 + 文档撰写 readme~~
-- ~~由于数据的准确性没有测试，分类和标签列表的与文章内容的先后顺序不同会导致标签和分类不会被勾选~~
-- ~~升级至Angular4 and Bootstrap 4最新测试版 ~~
-- ~~升级至ngx-bootstrap，并优化markdown~~
-- ~~全部升级为最新，一键安装构建~~
-
-
 # 执行命令
-```bash
-# install
-cnpm i --python=python2.7
 
-# 开发
-npm start
+## Development server
 
-# 构建
-npm run build:prod
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-# 生产，可以用nginx映射dist，不必要开node进程
-npm run server:prod
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
 ```
 
 

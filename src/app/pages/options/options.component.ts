@@ -1,6 +1,8 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { OptionsService } from './options.service';
+import { ApiService } from '@app/api.service';
+import { Base64 } from 'js-base64';
 
 @Component({
   selector: 'options',
@@ -9,6 +11,10 @@ import { OptionsService } from './options.service';
   template: require('./options.html'),
 })
 export class Options {
+
+	// url
+  private _authApiUrl = '/auth';
+  private _optionApiUrl = '/option';
 
 	// authForm
 	public authForm:FormGroup;
@@ -34,8 +40,9 @@ export class Options {
   public blacklist_mails:AbstractControl;
   public blacklist_keywords:AbstractControl;
 
-  constructor(private _fb: FormBuilder,
-  						private _optionsService: OptionsService) {
+  constructor(private _router: Router,
+  						private _fb: FormBuilder,
+  						private _apiService: ApiService) {
 
   	// authForm
 		this.authForm = _fb.group({
@@ -115,7 +122,18 @@ export class Options {
 	// 提交权限表单
 	public submitAuthForm(values: any) {
 		if (this.authForm.valid) {
-			this.putAuth(this.authForm.value);
+			const authFormData = this.authForm.value;
+			const newformData = {};
+			Object.keys(authFormData).forEach(key => {
+				if (authFormData[key]) {
+					if (key.includes('password')) {
+						newformData[key] = Base64.encode(authFormData[key]);
+					} else {
+						newformData[key] = authFormData[key];
+					}
+				}
+			});
+			this.putAuth(newformData);
 		}
 	}
 
@@ -137,14 +155,21 @@ export class Options {
 	// 解析返回的权限表单数据
 	public handleAuthChange = userAuthPromise => {
 		userAuthPromise.then(({ result: { name, slogan, gravatar }}) => {
-			this.authForm.reset({
-				name,
-				slogan,
-				gravatar,
-				password: '',
-				new_password: '',
-				rel_new_password: ''
-			});
+			if (this.authForm.value.rel_new_password) {
+				console.info('密码更新成功，正跳转至登陆页');
+				setTimeout(() => {
+					this._router.navigate(['/auth']);
+				}, 960)
+			} else {
+				this.authForm.reset({
+					name,
+					slogan,
+					gravatar,
+					password: '',
+					new_password: '',
+					rel_new_password: ''
+				});
+			}
 		})
 		.catch(error => {});
 	}
@@ -163,22 +188,22 @@ export class Options {
 
 	// 获取用户
 	public getUserAuth() {
-		this.handleAuthChange(this._optionsService.getUserAuth());
+		this.handleAuthChange(this._apiService.get(this._authApiUrl));
 	}
 
 	// 更新用户
 	public putAuth(auth: any) {
-		this.handleAuthChange(this._optionsService.putAuth(auth));
+		this.handleAuthChange(this._apiService.put(this._authApiUrl, auth));
 	}
 
 	// 获取配置
 	public getOptions() {
-		this.handleOptionChange(this._optionsService.getOptions());
+		this.handleOptionChange(this._apiService.get(this._optionApiUrl));
 	}
 
 	// 更新配置
 	public putOptions(options: any) {
-		this.handleOptionChange(this._optionsService.putOptions(options));
+		this.handleOptionChange(this._apiService.put(this._optionApiUrl, options));
 	}
 
 	ngOnInit() {

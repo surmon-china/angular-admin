@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { Options }       from './options.component';
 import { routing }       from './options.routing';
-import { OptionsService } from './options.service';
 
 @NgModule({
   imports: [
@@ -15,9 +14,7 @@ import { OptionsService } from './options.service';
     NgaModule,
     routing
   ],
-  providers: [
-    OptionsService
-  ],
+  providers: [],
   declarations: [
     Options
   ]

@@ -1,14 +1,15 @@
-import { NgModule, ApplicationRef } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { provideAuth } from 'angular2-jwt'
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { isDevMode, enableProdMode } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, ApplicationRef } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ApiService } from '@app/api.service';
+
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
-import { enableProdMode } from '@angular/core';
-enableProdMode();
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -18,15 +19,16 @@ import { routing } from './app.routing';
 
 // App is our top level component
 import { App } from './app.component';
-import { AppState, InternalStateType } from './app.service';
-import { GlobalState } from './global.state';
 import { NgaModule } from './nga.module';
 import { PagesModule } from './pages/pages.module';
+import { GlobalState } from './global.state';
+import { AppState, InternalStateType } from './app.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
-  GlobalState
+  GlobalState,
+  ApiService
 ];
 
 type StoreType = {
@@ -44,28 +46,19 @@ type StoreType = {
   imports: [ // import Angular's modules
     BrowserModule,
     BrowserAnimationsModule,
-    HttpModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    SimpleNotificationsModule.forRoot(),
-    NgaModule.forRoot(),
     PagesModule,
-    routing
+    routing,
+    HttpClientModule,
+    SimpleNotificationsModule.forRoot(),
+    NgaModule.forRoot()
   ],
   // expose our Services and Providers into Angular's dependency injection
   providers: [
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    provideAuth({
-      headerName: 'Authorization',
-      headerPrefix: 'Bearer',
-      tokenName: 'id_token',
-      tokenGetter() { return localStorage.getItem('id_token')},
-      globalHeaders: [{'Content-Type': 'application/json'}],
-      noJwtError: false,
-      noTokenScheme: false
-    })
   ]
 })
 
