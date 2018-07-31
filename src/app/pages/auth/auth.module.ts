@@ -1,10 +1,8 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule }     from 'app/nga.module';
 import { routing }       from './auth.routing';
-
-import { AuthService }   from './auth.service';
 import { Auth }          from './auth.component';
 
 @NgModule({
@@ -14,9 +12,6 @@ import { Auth }          from './auth.component';
     ReactiveFormsModule,
     NgaModule,
     routing
-  ],
-  providers: [
-    AuthService
   ],
   declarations: [
     Auth

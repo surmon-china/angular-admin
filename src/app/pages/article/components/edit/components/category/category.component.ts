@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
-import { ArticleCategoryService } from '../../../category/category.service';
+import { ApiService } from '@app/api.service';
 
 @Component({
   selector: 'article-edit-category',
@@ -15,7 +15,7 @@ export class ArticleEditCategory {
 
   public categories = { data: [] };
 
-  constructor(private _articleCategoryService: ArticleCategoryService) {}
+  constructor(private _apiService: ApiService) {}
 
   ngOnInit() {
   	this.getCategories();
@@ -89,7 +89,7 @@ export class ArticleEditCategory {
 
   // 获取所有分类
   public getCategories() {
-  	this._articleCategoryService.getCategories()
+  	this._apiService.get('/category')
   	.then(categories => {
   		this.categories = categories.result;
   		this.categoryLevelBuild();

@@ -1,10 +1,8 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { NotificationsService } from 'angular2-notifications';
+
 import { ModalDirective } from 'ngx-bootstrap';
-import { ArticleListService } from './list.service';
-import { ArticleTagService } from '../tag/tag.service';
-import { ArticleCategoryService } from '../category/category.service';
+import { ApiService } from '@app/api.service';
 
 @Component({
   selector: 'article-list',
@@ -16,6 +14,11 @@ export class ArticleList {
 
   @ViewChild('delModal') delModal: ModalDirective;
 
+  // _apiUrl
+  private _tagUrl = '/tag';
+  private _articleUrl = '/article';
+  private _categoryUrl = '/category';
+
   // 搜索参数
   public searchForm:FormGroup;
   public keyword:AbstractControl;
@@ -23,7 +26,8 @@ export class ArticleList {
     tag: 'all',
     state: 'all',
     public: 'all',
-    category: 'all'
+    category: 'all',
+    origin: 'all'
   };
 
   // 初始化数据
@@ -49,10 +53,7 @@ export class ArticleList {
   public selectedArticles = [];
 
   constructor(private _fb:FormBuilder,
-              private _articleTagService:ArticleTagService,
-              private _articleListService:ArticleListService,
-              private _articleCategoryService:ArticleCategoryService,
-              private _notificationsService: NotificationsService) {
+              private _apiService:ApiService) {
 
     this.searchForm = _fb.group({
       'keyword': ['', Validators.compose([Validators.required])]
@@ -155,6 +156,7 @@ export class ArticleList {
     this.searchForm.reset({ keyword: '' });
     this.getParams.tag = 'all';
     this.getParams.public = 'all';
+    this.getParams.origin = 'all';
     this.getParams.category = 'all';
   }
 
@@ -186,7 +188,7 @@ export class ArticleList {
     }
     this.fetching.article = true;
     // 请求文章
-    this._articleListService.getArticles(params)
+    this._apiService.get(this._articleUrl, params)
     .then(articles => {
       this.articles = articles.result;
       this.articlesSelectAll = false;
@@ -200,7 +202,7 @@ export class ArticleList {
 
   // 获取标签列表
   public getTags(): void {
-    this._articleTagService.getTags({})
+    this._apiService.get(this._tagUrl)
     .then(tags => {
       this.tags = tags.result;
     })
@@ -209,7 +211,7 @@ export class ArticleList {
 
   // 获取分类列表
   public getCategories(): void {
-    this._articleCategoryService.getCategories()
+    this._apiService.get(this._categoryUrl)
     .then(categories => {
        this.categories = categories.result;
        this.categoryLevelBuild();
@@ -219,35 +221,29 @@ export class ArticleList {
 
   // 移至回收站
   public moveToRecycle(articles: any) {
-    this._articleListService.moveToRecycle(articles)
-    .then(do_result => {
-      this.getArticles({ page: this.articles.pagination.current_page });
-    })
+    this._apiService.patch(this._articleUrl, { articles, action: 1 })
+    .then(do_result => this.getArticles({ page: this.articles.pagination.current_page }))
     .catch(error => {});
   }
 
   // 恢复文章（移至草稿）
   public moveToDraft(articles: any) {
-    this._articleListService.moveToDraft(articles)
-    .then(do_result => {
-      this.getArticles({ page: this.articles.pagination.current_page });
-    })
+    this._apiService.patch(this._articleUrl, { articles, action: 2 })
+    .then(do_result => this.getArticles({ page: this.articles.pagination.current_page }))
     .catch(error => {});
   }
 
   // 快速发布（移至已发布）
   public moveToPublished(articles: any) {
-    this._articleListService.moveToPublished(articles)
-    .then(do_result => {
-      this.getArticles({ page: this.articles.pagination.current_page });
-    })
+    this._apiService.patch(this._articleUrl, { articles, action: 3 })
+    .then(do_result => this.getArticles({ page: this.articles.pagination.current_page }))
     .catch(error => {});
   }
 
   // 彻底删除文章
   public delArticles() {
     const articles = this.del_articles || this.selectedArticles;
-    this._articleListService.delArticles(articles)
+    this._apiService.delete(this._articleUrl, { articles })
     .then(do_result => {
       this.delModal.hide();
       this.del_articles = null;

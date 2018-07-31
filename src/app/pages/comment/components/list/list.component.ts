@@ -1,9 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { NotificationsService } from 'angular2-notifications';
+
 import { ModalDirective } from 'ngx-bootstrap';
-import { CommentService } from '../../comment.service';
+
+import { ApiService } from '@app/api.service';
 import { UAParse, OSParse } from '../../comment.ua';
 
 @Component({
@@ -15,6 +16,9 @@ import { UAParse, OSParse } from '../../comment.ua';
 export class CommentList {
 
   @ViewChild('delModal') public delModal: ModalDirective;
+
+  // _apiUrl
+  private _apiUrl = '/comment';
 
   // 搜索参数
   public UAParse = UAParse;
@@ -48,9 +52,15 @@ export class CommentList {
   public selectedComments = [];
   public selectedPostIds = [];
 
+  public unique(arr, newArr) {
+    let num;
+    if (-1 == arr.indexOf(num = arr.shift())) newArr.push(num);
+    arr.length && this.unique(arr, newArr);
+  }
+
   constructor(private _fb:FormBuilder,
               private _route: ActivatedRoute,
-              private _commentService:CommentService) {
+              private _apiService:ApiService) {
 
     this.searchForm = _fb.group({
       'keyword': ['', Validators.compose([Validators.required])]
@@ -149,7 +159,7 @@ export class CommentList {
     }
     this.fetching.comment = true;
     // 请求评论
-    this._commentService.getComments(params)
+    this._apiService.get(this._apiUrl, params)
     .then(comments => {
       this.comments = comments.result;
       this.commentsSelectAll = false;
@@ -164,7 +174,10 @@ export class CommentList {
 
   // 更新评论状态
   public updateCommentState(comments: any, post_ids: any, state: number) {
-    this._commentService.updateCommentState(comments, post_ids, state)
+    let _post_ids = [];
+    this.unique(post_ids, _post_ids);
+    post_ids = _post_ids;
+    this._apiService.patch(this._apiUrl, { comments, post_ids, state })
     .then(do_result => {
       this.getComments({ page: this.comments.pagination.current_page });
     })
@@ -175,6 +188,7 @@ export class CommentList {
   public delComments() {
     const comments = this.del_comments || this.selectedComments;
     let post_ids = [];
+    let _post_ids = [];
     if(Object.is(comments.length, 1)) {
       let currentComment = this.comments.data.find(c => Object.is(comments[0], c._id));
       if(!!currentComment) {
@@ -183,7 +197,9 @@ export class CommentList {
     } else {
       post_ids = this.selectedPostIds;
     }
-    this._commentService.delComments(comments, post_ids)
+    this.unique(post_ids, _post_ids);
+    post_ids = _post_ids;
+    this._apiService.delete(this._apiUrl, { comments, post_ids })
     .then(do_result => {
       this.delModal.hide();
       this.del_comments = null;

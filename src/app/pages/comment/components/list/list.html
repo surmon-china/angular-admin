@@ -15,56 +15,56 @@
                     [ngClass]="{ 'active': getParams.state == 'all'}"
                     (click)="switchState('all')">
               <span>全部</span>
-              <span *ngIf="getParams.state == 'all'">({{ comments.pagination.total || 0 }})</span>
+              <span *ngIf="getParams.state == 'all'">&nbsp;({{ comments.pagination.total || 0 }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': getParams.state == 1 }"
                     (click)="switchState(1)">
               <span>已发布</span>
-              <span *ngIf="getParams.state == 1">({{ comments.pagination.total || 0 }})</span>
+              <span *ngIf="getParams.state == 1">&nbsp;({{ comments.pagination.total || 0 }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': getParams.state == 0 }"
                     (click)="switchState(0)">
               <span>待审核</span>
-              <span *ngIf="getParams.state == 0">({{ comments.pagination.total || 0 }})</span>
+              <span *ngIf="getParams.state == 0">&nbsp;({{ comments.pagination.total || 0 }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': getParams.state == -1 }"
                     (click)="switchState(-1)">
               <span>回收站</span>
-              <span *ngIf="getParams.state == -1">({{ comments.pagination.total || 0 }})</span>
+              <span *ngIf="getParams.state == -1">&nbsp;({{ comments.pagination.total || 0 }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
                     [ngClass]="{ 'active': getParams.state == -2 }"
                     (click)="switchState(-2)">
               <span>垃圾评论</span>
-              <span *ngIf="getParams.state == -2">({{ comments.pagination.total || 0 }})</span>
+              <span *ngIf="getParams.state == -2">&nbsp;({{ comments.pagination.total || 0 }})</span>
             </button>
           </div>
-          <span>&nbsp;</span>
+          <span>&nbsp;&nbsp;</span>
           <div class="btn-group">
             <button type="button" 
                     class="btn btn-default btn-with-icon"
                     (click)="refreshComments()">
-              <i class="ion-refresh"></i>
+              <i class="ion-md-refresh"></i>
               <span>刷新</span>
             </button>
             <button type="button" 
                     class="btn btn-default btn-with-icon"
                     (click)="resetGetParams()">
-              <i class="ion-trash-b"></i>
+              <i class="ion-md-trash"></i>
               <span>清空搜索条件</span>
             </button>
             <div class="btn-group" dropdown [isDisabled]="!selectedComments.length">
               <button type="button" 
                       class="btn btn-default btn-with-icon dropdown-toggle"
                       dropdownToggle>
-                <i class="ion-ios-list"></i>
+                <i class="ion-md-list"></i>
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" *dropdownMenu>
@@ -208,10 +208,11 @@
                   <td>{{ comment.is_top ? '是' : '否' }}</td>
                   <td>{{ comment.create_at | dataToLocale }}</td>
                   <td>
-                    <i class="ion-checkmark text-success" *ngIf="comment.state == 1"></i>
-                    <i class="ion-edit text-warning" *ngIf="comment.state == 0"></i>
-                    <i class="ion-trash-b text-danger" *ngIf="comment.state == -1"></i>
-                    <i class="ion-nuclear text-danger" *ngIf="comment.state == -2"></i>
+                    <i class="ion-md-checkmark text-success" *ngIf="comment.state == 1"></i>
+                    <i class="ion-md-create text-warning" *ngIf="comment.state == 0"></i>
+                    <i class="ion-md-trash text-danger" *ngIf="comment.state == -1"></i>
+                    <i class="ion-md-nuclear text-danger" *ngIf="comment.state == -2"></i>
+                    <span>&nbsp;</span>
                     <span [ngSwitch]="comment.state">
                       <span *ngSwitchCase="0">待审核</span>
                       <span *ngSwitchCase="1">已发布</span>
@@ -288,7 +289,7 @@
           <div class="modal-body">
             <div class="message">
               <span class="icon text-warning">
-                <i class="ion-ios-information-outline"></i>
+                <i class="ion-md-information-circle-outline"></i>
               </span>
               <span>确定要删除{{ del_comments ? '这篇' : '选中' }}评论吗？本操作不可逆</span>
             </div>

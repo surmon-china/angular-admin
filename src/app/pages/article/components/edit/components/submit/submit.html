@@ -1,5 +1,19 @@
 <form name="articleSubmit" class="form-horizontal">
   <div class="form-group row">
+    <label for="articleStatus" class="col-3 text-center form-control-label">来源</label>
+    <div class="col-6">
+      <select class="form-control c-select" 
+              id="articleOrigin" 
+              name="articleOrigin" 
+              [(ngModel)]="origin"
+              (change)="originChange.emit($event.target.value)">
+        <option value="0">原创</option>
+        <option value="1">转载</option>
+        <option value="2">混合</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row">
     <label for="articleStatus" class="col-3 text-center form-control-label">状态</label>
     <div class="col-6">
       <select class="form-control c-select" 
@@ -43,8 +57,11 @@
   <hr>
   <div class="row">
     <div class="col-sm-12">
-       <button class="btn btn-block btn-default" 
-               (click)="submitArticle.emit()">{{ isEdit ? '修改' : '发布' }}文章</button>
+      <button class="btn btn-block btn-default btn-with-icon" 
+               (click)="submitArticle.emit()">
+        <i class="ion-md-done-all"></i>
+        <span>{{ isEdit ? '修改' : '发布' }}文章</span>
+      </button>
     </div>
   </div>
 </form>

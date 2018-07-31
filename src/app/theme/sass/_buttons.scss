@@ -11,6 +11,10 @@ $hover: 24;
   min-height: 2.3rem;
   line-height: 2.3rem;
   font-size: 0.9rem;
+
+  &[disabled] {
+    cursor: no-drop;
+  }
 }
 
 .btn:hover {

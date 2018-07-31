@@ -62,7 +62,7 @@
         <div class="tags-list">
           <button class="btn btn-article-tag-item btn-with-icon btn-default text-muted disabled" 
                   *ngIf="!tags.data.length">
-            <i class="ion-information"></i>
+            <i class="ion-md-information-circle-outline"></i>
             <span>暂无标签</span>
           </button>
           <button class="btn btn-sm article-tag-item" 
@@ -73,7 +73,10 @@
         </div>
         <hr>
         <div class="clearfix">
-          <button class="btn btn-sm btn-default" (click)="getTags()">更新标签列表</button>
+          <button class="btn btn-sm btn-default btn-with-icon" (click)="getTags()">
+            <i class="ion-md-refresh"></i>
+            <span>更新标签列表</span>
+          </button>
         </div>
       </div>
     </div>

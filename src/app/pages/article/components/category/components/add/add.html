@@ -101,24 +101,31 @@
         <button class="btn btn-warning" 
                 (click)="delExtendItem(i)"
                 [disabled]="extends.value.length < 2">
-          <i class="ion-trash-b"></i>
+          <i class="ion-md-trash"></i>
         </button>
       </div>
     </div>
-    <a [href]="" class="btn btn-default btn-sm btn-block" (click)="addExtendItem()">增加扩展</a>
+    <a [href]="" class="btn btn-default btn-sm btn-block btn-with-icon" (click)="addExtendItem()">
+      <i class="ion-md-add"></i>
+      <span>增加扩展</span>
+    </a>
     <span class="help-block sub-little-text">可以为当前标签扩展自定义扩展属性</span>
   </div>
   <hr>
   <div class="row">
     <div class="col-sm-12">
       <button type="submit" 
-          class="btn btn-success" 
+          class="btn btn-success btn-with-icon" 
           [disabled]="!editForm.valid || submitState.ing">
+        <i class="ion-md-done-all"></i>
         <span *ngIf="submitState.ing">分类{{ category ? '修改' : '添加' }}中</span>
         <span *ngIf="!submitState.ing">{{ category ? '修改' : '添加' }}分类目录</span>
       </button>
-      <span>&nbsp;</span>
-      <button class="btn btn-default" (click)="resetForm()">重置</button>
+      <span>&nbsp;&nbsp;</span>
+      <button class="btn btn-default btn-with-icon" (click)="resetForm()">
+        <i class="ion-md-refresh"></i>
+        <span>重置</span>
+      </button>
     </div>
   </div>
 </form>

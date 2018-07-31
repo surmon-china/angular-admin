@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ArticleEditService } from './edit.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { ApiService } from '@app/api.service';
 
 @Component({
   selector: 'article-edit',
@@ -8,6 +9,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class ArticleEdit {
+
+  // _apiUrl
+  private _apiUrl = '/article';
 
   // 文章内容
   public article_id: any = null;
@@ -17,6 +21,7 @@ export class ArticleEdit {
     description: '',
     content: '',
     thumb: '',
+    origin: '0',
     state: '1',
     public: '1',
     password: '',
@@ -25,16 +30,29 @@ export class ArticleEdit {
     extends: []
   }
 
-  constructor(private _route: ActivatedRoute,
-              private _articleEditService: ArticleEditService) {}
+  constructor(private _router: Router,
+              private _route: ActivatedRoute,
+              private _apiService: ApiService) {}
 
   // 提交文章
   public submitArticle(event) {
+    let isSubmitNewPost = false;
     const { title, content } = this.article;
-    if(title && content) {
-      this._articleEditService[(<any>this.article)._id ? 'putArticle' : 'addArticle'](this.article)
+    if (title && content) {
+      ((() => {
+        if ((<any>this.article)._id) {
+          isSubmitNewPost = false;
+          return this._apiService.put(`${this._apiUrl}/${(<any>this.article)._id}`, this.article);
+        } else {
+          isSubmitNewPost = true;
+          return this._apiService.post(this._apiUrl, this.article);
+        }
+      })())
       .then(article => {
         this.article = article.result;
+        if (isSubmitNewPost) {
+          this._router.navigate([`/article/edit/${article.result._id}`]);
+        }
       })
       .catch(error => {})
     }
@@ -42,7 +60,7 @@ export class ArticleEdit {
 
   // 获取文章信息
   public getArticle(article_id: string) {
-    this._articleEditService.getArticle(article_id)
+    this._apiService.get(`${this._apiUrl}/${article_id}`)
     .then(article => {
       this.article = article.result;
     })
@@ -54,7 +72,9 @@ export class ArticleEdit {
     // 如果是修改，则请求文章数据
     this._route.params.subscribe(({ article_id }) => {
       this.article_id = article_id;
-      if(article_id) this.getArticle(article_id);
+      if(article_id) {
+        this.getArticle(article_id);
+      }
     });
   }
 }

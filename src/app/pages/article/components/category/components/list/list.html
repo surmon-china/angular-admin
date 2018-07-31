@@ -2,14 +2,14 @@
   <div class="pull-left">
     <div class="btn-group" role="group" aria-label="Basic example">
       <button type="button" class="btn btn-default btn-with-icon" (click)="refreshList.emit()">
-        <i class="ion-refresh"></i>
+        <i class="ion-md-refresh"></i>
         <span>刷新</span>
       </button>
       <div class="btn-group" dropdown [isDisabled]="!selectedCategories.length">
         <button type="button"
                 class="btn btn-default  btn-with-icon dropdown-toggle"
                 dropdownToggle>
-          <i class="ion-ios-list"></i>
+          <i class="ion-md-list"></i>
           <span>批量操作</span>
         </button>
         <ul class="dropdown-menu" *dropdownMenu>
@@ -60,7 +60,7 @@
             </td>
             <td>
               <strong *ngIf="category.unrepaired" class="text-warning">
-                <i class="ion-alert"></i>
+                <i class="ion-md-alert"></i>
                 <span>&nbsp;</span>
               </strong>
               <strong *ngIf="category.level">└</strong>

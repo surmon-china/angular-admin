@@ -6,7 +6,6 @@ import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 
 import { routing }             from './comment.routing';
 
-import { CommentService }      from './comment.service';
 
 import { Comment }             from './comment.component';
 import { CommentList }         from './components/list';
@@ -23,9 +22,7 @@ import { CommentDetail }       from './components/detail';
     ModalModule.forRoot(),
     routing
   ],
-  providers: [
-    CommentService
-  ],
+  providers: [],
   declarations: [
     Comment,
     CommentList,

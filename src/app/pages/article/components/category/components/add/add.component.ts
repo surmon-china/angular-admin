@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { EmailValidator, EqualPasswordsValidator } from '../../../../../../theme/validators';
+import { EmailValidator, EqualPasswordsValidator } from 'app/validators';
 
 @Component({
   selector: 'article-category-add',

@@ -1,6 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs';
 
 export type InternalStateType = {
   [key: string]: any

@@ -1,6 +1,8 @@
 import { Component, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from './auth.service';
+
+import { ApiService } from '@app/api.service';
+import { Base64 } from 'js-base64';
 
 @Component({
   selector: 'auth',
@@ -10,14 +12,16 @@ import { AuthService } from './auth.service';
 })
 export class Auth {
 
-  public password:String;
+  private _apiUrl:string = '/auth';
+
+  public password:string;
   public editMode:Boolean = false;
-  public slogans = ['Done is better than perfect.', 'Code wins arguments.', 'Move fast and break things.'];
-  public slogan:String = this.slogans[Math.floor(Math.random()*3)];
+  public slogans = ['Done is better than perfect.', '远离颠倒梦想，究竟涅槃', 'དཀར་གསལ་ཟླ་བ་ཤར་བྱུང་།, ཤར་ཕྱོགས་རི་བོའི་རྩེ་ནས།'];
+  public slogan:string = this.slogans[Math.floor(Math.random() * 3)];
 
   constructor(public elem:ElementRef, 
               private _router: Router,
-              private _authService:AuthService) {}
+              private _apiService:ApiService) {}
 
   toEditMode(event:any) {
     this.editMode = !this.editMode;
@@ -35,9 +39,9 @@ export class Auth {
   }
 
   onSubmit() {
-    this._authService.getToken(this.password)
+    this._apiService.post(this._apiUrl, { password: Base64.encode(this.password) })
     .then(auth => {
-      if(auth.result.token) {
+      if (auth.result.token) {
         localStorage.setItem('id_token', auth.result.token);
         this._router.navigate(['/dashboard']);
       }
@@ -46,7 +50,9 @@ export class Auth {
   }
 
   ngAfterViewChecked() {
-    const input = this.elem.nativeElement.children[0].children[0].children[0].children[0];
-    input.focus();
+    const inputs = this.elem.nativeElement.getElementsByTagName('input');
+    if (inputs.length && inputs[0].focus) {
+      inputs[0].focus();
+    }
   }
 }

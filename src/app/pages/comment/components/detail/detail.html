@@ -191,7 +191,7 @@
               </div>
               <div class="extend-del">
                 <button class="btn btn-warning" (click)="delExtendItem(i)">
-                  <i class="ion-trash-b"></i>
+                  <i class="ion-md-trash"></i>
                 </button>
               </div>
             </div>
@@ -205,9 +205,9 @@
           <div class="col-sm-11">
             <button type="submit" class="btn btn-success"
                     [disabled]="!editForm.valid">提交更改</button>
-            <span>&nbsp;</span>
+            <span>&nbsp;&nbsp;</span>
             <a [href]="" class="btn btn-info" (click)="getCommentDetail()">刷新评论</a>
-            <span>&nbsp;</span>
+            <span>&nbsp;&nbsp;</span>
             <a class="btn btn-default"
                [routerLink]="['/comment/post/', comment.post_id]">回到宿主页面评论列表</a>
           </div>

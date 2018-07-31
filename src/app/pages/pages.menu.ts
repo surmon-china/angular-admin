@@ -7,7 +7,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '仪表盘',
-            icon: 'ion-android-home',
+            icon: 'ion-md-home',
             selected: false,
             expanded: false,
             order: 0
@@ -19,7 +19,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '公告管理',
-            icon: 'ion-radio-waves',
+            icon: 'ion-md-sunny',
             selected: false,
             expanded: false,
             order: 1,
@@ -31,7 +31,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '文章管理',
-            icon: 'ion-pin',
+            icon: 'ion-md-create',
             order: 2,
           }
         },
@@ -40,7 +40,7 @@ export const PAGES_MENU = [
             path: 'list',
             data: {
               menu: {
-                icon: 'ion-ios-list-outline',
+                icon: 'ion-md-list',
                 title: '所有文章',
               }
             }
@@ -49,7 +49,7 @@ export const PAGES_MENU = [
             path: 'category',
             data: {
               menu: {
-                icon: 'ion-ios-folder',
+                icon: 'ion-md-folder',
                 title: '分类目录',
               }
             }
@@ -58,7 +58,7 @@ export const PAGES_MENU = [
             path: 'post',
             data: {
               menu: {
-                icon: 'ion-compose',
+                icon: 'ion-md-done-all',
                 title: '发布文章',
               }
             }
@@ -67,7 +67,7 @@ export const PAGES_MENU = [
             path: 'tag',
             data: {
               menu: {
-                icon: 'ion-pricetags',
+                icon: 'ion-md-pricetags',
                 title: '文章标签',
               }
             }
@@ -79,7 +79,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '评论管理',
-            icon: 'ion-chatbox-working',
+            icon: 'ion-md-text',
             order: 4
           }
         },
@@ -89,7 +89,7 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: '所有评论',
-                icon: 'ion-ios-list-outline'
+                icon: 'ion-md-list'
               }
             }
           },
@@ -98,7 +98,7 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: '留言评论',
-                icon: 'ion-ios-list-outline'
+                icon: 'ion-md-list'
               }
             }
           }
@@ -109,7 +109,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '全局设置',
-            icon: 'ion-gear-a',
+            icon: 'ion-md-settings',
             order: 10,
           }
         }
@@ -119,7 +119,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Aliyun管理',
-            icon: 'ion-social-tux',
+            icon: 'ion-logo-tux',
             selected: false,
             expanded: false,
             order: 9
@@ -132,7 +132,7 @@ export const PAGES_MENU = [
           menu: {
             title: 'Google Analytics',
             url: 'https://analytics.google.com',
-            icon: 'ion-ios-pie',
+            icon: 'ion-logo-google',
             order: 800,
             target: '_blank'
           }
@@ -144,7 +144,7 @@ export const PAGES_MENU = [
           menu: {
             title: 'Blog',
             url: 'https://surmon.me',
-            icon: 'ion-android-exit',
+            icon: 'ion-md-ribbon',
             order: 800,
             target: '_blank'
           }
@@ -156,7 +156,7 @@ export const PAGES_MENU = [
           menu: {
             title: 'Github',
             url: 'https://github.com/surmon-china',
-            icon: 'ion-social-github',
+            icon: 'ion-logo-github',
             target: '_blank'
           }
         }
@@ -166,7 +166,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Demo开发',
-            icon: 'ion-ios-more',
+            icon: 'ion-logo-angular',
             selected: false,
             expanded: false,
             order: 11,
@@ -179,7 +179,7 @@ export const PAGES_MENU = [
               menu: {
                 title: '官方文档',
                 url: 'https://akveo.github.io/ng2-admin/',
-                icon: 'ion-android-exit',
+                icon: 'ion-md-school',
                 order: 800,
                 target: '_blank'
               }
@@ -190,7 +190,7 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: 'UI 展示',
-                icon: 'ion-android-laptop',
+                icon: 'ion-md-color-fill',
                 selected: false,
                 expanded: false,
                 order: 300,
@@ -244,7 +244,7 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: '表单组件',
-                icon: 'ion-compose',
+                icon: 'ion-md-clipboard',
                 selected: false,
                 expanded: false,
                 order: 400,
@@ -274,7 +274,7 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: '表格',
-                icon: 'ion-grid',
+                icon: 'ion-md-grid',
                 selected: false,
                 expanded: false,
                 order: 500,
@@ -286,14 +286,6 @@ export const PAGES_MENU = [
                 data: {
                   menu: {
                     title: '基本表格',
-                  }
-                }
-              },
-              {
-                path: 'smarttables',
-                data: {
-                  menu: {
-                    title: '智能表格',
                   }
                 }
               }

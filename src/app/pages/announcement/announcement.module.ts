@@ -7,7 +7,6 @@ import { NgaModule }     from 'app/nga.module';
 import { routing }       from './announcement.routing';
 
 import { Announcement }  from './announcement.component';
-import { AnnouncementService } from './announcement.service';
 
 @NgModule({
   imports: [
@@ -20,9 +19,7 @@ import { AnnouncementService } from './announcement.service';
     NgaModule,
     routing
   ],
-  providers: [
-    AnnouncementService
-  ],
+  providers: [],
   declarations: [
     Announcement
   ]

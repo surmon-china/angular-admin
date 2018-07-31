@@ -44,6 +44,7 @@
   color: $content-text;
   @include placeholderStyle($content-text, 0.4);
   padding: 0rem 0.75rem;
+  height: auto;
   min-height: 2.3rem;
   line-height: 2.3rem;
   border: 1px solid $input-border;
@@ -220,7 +221,7 @@ label.custom-radio {
     &:checked {
       & + span {
         &:before {
-          content: "\f383";
+          content: "\f2bc";
           font-weight: $font-light;
         }
       }
@@ -276,7 +277,7 @@ label.custom-radio {
     &:checked {
       & + span {
         &:before {
-          content: "\f111";
+          content: "\f2bc";
         }
       }
     }
@@ -639,7 +640,7 @@ label.custom-checkbox {
     &:checked {
       & + span {
         &:before {
-          content: "\f383";
+          content: "\f2bc";
           font-weight: $font-light;
         }
       }
