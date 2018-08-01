@@ -28,27 +28,27 @@ If you only need to demonstrate the project locally, you need to comment on the 
 
 **标签管理**
 
-![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/tag-list.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/tag-list.jpg)
 
 **发布文章**
 
-![发布文章](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/submit-article.png)
+![发布文章](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/submit-article.jpg)
 
 **全局设置**
 
-![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/setting.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/setting.jpg)
 
 **文章列表**
 
-![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/article-list.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/article-list.jpg)
 
 **评论管理**
 
-![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/comment.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/comment.jpg)
 
 **markdown编辑器**
 
-![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/markdown.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/markdown.jpg)
 
 # 程序结构（踩坑记录）
 
