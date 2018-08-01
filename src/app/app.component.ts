@@ -62,7 +62,7 @@ export class App {
   // 初始化时拉取全局设置
   public initAppOptions():void {
     this.optionIsInited = true;
-    this._apiService.get('/option')
+    this._apiService.get('/auth')
     .then(({ result: adminInfo }) => {
       if(Object.keys(adminInfo).length) {
         this._appState.set('adminInfo', adminInfo);
