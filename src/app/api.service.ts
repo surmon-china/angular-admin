@@ -33,10 +33,13 @@ export class ApiService {
   }
 
   // 失败处理
-  private handleError = (error:any):Promise<any> => {
-    const errmsg = [500, 504].includes(error.status) ? error._body : JSON.parse(error._body).message;
-    this._notificationsService.error('请求失败', errmsg, { timeOut: 1000 });
-    return Promise.reject(error);
+  private handleError = (res:any):Promise<any> => {
+    const isNotOk = [500, 504].includes(res.status);
+    const errmsg =  res.error && res.error.message;
+    if (isNotOk && errmsg) {
+      this._notificationsService.error('请求失败', errmsg, { timeOut: 1000 });
+    }
+    return Promise.reject(res);
   }
 
   constructor(private _http: HttpClient,
