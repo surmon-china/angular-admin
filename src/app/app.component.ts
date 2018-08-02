@@ -53,7 +53,14 @@ export class App {
     // 路由拦截器
     this._router.events.subscribe(event => {
       const url = this._router.url;
-      if(!Object.is(url, '/') && !Object.is(url, '/auth')) {
+      // 如果是发生登录事件，则拉取初始化信息
+      if (Object.is(url, '/dashboard') &&
+          (<any>event).navigationTrigger &&
+          Object.is((<any>event).navigationTrigger, 'imperative')) {
+        this.initAppOptions();
+      }
+      // 如果发生非首页或登陆页的跳转事件，则执行 Token 全面检查
+      if (!Object.is(url, '/') && !Object.is(url, '/auth')) {
         if (!checkTokenIsOk()) {
           this.remiveTokenToLogin();
         }
@@ -72,18 +79,20 @@ export class App {
 
   // 初始化时拉取全局设置
   public initAppOptions():void {
-    this.optionIsInited = true;
-    this._apiService.get('/auth')
-    .then(({ result: adminInfo }) => {
-      if(Object.keys(adminInfo).length) {
-        this._appState.set('adminInfo', adminInfo);
-      }
-    })
-    .catch(error => {
-      if(Object.is(error.status, 403)) {
-        this._router.navigate(['/auth']);
-      }
-    });
+    if (!this.optionIsInited) {
+      this.optionIsInited = true;
+      this._apiService.get('/auth')
+      .then(({ result: adminInfo }) => {
+        if(Object.keys(adminInfo).length) {
+          this._appState.set('adminInfo', adminInfo);
+        }
+      })
+      .catch(error => {
+        if(Object.is(error.status, 403)) {
+          this._router.navigate(['/auth']);
+        }
+      });
+    }
   }
 
   // 初始化根据服务端验证 Token 有效性
@@ -93,9 +102,7 @@ export class App {
       console.log('远程 Token 验证结果：', tokenIsValidity);
       // 通过验证，则初始化 APP
       if (tokenIsValidity) {
-        if (!this.optionIsInited) {
-          this.initAppOptions();
-        }
+        this.initAppOptions();
       } else {
         // 否则依然去登陆
         this.remiveTokenToLogin();
