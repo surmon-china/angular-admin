@@ -54,9 +54,20 @@ export class App {
     this._router.events.subscribe(event => {
       const url = this._router.url;
       if(!Object.is(url, '/') && !Object.is(url, '/auth')) {
-        this.routeCheck();
+        if (!checkTokenIsOk()) {
+          this.remiveTokenToLogin();
+        }
       }
     });
+  }
+
+  // 删除 Token 并跳转到登陆页
+  public remiveTokenToLogin():void {
+    localStorage.removeItem('id_token');
+    setTimeout(() => {
+      this._notificationsService.error('误闯禁地', '...', { timeOut: 1000 });
+      this._router.navigate(['/auth']);
+    }, 0);
   }
 
   // 初始化时拉取全局设置
@@ -72,6 +83,27 @@ export class App {
       if(Object.is(error.status, 403)) {
         this._router.navigate(['/auth']);
       }
+    });
+  }
+
+  // 初始化根据服务端验证 Token 有效性
+  public checkTokenValidity():void  {
+    this._apiService.patch('/auth')
+    .then(({ result: tokenIsValidity }) => {
+      console.log('远程 Token 验证结果：', tokenIsValidity);
+      // 通过验证，则初始化 APP
+      if (tokenIsValidity) {
+        if (!this.optionIsInited) {
+          this.initAppOptions();
+        }
+      } else {
+        // 否则依然去登陆
+        this.remiveTokenToLogin();
+      }
+    })
+    .catch(error => {
+      console.warn('Token 被验证是无效的，跳登陆页', error);
+      this.remiveTokenToLogin();
     });
   }
 
@@ -102,24 +134,15 @@ export class App {
     const imageLoaer = this._imageLoader.load(layoutPaths.images.root + 'background.jpg');
     BaThemePreloader.registerLoader(imageLoaer);
   }
-
-  // 路由检查
-  routeCheck() {
-    // 如果 token 不存在 或 存在不合法，则拦截路由
-    if(!checkTokenIsOk()) {
-      localStorage.removeItem('id_token');
-      setTimeout(() => {
-        this._notificationsService.error('误闯禁地', '...', { timeOut: 1000 });
-        this._router.navigate(['/auth']);
-      }, 0);
-    } else if (!this.optionIsInited) {
-      this.initAppOptions();
-      // 因为检查 token 无效后没有删除 Token，所以如果这里跳首页，会导致无限循环
-    }
-  }
   
   // 初始化时重置路由
   ngOnInit() {
-    this.routeCheck();
+    // 程序初始化时检查本地 Token
+    if (!checkTokenIsOk()) {
+      this.remiveTokenToLogin();
+    // 如果本地检查通过，则通过服务端检查有效性
+    } else {
+      this.checkTokenValidity();
+    }
   }
 }
