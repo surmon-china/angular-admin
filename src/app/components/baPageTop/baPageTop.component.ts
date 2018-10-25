@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { GlobalState } from 'app/global.state';
 import { AppState } from 'app/app.service';
+import { TOKEN } from '@app/constants/auth';
 
 @Component({
   selector: 'ba-page-top',
@@ -26,7 +27,7 @@ export class BaPageTop {
 
   public logout() {
     console.log('退出系统');
-    localStorage.removeItem('id_token');
+    localStorage.removeItem(TOKEN);
     this._router.navigate(['/auth']);
   }
 

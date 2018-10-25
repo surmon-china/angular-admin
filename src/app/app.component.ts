@@ -1,3 +1,9 @@
+/**
+ * @file App 顶级入口组件
+ * @module app/api-component
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
@@ -11,15 +17,18 @@ import { BaThemeConfig } from './theme/theme.config';
 import { AppState } from './app.service';
 import { checkTokenIsOk } from './token.service';
 import { ApiService } from '@app/api.service';
+import { TOKEN } from '@app/constants/auth';
 
-/*
- * 顶级入口组件
- */
- 
+type MenuCollapsedState = boolean
+
 @Component({
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('normalize.css'), require('./theme/initial.scss'), require('./app.scss')],
+  styles: [
+    require('normalize.css'),
+    require('./theme/initial.scss'),
+    require('./app.scss')
+  ],
   template: `
     <main [ngClass]="{'menu-collapsed': isMenuCollapsed}" baThemeRun>
       <simple-notifications [options]="notificationsOptions"></simple-notifications>
@@ -31,8 +40,8 @@ import { ApiService } from '@app/api.service';
 })
 export class App {
 
-  isMenuCollapsed: boolean = false;
-  optionIsInited: boolean = false;
+  isMenuCollapsed: MenuCollapsedState = false;
+  isOptionInited: boolean = false;
 
   constructor(private _state: GlobalState,
               private _appState: AppState,
@@ -44,19 +53,22 @@ export class App {
               private viewContainerRef: ViewContainerRef,
               private _notificationsService: NotificationsService) {
 
+    // 初始化加载图片
     this._loadImages();
 
-    this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
+    // 订阅菜单折叠事件
+    this._state.subscribe('menu.isCollapsed', (isCollapsed: MenuCollapsedState): void => {
       this.isMenuCollapsed = isCollapsed;
     });
 
     // 路由拦截器
     this._router.events.subscribe(event => {
-      const url = this._router.url;
+      const url: string = this._router.url;
+      
       // 如果是发生登录事件，则拉取初始化信息
-      if (Object.is(url, '/dashboard') &&
+      if (url === '/dashboard' &&
           (<any>event).navigationTrigger &&
-          Object.is((<any>event).navigationTrigger, 'imperative')) {
+          (<any>event).navigationTrigger === 'imperative') {
         this.initAppOptions();
       }
       // 如果发生非首页或登陆页的跳转事件，则执行 Token 全面检查
@@ -70,7 +82,7 @@ export class App {
 
   // 删除 Token 并跳转到登陆页
   public remiveTokenToLogin():void {
-    localStorage.removeItem('id_token');
+    localStorage.removeItem(TOKEN);
     setTimeout(() => {
       this._notificationsService.error('误闯禁地', '...', { timeOut: 1000 });
       this._router.navigate(['/auth']);
@@ -79,8 +91,8 @@ export class App {
 
   // 初始化时拉取全局设置
   public initAppOptions():void {
-    if (!this.optionIsInited) {
-      this.optionIsInited = true;
+    if (!this.isOptionInited) {
+      this.isOptionInited = true;
       this._apiService.get('/auth')
       .then(({ result: adminInfo }) => {
         if(Object.keys(adminInfo).length) {

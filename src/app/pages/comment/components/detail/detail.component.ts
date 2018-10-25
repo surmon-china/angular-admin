@@ -4,7 +4,6 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 
 import { ApiService } from '@app/api.service';
 import { UAParse, OSParse } from '../../comment.ua';
-import { API_ROOT } from '@config';
 
 @Component({
   selector: 'comment-edit',

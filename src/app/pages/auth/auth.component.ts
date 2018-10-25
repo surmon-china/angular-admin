@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { ApiService } from '@app/api.service';
 import { Base64 } from 'js-base64';
+import { TOKEN } from '@app/constants/auth';
 
 @Component({
   selector: 'auth',
@@ -42,7 +43,7 @@ export class Auth {
     this._apiService.post(this._apiUrl, { password: Base64.encode(this.password) })
     .then(auth => {
       if (auth.result.token) {
-        localStorage.setItem('id_token', auth.result.token);
+        localStorage.setItem(TOKEN, auth.result.token);
         this._router.navigate(['/dashboard']);
       }
     })

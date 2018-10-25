@@ -1,113 +1,153 @@
+/**
+ * @file API service 模块
+ * @module app/api-service
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { NotificationsService } from 'angular2-notifications';
 import { checkTokenIsOk } from './token.service';
-import { API_ROOT } from '@config';
+import { api } from '@/environments/environment';
+import { TOKEN } from '@app/constants/auth';
 
 import 'rxjs/add/operator/toPromise';
+
+type RequestUrlPath = string
+type RequestData = object
+
+interface IReponeseParams {
+  [key: string]: string
+};
+
+interface IReponese {
+  status: number
+  error?: any
+};
+
+interface IReponeseData {
+  code: 1 | 0
+  debug?: any
+  message: string,
+  result?: object | any[]
+};
 
 @Injectable()
 export class ApiService {
 
-  private _token:String = '';
-  private _headers:HttpHeaders = new HttpHeaders({ 'Content-Type':'application/json; charset=utf-8' });
+  private _token: string = '';
+  private _headers: HttpHeaders = new HttpHeaders({ 'Content-Type':'application/json; charset=utf-8' });
 
   // 成功处理
-  private handleResponse = (data:any):Promise<any> => {
-    if (data.code) {
-      this._notificationsService.success(
-        data.message,
-        '数据请求成功',
-        { timeOut: 1000 }
-      );
-      return Promise.resolve(data);
-    } else {
-      this._notificationsService.error(
-        data.message,
-        data.debug ? (data.debug.message || data.message) : data.message,
-        { timeOut: 1000 }
-      );
-      return Promise.reject(data);
-    }
+  private handleResponseSuccess = (response: IReponeseData): Promise<any> => {
+    return new Promise((resolve, reject) => {
+      if (response.code) {
+        this._notificationsService.success(
+          response.message,
+          '数据请求成功',
+          { timeOut: 1000 }
+        );
+        return resolve(response);
+      } else {
+        this._notificationsService.error(
+          response.message,
+          response.debug ? (response.debug.message || response.message) : response.message,
+          { timeOut: 1000 }
+        );
+        return reject(response);
+      }
+    });
   }
 
   // 失败处理
-  private handleError = (res:any):Promise<any> => {
-    const isNotOk = [500, 504].includes(res.status);
-    const errmsg =  res.error && res.error.message;
-    if (isNotOk && errmsg) {
-      this._notificationsService.error('请求失败', errmsg, { timeOut: 1000 });
-    }
-    return Promise.reject(res);
+  private handleReponseError = (response: IReponese): Promise<any> => {
+    return new Promise((_, reject) => {
+      const isNotOk = [500, 504].includes(response.status);
+      const errMsg =  response.error && response.error.message;
+      if (isNotOk && errMsg) {
+        this._notificationsService.error('请求失败', errMsg, { timeOut: 1000 });
+      }
+      return reject(response);
+    });
   }
 
+  // 构造函数
   constructor(private _http: HttpClient,
               private _notificationsService: NotificationsService) {}
 
   // 请求前检查条件
-  checkRequestCondition(url?) {
+  checkRequestCondition(url?: RequestUrlPath): void {
 
     // 检查是否是登陆，用于创建一个合理的头；登陆 = /auth + POST
-    if (url && url === '/auth') {
-      this._headers = this._headers.delete('Authorization');
-    } else {
+    const isToAuthPage = url && url === '/auth';
 
-      // 检查 token
-      if (checkTokenIsOk()) {
-        this._token = localStorage.getItem('id_token');
-        this._headers = this._headers.set('Authorization', `Bearer ${this._token}`);
-      } else {
-        this._notificationsService.error('Token 无效', 'Token 不存在或是无效的', { timeOut: 1000 });
-      }
+    // 跳转登陆
+    if (isToAuthPage) {
+      this._headers = this._headers.delete('Authorization');
+      return;
+    }
+
+    // 检查 token
+    if (checkTokenIsOk()) {
+      this._token = localStorage.getItem(TOKEN);
+      this._headers = this._headers.set('Authorization', `Bearer ${this._token}`);
+    } else {
+      this._notificationsService.error('Token 无效', 'Token 不存在或是无效的', { timeOut: 1000 });
     }
   }
 
-  get(url, getParams?) {
+  // 构造请求 Url
+  buildRequestUrl(url: RequestUrlPath): RequestUrlPath {
+    return `${api.API_ROOT}${url}`
+  }
+
+  // 请求包装器
+  handleRequest(request): Promise<any> {
+    return request
+      .toPromise()
+      .then(this.handleResponseSuccess)
+      .catch(this.handleReponseError);
+  }
+
+  get(url: RequestUrlPath, getParams?: IReponeseParams): Promise<any> {
     let params: HttpParams = new HttpParams();
     if (getParams) {
       Object.keys(getParams).forEach(k => {
-        params = params.set(k, getParams[k]);
+        params = params.set(k, getParams[k] as string);
       });
     }
     this.checkRequestCondition();
-    return this._http
-      .get(`${API_ROOT}${url}`, { params, headers: this._headers })
-      .toPromise()
-      .then(this.handleResponse)
-      .catch(this.handleError);
+    const requestUrl = this.buildRequestUrl(url);
+    const request = this._http.get(requestUrl, { params, headers: this._headers });
+    return this.handleRequest(request);
   }
 
-  post(url, data = {}) {
+  post(url: RequestUrlPath, data?: RequestData): Promise<any> {
     this.checkRequestCondition(url);
-    return this._http.post(`${API_ROOT}${url}`, data, { headers: this._headers })
-      .toPromise()
-      .then(this.handleResponse)
-      .catch(this.handleError);
+    const requestUrl = this.buildRequestUrl(url);
+    const request = this._http.post(requestUrl, data, { headers: this._headers });
+    return this.handleRequest(request);
   }
 
-  put(url, data = {}) {
+  put(url: RequestUrlPath, data?: RequestData): Promise<any> {
     this.checkRequestCondition();
-    return this._http.put(`${API_ROOT}${url}`, data, { headers: this._headers })
-      .toPromise()
-      .then(this.handleResponse)
-      .catch(this.handleError);
+    const requestUrl = this.buildRequestUrl(url);
+    const request = this._http.put(requestUrl, data, { headers: this._headers });
+    return this.handleRequest(request);
   }
 
-  patch(url, data = {}) {
+  patch(url: RequestUrlPath, data?: RequestData): Promise<any> {
     this.checkRequestCondition();
-    return this._http.patch(`${API_ROOT}${url}`, data, { headers: this._headers })
-      .toPromise()
-      .then(this.handleResponse)
-      .catch(this.handleError);
+    const requestUrl = this.buildRequestUrl(url);
+    const request = this._http.patch(requestUrl, data, { headers: this._headers });
+    return this.handleRequest(request);
   }
 
-  delete(url, data = {}) {
+  delete(url: RequestUrlPath, data?: RequestData): Promise<any> {
     this.checkRequestCondition();
-    return this._http
-      .request('delete', `${API_ROOT}${url}`, { body: data, headers: this._headers })
-      .toPromise()
-      .then(this.handleResponse)
-      .catch(this.handleError);
+    const requestUrl = this.buildRequestUrl(url);
+    const request = this._http.request('delete', requestUrl, { body: data, headers: this._headers });
+    return this.handleRequest(request);
   }
 }

@@ -1,6 +1,13 @@
+/**
+ * @file App service 模块
+ * @module app/app-service
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
+// 普通对象模型
 export type InternalStateType = {
   [key: string]: any
 };
@@ -8,6 +15,7 @@ export type InternalStateType = {
 @Injectable()
 export class AppState {
 
+  // 状态机
   private stateChange = new Subject();
   state$ = this.stateChange.asObservable();
 
@@ -44,7 +52,6 @@ export class AppState {
   }
 
   private _clone(object: InternalStateType) {
-    // simple object clone
     return JSON.parse(JSON.stringify(object));
   }
 }

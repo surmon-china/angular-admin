@@ -1,3 +1,9 @@
+/**
+ * @file App module 模块
+ * @module app/app-module
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { isDevMode, enableProdMode } from '@angular/core';

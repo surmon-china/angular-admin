@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { ApiService } from '@app/api.service';
 
 import { NotificationsService } from 'angular2-notifications';
-import { API_ROOT, STATIC_URL } from '@config';
+import { api } from '@/environments/environment';
 
 import * as qiniu from 'qiniu-js';
 import 'rxjs/add/operator/toPromise';
@@ -137,7 +137,7 @@ export class BaPictureUploader implements ControlValueAccessor {
         },
         complete: res => {
           console.log('上传完成', res);
-          const picture_url = `${STATIC_URL}/${res.key}`;
+          const picture_url = `${api.STATIC_URL}/${res.key}`;
           this.uploadInProgress = false;
           this.onUploadCompleted.emit(picture_url);
           this.changePictureFromURL(picture_url);
