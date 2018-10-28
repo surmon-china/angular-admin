@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'article-edit-extend',
+  selector: 'box-article-edit-extend',
   template: require('./extend.html'),
   styles: [require('./extend.scss')]
 })
 
-export class ArticleEditExtend {
+export class ArticleEditExtendComponent {
 
   @Input() extends;
   @Output() extendsChange: EventEmitter<any> = new EventEmitter();

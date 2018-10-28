@@ -1,0 +1,153 @@
+@import '~app/theme/sass/conf/conf';
+@import '~app/components/saMsgCenter/saMsgCenter';
+
+.page-top {
+  background-color: $sidebar;
+  position: fixed;
+  z-index: 999;
+  height: $top-height;
+  width: 100%;
+  min-width: $resMin;
+  padding: 0 20px 0 0;
+  border-bottom: 3px solid $topbar-border;
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+}
+
+.blur {
+  .page-top.scrolled {
+    background-color: rgba(black, 0.85)
+  }
+}
+
+a.al-logo {
+  color: $topbar-text;
+  display: block;
+  font-size: 20px;
+  // font-family: $font-family;
+  white-space: nowrap;
+  float: left;
+  outline: none !important;
+  line-height: $top-height;
+  width: $sidebar-width;
+  text-align: center;
+  font-weight: bolder;
+
+  span {
+    margin-right: 2px;
+    color: $primary;
+  }
+}
+
+.user-profile {
+  float: right;
+  // min-width: 230px;
+  // margin-top: 10px;
+}
+
+.al-user-profile {
+  float: right;
+  margin-right: 12px;
+  transition: all .15s ease-in-out;
+  padding: 0;
+  height: 45px;
+  border: 0;
+  opacity: 1;
+  position: relative;
+  a {
+    display: block;
+    // height: 45px;
+
+    &.profile-toggle-link {
+      height: 45px;
+    }
+  }
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-top: 6px;
+  }
+}
+
+a.refresh-data {
+  color: $sidebar-text;
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: $font-normal;
+  float: right;
+  margin-top: 13px;
+  margin-right: 26px;
+
+  &:hover {
+    color: $warning !important;
+  }
+}
+
+a.collapse-menu-link {
+  font-size: 31px;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  line-height: 43px;
+  color: $topbar-text;
+  padding: 0;
+  float: left;
+  // margin: 0px 0 0 10px;
+  width: 40px;
+  text-align: center;
+
+  &:hover {
+    text-decoration: none;
+    color: $warning;
+  }
+}
+
+.al-skin-dropdown {
+  float: right;
+  margin-top: 14px;
+  margin-right: 26px;
+
+  .tpl-skin-panel {
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
+
+.icon-palette {
+  display: inline-block;
+  width: 14px;
+  height: 13px;
+  @include bg('theme/palette.png');
+  background-size: cover;
+}
+
+@media screen and (max-width: $resXS) {
+  .page-top {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: $resXXS) {
+  .user-profile{
+    min-width: 136px;
+  }
+  a.refresh-data {
+    margin-right: 10px;
+  }
+  a.collapse-menu-link {
+    margin-left: 10px;
+  }
+
+  .al-skin-dropdown {
+    display: none;
+  }
+}
+
+.profile-toggle-link{
+  cursor: pointer;
+}
+

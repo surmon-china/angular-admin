@@ -1,3 +1,9 @@
+/**
+ * @file 仪表盘页面网站统计组件数据服务
+ * @module app/page/dashboard/componennt/site-statistics-service
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Injectable } from '@angular/core';
 
 @Injectable()

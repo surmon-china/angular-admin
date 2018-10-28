@@ -1,9 +1,9 @@
-import { NgModule }      from '@angular/core';
-import { CommonModule }  from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule as AngularFormsModule } from '@angular/forms';
-import { NgaModule } from 'app/nga.module';
+import { SaModule } from '@/app/sa.module';
 
-import { routing }       from './forms.routing';
+import { routing } from './forms.routing';
 
 import { RatingModule } from 'ngx-bootstrap';
 import { Forms } from './forms.component';
@@ -20,14 +20,14 @@ import { SelectInputs } from './components/inputs/components/selectInputs';
 import { InlineForm } from './components/layouts/components/inlineForm';
 import { BlockForm } from './components/layouts/components/blockForm';
 import { HorizontalForm } from './components/layouts/components/horizontalForm';
-import { BasicForm } from './components/layouts/components/basicForm';
+import { BasicFormComponent } from './components/layouts/components/basicForm';
 import { WithoutLabelsForm } from './components/layouts/components/withoutLabelsForm';
 
 @NgModule({
   imports: [
     CommonModule,
     AngularFormsModule,
-    NgaModule,
+    SaModule,
     RatingModule.forRoot(),
     routing
   ],
@@ -44,7 +44,7 @@ import { WithoutLabelsForm } from './components/layouts/components/withoutLabels
     InlineForm,
     BlockForm,
     HorizontalForm,
-    BasicForm,
+    BasicFormComponent,
     WithoutLabelsForm
   ]
 })

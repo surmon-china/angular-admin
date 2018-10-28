@@ -1,7 +1,7 @@
 import { NgModule }            from '@angular/core';
 import { CommonModule }        from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgaModule }           from 'app/nga.module';
+import { SaModule }           from '@/app/sa.module';
 import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 
 import { routing }             from './comment.routing';
@@ -16,7 +16,7 @@ import { CommentDetail }       from './components/detail';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgaModule,
+    SaModule,
     PaginationModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),

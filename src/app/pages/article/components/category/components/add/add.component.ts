@@ -1,45 +1,46 @@
-import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
+/**
+ * @file 分类页面发布组件
+ * @module app/page/article/componennt/category/add
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { EmailValidator, EqualPasswordsValidator } from 'app/validators';
+
+import { mergeFormControlsToInstance } from '@app/pages/pages.utils';
 
 @Component({
-  selector: 'article-category-add',
+  selector: 'box-category-add',
   encapsulation: ViewEncapsulation.None,
   styles: [require('./add.scss')],
   template: require('./add.html')
 })
 
-export class ArticleCategoryAdd {
+export class CategoryAddComponent implements OnChanges {
 
   @Input() category;
   @Input() categories;
-  @Input() submitState:any;
-  @Output() categoryChange:EventEmitter<any> = new EventEmitter();
-  @Output() submitCategory:EventEmitter<any> = new EventEmitter();
-  @Output() submitStateChange:EventEmitter<any> = new EventEmitter();
+  @Input() submitState: any;
+  @Output() categoryChange: EventEmitter<any> = new EventEmitter();
+  @Output() submitCategory: EventEmitter<any> = new EventEmitter();
+  @Output() submitStateChange: EventEmitter<any> = new EventEmitter();
 
-  public editForm:FormGroup;
-  public name:AbstractControl;
-  public slug:AbstractControl;
-  public pid:AbstractControl;
-  public description:AbstractControl;
-  public extends:AbstractControl;
+  public editForm: FormGroup;
+  public name: AbstractControl;
+  public slug: AbstractControl;
+  public pid: AbstractControl;
+  public description: AbstractControl;
+  public extends: AbstractControl;
 
-  constructor(fb:FormBuilder) {
-
+  constructor(fb: FormBuilder) {
     this.editForm = fb.group({
-      'name': ['', Validators.compose([Validators.required])],
-      'slug': ['', Validators.compose([Validators.required])],
-      'pid': ['', Validators.compose([])],
-      'description': ['', Validators.compose([])],
-      'extends': [[{ name: 'icon', value: 'icon-category'}]]
+      name: ['', Validators.compose([Validators.required])],
+      slug: ['', Validators.compose([Validators.required])],
+      pid: ['', Validators.compose([])],
+      description: ['', Validators.compose([])],
+      extends: [[{ name: 'icon', value: 'icon-category'}]]
     });
-
-    this.name = this.editForm.controls['name'];
-    this.slug = this.editForm.controls['slug'];
-    this.pid = this.editForm.controls['pid'];
-    this.extends = this.editForm.controls['extends'];
-    this.description = this.editForm.controls['description'];
+    mergeFormControlsToInstance(this, this.editForm);
   }
 
   // 级别标记
@@ -56,7 +57,7 @@ export class ArticleCategoryAdd {
   }
 
   // 重置表单
-  public resetForm():void {
+  public resetForm(): void {
     this.editForm.reset({
       pid: '',
       name: '',
@@ -64,7 +65,7 @@ export class ArticleCategoryAdd {
       description: '',
       extends: [{ name: 'icon', value: 'icon-category'}]
     });
-    if(!!this.category) {
+    if (this.category) {
       this.category = null;
       this.categoryChange.emit(this.category);
     }
@@ -74,7 +75,7 @@ export class ArticleCategoryAdd {
   }
 
   // 提交
-  public onSubmit(category:Object):void {
+  public onSubmit(category: Object): void {
     if (this.editForm.valid) {
       return this.submitCategory.emit(category);
     }
@@ -83,8 +84,8 @@ export class ArticleCategoryAdd {
   ngOnChanges(changes) {
     const submitOk = !!changes.submitState && !changes.submitState.currentValue.ing && changes.submitState.currentValue.success;
     const category = !!changes.category && !!changes.category.currentValue;
-    if(submitOk) this.resetForm();
-    if(category) {
+    if (submitOk) { this.resetForm(); }
+    if (category) {
       changes.category.currentValue.pid = changes.category.currentValue.pid || '';
       this.editForm.reset(changes.category.currentValue);
     }

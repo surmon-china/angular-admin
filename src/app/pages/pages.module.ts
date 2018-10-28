@@ -1,14 +1,18 @@
-import { NgModule }      from '@angular/core';
-import { CommonModule }  from '@angular/common';
+/**
+ * @file 页面模块
+ * @module app/page
+ * @author Surmon <https://github.com/surmon-china>
+ */
 
-import { routing }       from './pages.routing';
-import { NgaModule } from '../nga.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { Pages } from './pages.component';
+import { routing } from './pages.routing';
+import { SaModule } from '../sa.module';
+import { PagesComponent } from './pages.component';
 
 @NgModule({
-  imports: [CommonModule, NgaModule, routing],
-  declarations: [Pages]
+  imports: [CommonModule, SaModule, routing],
+  declarations: [PagesComponent]
 })
-export class PagesModule {
-}
+export class PagesModule {}

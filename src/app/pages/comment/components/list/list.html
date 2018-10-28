@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-12 col-md-12">
-    <ba-card title="评论列表" baCardClass="with-scroll table-panel">
+    <sa-card title="评论列表" baCardClass="with-scroll table-panel">
       <div class="contnet-top-tools">
         <div class="pull-left">
           <div class="btn-group">
@@ -119,12 +119,12 @@
             <thead class="thead-inverse">
               <tr>
                 <th>
-                  <ba-checkbox [(ngModel)]="commentsSelectAll" (ngModelChange)="batchSelectChange($event)">
-                    <span ba-checkbox-label>
+                  <sa-checkbox [(ngModel)]="commentsSelectAll" (ngModelChange)="batchSelectChange($event)">
+                    <span sa-checkbox-label>
                       <span>&nbsp;</span>
                       <strong>ID</strong>
                     </span>
-                  </ba-checkbox>
+                  </sa-checkbox>
                 </th>
                 <th>PID2</th>
                 <th>POST</th>
@@ -150,12 +150,12 @@
               <ng-template [ngIf]="comments && comments.data.length">
                 <tr *ngFor="let comment of comments.data" class="comment-item">
                   <td class="batch-checkbox">
-                    <ba-checkbox [(ngModel)]="comment.selected" (ngModelChange)="itemSelectChange()">
-                      <span ba-checkbox-label>
+                    <sa-checkbox [(ngModel)]="comment.selected" (ngModelChange)="itemSelectChange()">
+                      <span sa-checkbox-label>
                         <span>&nbsp;</span>
                         <strong>{{ comment.id }}</strong>
                       </span>
-                    </ba-checkbox>
+                    </sa-checkbox>
                   </td>
                   <td>
                     <a *ngIf="!!comment.pid"
@@ -275,7 +275,7 @@
           </div>
         </div>
       </div>
-    </ba-card>
+    </sa-card>
     <!-- 删除确认弹窗 -->
     <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog">

@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ApiService } from '@app/api.service';
+import { SaHttpRequesterService } from '@app/services';
 
 @Component({
-  selector: 'article-edit',
+  selector: 'page-article-edit',
   template: require('./edit.html')
 })
 
-export class ArticleEdit {
+export class ArticleEditComponent {
 
-  // _apiUrl
-  private _apiUrl = '/article';
+  private _apiPath = '/article';
 
   // 文章内容
   public article_id: any = null;
@@ -28,11 +27,11 @@ export class ArticleEdit {
     tag: [],
     category: [],
     extends: []
-  }
+  };
 
   constructor(private _router: Router,
               private _route: ActivatedRoute,
-              private _apiService: ApiService) {}
+              private _httpService: SaHttpRequesterService) {}
 
   // 提交文章
   public submitArticle(event) {
@@ -42,10 +41,10 @@ export class ArticleEdit {
       ((() => {
         if ((<any>this.article)._id) {
           isSubmitNewPost = false;
-          return this._apiService.put(`${this._apiUrl}/${(<any>this.article)._id}`, this.article);
+          return this._httpService.put(`${this._apiPath}/${(<any>this.article)._id}`, this.article);
         } else {
           isSubmitNewPost = true;
-          return this._apiService.post(this._apiUrl, this.article);
+          return this._httpService.post(this._apiPath, this.article);
         }
       })())
       .then(article => {
@@ -54,17 +53,17 @@ export class ArticleEdit {
           this._router.navigate([`/article/edit/${article.result._id}`]);
         }
       })
-      .catch(error => {})
+      .catch(error => {});
     }
   }
 
   // 获取文章信息
   public getArticle(article_id: string) {
-    this._apiService.get(`${this._apiUrl}/${article_id}`)
+    this._httpService.get(`${this._apiPath}/${article_id}`)
     .then(article => {
       this.article = article.result;
     })
-    .catch(error => {})
+    .catch(error => {});
   }
 
   // 初始化
@@ -72,7 +71,7 @@ export class ArticleEdit {
     // 如果是修改，则请求文章数据
     this._route.params.subscribe(({ article_id }) => {
       this.article_id = article_id;
-      if(article_id) {
+      if (article_id) {
         this.getArticle(article_id);
       }
     });

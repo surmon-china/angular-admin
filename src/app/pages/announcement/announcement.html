@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
-    <ba-card title="添加公告">
+    <sa-card title="添加公告">
       <form class="announcement-form"
             [formGroup]="editForm" 
-            (ngSubmit)="submitAnnouncement(editForm.value)">
+            (ngSubmit)="submitEditForm(editForm.value)">
         <div class="form-group"
               [ngClass]="{ 
                 'has-error': (!state.valid && state.touched), 
@@ -27,11 +27,11 @@
           <label for="announcementContent">
             <h5>公告内容</h5>
           </label>
-          <markdown-editor class="form-control announcement-content" 
+          <sa-markdown-editor class="form-control announcement-content" 
                            title="文章内容"
                            [config]="{ lineWrapping: true }"
                            [formControl]="content">
-          </markdown-editor>
+          </sa-markdown-editor>
         </div>
         <hr>
         <div class="col-sm-12">
@@ -39,42 +39,42 @@
                   class="btn btn-success btn-with-icon"
                   [disabled]="!editForm.valid">
             <i class="ion-md-done-all"></i>
-            <span>{{ edit_announcement ? '修改' : '添加' }}公告</span>
+            <span>{{ activeAnnouncement ? '修改' : '添加' }}公告</span>
           </button>
           <span>&nbsp;&nbsp;</span>
-          <button class="btn btn-default btn-with-icon" (click)="resetForm()">
+          <button class="btn btn-default btn-with-icon" (click)="resetEditForm()">
             <i class="ion-md-refresh"></i>
             <span>重置</span>
           </button>
         </div>
       </form>
-    </ba-card>
+    </sa-card>
   </div>
   <div class="col-md-8 col-xs-12">
-    <ba-card title="全部公告" baCardClass="with-scroll">
+    <sa-card title="全部公告" baCardClass="with-scroll">
       <div class="clearfix">
         <div class="pull-left">
           <div class="btn-group">
             <button type="button"
                     class="btn btn-default active"
-                    [ngClass]="{ 'active': searchState == 'all'}"
+                    [ngClass]="{ 'active': publishState == 'all'}"
                     (click)="switchState('all')">
               <span>全部</span>
-              <span *ngIf="searchState == 'all'">&nbsp;({{ announcements.pagination.total }})</span>
+              <span *ngIf="publishState == 'all'">&nbsp;({{ currentListTotal }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
-                    [ngClass]="{ 'active': searchState == 1 }"
+                    [ngClass]="{ 'active': publishState == 1 }"
                     (click)="switchState(1)">
               <span>已发布</span>
-              <span *ngIf="searchState == 1">&nbsp;({{ announcements.pagination.total }})</span>
+              <span *ngIf="publishState == 1">&nbsp;({{ currentListTotal }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
-                    [ngClass]="{ 'active': searchState == 0 }"
+                    [ngClass]="{ 'active': publishState == 0 }"
                     (click)="switchState(0)">
               <span>草稿</span>
-              <span *ngIf="searchState == 0">&nbsp;({{ announcements.pagination.total }})</span>
+              <span *ngIf="publishState == 0">&nbsp;({{ currentListTotal }})</span>
             </button>
           </div>
           <span>&nbsp;&nbsp;</span>
@@ -100,7 +100,7 @@
               </button>
               <ul class="dropdown-menu" *dropdownMenu>
                 <li class="dropdown-item">
-                  <a [href]="" (click)="delAnnouncementsModal()">批量删除</a>
+                  <a [href]="" (click)="openBatchDelModal()">批量删除</a>
                 </li>
               </ul>
             </div>
@@ -108,16 +108,14 @@
         </div>
         <form class="pull-right form-inline navbar-form announcement-search-form" 
               [formGroup]="searchForm" 
-              (ngSubmit)="searchAnnouncements(searchForm.value)">
+              (ngSubmit)="submitSearchForm(searchForm.value)">
           <div class="input-group" style="margin: 0">
             <input type="text"
                    placeholder="公告内容"
                    [formControl]="keyword"
                    class="form-control with-default-addon">
             <span class="input-group-btn">
-              <button class="btn btn-default" 
-                      type="submit"
-                      [disabled]="!searchForm.valid">搜索</button>
+              <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
             </span>
           </div>
         </form>
@@ -128,12 +126,12 @@
             <thead class="thead-inverse">
               <tr>
                 <th class="batch-checkbox">
-                  <ba-checkbox [(ngModel)]="announcementsSelectAll" (ngModelChange)="batchSelectChange($event)">
-                    <span ba-checkbox-label>
+                  <sa-checkbox [(ngModel)]="announcementsSelectAll" (ngModelChange)="handleBatchSelectChange($event)">
+                    <span sa-checkbox-label>
                       <span>&nbsp;</span>
                       <strong>ID</strong>
                     </span>
-                  </ba-checkbox>
+                  </sa-checkbox>
                 </th>
                 <th width="50%">内容</th>
                 <th class="text-center">状态</th>
@@ -144,20 +142,20 @@
               <tr *ngIf="!announcements || !announcements.data.length">
                 <td colspan="7">
                   <p class="text-muted text-center announcement-err-msg">
-                    <span *ngIf="fetching.announcement">数据请求中...</span>
-                    <span *ngIf="!fetching.announcement">暂无数据</span>
+                    <span *ngIf="fetching.get">数据请求中...</span>
+                    <span *ngIf="!fetching.get">暂无数据</span>
                   <p>
                 </td>
               </tr>
               <ng-template [ngIf]="announcements && announcements.data.length">
                 <tr *ngFor="let announcement of announcements.data">
                   <td class="batch-checkbox">
-                    <ba-checkbox [(ngModel)]="announcement.selected" (ngModelChange)="itemSelectChange()">
-                      <span ba-checkbox-label>
+                    <sa-checkbox [(ngModel)]="announcement.selected" (ngModelChange)="handleItemSelectChange()">
+                      <span sa-checkbox-label>
                         <span>&nbsp;</span>
                         <strong>{{ announcement.id }}</strong>
                       </span>
-                    </ba-checkbox>
+                    </sa-checkbox>
                   </td>
                   <td>
                     <div class="content ql-editor" 
@@ -174,10 +172,10 @@
                       <div class="btn-group" role="group">
                         <button type="button"
                                 class="btn btn-sm btn-warning"
-                                (click)="putAnnouncement(announcement)">编辑公告</button>
+                                (click)="editAnnouncement(announcement)">编辑公告</button>
                         <button type="button"
                                 class="btn btn-sm btn-danger"
-                                (click)="delAnnouncementModal(announcement)">删除公告</button>
+                                (click)="openDelModal(announcement)">删除公告</button>
                       </div>
                     </div>
                   </td>
@@ -186,7 +184,7 @@
             </tbody>
           </table>
           <br>
-          <div class="text-center">
+          <div class="text-center" *ngIf="announcements.pagination">
             <pagination class="pagination-xs"
                         firstText="首页"
                         lastText="末页"
@@ -199,19 +197,19 @@
                         [maxSize]="7"
                         [boundaryLinks]="true"
                         [rotate]="false"
-                        (pageChanged)="pageChanged($event)">
+                        (pageChanged)="handlePageChanged($event)">
             </pagination>
           </div>
         </div>
       </div>
-    </ba-card>
+    </sa-card>
   </div>
   <!-- 删除确认弹窗 -->
   <div bsModal #delModal="bs-modal" class="modal fade" tabindex="1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button class="close" aria-label="Close" (click)="canceldDelAnnouncementModal()">
+          <button class="close" aria-label="Close" (click)="canceldDelModal()">
             <span aria-hidden="true">&times;</span>
           </button>
           <h4 class="modal-title">确认操作</h4>
@@ -221,13 +219,13 @@
             <span class="icon text-warning">
               <i class="ion-md-information-circle-outline"></i>
             </span>
-            <span>确定要删除{{ del_announcement ? '这条' : '选中' }}公告吗？</span>
+            <span>确定要删除{{ activeAnnouncement ? '这条' : '选中' }}公告吗？</span>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary confirm-btn" (click)="(del_announcement ? doDelAnnouncement() : doDelAnnouncements())">确认删除</button>
+          <button class="btn btn-primary confirm-btn" (click)="(activeAnnouncement ? doDelAnnouncement() : doDelAnnouncements())">确认删除</button>
           <span>&nbsp;&nbsp;</span>
-          <button class="btn btn-default confirm-btn" (click)="canceldDelAnnouncementModal()">取消</button>
+          <button class="btn btn-default confirm-btn" (click)="canceldDelModal()">取消</button>
         </div>
       </div>
     </div>

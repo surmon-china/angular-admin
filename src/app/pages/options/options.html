@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-6 col-xs-12">
-    <ba-card title="基本设置" baCardClass="with-scroll">
+    <sa-card title="基本设置" baCardClass="with-scroll">
       <div class="col-sm-12 col-xs-12">
         <form class="form-horizontal option-form"
               [formGroup]="optionForm" 
@@ -45,7 +45,7 @@
                      id="blogKeywords" 
                      placeholder="关键词"
                      [formControl]="keywords"
-                     (change)="keywordsChangeHandle($event)">
+                     (change)="handleKeywordsChange($event)">
             </div>
           </div>
           <div class="form-group row"
@@ -116,7 +116,7 @@
                         class="form-control blog-ping-sites"
                         placeholder="在发表新文章时，NodePress会自动通知站点更新服务。用换行分隔多个服务URL。"
                         [formControl]="seo_ping_sites"
-                        (change)="pingSitesChangeHandle($event)">
+                        (change)="handlePingSitesChange($event)">
               </textarea>
             </div>
           </div>
@@ -131,7 +131,7 @@
                         class="form-control blog-ping-sites"
                         placeholder="这些IP来源的评论将被拒绝，用换行分隔多个IP地址。"
                         [formControl]="blacklist_ips"
-                        (change)="commentBlacklistIpsChangeHandle($event)">
+                        (change)="handleCommentBlacklistIpsChange($event)">
               </textarea>
             </div>
           </div>
@@ -146,7 +146,7 @@
                         class="form-control blog-ping-sites"
                         placeholder="这些邮箱来源的评论将被拒绝，用换行分隔多个邮箱地址。"
                         [formControl]="blacklist_mails"
-                        (change)="commentBlacklistMailsChangeHandle($event)">
+                        (change)="handleCommentBlacklistMailsChange($event)">
               </textarea>
             </div>
           </div>
@@ -161,7 +161,7 @@
                         class="form-control blog-ping-sites"
                         placeholder="包含这些关键字的的评论将被拒绝，用换行分隔多个关键词。"
                         [formControl]="blacklist_keywords"
-                        (change)="commentBlacklistKeywordsChangeHandle($event)">
+                        (change)="handleCommentBlacklistKeywordsChange($event)">
               </textarea>
             </div>
           </div>
@@ -178,10 +178,10 @@
           </div>
         </form>
       </div>
-    </ba-card>
+    </sa-card>
   </div>
   <div class="col-md-6 col-xs-12">
-    <ba-card title="个人设置" baCardClass="with-scroll">
+    <sa-card title="个人设置" baCardClass="with-scroll">
       <div class="col-sm-12 col-xs-12">
         <form class="form-horizontal auth-form"
               [formGroup]="authForm" 
@@ -193,8 +193,8 @@
                 }">
             <label class="col-sm-2 form-control-label">个人头像</label>
             <div class="col-sm-10">
-              <ba-picture-uploader class="form-control auth-gravatar" [formControl]="gravatar">
-              </ba-picture-uploader>
+              <sa-picture-uploader class="form-control auth-gravatar" [formControl]="gravatar">
+              </sa-picture-uploader>
             </div>
           </div>
           <div class="form-group row"
@@ -237,6 +237,7 @@
                      class="form-control" 
                      id="userPassword" 
                      placeholder="输入旧密码"
+                     autocomplete="password"
                      [formControl]="password">
             </div>
           </div>
@@ -251,6 +252,7 @@
                      class="form-control" 
                      id="userNewPassword" 
                      placeholder="输入新密码"
+                     autocomplete="new_password"
                      [formControl]="new_password">
             </div>
           </div>
@@ -265,6 +267,7 @@
                      class="form-control" 
                      id="userRelNewPassword" 
                      placeholder="确认新密码"
+                     autocomplete="rel_new_password"
                      [formControl]="rel_new_password">
             </div>
           </div>
@@ -281,6 +284,6 @@
           </div>
         </form>
       </div>
-    </ba-card>
+    </sa-card>
   </div>
 </div>

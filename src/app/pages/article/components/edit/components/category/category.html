@@ -4,14 +4,14 @@
     <div title="{{ category.name }}" 
          class="category-item-checkbox" 
          *ngFor="let category of categories.data">
-      <ba-checkbox [(ngModel)]="category.checked" (ngModelChange)="itemSelectChange($event, category)">
-        <span ba-checkbox-label>
+      <sa-checkbox [(ngModel)]="category.checked" (ngModelChange)="itemSelectChange($event, category)">
+        <span sa-checkbox-label>
           <span>&nbsp;</span>
           <span *ngIf="category.level">└</span>
           <span *ngFor="let num of categoryLevelMark(category.level)">─</span>
           <span>{{ category.name }}</span>
         </span>
-      </ba-checkbox>
+      </sa-checkbox>
       <p></p>
     </div>
   </ng-template>

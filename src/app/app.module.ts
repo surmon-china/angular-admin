@@ -6,50 +6,40 @@
 
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { isDevMode, enableProdMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ApplicationRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { ApiService } from '@app/api.service';
-
-import { SimpleNotificationsModule } from 'angular2-notifications';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
-/*
- * Platform and Environment providers/directives/pipes
- */
-import { ENV_PROVIDERS } from './environment';
-import { routing } from './app.routing';
-
-// App is our top level component
-import { App } from './app.component';
-import { NgaModule } from './nga.module';
-import { PagesModule } from './pages/pages.module';
-import { GlobalState } from './global.state';
-import { AppState, InternalStateType } from './app.service';
+import { ENV_PROVIDERS } from '@app/environment';
+import { AppComponent } from '@app/app.component';
+import { SaModule } from '@app/sa.module';
+import { PagesModule } from '@app/pages/pages.module';
+import { GlobalState } from '@app/global.state';
+import { routing } from '@app/app.routing';
+import { AppState, IinternalState } from '@app/app.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
-  GlobalState,
-  ApiService
+  GlobalState
 ];
 
-type StoreType = {
-  state: InternalStateType,
-  restoreInputValues: () => void,
-  disposeOldHosts: () => void
-};
+interface IStore {
+  state: IinternalState;
+  restoreInputValues: () => void;
+  disposeOldHosts: () => void;
+}
 
-// app入口模块
+// App 入口模块
 @NgModule({
-  bootstrap: [App],
+  bootstrap: [AppComponent],
   declarations: [
-    App
+    AppComponent
   ],
-  imports: [ // import Angular's modules
+  imports: [
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
@@ -59,35 +49,35 @@ type StoreType = {
     routing,
     HttpClientModule,
     SimpleNotificationsModule.forRoot(),
-    NgaModule.forRoot()
+    SaModule.forRoot()
   ],
-  // expose our Services and Providers into Angular's dependency injection
   providers: [
     ENV_PROVIDERS,
     APP_PROVIDERS,
   ]
 })
-
 export class AppModule {
 
   constructor(public appRef: ApplicationRef, public appState: AppState) {}
 
-  hmrOnInit(store: StoreType) {
-    if (!store || !store.state) return;
+  hmrOnInit(store: IStore) {
+    if (!store || !store.state)  {
+      return;
+    }
     console.log('HMR store', JSON.stringify(store, null, 2));
     // set state
     this.appState._state = store.state;
     // set input values
     if ('restoreInputValues' in store) {
-      let restoreInputValues = store.restoreInputValues;
+      const restoreInputValues = store.restoreInputValues;
       setTimeout(restoreInputValues);
     }
     this.appRef.tick();
-    delete store.state;
-    delete store.restoreInputValues;
+    Reflect.deleteProperty(store, 'state');
+    Reflect.deleteProperty(store, 'restoreInputValues');
   }
 
-  hmrOnDestroy(store: StoreType) {
+  hmrOnDestroy(store: IStore) {
     const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
     // save state
     const state = this.appState._state;
@@ -100,7 +90,7 @@ export class AppModule {
     removeNgStyles();
   }
 
-  hmrAfterDestroy(store: StoreType) {
+  hmrAfterDestroy(store: IStore) {
     // display new elements
     store.disposeOldHosts();
     delete store.disposeOldHosts;

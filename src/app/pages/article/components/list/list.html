@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-12 col-md-12">
-    <ba-card title="文章列表" baCardClass="with-scroll table-panel">
+    <sa-card title="文章列表" baCardClass="with-scroll table-panel">
       <div class="contnet-top-tools">
         <div class="pull-left">
           <div class="btn-group">
@@ -143,12 +143,12 @@
             <thead class="thead-inverse">
               <tr>
                 <th>
-                  <ba-checkbox [(ngModel)]="articlesSelectAll" (ngModelChange)="batchSelectChange($event)">
-                    <span ba-checkbox-label>
+                  <sa-checkbox [(ngModel)]="articlesSelectAll" (ngModelChange)="batchSelectChange($event)">
+                    <span sa-checkbox-label>
                       <span>&nbsp;</span>
                       <strong>ID</strong>
                     </span>
-                  </ba-checkbox>
+                  </sa-checkbox>
                 </th>
                 <th width="30%">文章</th>
                 <th>分类目录</th>
@@ -173,12 +173,12 @@
               <ng-template [ngIf]="articles && articles.data.length">
                 <tr *ngFor="let article of articles.data" class="article-item">
                   <td class="batch-checkbox">
-                    <ba-checkbox [(ngModel)]="article.selected" (ngModelChange)="itemSelectChange()">
-                      <span ba-checkbox-label>
+                    <sa-checkbox [(ngModel)]="article.selected" (ngModelChange)="itemSelectChange()">
+                      <span sa-checkbox-label>
                         <span>&nbsp;</span>
                         <strong>{{ article.id }}</strong>
                       </span>
-                    </ba-checkbox>
+                    </sa-checkbox>
                   </td>
                   <td class="article-content">
                     <div class="content-box">
@@ -333,7 +333,7 @@
           </div>
         </div>
       </div>
-    </ba-card>
+    </sa-card>
     <!-- 删除确认弹窗 -->
     <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog">

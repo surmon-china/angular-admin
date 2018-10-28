@@ -1,3 +1,9 @@
+/**
+ * @file 页面边栏菜单组件
+ * @module app/page/menu
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 export const PAGES_MENU = [
   {
     path: '',

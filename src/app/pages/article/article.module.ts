@@ -1,53 +1,57 @@
-import { NgModule }            from '@angular/core';
-import { CommonModule }        from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+/**
+ * @file 文章管理页面模块
+ * @module app/page/article/module
+ * @author Surmon <https://github.com/surmon-china>
+ */
 
-import { NgaModule }           from 'app/nga.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 
-import { routing }             from './article.routing';
+import { SaModule } from '@/app/sa.module';
+import { routing } from './article.routing';
 
-import { Article }             from './article.component';
-import { ArticleCategory }     from './components/category';
-import { ArticleCategoryAdd }  from './components/category/components/add';
-import { ArticleCategoryList } from './components/category/components/list';
+import { ArticleTagComponent } from './components/tag';
+import { CategoryAddComponent } from './components/category/components/add';
+import { CategoryListComponent } from './components/category/components/list';
 
-import { ArticleEdit }          from './components/edit';
-import { ArticleEditMain }      from './components/edit/components/main';
-import { ArticleEditExtend }    from './components/edit/components/extend';
-import { ArticleEditSubmit }    from './components/edit/components/submit';
-import { ArticleEditCategory }  from './components/edit/components/category';
+import { ArticleEditComponent } from './components/edit';
+import { ArticleEditMainComponent } from './components/edit/components/main';
+import { ArticleEditExtendComponent } from './components/edit/components/extend';
+import { ArticleEditSubmitComponent } from './components/edit/components/submit';
+import { ArticleEditCategoryComponent } from './components/edit/components/category';
 
-import { ArticleList }          from './components/list';
-import { ArticleTag }           from './components/tag';
+import { ArticleComponent } from './article.component';
+import { ArticleCategoryComponent } from './components/category';
+import { ArticleListComponent } from './components/list';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgaModule,
+    SaModule,
     PaginationModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     routing
   ],
   declarations: [
-    Article,
+    ArticleComponent,
 
-    ArticleCategory,
-    ArticleCategoryAdd,
-    ArticleCategoryList,
+    ArticleListComponent,
+    ArticleTagComponent,
 
-    ArticleEdit,
-    ArticleEditMain,
-    ArticleEditSubmit,
-    ArticleEditExtend,
-    ArticleEditCategory,
+    ArticleCategoryComponent,
+    CategoryAddComponent,
+    CategoryListComponent,
 
-    ArticleList,
-    ArticleTag
+    ArticleEditComponent,
+    ArticleEditMainComponent,
+    ArticleEditSubmitComponent,
+    ArticleEditExtendComponent,
+    ArticleEditCategoryComponent,
   ]
 })
-export default class ArticleModule {
-}
+export default class ArticleModule {}

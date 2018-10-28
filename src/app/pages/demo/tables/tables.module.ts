@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule }  from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgaModule } from 'app/nga.module';
+import { SaModule } from '@/app/sa.module';
 
 import { routing } from './tables.routing';
 import { Tables } from './tables.component';
-import { BasicTables } from './components/basicTables/basicTables.component';
+import { BasicTablesComponent } from './components/basicTables/basicTables.component';
 import { BasicTablesService } from './components/basicTables/basicTables.service';
 import { ResponsiveTable } from './components/basicTables/components/responsiveTable';
 import { StripedTable } from './components/basicTables/components/stripedTable';
@@ -19,12 +19,12 @@ import { ContextualTable } from './components/basicTables/components/contextualT
   imports: [
     CommonModule,
     FormsModule,
-    NgaModule,
+    SaModule,
     routing
   ],
   declarations: [
     Tables,
-    BasicTables,
+    BasicTablesComponent,
     HoverTable,
     BorderedTable,
     CondensedTable,

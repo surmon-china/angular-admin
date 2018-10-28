@@ -4,7 +4,7 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 
 import { ModalDirective } from 'ngx-bootstrap';
 
-import { ApiService } from '@app/api.service';
+import { SaHttpRequesterService } from '@app/services';
 import { UAParse, OSParse } from '../../comment.ua';
 
 @Component({
@@ -17,8 +17,8 @@ export class CommentList {
 
   @ViewChild('delModal') public delModal: ModalDirective;
 
-  // _apiUrl
-  private _apiUrl = '/comment';
+  
+  private _apiPath = '/comment';
 
   // 搜索参数
   public UAParse = UAParse;
@@ -60,7 +60,7 @@ export class CommentList {
 
   constructor(private _fb:FormBuilder,
               private _route: ActivatedRoute,
-              private _apiService:ApiService) {
+              private _httpService:ApiService) {
 
     this.searchForm = _fb.group({
       'keyword': ['', Validators.compose([Validators.required])]
@@ -159,7 +159,7 @@ export class CommentList {
     }
     this.fetching.comment = true;
     // 请求评论
-    this._apiService.get(this._apiUrl, params)
+    this._httpService.get(this._apiPath, params)
     .then(comments => {
       this.comments = comments.result;
       this.commentsSelectAll = false;
@@ -177,11 +177,11 @@ export class CommentList {
     let _post_ids = [];
     this.unique(post_ids, _post_ids);
     post_ids = _post_ids;
-    this._apiService.patch(this._apiUrl, { comments, post_ids, state })
+    this._httpService.patch(this._apiPath, { comments, post_ids, state })
     .then(do_result => {
       this.getComments({ page: this.comments.pagination.current_page });
     })
-    .catch(error => {});
+    
   }
 
   // 彻底删除评论
@@ -199,7 +199,7 @@ export class CommentList {
     }
     this.unique(post_ids, _post_ids);
     post_ids = _post_ids;
-    this._apiService.delete(this._apiUrl, { comments, post_ids })
+    this._httpService.delete(this._apiPath, { comments, post_ids })
     .then(do_result => {
       this.delModal.hide();
       this.del_comments = null;

@@ -1,0 +1,24 @@
+@import '../../theme/sass/conf/conf';
+$height: 52px;
+
+.sa-back-top {
+  position: fixed;
+  display: none;
+  z-index: 9999;
+  width: $height;
+  height: $height;
+  right: 40px;
+  bottom: 40px !important;
+  border-radius: 50%;
+  line-height: $height;
+  text-decoration: none;
+  font-size: 1.5em;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.75);
+  opacity: 0.5;
+  cursor: pointer;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}

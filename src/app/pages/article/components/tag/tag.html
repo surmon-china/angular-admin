@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
-    <ba-card title="添加标签" baCardClass="with-scroll">
+    <sa-card title="添加标签" baCardClass="with-scroll">
       <form class="tag-form"
             [formGroup]="editForm" 
             (ngSubmit)="submitTag(editForm.value)">
@@ -106,10 +106,10 @@
           </div>
         </div>
       </form>
-    </ba-card>
+    </sa-card>
   </div>
   <div class="col-md-8 col-xs-12">
-    <ba-card title="标签管理" baCardClass="with-scroll">
+    <sa-card title="标签管理" baCardClass="with-scroll">
       <div class="contnet-top-tools">
         <div class="pull-left">
           <div class="btn-group" role="group">
@@ -162,12 +162,12 @@
             <thead class="thead-inverse">
               <tr>
                 <th class="batch-checkbox">
-                  <ba-checkbox [(ngModel)]="tagsSelectAll" (ngModelChange)="batchSelectChange($event)">
-                    <span ba-checkbox-label>
+                  <sa-checkbox [(ngModel)]="tagsSelectAll" (ngModelChange)="batchSelectChange($event)">
+                    <span sa-checkbox-label>
                       <span>&nbsp;</span>
                       <strong>ID</strong>
                     </span>
-                  </ba-checkbox>
+                  </sa-checkbox>
                 </th>
                 <th>名称</th>
                 <th>别名</th>
@@ -188,12 +188,12 @@
               <ng-template [ngIf]="tags && tags.data.length">
                 <tr *ngFor="let tag of tags.data">
                   <td class="batch-checkbox">
-                    <ba-checkbox [(ngModel)]="tag.selected" (ngModelChange)="itemSelectChange()">
-                      <span ba-checkbox-label>
+                    <sa-checkbox [(ngModel)]="tag.selected" (ngModelChange)="itemSelectChange()">
+                      <span sa-checkbox-label>
                         <span>&nbsp;</span>
                         <strong>{{ tag.id }}</strong>
                       </span>
-                    </ba-checkbox>
+                    </sa-checkbox>
                   </td>
                   <td>{{ tag.name }}</td>
                   <td>
@@ -241,7 +241,7 @@
           </div>
         </div>
       </div>
-    </ba-card>
+    </sa-card>
   </div>
   <!-- 删除确认弹窗 -->
   <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">

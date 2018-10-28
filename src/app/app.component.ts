@@ -1,28 +1,28 @@
 /**
  * @file App 顶级入口组件
- * @module app/api-component
+ * @module app/app-component
  * @author Surmon <https://github.com/surmon-china>
  */
 
 import { Router } from '@angular/router';
-import { Component, ViewEncapsulation, ViewContainerRef } from '@angular/core';
-
+import { Component, ViewEncapsulation, AfterViewInit, OnInit, ViewContainerRef } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 
-import { GlobalState } from './global.state';
-import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './services';
-import { layoutPaths } from './theme/theme.constants';
-import { BaThemeConfig } from './theme/theme.config';
+import { GlobalState } from '@app/global.state';
+import { layoutPaths } from '@app/theme/theme.constants';
+import { SaThemeConfig } from '@app/theme/theme.config';
+import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
 
-import { AppState } from './app.service';
-import { checkTokenIsOk } from './token.service';
-import { ApiService } from '@app/api.service';
+import { AppState } from '@app/app.service';
 import { TOKEN } from '@app/constants/auth';
+import { NO_PERMISSION } from '@/app/constants/http';
+import { checkTokenIsOk } from '@app/discriminators/token';
+import { isIndexPage, isAuthPage, isDashboardPage } from '@app/discriminators/url';
 
-type MenuCollapsedState = boolean
+type TMenuCollapsedState = boolean;
 
 @Component({
-  selector: 'app',
+  selector: 'app-admin',
   encapsulation: ViewEncapsulation.None,
   styles: [
     require('normalize.css'),
@@ -30,7 +30,7 @@ type MenuCollapsedState = boolean
     require('./app.scss')
   ],
   template: `
-    <main [ngClass]="{'menu-collapsed': isMenuCollapsed}" baThemeRun>
+    <main [ngClass]="{'menu-collapsed': _isMenuCollapsed}" saThemeRun>
       <simple-notifications [options]="notificationsOptions"></simple-notifications>
       <div class="additional-bg"></div>
       <router-outlet></router-outlet>
@@ -38,18 +38,18 @@ type MenuCollapsedState = boolean
   `,
   providers: [AppState]
 })
-export class App {
+export class AppComponent implements AfterViewInit, OnInit {
 
-  isMenuCollapsed: MenuCollapsedState = false;
-  isOptionInited: boolean = false;
+  private _isOptionInited = false;
+  private _isMenuCollapsed: TMenuCollapsedState = false;
 
   constructor(private _state: GlobalState,
               private _appState: AppState,
-              private _apiService: ApiService,
               private _router: Router,
-              private _config: BaThemeConfig,
-              private _spinner: BaThemeSpinner,
-              private _imageLoader: BaImageLoaderService,
+              private _config: SaThemeConfig,
+              private _spinner: SaThemeSpinnerService,
+              private _imageLoader: SaImageLoaderService,
+              private _httpService: SaHttpRequesterService,
               private viewContainerRef: ViewContainerRef,
               private _notificationsService: NotificationsService) {
 
@@ -57,72 +57,24 @@ export class App {
     this._loadImages();
 
     // 订阅菜单折叠事件
-    this._state.subscribe('menu.isCollapsed', (isCollapsed: MenuCollapsedState): void => {
-      this.isMenuCollapsed = isCollapsed;
+    this._state.subscribe('menu.isCollapsed', (isCollapsed: TMenuCollapsedState): void => {
+      this._isMenuCollapsed = isCollapsed;
     });
 
     // 路由拦截器
     this._router.events.subscribe(event => {
+
       const url: string = this._router.url;
-      
+
       // 如果是发生登录事件，则拉取初始化信息
-      if (url === '/dashboard' &&
-          (<any>event).navigationTrigger &&
-          (<any>event).navigationTrigger === 'imperative') {
+      if (isDashboardPage(url) && (<any>event).navigationTrigger && (<any>event).navigationTrigger === 'imperative') {
         this.initAppOptions();
       }
-      // 如果发生非首页或登陆页的跳转事件，则执行 Token 全面检查
-      if (!Object.is(url, '/') && !Object.is(url, '/auth')) {
-        if (!checkTokenIsOk()) {
-          this.remiveTokenToLogin();
-        }
-      }
-    });
-  }
 
-  // 删除 Token 并跳转到登陆页
-  public remiveTokenToLogin():void {
-    localStorage.removeItem(TOKEN);
-    setTimeout(() => {
-      this._notificationsService.error('误闯禁地', '...', { timeOut: 1000 });
-      this._router.navigate(['/auth']);
-    }, 0);
-  }
-
-  // 初始化时拉取全局设置
-  public initAppOptions():void {
-    if (!this.isOptionInited) {
-      this.isOptionInited = true;
-      this._apiService.get('/auth')
-      .then(({ result: adminInfo }) => {
-        if(Object.keys(adminInfo).length) {
-          this._appState.set('adminInfo', adminInfo);
-        }
-      })
-      .catch(error => {
-        if(Object.is(error.status, 403)) {
-          this._router.navigate(['/auth']);
-        }
-      });
-    }
-  }
-
-  // 初始化根据服务端验证 Token 有效性
-  public checkTokenValidity():void  {
-    this._apiService.patch('/auth')
-    .then(({ result: tokenIsValidity }) => {
-      console.log('远程 Token 验证结果：', tokenIsValidity);
-      // 通过验证，则初始化 APP
-      if (tokenIsValidity) {
-        this.initAppOptions();
-      } else {
-        // 否则依然去登陆
+      // 如果发生 非首页或登陆页 的跳转事件，则执行 Token 全面检查
+      if (!isIndexPage(url) && !isAuthPage(url) && !checkTokenIsOk()) {
         this.remiveTokenToLogin();
       }
-    })
-    .catch(error => {
-      console.warn('Token 被验证是无效的，跳登陆页', error);
-      this.remiveTokenToLogin();
     });
   }
 
@@ -140,28 +92,68 @@ export class App {
     preventLastDuplicates: false
   };
 
-  // 程序初始化，关闭加载状态
-  public ngAfterViewInit(): void {
-    // hide spinner once all loaders are completed
-    BaThemePreloader.load().then((values) => {
-      this._spinner.hide();
+  // 删除 Token 并跳转到登陆页
+  public remiveTokenToLogin(): void {
+    localStorage.removeItem(TOKEN);
+    setTimeout(() => {
+      this._notificationsService.error('误闯禁地', '...', { timeOut: 1000 });
+      this._router.navigate(['/auth']);
+    }, 0);
+  }
+
+  // 初始化时拉取全局设置
+  public initAppOptions(): void {
+    if (this._isOptionInited) {
+      return;
+    }
+    this._isOptionInited = true;
+    this._httpService.get('/auth')
+    .then(({ result: adminInfo }) => {
+      if (Object.keys(adminInfo).length) {
+        this._appState.set('adminInfo', adminInfo);
+      }
+    })
+    .catch(error => {
+      if (error.status === NO_PERMISSION) {
+        this._router.navigate(['/auth']);
+      }
+    });
+  }
+
+  // 初始化根据服务端验证 Token 有效性
+  public checkTokenValidity(): void  {
+    this._httpService.patch('/auth')
+    .then(({ result: tokenIsValidity }) => {
+      console.log('远程 Token 验证结果：', tokenIsValidity);
+      // 通过验证，则初始化 APP
+      tokenIsValidity
+        ? this.initAppOptions()
+        : this.remiveTokenToLogin();
+    })
+    .catch(error => {
+      console.warn('Token 被验证是无效的，跳登陆页', error);
+      this.remiveTokenToLogin();
     });
   }
 
   private _loadImages(): void {
     // register some loaders
     const imageLoaer = this._imageLoader.load(layoutPaths.images.root + 'background.jpg');
-    BaThemePreloader.registerLoader(imageLoaer);
+    SaThemePreloaderService.registerLoader(imageLoaer);
   }
-  
+
+  // 程序初始化，关闭加载状态
+  ngAfterViewInit() {
+    SaThemePreloaderService.load().then(_ => {
+      this._spinner.hide();
+    });
+  }
+
   // 初始化时重置路由
   ngOnInit() {
     // 程序初始化时检查本地 Token
-    if (!checkTokenIsOk()) {
-      this.remiveTokenToLogin();
-    // 如果本地检查通过，则通过服务端检查有效性
-    } else {
-      this.checkTokenValidity();
-    }
+    checkTokenIsOk()
+      ? this.checkTokenValidity()
+      : this.remiveTokenToLogin();
   }
 }

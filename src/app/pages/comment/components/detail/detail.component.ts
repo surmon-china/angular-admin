@@ -2,7 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
-import { ApiService } from '@app/api.service';
+import { SaHttpRequesterService } from '@app/services';
 import { UAParse, OSParse } from '../../comment.ua';
 
 @Component({
@@ -14,8 +14,8 @@ import { UAParse, OSParse } from '../../comment.ua';
 
 export class CommentDetail {
 
-  // _apiUrl
-  private _apiUrl = '/comment';
+  
+  private _apiPath = '/comment';
 
   // 评论内容
   public UAParse = UAParse;
@@ -52,7 +52,7 @@ export class CommentDetail {
 
   constructor(private _fb: FormBuilder,
               private _route: ActivatedRoute,
-              private _apiService: ApiService) {
+              private _httpService: SaHttpRequesterService) {
     this.editForm = _fb.group({
       'pid': ['0', Validators.compose([Validators.required])],
       'state': ['', Validators.compose([Validators.required])],
@@ -118,7 +118,7 @@ export class CommentDetail {
       }
       // console.log(this.comment);
       // return false;
-      this._apiService.put(`${this._apiUrl}/${(<any>this.comment)._id}`, this.comment)
+      this._httpService.put(`${this._apiPath}/${(<any>this.comment)._id}`, this.comment)
       .then(comment => {
         this.comment = (<any>comment).result;
       })
@@ -128,7 +128,7 @@ export class CommentDetail {
 
   // 获取评论列表
   public getComments(params) {
-    this._apiService.get(this._apiUrl, params)
+    this._httpService.get(this._apiPath, params)
     .then(comments => {
       this.comments = (<any>comments).result;
     })
@@ -137,7 +137,7 @@ export class CommentDetail {
 
   // 获取评论信息
   public getCommentDetail() {
-    this._apiService.get(`${this._apiUrl}/${this.comment_id}`)
+    this._httpService.get(`${this._apiPath}/${this.comment_id}`)
     .then(comment => {
       this.comment = (<any>comment).result;
       this.updateEditForm();
@@ -151,7 +151,7 @@ export class CommentDetail {
 
   // 获取文章详情
   public getCommentArticleDetail() {
-    this._apiService.get(`/article/${this.comment.post_id}`)
+    this._httpService.get(`/article/${this.comment.post_id}`)
     .then(article => {
       this.article = (<any>article).result;
     })

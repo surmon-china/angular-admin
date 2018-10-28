@@ -27,12 +27,12 @@
       <thead class="thead-inverse">
         <tr>
           <th class="batch-checkbox">
-            <ba-checkbox [(ngModel)]="categoriesSelectAll" (ngModelChange)="batchSelectChange($event)">
-              <span ba-checkbox-label>
+            <sa-checkbox [(ngModel)]="categoriesSelectAll" (ngModelChange)="batchSelectChange($event)">
+              <span sa-checkbox-label>
                 <span>&nbsp;</span>
                 <strong>ID</strong>
               </span>
-            </ba-checkbox>
+            </sa-checkbox>
           </th>
           <th width="20%">名称</th>
           <th width="30%">描述</th>
@@ -51,12 +51,12 @@
         <ng-template [ngIf]="categories && categories.data.length">
           <tr *ngFor="let category of categories.data">
             <td class="batch-checkbox">
-              <ba-checkbox [(ngModel)]="category.selected" (ngModelChange)="itemSelectChange()">
-                <span ba-checkbox-label>
+              <sa-checkbox [(ngModel)]="category.selected" (ngModelChange)="itemSelectChange()">
+                <span sa-checkbox-label>
                   <span>&nbsp;</span>
                   <strong>{{ category.id }}</strong>
                 </span>
-              </ba-checkbox>
+              </sa-checkbox>
             </td>
             <td>
               <strong *ngIf="category.unrepaired" class="text-warning">
@@ -68,7 +68,8 @@
               <strong>{{ category.name }}</strong>
             </td>
             <td class="category-description" title="{{ category.description }}">
-              <span [class.text-muted]="!category.description">{{ category.description || '暂无' }}</span></td>
+              <span [class.text-muted]="!category.description">{{ category.description || '暂无描述' }}</span>
+            </td>
             <td>{{ category.slug }}</td>
             <td>{{ category.count || 0 }}</td>
             <td>

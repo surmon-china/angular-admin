@@ -17,8 +17,7 @@
     "eofline": true,
     "forin": true,
     "import-blacklist": [
-      true,
-      "rxjs/Rx"
+      true
     ],
     "import-spacing": true,
     "indent": [
@@ -44,7 +43,7 @@
       }
     ],
     "no-arg": true,
-    "no-bitwise": true,
+    "no-bitwise": false,
     "no-console": [
       true,
       "debug",
@@ -61,7 +60,8 @@
     "no-eval": true,
     "no-inferrable-types": [
       true,
-      "ignore-params"
+      "ignore-params",
+      "ignore-properties"
     ],
     "no-misused-new": true,
     "no-non-null-assertion": true,

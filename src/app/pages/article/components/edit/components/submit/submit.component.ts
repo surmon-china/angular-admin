@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'article-edit-submit',
+  selector: 'box-article-edit-submit',
   template: require('./submit.html')
 })
 
-export class ArticleEditSubmit {
+export class ArticleEditSubmitComponent {
 
   @Input() isEdit;
   @Input() state;

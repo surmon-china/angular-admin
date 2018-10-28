@@ -1,14 +1,19 @@
-import {Injectable} from '@angular/core';
-import {BaThemeConfigProvider, layoutPaths} from '../../../theme';
+/**
+ * @file 仪表盘页面用户地图数据服务
+ * @module app/page/dashboard/component/user-map-service
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import { Injectable } from '@angular/core';
+import { SaThemeConfigProvider, layoutPaths } from '@app/theme';
 
 @Injectable()
 export class UsersMapService {
 
-  constructor(private _baConfig:BaThemeConfigProvider) {
-  }
+  constructor(private _saConfig: SaThemeConfigProvider) {}
 
   getData() {
-    var layoutColors = this._baConfig.get().colors;
+    const layoutColors = this._saConfig.get().colors;
 
     return {
       type: 'map',

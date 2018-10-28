@@ -1,13 +1,13 @@
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'article-category-list',
+  selector: 'box-category-list',
   encapsulation: ViewEncapsulation.Emulated,
   template: require('./list.html'),
   styles: [require('./list.scss')]
 })
 
-export class ArticleCategoryList {
+export class CategoryListComponent {
 
   @Input() categories;
   @Output() delCategoryRequest = new EventEmitter();
@@ -15,7 +15,7 @@ export class ArticleCategoryList {
   @Output() editCategoryRequest = new EventEmitter();
   @Output() refreshList = new EventEmitter();
 
-  public categoriesSelectAll:boolean = false;
+  public categoriesSelectAll: boolean = false;
   public selectedCategories = [];
 
   constructor() {}
@@ -24,19 +24,19 @@ export class ArticleCategoryList {
   public categoryLevelMark = level => Array.from({ length: level }, () => '');
 
   // 多选切换
-  public batchSelectChange(is_select) {
-    if(!this.categories.data.length) return;
-    this.selectedCategories = [];
-    this.categories.data.forEach(item => { item.selected = is_select; is_select && this.selectedCategories.push(item._id) });
+  public batchSelectChange(is_select: boolean): void {
+    if (!this.categories.data.length) {
+      return;
+    }
+    this.selectedCategories = is_select ? this.categories.data.map(item => item._id) : [];
+    this.categories.data.forEach(item => (item.selected = is_select));
   }
 
   // 单个切换
-  public itemSelectChange() {
-    this.selectedCategories = [];
+  public itemSelectChange(): void {
     const categories = this.categories.data;
-    categories.forEach(item => { item.selected && this.selectedCategories.push(item._id) });
-    if(!this.selectedCategories.length) this.categoriesSelectAll = false;
-    if(!!this.selectedCategories.length && this.selectedCategories.length == categories.length) this.categoriesSelectAll = true;
+    this.selectedCategories = categories.filter(item => item.selected).map(item => item._id);
+    this.categoriesSelectAll = this.selectedCategories.length === categories.length;
   }
 
   // 编辑分类

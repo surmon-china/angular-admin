@@ -1,0 +1,11 @@
+<div class="{{ baCheckboxClass }}">
+  <label class="checkbox-inline custom-checkbox nowrap">
+    <input type="checkbox" 
+           [checked]="state"
+           (change)="onChange($event.target.checked)"
+           [disabled]="disabled" 
+           [value]="value">
+    <span class="{{ baCheckboxLabelClass }}" *ngIf="label">{{ label }}</span>
+    <ng-content select="[sa-checkbox-label]"></ng-content>
+  </label>
+</div>

@@ -1,7 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgaModule } from 'app/nga.module';
+import { SaModule } from '@/app/sa.module';
 
 import { routing }       from './ui.routing';
 import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
@@ -27,7 +27,7 @@ import { IconsService } from './components/icons/icons.service';
   imports: [
     CommonModule,
     FormsModule,
-    NgaModule,
+    SaModule,
     PaginationModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
