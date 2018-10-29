@@ -1,4 +1,10 @@
-import { Component, ViewEncapsulation, EventEmitter, Input, Output } from '@angular/core';
+/**
+ * @file 文章编辑页面分类选择组件
+ * @module app/page/article/componennt/category
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core';
 import { SaHttpRequesterService } from '@app/services';
 
 @Component({
@@ -8,7 +14,7 @@ import { SaHttpRequesterService } from '@app/services';
   styles: [require('./category.scss')]
 })
 
-export class ArticleEditCategoryComponent {
+export class ArticleEditCategoryComponent implements OnInit, OnChanges {
 
   @Input() category;
   @Output() categoryChange: EventEmitter<any> = new EventEmitter();
@@ -55,12 +61,12 @@ export class ArticleEditCategoryComponent {
     // 扁平数据构造（同时添加级别标示）
     const levelBuildRun = cates => {
       const newCategories = [];
-      const levelBuildOptimize = (cates, level) => {
-        cates.forEach(c => {
-          c.level = level;
-          newCategories.push(c);
-          c.checked = this.category.indexOf(c._id) > -1;
-          if (c.children && c.children.length) { levelBuildOptimize(c.children, level + 1); }
+      const levelBuildOptimize = (_cates, level) => {
+        _cates.forEach(child => {
+          child.level = level;
+          newCategories.push(child);
+          child.checked = this.category.indexOf(child._id) > -1;
+          if (child.children && child.children.length) { levelBuildOptimize(child.children, level + 1); }
         });
       };
       levelBuildOptimize(cates, 0);

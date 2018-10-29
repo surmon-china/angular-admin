@@ -1,15 +1,14 @@
-import { NgModule }            from '@angular/core';
-import { CommonModule }        from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SaModule }           from '@/app/sa.module';
+import { SaModule } from '@/app/sa.module';
 import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 
-import { routing }             from './comment.routing';
+import { routing } from './comment.routing';
 
-
-import { Comment }             from './comment.component';
-import { CommentList }         from './components/list';
-import { CommentDetail }       from './components/detail';
+import { CommentComponent } from './comment.component';
+import { CommentListComponent } from './components/list';
+import { CommentDetailComponent } from './components/detail';
 
 @NgModule({
   imports: [
@@ -24,9 +23,9 @@ import { CommentDetail }       from './components/detail';
   ],
   providers: [],
   declarations: [
-    Comment,
-    CommentList,
-    CommentDetail
+    CommentComponent,
+    CommentListComponent,
+    CommentDetailComponent
   ]
 })
 export default class CommentModule {

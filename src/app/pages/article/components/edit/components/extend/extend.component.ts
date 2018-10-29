@@ -1,3 +1,9 @@
+/**
+ * @file 文章编辑页面扩展信息组件
+ * @module app/page/article/componennt/extend
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({

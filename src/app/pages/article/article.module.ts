@@ -12,19 +12,20 @@ import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 import { SaModule } from '@/app/sa.module';
 import { routing } from './article.routing';
 
+import { ArticleComponent } from './article.component';
+
 import { ArticleTagComponent } from './components/tag';
-import { CategoryAddComponent } from './components/category/components/add';
-import { CategoryListComponent } from './components/category/components/list';
+import { ArticleListComponent } from './components/list';
+
+import { ArticleCategoryComponent } from './components/category';
+import { ArticleCategoryAddComponent } from './components/category/components/add';
+import { ArticleCategoryListComponent } from './components/category/components/list';
 
 import { ArticleEditComponent } from './components/edit';
 import { ArticleEditMainComponent } from './components/edit/components/main';
 import { ArticleEditExtendComponent } from './components/edit/components/extend';
 import { ArticleEditSubmitComponent } from './components/edit/components/submit';
 import { ArticleEditCategoryComponent } from './components/edit/components/category';
-
-import { ArticleComponent } from './article.component';
-import { ArticleCategoryComponent } from './components/category';
-import { ArticleListComponent } from './components/list';
 
 @NgModule({
   imports: [
@@ -44,8 +45,8 @@ import { ArticleListComponent } from './components/list';
     ArticleTagComponent,
 
     ArticleCategoryComponent,
-    CategoryAddComponent,
-    CategoryListComponent,
+    ArticleCategoryAddComponent,
+    ArticleCategoryListComponent,
 
     ArticleEditComponent,
     ArticleEditMainComponent,

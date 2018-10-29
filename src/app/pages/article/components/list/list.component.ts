@@ -1,3 +1,9 @@
+/**
+ * @file 文章列表页面组件
+ * @module app/page/article/componennt/list
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 

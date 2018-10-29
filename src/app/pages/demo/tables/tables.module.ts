@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { SaModule } from '@/app/sa.module';
 
 import { routing } from './tables.routing';
-import { Tables } from './tables.component';
+import { TablesComponent } from './tables.component';
 import { BasicTablesComponent } from './components/basicTables/basicTables.component';
 import { BasicTablesService } from './components/basicTables/basicTables.service';
 import { ResponsiveTable } from './components/basicTables/components/responsiveTable';
@@ -23,7 +23,7 @@ import { ContextualTable } from './components/basicTables/components/contextualT
     routing
   ],
   declarations: [
-    Tables,
+    TablesComponent,
     BasicTablesComponent,
     HoverTable,
     BorderedTable,

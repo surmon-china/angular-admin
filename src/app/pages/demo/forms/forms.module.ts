@@ -6,9 +6,9 @@ import { SaModule } from '@/app/sa.module';
 import { routing } from './forms.routing';
 
 import { RatingModule } from 'ngx-bootstrap';
-import { Forms } from './forms.component';
-import { Inputs } from './components/inputs';
-import { Layouts } from './components/layouts';
+import { FormsComponent } from './forms.component';
+import { InputsComponent } from './components/inputs';
+import { LayoutsComponent } from './components/layouts';
 
 import { StandardInputs } from './components/inputs/components/standardInputs';
 import { ValidationInputs } from './components/inputs/components/validationInputs';
@@ -32,9 +32,9 @@ import { WithoutLabelsForm } from './components/layouts/components/withoutLabels
     routing
   ],
   declarations: [
-    Layouts,
-    Inputs,
-    Forms,
+    LayoutsComponent,
+    InputsComponent,
+    FormsComponent,
     StandardInputs,
     ValidationInputs,
     GroupInputs,

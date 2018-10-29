@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'forms',
+  selector: 'page-tables',
   styles: [],
   template: `<router-outlet></router-outlet>`
 })
-export class Tables {
+export class TablesComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

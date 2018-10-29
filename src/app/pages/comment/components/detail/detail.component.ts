@@ -1,20 +1,19 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 import { SaHttpRequesterService } from '@app/services';
 import { UAParse, OSParse } from '../../comment.ua';
 
 @Component({
-  selector: 'comment-edit',
+  selector: 'page-comment-detail',
   encapsulation: ViewEncapsulation.None,
   styles: [require('./detail.scss')],
   template: require('./detail.html')
 })
 
-export class CommentDetail {
+export class CommentDetailComponent implements OnInit {
 
-  
   private _apiPath = '/comment';
 
   // 评论内容
@@ -112,9 +111,9 @@ export class CommentDetail {
         },
         content: comment.content,
         extends: comment.extends.filter(e => !!e && !!e.name && e.value)
-      })
-      if(!!comment.user_site) {
-        this.comment.author.site = comment.user_site
+      });
+      if (!!comment.user_site) {
+        this.comment.author.site = comment.user_site;
       }
       // console.log(this.comment);
       // return false;
@@ -122,7 +121,7 @@ export class CommentDetail {
       .then(comment => {
         this.comment = (<any>comment).result;
       })
-      .catch(error => {})
+      .catch(error => {});
     }
   }
 
@@ -132,7 +131,7 @@ export class CommentDetail {
     .then(comments => {
       this.comments = (<any>comments).result;
     })
-    .catch(error => {})
+    .catch(error => {});
   }
 
   // 获取评论信息
@@ -141,12 +140,12 @@ export class CommentDetail {
     .then(comment => {
       this.comment = (<any>comment).result;
       this.updateEditForm();
-      if(!Object.is(this.comment.post_id, 0)) {
+      if (!Object.is(this.comment.post_id, 0)) {
         this.getCommentArticleDetail();
       }
       this.getComments({ post_id: this.comment.post_id, per_page: 1000 });
     })
-    .catch(error => {})
+    .catch(error => {});
   }
 
   // 获取文章详情
@@ -155,13 +154,13 @@ export class CommentDetail {
     .then(article => {
       this.article = (<any>article).result;
     })
-    .catch(error => {})
+    .catch(error => {});
   }
 
   // 初始化
   ngOnInit() {
     this._route.params.subscribe(({ comment_id }) => {
-      if(comment_id) {
+      if (comment_id) {
         this.comment_id = comment_id;
       }
       this.getCommentDetail();

@@ -7,22 +7,41 @@
 import { Routes, RouterModule } from '@angular/router';
 
 import { ArticleComponent } from './article.component';
-import { ArticleCategoryComponent } from './components/category';
+import { ArticleTagComponent } from './components/tag';
 import { ArticleEditComponent } from './components/edit';
 import { ArticleListComponent } from './components/list';
-import { ArticleTagComponent } from './components/tag';
+import { ArticleCategoryComponent } from './components/category';
 
 const routes: Routes = [
   {
     path: '',
     component: ArticleComponent,
     children: [
-      { path: '', redirectTo: 'category', pathMatch: 'full' },
-      { path: 'category', component: ArticleCategoryComponent },
-      { path: 'post', component: ArticleEditComponent },
-      { path: 'edit/:article_id', component: ArticleEditComponent },
-      { path: 'list', component: ArticleListComponent },
-      { path: 'tag', component: ArticleTagComponent }
+      {
+        path: '',
+        redirectTo: 'category',
+        pathMatch: 'full'
+      },
+      {
+        path: 'category',
+        component: ArticleCategoryComponent
+      },
+      {
+        path: 'post',
+        component: ArticleEditComponent
+      },
+      {
+        path: 'edit/:article_id',
+        component: ArticleEditComponent
+      },
+      {
+        path: 'list',
+        component: ArticleListComponent
+      },
+      {
+        path: 'tag',
+        component: ArticleTagComponent
+      }
     ]
   }
 ];

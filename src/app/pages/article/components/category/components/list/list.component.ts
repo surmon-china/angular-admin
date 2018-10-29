@@ -1,3 +1,9 @@
+/**
+ * @file 分类页面列表组件
+ * @module app/page/article/componennt/category/list
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -7,7 +13,7 @@ import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angu
   styles: [require('./list.scss')]
 })
 
-export class CategoryListComponent {
+export class ArticleCategoryListComponent {
 
   @Input() categories;
   @Output() delCategoryRequest = new EventEmitter();

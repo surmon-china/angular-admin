@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'forms',
+  selector: 'page-forms',
   styles: [],
   template: `<router-outlet></router-outlet>`
 })
-export class Forms {
+export class FormsComponent {
 
   constructor() {
   }

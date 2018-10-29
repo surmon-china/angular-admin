@@ -7,6 +7,5 @@ import {Component} from '@angular/core';
 })
 export class Ui {
 
-  constructor() {
-  }
+  constructor()Component; {}
 }

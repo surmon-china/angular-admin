@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'comment',
+  selector: 'page-comment',
   template: `<router-outlet></router-outlet>`
 })
-export class Comment {
+export class CommentComponent {
   constructor() {}
 }

@@ -16,7 +16,7 @@ import { mergeFormControlsToInstance } from '@app/pages/pages.utils';
   template: require('./add.html')
 })
 
-export class CategoryAddComponent implements OnChanges {
+export class ArticleCategoryAddComponent implements OnChanges {
 
   @Input() category;
   @Input() categories;

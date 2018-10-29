@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 import { ModalDirective } from 'ngx-bootstrap';
@@ -8,31 +8,30 @@ import { SaHttpRequesterService } from '@app/services';
 import { UAParse, OSParse } from '../../comment.ua';
 
 @Component({
-  selector: 'comment-list',
+  selector: 'page-comment-list',
   encapsulation: ViewEncapsulation.None,
   template: require('./list.html'),
   styles: [require('./list.scss')]
 })
-export class CommentList {
+export class CommentListComponent implements OnInit {
 
   @ViewChild('delModal') public delModal: ModalDirective;
 
-  
   private _apiPath = '/comment';
 
   // 搜索参数
   public UAParse = UAParse;
   public OSParse = OSParse;
-  public searchForm:FormGroup;
-  public keyword:AbstractControl;
-  public getParams:any = {
+  public searchForm: FormGroup;
+  public keyword: AbstractControl;
+  public getParams: any = {
     sort: '-1',
     state: 'all'
   };
 
   // 初始化数据
-  public post_id:any = null;
-  public comments = { 
+  public post_id: any = null;
+  public comments = {
     data: [],
     pagination: {
       current_page: 1,
@@ -47,20 +46,20 @@ export class CommentList {
   };
 
   // 其他数据
-  public del_comments:any;
-  public commentsSelectAll:boolean = false;
+  public del_comments: any;
+  public commentsSelectAll: boolean = false;
   public selectedComments = [];
   public selectedPostIds = [];
 
   public unique(arr, newArr) {
     let num;
-    if (-1 == arr.indexOf(num = arr.shift())) newArr.push(num);
+    if (-1 === arr.indexOf(num = arr.shift())) { newArr.push(num); }
     arr.length && this.unique(arr, newArr);
   }
 
-  constructor(private _fb:FormBuilder,
+  constructor(private _fb: FormBuilder,
               private _route: ActivatedRoute,
-              private _httpService:ApiService) {
+              private _httpService: ApiService) {
 
     this.searchForm = _fb.group({
       'keyword': ['', Validators.compose([Validators.required])]
@@ -80,10 +79,10 @@ export class CommentList {
 
   // 评论列表多选切换
   public batchSelectChange(is_select): void {
-    if(!this.comments.data.length) return;
+    if (!this.comments.data.length) { return; }
     this.selectedComments = [];
     this.selectedPostIds = [];
-    this.comments.data.forEach(item => { 
+    this.comments.data.forEach(item => {
       item.selected = is_select;
       is_select && this.selectedComments.push(item._id);
       is_select && this.selectedPostIds.push(item.post_id);
@@ -95,21 +94,21 @@ export class CommentList {
     this.selectedComments = [];
     this.selectedPostIds = [];
     const comments = this.comments.data;
-    comments.forEach(item => { 
+    comments.forEach(item => {
       item.selected && this.selectedComments.push(item._id);
       item.selected && this.selectedPostIds.push(item.post_id);
     });
-    if(!this.selectedComments.length) {
+    if (!this.selectedComments.length) {
       this.commentsSelectAll = false;
     }
-    if(!!this.selectedComments.length && this.selectedComments.length == comments.length) {
+    if (!!this.selectedComments.length && this.selectedComments.length === comments.length) {
       this.commentsSelectAll = true;
     }
   }
 
   // 切换评论类型
-  public switchState(state:any):void {
-    if(state == undefined || Object.is(state, this.getParams.state)) return;
+  public switchState(state: any): void {
+    if (state === undefined || Object.is(state, this.getParams.state)) { return; }
     this.getParams.state = state;
     this.getComments();
   }
@@ -133,28 +132,28 @@ export class CommentList {
   }
 
   // 分页获取标签
-  public pageChanged(event: any):void {
+  public pageChanged(event: any): void {
     this.getComments({ page: event.page });
   }
 
   // 获取评论列表
   public getComments(params: any = {}): void {
     // 如果没有搜索词，则清空搜索框
-    if(this.keyword.value) {
+    if (this.keyword.value) {
       params.keyword = this.keyword.value;
     }
     // 如果请求的是全部数据，则优化参数
     Object.keys(this.getParams).forEach(key => {
-      if(!Object.is(this.getParams[key], 'all')) {
+      if (!Object.is(this.getParams[key], 'all')) {
         params[key] = this.getParams[key];
       }
-    })
+    });
     // 如果请求的是第一页，则设置翻页组件的当前页为第一页
-    if(!params.page || Object.is(params.page, 1)) {
+    if (!params.page || Object.is(params.page, 1)) {
       this.comments.pagination.current_page = 1;
     }
     // 请求的是否为某post页面的列表
-    if(this.post_id) {
+    if (this.post_id) {
       params.post_id = this.post_id;
     }
     this.fetching.comment = true;
@@ -174,24 +173,24 @@ export class CommentList {
 
   // 更新评论状态
   public updateCommentState(comments: any, post_ids: any, state: number) {
-    let _post_ids = [];
+    const _post_ids = [];
     this.unique(post_ids, _post_ids);
     post_ids = _post_ids;
     this._httpService.patch(this._apiPath, { comments, post_ids, state })
     .then(do_result => {
       this.getComments({ page: this.comments.pagination.current_page });
-    })
-    
+    });
+
   }
 
   // 彻底删除评论
   public delComments() {
     const comments = this.del_comments || this.selectedComments;
     let post_ids = [];
-    let _post_ids = [];
-    if(Object.is(comments.length, 1)) {
-      let currentComment = this.comments.data.find(c => Object.is(comments[0], c._id));
-      if(!!currentComment) {
+    const _post_ids = [];
+    if (Object.is(comments.length, 1)) {
+      const currentComment = this.comments.data.find(c => Object.is(comments[0], c._id));
+      if (!!currentComment) {
         post_ids = [currentComment.post_id];
       }
     } else {

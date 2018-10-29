@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+/**
+ * @file 文章编辑页面组件
+ * @module app/page/article/componennt/edit
+ * @author Surmon <https://github.com/surmon-china>
+ */
 
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SaHttpRequesterService } from '@app/services';
 
 @Component({
@@ -8,7 +13,7 @@ import { SaHttpRequesterService } from '@app/services';
   template: require('./edit.html')
 })
 
-export class ArticleEditComponent {
+export class ArticleEditComponent implements OnInit {
 
   private _apiPath = '/article';
 

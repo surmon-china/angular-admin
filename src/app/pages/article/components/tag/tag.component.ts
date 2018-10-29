@@ -1,4 +1,10 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+/**
+ * @file 标签列表页面组件
+ * @module app/page/article/componennt/tag
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 import { ModalDirective } from 'ngx-bootstrap';
@@ -10,7 +16,7 @@ import { SaHttpRequesterService } from '@app/services';
   styles: [require('./tag.scss')],
   template: require('./tag.html')
 })
-export class ArticleTagComponent {
+export class ArticleTagComponent implements OnInit {
 
   @ViewChild('delModal') delModal: ModalDirective;
 

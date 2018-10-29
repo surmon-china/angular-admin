@@ -1,17 +1,17 @@
-import { Routes, RouterModule }  from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
-import { Forms } from './forms.component';
-import { Inputs } from './components/inputs/inputs.component';
-import { Layouts } from './components/layouts/layouts.component';
+import { FormsComponent } from './forms.component';
+import { InputsComponent } from './components/inputs/inputs.component';
+import { LayoutsComponent } from './components/layouts/layouts.component';
 
 // noinspection TypeScriptValidateTypes
 const routes: Routes = [
   {
     path: '',
-    component: Forms,
+    component: FormsComponent,
     children: [
-      { path: 'inputs', component: Inputs },
-      { path: 'layouts', component: Layouts }
+      { path: 'inputs', component: InputsComponent },
+      { path: 'layouts', component: LayoutsComponent }
     ]
   }
 ];

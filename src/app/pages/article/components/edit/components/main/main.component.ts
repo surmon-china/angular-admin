@@ -1,4 +1,10 @@
-import { Component, EventEmitter, ViewEncapsulation, Input, Output } from '@angular/core';
+/**
+ * @file 文章编辑页面核心组件
+ * @module app/page/article/componennt/main
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import { Component, EventEmitter, ViewEncapsulation, Input, Output, OnInit, OnChanges } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,7 +16,7 @@ import { SaHttpRequesterService } from '@app/services';
   styles: [require('./main.scss')],
   template: require('./main.html')
 })
-export class ArticleEditMainComponent {
+export class ArticleEditMainComponent implements OnInit, OnChanges {
 
   // input
   @Input() tag;

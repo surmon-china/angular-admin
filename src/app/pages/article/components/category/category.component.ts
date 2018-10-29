@@ -1,5 +1,5 @@
 /**
- * @file 文章管理页面分类组件
+ * @file 分类页面组件
  * @module app/page/article/componennt/category
  * @author Surmon <https://github.com/surmon-china>
  */
