@@ -31,6 +31,7 @@ type TMenuCollapsedState = boolean;
   ],
   template: `
     <main [ngClass]="{'menu-collapsed': _isMenuCollapsed}" saThemeRun>
+      <ngx-loading-bar color="#017170" height="4px" diameter="20px"></ngx-loading-bar>
       <simple-notifications [options]="notificationsOptions"></simple-notifications>
       <div class="additional-bg"></div>
       <router-outlet></router-outlet>

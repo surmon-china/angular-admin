@@ -4,9 +4,27 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import * as lodash from 'lodash';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { SaHttpRequesterService } from '@app/services';
+import { TApiPath, IFetching, IDataExtends, IResponseData } from '@app/pages/pages.constants';
+import * as API_PATH from '@app/constants/api';
+
+// 公告
+export interface ICategory {
+  id?: number;
+  _id?: string;
+  pid?: string;
+  count?: number;
+  name: string;
+  slug: string;
+  description: string;
+  update_at: string;
+  create_at: string;
+  selected?: boolean;
+  extends: IDataExtends[];
+}
 
 @Component({
   selector: 'page-article-category',
@@ -15,26 +33,38 @@ import { SaHttpRequesterService } from '@app/services';
 export class ArticleCategoryComponent implements OnInit {
 
   @ViewChild('delModal') delModal: ModalDirective;
+  @ViewChild('editCategoryForm') editCategoryForm;
 
-  private _apiPath = '/category';
+  private _apiPath: TApiPath = API_PATH.CATEGORY;
 
-  public categories = { data: [] };
-  public addCategoryState = { ing: false, success: false };
-  public delCategory: any;
-  public editCategory: any;
-  public delCategories: any;
+  public categories: IResponseData<ICategory> = {
+    data: []
+  };
+  public fetching: IFetching = {
+    get: false,
+    post: false
+  };
+  public todoDelCategory: ICategory;
+  public todoEditCategory: ICategory;
+  public todoDelCategories: string[];
 
   constructor(private _httpService: SaHttpRequesterService) {}
 
   ngOnInit() {
-    this._getCategories();
+    this.getCategories();
+  }
+
+  // 重置编辑数据
+  public resetEditForm() {
+    this.todoEditCategory = null;
+    this.editCategoryForm.resetEditForm();
   }
 
   // 分类级别递归排序
-  private _categoryLevelBuild = () => {
+  public buildCategoryLevel = () => {
 
     // 初始化数据
-    const categories = Array.from(this.categories.data);
+    const categories: any = Array.from(this.categories.data);
     const toDoDeletes = [];
 
     // 级别数据构造
@@ -68,88 +98,92 @@ export class ArticleCategoryComponent implements OnInit {
     this.categories.data = levelBuildRun(categories.filter(c => toDoDeletes.indexOf(c) === -1));
   }
 
-  // 获取分类
-  private _getCategories() {
-    this._httpService.get(this._apiPath, { per_page: 100 })
-    .then(categories => {
-      this.categories = categories.result;
-      this._categoryLevelBuild();
-    });
-
-  }
-
-  // 添加分类
-  private _addCategory(category) {
-    this.addCategoryState = { ing: true, success: false };
-    this._httpService.post(this._apiPath, category)
-    .then(_category => {
-      this._getCategories();
-      this.addCategoryState = { ing: false, success: !!_category.code };
-    });
-
-  }
-
   // 修改分类
-  private _putCategory(category) {
-    this.editCategory = category;
-  }
-
-  // 确认修改分类
-  private _doPutCategory(category) {
-    this.addCategoryState = { ing: true, success: false };
-    category = Object.assign(this.editCategory, category);
-    this._httpService.put(`${ this._apiPath }/${ category._id }`, category)
-    .then(result => {
-      this._getCategories();
-      this.editCategory = null;
-      this.addCategoryState = { ing: false, success: !!result.code };
-    })
-    .catch(error => {
-      this.addCategoryState = { ing: false, success: false };
-    });
+  public editCategory(category: ICategory) {
+    this.todoEditCategory = lodash.cloneDeep(category);
   }
 
   // 删除分类弹窗
-  private _delCategory(category) {
-    this.delCategory = category;
+  public delCategory(category: ICategory) {
+    this.todoDelCategory = lodash.cloneDeep(category);
     this.delModal.show();
   }
 
   // 分类弹窗取消
-  private _canceldDelCategory(category) {
-    this.delCategory = null;
+  public canceldDelCategory() {
+    this.todoDelCategory = null;
     this.delModal.hide();
   }
 
-  // 确认删除分类
-  private _doDelCategory() {
-    this._httpService.delete(`${ this._apiPath }/${ this.delCategory._id }`)
-    .then(category => {
-      this.delCategory = null;
+  // 批量删除分类
+  public delCategories(categories) {
+    this.todoDelCategories = categories;
+    this.todoDelCategory = null;
+    this.delModal.show();
+  }
+
+  // 添加或更新的相应处理
+  public handlePostRequest(request: Promise<any>) {
+    request
+      .then(_ => {
+        this.getCategories();
+        this.resetEditForm();
+        this.fetching.post = false;
+        console.log('执行什么了');
+      })
+      .catch(_ => {
+        console.log('难道么有执行');
+        this.fetching.post = false;
+      });
+  }
+
+  // 获取分类
+  public getCategories() {
+    this.fetching.get = true;
+    this._httpService.get(this._apiPath, { per_page: 100 }).then(categories => {
+      this.categories = categories.result;
+      this.fetching.get = false;
+      this.buildCategoryLevel();
+    });
+  }
+
+  // 添加分类
+  public addCategory(category: ICategory) {
+    this.fetching.post = true;
+    const request = this._httpService.post(this._apiPath, category);
+    this.handlePostRequest(request);
+  }
+
+  // 修改分类
+  public doEditCategory(category: ICategory) {
+    this.fetching.post = true;
+    const newCategory = Object.assign(this.todoEditCategory, category);
+    const request = this._httpService.put(`${ this._apiPath }/${ newCategory._id }`, newCategory);
+    this.handlePostRequest(request);
+  }
+
+  // 删除分类
+  public doDelCategory() {
+    this._httpService.delete(`${ this._apiPath }/${ this.todoDelCategory._id }`)
+    .then(_ => {
+      this.todoDelCategory = null;
       this.delModal.hide();
-      this._getCategories();
+      this.getCategories();
     })
-    .catch(error => {
+    .catch(_ => {
       this.delModal.hide();
     });
   }
 
-  // 批量删除分类
-  private _delCategories(categories) {
-    this.delCategories = categories;
-    this.delCategory = null;
-    this.delModal.show();
-  }
-
-  // 确认批量删除
-  private _doDelCategories() {
-    this._httpService.delete(this._apiPath, { categories: this.delCategories })
-    .then(categories => {
-      this.delCategories = null;
+  // 批量删除
+  public doDelCategories() {
+    this._httpService.delete(this._apiPath, { categories: this.todoDelCategories })
+    .then(_ => {
+      this.todoDelCategories = null;
       this.delModal.hide();
-      this._getCategories();
+      this.getCategories();
     })
-    .catch(error => {
+    .catch(_ => {
       this.delModal.hide();
     });
   }

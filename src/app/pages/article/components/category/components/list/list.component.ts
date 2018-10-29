@@ -5,6 +5,8 @@
  */
 
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { ICategory } from '../../category.component';
+import { IFetching, IResponseData } from '@app/pages/pages.constants';
 
 @Component({
   selector: 'box-category-list',
@@ -15,7 +17,8 @@ import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angu
 
 export class ArticleCategoryListComponent {
 
-  @Input() categories;
+  @Input() fetching: IFetching;
+  @Input() categories: IResponseData<ICategory>;
   @Output() delCategoryRequest = new EventEmitter();
   @Output() delCategoriesRequest = new EventEmitter();
   @Output() editCategoryRequest = new EventEmitter();

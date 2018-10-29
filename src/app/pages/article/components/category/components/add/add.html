@@ -1,7 +1,7 @@
 <form name="addCatrgory" 
       class="category-edit-form" 
       [formGroup]="editForm" 
-      (ngSubmit)="onSubmit(editForm.value)">
+      (ngSubmit)="submitEditForm()">
   <div class="form-group" 
         [ngClass]="{
           'has-error': (!name.valid && name.touched), 
@@ -41,13 +41,14 @@
       <h5>父分类</h5>
     </label>
     <select class="form-control c-select" id="categoryParent" [formControl]="pid">
-      <option value="">无</option>
-      <ng-template [ngIf]="categories && categories.data.length">
-        <option *ngFor="let cate of categories.data" 
+      <option [ngValue]="null">无</option>
+      <ng-template [ngIf]="categories && categories.length">
+        <option *ngFor="let cate of categories" 
                 [ngValue]="cate._id" 
-                [disabled]="!!category && category._id == cate._id">
+                [disabled]="isDisableCateSelect(cate)">
           <span *ngIf="cate.level">└</span>
-          <span *ngFor="let num of categoryLevelMark(cate.level)">─</span>
+          <span>{{ ''.padEnd(cate.level, '─') }}</span>
+          <span>&nbsp;</span>
           <span>{{ cate.name }}</span>
         </option>
       </ng-template>
@@ -116,13 +117,13 @@
     <div class="col-sm-12">
       <button type="submit" 
           class="btn btn-success btn-with-icon" 
-          [disabled]="!editForm.valid || submitState.ing">
+          [disabled]="!editForm.valid || fetching.post">
         <i class="ion-md-done-all"></i>
-        <span *ngIf="submitState.ing">分类{{ category ? '修改' : '添加' }}中</span>
-        <span *ngIf="!submitState.ing">{{ category ? '修改' : '添加' }}分类目录</span>
+        <span *ngIf="fetching.post">分类{{ category ? '修改' : '添加' }}中</span>
+        <span *ngIf="!fetching.post">{{ category ? '修改' : '添加' }}分类目录</span>
       </button>
       <span>&nbsp;&nbsp;</span>
-      <button class="btn btn-default btn-with-icon" (click)="resetForm()">
+      <button class="btn btn-default btn-with-icon" (click)="resetEditForm(true)">
         <i class="ion-md-refresh"></i>
         <span>重置</span>
       </button>

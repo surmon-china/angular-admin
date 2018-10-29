@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 
 @Component({
-  selector: 'ui',
+  selector: 'page-ui',
   styles: [],
   template: `<router-outlet></router-outlet>`
 })
-export class Ui {
+export class UiComponent {
 
-  constructor()Component; {}
+  constructor() {}
 }

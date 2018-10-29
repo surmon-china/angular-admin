@@ -139,15 +139,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngIf="!announcements || !announcements.data.length">
+              <tr *ngIf="!announcements.data.length;else dataList">
                 <td colspan="7">
                   <p class="text-muted text-center announcement-err-msg">
-                    <span *ngIf="fetching.get">数据请求中...</span>
-                    <span *ngIf="!fetching.get">暂无数据</span>
+                    <span>{{ fetching.get ? '数据请求中...' : '暂无数据' }}</span>
                   <p>
                 </td>
               </tr>
-              <ng-template [ngIf]="announcements && announcements.data.length">
+              <ng-template #dataList>
                 <tr *ngFor="let announcement of announcements.data">
                   <td class="batch-checkbox">
                     <sa-checkbox [(ngModel)]="announcement.selected" (ngModelChange)="handleItemSelectChange()">

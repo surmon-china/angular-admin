@@ -1,11 +1,11 @@
-import { NgModule }      from '@angular/core';
-import { CommonModule }  from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SaModule } from '@/app/sa.module';
 
-import { routing }       from './ui.routing';
+import { routing } from './ui.routing';
 import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
-import { Ui } from './ui.component';
+import { UiComponent } from './ui.component';
 import { Buttons } from './components/buttons/buttons.component';
 import { Grid } from './components/grid/grid.component';
 import { Icons } from './components/icons/icons.component';
@@ -39,7 +39,7 @@ import { IconsService } from './components/icons/icons.service';
     Icons,
     Modals,
     Typography,
-    Ui,
+    UiComponent,
     FlatButtons,
     RaisedButtons,
     SizedButtons,
@@ -53,5 +53,4 @@ import { IconsService } from './components/icons/icons.service';
     IconsService
   ]
 })
-export default class UiModule {
-}
+export default class UiModule {}

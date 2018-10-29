@@ -7,7 +7,17 @@
 import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
+import { ICategory } from '../../category.component';
+import { IFetching, IResponseData } from '@app/pages/pages.constants';
 import { mergeFormControlsToInstance } from '@app/pages/pages.utils';
+
+const DEFAULT_FORM = {
+  name: '',
+  slug: '',
+  pid: null,
+  description: '',
+  extends: [{ name: 'icon', value: 'icon-category'}]
+};
 
 @Component({
   selector: 'box-category-add',
@@ -15,15 +25,13 @@ import { mergeFormControlsToInstance } from '@app/pages/pages.utils';
   styles: [require('./add.scss')],
   template: require('./add.html')
 })
-
 export class ArticleCategoryAddComponent implements OnChanges {
 
-  @Input() category;
-  @Input() categories;
-  @Input() submitState: any;
-  @Output() categoryChange: EventEmitter<any> = new EventEmitter();
-  @Output() submitCategory: EventEmitter<any> = new EventEmitter();
-  @Output() submitStateChange: EventEmitter<any> = new EventEmitter();
+  @Input() fetching: IFetching;
+  @Input() category: ICategory;
+  @Input() categories: IResponseData<ICategory>;
+  @Output() resetForm: EventEmitter<any> = new EventEmitter();
+  @Output() submitForm: EventEmitter<any> = new EventEmitter();
 
   public editForm: FormGroup;
   public name: AbstractControl;
@@ -34,17 +42,22 @@ export class ArticleCategoryAddComponent implements OnChanges {
 
   constructor(fb: FormBuilder) {
     this.editForm = fb.group({
-      name: ['', Validators.compose([Validators.required])],
-      slug: ['', Validators.compose([Validators.required])],
-      pid: ['', Validators.compose([])],
-      description: ['', Validators.compose([])],
-      extends: [[{ name: 'icon', value: 'icon-category'}]]
+      pid: [DEFAULT_FORM.pid, Validators.compose([])],
+      name: [DEFAULT_FORM.name, Validators.compose([Validators.required])],
+      slug: [DEFAULT_FORM.slug, Validators.compose([Validators.required])],
+      description: [DEFAULT_FORM.description, Validators.compose([])],
+      extends: [DEFAULT_FORM.extends]
     });
     mergeFormControlsToInstance(this, this.editForm);
   }
 
-  // 级别标记
-  public categoryLevelMark = level => Array.from({ length: level }, () => '');
+  // 是否禁用分类选择
+  public isDisableCateSelect(cate): boolean {
+    const category = this.category;
+    return category
+      ? category._id === cate._id || category._id === cate.pid
+      : false;
+  }
 
   // 删除自定义配置项目
   public delExtendItem(index) {
@@ -57,37 +70,22 @@ export class ArticleCategoryAddComponent implements OnChanges {
   }
 
   // 重置表单
-  public resetForm(): void {
-    this.editForm.reset({
-      pid: '',
-      name: '',
-      slug: '',
-      description: '',
-      extends: [{ name: 'icon', value: 'icon-category'}]
-    });
-    if (this.category) {
-      this.category = null;
-      this.categoryChange.emit(this.category);
-    }
-    this.submitState.ing = false;
-    this.submitState.success = false;
-    this.submitStateChange.emit(this.submitState);
+  public resetEditForm(emit: boolean): void {
+    this.editForm.reset(DEFAULT_FORM);
+    return emit && this.resetForm.emit(true);
   }
 
-  // 提交
-  public onSubmit(category: Object): void {
+  // 提交表单
+  public submitEditForm(): void {
     if (this.editForm.valid) {
-      return this.submitCategory.emit(category);
+      return this.submitForm.emit(this.editForm.value);
     }
   }
 
   ngOnChanges(changes) {
-    const submitOk = !!changes.submitState && !changes.submitState.currentValue.ing && changes.submitState.currentValue.success;
-    const category = !!changes.category && !!changes.category.currentValue;
-    if (submitOk) { this.resetForm(); }
-    if (category) {
-      changes.category.currentValue.pid = changes.category.currentValue.pid || '';
-      this.editForm.reset(changes.category.currentValue);
-    }
+    console.log('changes', changes);
+    const { category } = changes;
+    const newCategory = category && category.currentValue;
+    return newCategory && this.editForm.reset(newCategory);
   }
 }

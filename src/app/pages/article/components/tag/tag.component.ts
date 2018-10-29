@@ -9,6 +9,7 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 
 import { ModalDirective } from 'ngx-bootstrap';
 import { SaHttpRequesterService } from '@app/services';
+import * as API_PATH from '@app/constants/api';
 
 @Component({
   selector: 'page-article-tag',
@@ -21,7 +22,7 @@ export class ArticleTagComponent implements OnInit {
   @ViewChild('delModal') delModal: ModalDirective;
 
 
-  private _apiPath = '/tag';
+  private _apiPath = API_PATH.TAG;
 
   public editForm: FormGroup;
   public searchForm: FormGroup;

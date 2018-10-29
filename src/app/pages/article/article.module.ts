@@ -40,19 +40,18 @@ import { ArticleEditCategoryComponent } from './components/edit/components/categ
   ],
   declarations: [
     ArticleComponent,
-
     ArticleListComponent,
     ArticleTagComponent,
-
-    ArticleCategoryComponent,
-    ArticleCategoryAddComponent,
-    ArticleCategoryListComponent,
-
     ArticleEditComponent,
+
     ArticleEditMainComponent,
     ArticleEditSubmitComponent,
     ArticleEditExtendComponent,
     ArticleEditCategoryComponent,
+
+    ArticleCategoryComponent,
+    ArticleCategoryAddComponent,
+    ArticleCategoryListComponent
   ]
 })
 export default class ArticleModule {}

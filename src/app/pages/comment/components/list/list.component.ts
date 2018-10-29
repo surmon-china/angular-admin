@@ -6,6 +6,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 
 import { SaHttpRequesterService } from '@app/services';
 import { UAParse, OSParse } from '../../comment.ua';
+import * as API_PATH from '@app/constants/api';
 
 @Component({
   selector: 'page-comment-list',
@@ -17,7 +18,7 @@ export class CommentListComponent implements OnInit {
 
   @ViewChild('delModal') public delModal: ModalDirective;
 
-  private _apiPath = '/comment';
+  private _apiPath = API_PATH.COMMENT;
 
   // 搜索参数
   public UAParse = UAParse;
@@ -59,7 +60,7 @@ export class CommentListComponent implements OnInit {
 
   constructor(private _fb: FormBuilder,
               private _route: ActivatedRoute,
-              private _httpService: ApiService) {
+              private _httpService: SaHttpRequesterService) {
 
     this.searchForm = _fb.group({
       'keyword': ['', Validators.compose([Validators.required])]

@@ -4,6 +4,7 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 
 import { SaHttpRequesterService } from '@app/services';
 import { UAParse, OSParse } from '../../comment.ua';
+import * as API_PATH from '@app/constants/api';
 
 @Component({
   selector: 'page-comment-detail',
@@ -14,7 +15,7 @@ import { UAParse, OSParse } from '../../comment.ua';
 
 export class CommentDetailComponent implements OnInit {
 
-  private _apiPath = '/comment';
+  private _apiPath = API_PATH.COMMENT;
 
   // 评论内容
   public UAParse = UAParse;

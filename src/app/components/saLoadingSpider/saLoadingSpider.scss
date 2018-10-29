@@ -1,0 +1,9 @@
+@import '../../theme/sass/conf/conf';
+$height: 52px;
+
+.sa-loading-spider {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}

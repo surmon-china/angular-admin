@@ -11,4 +11,4 @@ export const routes: Routes = [
   { path: '**', redirectTo: 'dashboard' }
 ];
 
-export const routing = RouterModule.forRoot(routes, { useHash: false });
+export const RoutingModule = RouterModule.forRoot(routes, { useHash: false });

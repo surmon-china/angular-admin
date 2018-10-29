@@ -1,1 +1,1 @@
-export * from './BasicTables.component';
+export * from './basicTables.component';

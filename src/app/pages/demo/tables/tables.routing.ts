@@ -1,13 +1,13 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { Tables } from './tables.component';
+import { TablesComponent } from './tables.component';
 import { BasicTablesComponent } from './components/basicTables/basicTables.component';
 
 // noinspection TypeScriptValidateTypes
 const routes: Routes = [
   {
     path: '',
-    component: Tables,
+    component: TablesComponent,
     children: [
       { path: 'basictables', component: BasicTablesComponent },
     ]

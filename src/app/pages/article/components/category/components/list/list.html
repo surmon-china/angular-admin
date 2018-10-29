@@ -44,8 +44,7 @@
       <tbody>
         <tr *ngIf="!categories || !categories.data.length">
           <td colspan="7">
-            <p class="text-muted text-center category-err-msg" *ngIf="categories && categories.data.length == 0">暂无数据<p>
-            <p class="text-muted text-center category-err-msg" *ngIf="categories && categories.data.length == undefined">加载中<p>
+            <p class="text-muted text-center category-err-msg">{{ fetching.get ? '加载中' : '暂无数据' }}<p>
           </td>
         </tr>
         <ng-template [ngIf]="categories && categories.data.length">

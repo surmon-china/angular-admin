@@ -11,11 +11,11 @@ import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 import * as API_PATH from '@app/constants/api';
-import { mergeFormControlsToInstance } from '@app/pages/pages.utils';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
-import { TSelectedIds, EPublishState, IResponseData, IFetching } from '@app/pages/pages.constants';
+import { mergeFormControlsToInstance, handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.utils';
+import { TApiPath, TSelectedIds, TSelectedAll, EPublishState, IResponseData, IFetching } from '@app/pages/pages.constants';
 
-// 单个公告
+// 公告
 interface IAnnouncement {
   id?: number;
   _id?: string;
@@ -25,6 +25,15 @@ interface IAnnouncement {
   create_at: string;
   selected?: boolean;
 }
+
+const DEFAULT_EDIT_FORM = {
+  content: '',
+  state: EPublishState.published
+};
+
+const DEFAULT_SEARCH_FORM = {
+  keyword: ''
+};
 
 @Component({
   selector: 'page-announcement',
@@ -36,7 +45,7 @@ export class AnnouncementComponent implements OnInit {
 
   @ViewChild('delModal') delModal: ModalDirective;
 
-  private _apiPath: string = API_PATH.ANNOUNCEMENT;
+  private _apiPath: TApiPath = API_PATH.ANNOUNCEMENT;
 
   // 表单
   public editForm: FormGroup;
@@ -47,7 +56,7 @@ export class AnnouncementComponent implements OnInit {
 
   // 业务
   public activeAnnouncement: IAnnouncement = null;
-  public announcementsSelectAll: boolean = false;
+  public announcementsSelectAll: TSelectedAll = false;
   public selectedAnnouncements: TSelectedIds = [];
   public publishState: EPublishState = EPublishState.all;
   public fetching: IFetching = { get: false };
@@ -60,12 +69,12 @@ export class AnnouncementComponent implements OnInit {
 
     // 实例表单
     this.editForm = this._fb.group({
-      content: ['', Validators.compose([Validators.required])],
-      state: [EPublishState.published, Validators.compose([Validators.required])]
+      content: [DEFAULT_EDIT_FORM.content, Validators.compose([Validators.required])],
+      state: [DEFAULT_EDIT_FORM.state, Validators.compose([Validators.required])]
     });
 
     this.searchForm = this._fb.group({
-      keyword: ['', Validators.compose([Validators.required])]
+      keyword: [DEFAULT_SEARCH_FORM.keyword, Validators.compose([Validators.required])]
     });
 
     mergeFormControlsToInstance(this, this.editForm);
@@ -108,16 +117,13 @@ export class AnnouncementComponent implements OnInit {
 
   // 重置编辑表单
   public resetEditForm(): void {
-    this.editForm.reset({
-      content: '',
-      state: EPublishState.published
-    });
+    this.editForm.reset(DEFAULT_EDIT_FORM);
     this.activeAnnouncement = null;
   }
 
   // 重置搜索
   public resetSearchForm(): void {
-    this.searchForm.reset({ keyword: '' });
+    this.searchForm.reset(DEFAULT_SEARCH_FORM);
   }
 
   // 修改公告
@@ -136,7 +142,7 @@ export class AnnouncementComponent implements OnInit {
   }
 
   // 提交搜索
-  public submitSearchForm(keyword: string): void {
+  public submitSearchForm(): void {
     if (this.searchForm.valid) {
       this.getAnnouncements();
     }
@@ -161,19 +167,17 @@ export class AnnouncementComponent implements OnInit {
   }
 
   // 多选切换
-  public handleBatchSelectChange(is_select: boolean): void {
-    if (!this.announcements.data.length) {
-      return;
-    }
-    this.selectedAnnouncements = is_select ? this.announcements.data.map(item => item._id) : [];
-    this.announcements.data.forEach(item => (item.selected = is_select));
+  public handleBatchSelectChange(isSelect: boolean) {
+    const data = this.announcements.data;
+    const selectedIds = this.selectedAnnouncements;
+    handleBatchSelectChange({ data, selectedIds, isSelect });
   }
 
   // 单个切换
   public handleItemSelectChange(): void {
-    const announcements = this.announcements.data;
-    this.selectedAnnouncements = announcements.filter(item => item.selected).map(item => item._id);
-    this.announcementsSelectAll = this.selectedAnnouncements.length === announcements.length;
+    const data = this.announcements.data;
+    const selectedIds = this.selectedAnnouncements;
+    this.announcementsSelectAll = handleItemSelectChange({ data, selectedIds });
   }
 
   // 分页获取公告

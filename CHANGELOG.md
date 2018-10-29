@@ -4,6 +4,9 @@
 ### v2.1.0
 
 - 重构 Typescript 部分
+- 重构所有类型和接口
+- 增加 loading-bar 组件
+- 增加 loading-spider 组件
 
 ### v2.0.0
 

@@ -4,15 +4,22 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-// 选中的 ids
+export type TApiPath = string;
 export type TSelectedIds = string[];
+export type TSelectedAll = boolean;
 
 // 请求状态
 export interface IFetching {
   [key: string]: boolean;
 }
 
-interface IPagination {
+export interface IDataExtends {
+  _id: string;
+  name: string;
+  value: string;
+}
+
+export interface IPagination {
   current_page: number;
   total_page: number;
   per_page: number;
@@ -34,20 +41,20 @@ export enum EPublishState {
 }
 
 // 公开状态
-export enum PUBLIC_STATE {
+export enum EPublicState {
   password = 0, // 需要密码
   public = 1, // 公开状态
   secret = -1 // 私密
 }
 
 // 转载状态
-export enum ORIGIN_STATE {
+export enum EOriginState {
   original = 0, // 原创
   reprint = 1, // 转载
   hybrid = -1 // 混合
 }
 
-export enum COMMENT_STATE {
+export enum ECommentState {
   auditing = 0, // 待审核
   published = 1, // 通过正常
   deleted = -1, // 已删除
@@ -55,23 +62,23 @@ export enum COMMENT_STATE {
 }
 
 // 评论宿主页面的 POST_ID 类型
-export enum COMMENT_POST_TYPE {
+export enum ECommentPostType {
   guestbook = 0 // 留言板
 }
 
 // 评论本身的类型
-export enum COMMENT_PARENT_TYPE {
+export enum ECOMMENT_PARENT_TYPE {
   self = 0 // 自身一级评论
 }
 
 // 排序状态
-export enum SORT_TYPE {
+export enum ESORT_TYPE {
   asc = 1, // 升序
   desc = -1 // 降序
 }
 
 // 喜欢类型
-export enum LIKE_TYPE {
+export enum ELIKE_TYPE {
   comment = 1,
   page = 2
 }

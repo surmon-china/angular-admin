@@ -7,6 +7,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SaHttpRequesterService } from '@app/services';
+import * as API_PATH from '@app/constants/api';
 
 @Component({
   selector: 'page-article-edit',
@@ -15,7 +16,7 @@ import { SaHttpRequesterService } from '@app/services';
 
 export class ArticleEditComponent implements OnInit {
 
-  private _apiPath = '/article';
+  private _apiPath = API_PATH.ARTICLE;
 
   // 文章内容
   public article_id: any = null;

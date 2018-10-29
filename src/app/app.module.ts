@@ -12,13 +12,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
 import { ENV_PROVIDERS } from '@app/environment';
 import { AppComponent } from '@app/app.component';
 import { SaModule } from '@app/sa.module';
 import { PagesModule } from '@app/pages/pages.module';
 import { GlobalState } from '@app/global.state';
-import { routing } from '@app/app.routing';
+import { RoutingModule } from '@app/app.routing';
 import { AppState, IinternalState } from '@app/app.service';
 
 // Application wide providers
@@ -46,9 +47,10 @@ interface IStore {
     FormsModule,
     ReactiveFormsModule,
     PagesModule,
-    routing,
+    RoutingModule,
     HttpClientModule,
     SimpleNotificationsModule.forRoot(),
+    LoadingBarHttpClientModule,
     SaModule.forRoot()
   ],
   providers: [
