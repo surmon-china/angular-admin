@@ -122,7 +122,8 @@
       </div>
       <div class="table-responsive">
         <div class="announcement-list">
-          <table class="table table-striped table-no-borders black-muted-bg table-enrich">
+            <sa-loading-spider [show]="fetching.get"></sa-loading-spider>
+            <table class="table table-striped table-no-borders black-muted-bg table-enrich">
             <thead class="thead-inverse">
               <tr>
                 <th class="batch-checkbox">

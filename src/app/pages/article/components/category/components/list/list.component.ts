@@ -5,8 +5,9 @@
  */
 
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { ICategory } from '../../category.component';
-import { IFetching, IResponseData } from '@app/pages/pages.constants';
+import { IFetching, IResponseData, TSelectedAll, TSelectedIds } from '@app/pages/pages.constants';
+import { handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.utils';
+import { ICategory } from '@app/pages/article/article.utils';
 
 @Component({
   selector: 'box-category-list',
@@ -24,28 +25,28 @@ export class ArticleCategoryListComponent {
   @Output() editCategoryRequest = new EventEmitter();
   @Output() refreshList = new EventEmitter();
 
-  public categoriesSelectAll: boolean = false;
-  public selectedCategories = [];
+  public categoriesSelectAll: TSelectedAll = false;
+  public selectedCategories: TSelectedIds = [];
 
   constructor() {}
 
-  // 级别标记
-  public categoryLevelMark = level => Array.from({ length: level }, () => '');
-
   // 多选切换
-  public batchSelectChange(is_select: boolean): void {
-    if (!this.categories.data.length) {
-      return;
-    }
-    this.selectedCategories = is_select ? this.categories.data.map(item => item._id) : [];
-    this.categories.data.forEach(item => (item.selected = is_select));
+  public batchSelectChange(isSelect: boolean): void {
+    const data = this.categories.data;
+    const selectedIds = this.selectedCategories;
+    handleBatchSelectChange({ data, selectedIds, isSelect });
   }
 
   // 单个切换
   public itemSelectChange(): void {
-    const categories = this.categories.data;
-    this.selectedCategories = categories.filter(item => item.selected).map(item => item._id);
-    this.categoriesSelectAll = this.selectedCategories.length === categories.length;
+    const data = this.categories.data;
+    const selectedIds = this.selectedCategories;
+    this.categoriesSelectAll = handleItemSelectChange({ data, selectedIds });
+  }
+
+  // 刷新列表
+  public refreshCategories() {
+    this.refreshList.emit();
   }
 
   // 编辑分类

@@ -58,7 +58,7 @@ export class OptionsComponent implements OnInit {
     this.authForm = this._fb.group({
       name: ['', Validators.compose([Validators.required])],
       slogan: ['', Validators.compose([Validators.required])],
-      gravatar: ['', Validators.compose([Validators.required])],
+      gravatar: [''],
       password: [''],
       new_password: [''],
       rel_new_password: [''],

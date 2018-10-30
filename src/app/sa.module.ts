@@ -32,7 +32,8 @@ const SA_COMPONENTS = [
   Components.SaMsgCenterComponent,
   Components.SaMultiCheckboxComponent,
   Components.SaPictureUploaderComponent,
-  Components.SaMarkdownEditorComponent
+  Components.SaMarkdownEditorComponent,
+  Components.SaLoadingSpiderComponent
 ];
 
 const SA_DIRECTIVES = [

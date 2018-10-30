@@ -10,7 +10,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
 import { checkTokenIsOk } from '@app/discriminators/token';
 import { TOKEN, TOKEN_HEADER } from '@app/constants/auth';
-import { SERVER_ERROR, GATEWAY_TIMEOUT } from '@/app/constants/http';
+import { SERVER_ERROR, GATEWAY_TIMEOUT, UNKNOWN_ERROR } from '@/app/constants/http';
 import { isAuthPage } from '@app/discriminators/url';
 import { api } from '@/environments/environment';
 
@@ -28,6 +28,8 @@ export interface IRequestParams {
 // 响应体
 interface IReponese {
   status: number;
+  statusText?: string;
+  message?: string;
   error?: any;
 }
 
@@ -70,12 +72,12 @@ export class SaHttpRequesterService {
   // 失败处理
   private handleReponseError = (response: IReponese): Promise<any> => {
     return new Promise((_, reject) => {
-      const responseError = [SERVER_ERROR, GATEWAY_TIMEOUT].includes(response.status);
-      const errMessage =  response.error && response.error.message;
-      if (responseError && errMessage) {
+      const responseError = [SERVER_ERROR, GATEWAY_TIMEOUT, UNKNOWN_ERROR].includes(response.status);
+      if (responseError) {
+        const errMessage = response.message || response.statusText;
         this._notificationsService.error('请求失败', errMessage, { timeOut: 1000 });
       }
-      return response;
+      return reject(response);
     });
   }
 

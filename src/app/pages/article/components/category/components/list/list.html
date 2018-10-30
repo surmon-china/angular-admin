@@ -1,7 +1,7 @@
 <div class="clearfix">
   <div class="pull-left">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-default btn-with-icon" (click)="refreshList.emit()">
+      <button type="button" class="btn btn-default btn-with-icon" (click)="refreshCategories()">
         <i class="ion-md-refresh"></i>
         <span>刷新</span>
       </button>
@@ -23,7 +23,8 @@
 </div>
 <div class="table-responsive">
   <div class="category-list">
-    <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
+      <sa-loading-spider [show]="fetching.get"></sa-loading-spider>
+      <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
       <thead class="thead-inverse">
         <tr>
           <th class="batch-checkbox">
@@ -42,12 +43,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngIf="!categories || !categories.data.length">
+        <tr *ngIf="!categories.data.length;else dataList">
           <td colspan="7">
             <p class="text-muted text-center category-err-msg">{{ fetching.get ? '加载中' : '暂无数据' }}<p>
           </td>
         </tr>
-        <ng-template [ngIf]="categories && categories.data.length">
+        <ng-template #dataList>
           <tr *ngFor="let category of categories.data">
             <td class="batch-checkbox">
               <sa-checkbox [(ngModel)]="category.selected" (ngModelChange)="itemSelectChange()">
@@ -63,7 +64,8 @@
                 <span>&nbsp;</span>
               </strong>
               <strong *ngIf="category.level">└</strong>
-              <strong *ngFor="let num of categoryLevelMark(category.level)">─&nbsp;</strong>
+              <strong>{{ ''.padEnd(category.level, '─') }}</strong>
+              <span>&nbsp;</span>
               <strong>{{ category.name }}</strong>
             </td>
             <td class="category-description" title="{{ category.description }}">

@@ -8,23 +8,9 @@ import * as lodash from 'lodash';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { SaHttpRequesterService } from '@app/services';
-import { TApiPath, IFetching, IDataExtends, IResponseData } from '@app/pages/pages.constants';
+import { TApiPath, IFetching, IResponseData, TSelectedIds } from '@app/pages/pages.constants';
+import { ICategory, buildLevelCategories } from '@app/pages/article/article.utils';
 import * as API_PATH from '@app/constants/api';
-
-// 公告
-export interface ICategory {
-  id?: number;
-  _id?: string;
-  pid?: string;
-  count?: number;
-  name: string;
-  slug: string;
-  description: string;
-  update_at: string;
-  create_at: string;
-  selected?: boolean;
-  extends: IDataExtends[];
-}
 
 @Component({
   selector: 'page-article-category',
@@ -46,7 +32,7 @@ export class ArticleCategoryComponent implements OnInit {
   };
   public todoDelCategory: ICategory;
   public todoEditCategory: ICategory;
-  public todoDelCategories: string[];
+  public todoDelCategories: TSelectedIds;
 
   constructor(private _httpService: SaHttpRequesterService) {}
 
@@ -58,44 +44,6 @@ export class ArticleCategoryComponent implements OnInit {
   public resetEditForm() {
     this.todoEditCategory = null;
     this.editCategoryForm.resetEditForm();
-  }
-
-  // 分类级别递归排序
-  public buildCategoryLevel = () => {
-
-    // 初始化数据
-    const categories: any = Array.from(this.categories.data);
-    const toDoDeletes = [];
-
-    // 级别数据构造
-    categories.forEach(cate => {
-      // 找到问题数据并添加标记
-      cate.unrepaired = (!!cate.pid && !categories.find(c => Object.is(cate.pid, c._id)));
-      categories.forEach(c => {
-        if (Object.is(cate.pid, c._id)) {
-          c.children = c.children || [];
-          c.children.push(cate);
-          toDoDeletes.push(cate);
-        }
-      });
-    });
-
-    // 扁平数据构造（同时添加级别标示）
-    const levelBuildRun = cates => {
-      const newCategories = [];
-      const levelBuildOptimize = (child, level) => {
-        child.forEach(c => {
-          c.level = level;
-          newCategories.push(c);
-          if (c.children && c.children.length) { levelBuildOptimize(c.children, level + 1); }
-        });
-      };
-      levelBuildOptimize(cates, 0);
-      return newCategories;
-    };
-
-    // 开始执行
-    this.categories.data = levelBuildRun(categories.filter(c => toDoDeletes.indexOf(c) === -1));
   }
 
   // 修改分类
@@ -116,7 +64,7 @@ export class ArticleCategoryComponent implements OnInit {
   }
 
   // 批量删除分类
-  public delCategories(categories) {
+  public delCategories(categories: TSelectedIds) {
     this.todoDelCategories = categories;
     this.todoDelCategory = null;
     this.delModal.show();
@@ -124,26 +72,26 @@ export class ArticleCategoryComponent implements OnInit {
 
   // 添加或更新的相应处理
   public handlePostRequest(request: Promise<any>) {
-    request
-      .then(_ => {
-        this.getCategories();
-        this.resetEditForm();
-        this.fetching.post = false;
-        console.log('执行什么了');
-      })
-      .catch(_ => {
-        console.log('难道么有执行');
-        this.fetching.post = false;
-      });
+    request.then(_ => {
+      this.getCategories();
+      this.resetEditForm();
+      this.fetching.post = false;
+    }).catch(_ => {
+      this.fetching.post = false;
+    });
   }
 
   // 获取分类
   public getCategories() {
     this.fetching.get = true;
-    this._httpService.get(this._apiPath, { per_page: 100 }).then(categories => {
+    this._httpService.get(this._apiPath, { per_page: 100 })
+    .then(categories => {
       this.categories = categories.result;
       this.fetching.get = false;
-      this.buildCategoryLevel();
+      this.categories.data = buildLevelCategories(this.categories.data);
+    })
+    .catch(_ => {
+      this.fetching.get = false;
     });
   }
 

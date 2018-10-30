@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Component, ElementRef, ViewEncapsulation, AfterViewChecked } from '@angular/core';
 
 import { SaHttpRequesterService } from '@app/services';
+import { TApiPath } from '@app/pages/pages.constants';
 import { TOKEN } from '@app/constants/auth';
 import * as API_PATH from '@app/constants/api';
 
@@ -20,7 +21,7 @@ import * as API_PATH from '@app/constants/api';
 })
 export class AuthComponent implements AfterViewChecked {
 
-  private _apiPath = API_PATH.AUTH;
+  private _apiPath: TApiPath = API_PATH.AUTH;
 
   public password: string = '';
   public editMode: boolean = false;
@@ -59,6 +60,9 @@ export class AuthComponent implements AfterViewChecked {
         localStorage.setItem(TOKEN, auth.result.token);
         this._router.navigate(['/dashboard']);
       }
+    })
+    .catch(err => {
+      console.warn('登陆系统失败！', err);
     });
   }
 

@@ -7,7 +7,7 @@
 import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
-import { ICategory } from '../../category.component';
+import { ICategory } from '@app/pages/article/article.utils';
 import { IFetching, IResponseData } from '@app/pages/pages.constants';
 import { mergeFormControlsToInstance } from '@app/pages/pages.utils';
 
@@ -83,7 +83,6 @@ export class ArticleCategoryAddComponent implements OnChanges {
   }
 
   ngOnChanges(changes) {
-    console.log('changes', changes);
     const { category } = changes;
     const newCategory = category && category.currentValue;
     return newCategory && this.editForm.reset(newCategory);
