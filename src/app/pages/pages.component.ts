@@ -27,7 +27,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
           <li><i class="socicon socicon-facebook"></i></li>
           <li><i class="socicon socicon-twitter"></i></li>
           <li><i class="socicon socicon-google"></i></li>
-          <li><i class="socicon socicon-github"></i></li>
+          <li>
+            <a href="https://github.com/surmon-china" target="_blank"><i class="socicon socicon-github"></i></a>
+          </li>
         </ul>
       </div>
     </footer>

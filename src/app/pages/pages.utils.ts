@@ -4,7 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { FormGroup } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import { TSelectedIds, TSelectedAll } from './pages.constants';
 
 interface ISelectChangeOptions {
@@ -40,4 +40,7 @@ export const handleItemSelectChange = (options: ISelectChangeOptions): TSelected
   return options.selectedIds.length === data.length;
 };
 
-// 其他
+// 表单验证
+export const formControlStateClass = (control: AbstractControl): string => {
+  return control.touched ? (control.valid ? 'has-success' : 'has-error') : '';
+};

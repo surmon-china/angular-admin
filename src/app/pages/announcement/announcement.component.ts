@@ -12,8 +12,13 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 
 import * as API_PATH from '@app/constants/api';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
-import { mergeFormControlsToInstance, handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.utils';
 import { TApiPath, TSelectedIds, TSelectedAll, EPublishState, IResponseData, IFetching } from '@app/pages/pages.constants';
+import {
+  mergeFormControlsToInstance,
+  handleBatchSelectChange,
+  handleItemSelectChange,
+  formControlStateClass
+} from '@app/pages/pages.utils';
 
 // 公告
 interface IAnnouncement {
@@ -42,6 +47,9 @@ const DEFAULT_SEARCH_FORM = {
   template: require('./announcement.html')
 })
 export class AnnouncementComponent implements OnInit {
+
+  PublishState = EPublishState;
+  controlStateClass = formControlStateClass;
 
   @ViewChild('delModal') delModal: ModalDirective;
 
@@ -104,6 +112,11 @@ export class AnnouncementComponent implements OnInit {
   // 解析 Markdown
   public parseMarkdown(content: string): string {
     return marked(content);
+  }
+
+  // 判断公告类型
+  public isState(state: EPublishState): boolean {
+    return this.publishState === state;
   }
 
   // 切换公告类型

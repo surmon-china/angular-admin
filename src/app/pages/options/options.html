@@ -5,11 +5,7 @@
         <form class="form-horizontal option-form"
               [formGroup]="optionForm" 
               (ngSubmit)="submitOptionForm(optionForm.value)">
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!title.valid && title.touched), 
-                  'has-success': (title.valid && title.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(title)">
             <label for="blogTitle" class="col-sm-2 form-control-label">站点标题</label>
             <div class="col-sm-10">
               <input type="text" 
@@ -19,11 +15,7 @@
                      [formControl]="title">
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!sub_title.valid && sub_title.touched), 
-                  'has-success': (sub_title.valid && sub_title.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(sub_title)">
             <label for="blogSubTitle" class="col-sm-2 form-control-label">副标题</label>
             <div class="col-sm-10">
               <input type="text" 
@@ -33,11 +25,7 @@
                      [formControl]="sub_title">
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!keywords.valid && keywords.touched), 
-                  'has-success': (keywords.valid && keywords.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(keywords)">
             <label for="blogKeywords" class="col-sm-2 form-control-label">关键词</label>
             <div class="col-sm-10">
               <input type="text" 
@@ -48,11 +36,7 @@
                      (change)="handleKeywordsChange($event)">
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!description.valid && description.touched), 
-                  'has-success': (description.valid && description.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(description)">
             <label for="blogDescription" class="col-sm-2 form-control-label">描述</label>
             <div class="col-sm-10">
               <textarea type="text" 
@@ -63,11 +47,7 @@
               </textarea>
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!site_url.valid && site_url.touched), 
-                  'has-success': (site_url.valid && site_url.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(site_url)">
             <label for="siteUrl" class="col-sm-2 form-control-label">站点地址</label>
             <div class="col-sm-10">
               <input type="text" 
@@ -77,11 +57,7 @@
                      [formControl]="site_url">
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!site_email.valid && site_email.touched), 
-                  'has-success': (site_email.valid && site_email.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(site_email)">
             <label for="siteEmail" class="col-sm-2 form-control-label">电子邮件地址</label>
             <div class="col-sm-10">
               <input type="text" 
@@ -91,11 +67,7 @@
                      [formControl]="site_email">
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!site_icp.valid && site_icp.touched), 
-                  'has-success': (site_icp.valid && site_icp.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(site_icp)">
             <label for="icpID" class="col-sm-2 form-control-label">ICP备案号</label>
             <div class="col-sm-10">
               <input type="text" 
@@ -105,11 +77,7 @@
                      [formControl]="site_icp">
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!seo_ping_sites.valid && seo_ping_sites.touched), 
-                  'has-success': (seo_ping_sites.valid && seo_ping_sites.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(seo_ping_sites)">
             <label for="pingSites" class="col-sm-2 form-control-label">SEO更新服务</label>
             <div class="col-sm-10">
               <textarea id="pingSites"
@@ -120,11 +88,7 @@
               </textarea>
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!blacklist_ips.valid && blacklist_ips.touched), 
-                  'has-success': (blacklist_ips.valid && blacklist_ips.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(blacklist_ips)">
             <label for="blacklistIps" class="col-sm-2 form-control-label">黑名单 - IP</label>
             <div class="col-sm-10">
               <textarea id="blacklistIps"
@@ -135,11 +99,7 @@
               </textarea>
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!blacklist_mails.valid && blacklist_mails.touched), 
-                  'has-success': (blacklist_mails.valid && blacklist_mails.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(blacklist_mails)">
             <label for="blacklistMails" class="col-sm-2 form-control-label">黑名单 - 邮箱</label>
             <div class="col-sm-10">
               <textarea id="blacklistMails"
@@ -150,11 +110,7 @@
               </textarea>
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!blacklist_keywords.valid && blacklist_keywords.touched), 
-                  'has-success': (blacklist_keywords.valid && blacklist_keywords.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(blacklist_keywords)">
             <label for="blacklistKeywords" class="col-sm-2 form-control-label">黑名单 - 关键字</label>
             <div class="col-sm-10">
               <textarea id="blacklistKeywords"
@@ -186,22 +142,14 @@
         <form class="form-horizontal auth-form"
               [formGroup]="authForm" 
               (ngSubmit)="submitAuthForm(authForm.value)">
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!gravatar.valid && gravatar.touched), 
-                  'has-success': (gravatar.valid && gravatar.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(gravatar)">
             <label class="col-sm-2 form-control-label">个人头像</label>
             <div class="col-sm-10">
               <sa-picture-uploader class="form-control auth-gravatar" [formControl]="gravatar">
               </sa-picture-uploader>
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!name.valid && name.touched), 
-                  'has-success': (name.valid && name.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(name)">
             <label for="userName" class="col-sm-2 form-control-label">姓名</label>
             <div class="col-sm-10">
               <input type="text" 
@@ -211,11 +159,7 @@
                      [formControl]="name">
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!slogan.valid && slogan.touched), 
-                  'has-success': (slogan.valid && slogan.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(slogan)">
             <label for="userSlogan" class="col-sm-2 form-control-label">个人签名</label>
             <div class="col-sm-10">
               <input type="text" 
@@ -226,11 +170,7 @@
             </div>
           </div>
           <hr>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!password.valid && password.touched), 
-                  'has-success': (password.valid && password.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(password)">
             <label for="userPassword" class="col-sm-2 form-control-label">旧密码</label>
             <div class="col-sm-6">
               <input type="password" 
@@ -241,11 +181,7 @@
                      [formControl]="password">
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!new_password.valid && new_password.touched), 
-                  'has-success': (new_password.valid && new_password.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(new_password)">
             <label for="userNewPassword" class="col-sm-2 form-control-label">新密码</label>
             <div class="col-sm-6">
               <input type="password" 
@@ -256,11 +192,7 @@
                      [formControl]="new_password">
             </div>
           </div>
-          <div class="form-group row"
-                [ngClass]="{ 
-                  'has-error': (!rel_new_password.valid && rel_new_password.touched), 
-                  'has-success': (rel_new_password.valid && rel_new_password.touched)
-                }">
+          <div class="form-group row" [ngClass]="controlStateClass(rel_new_password)">
             <label for="userRelNewPassword" class="col-sm-2 form-control-label">确认新密码</label>
             <div class="col-sm-6">
               <input type="password" 

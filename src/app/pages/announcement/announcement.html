@@ -4,33 +4,24 @@
       <form class="announcement-form"
             [formGroup]="editForm" 
             (ngSubmit)="submitEditForm(editForm.value)">
-        <div class="form-group"
-              [ngClass]="{ 
-                'has-error': (!state.valid && state.touched), 
-                'has-success': (state.valid && state.touched)
-              }">
+        <div class="form-group" [ngClass]="controlStateClass(state)">
           <label for="announcementType">
             <h5>公告状态</h5>
           </label>
-          <select class="form-control c-select" 
-                  id="announcementType" 
-                  [formControl]="state">
-            <option value="1">已发布</option>
-            <option value="0">草稿</option>
+          <select class="form-control c-select" id="announcementType" [formControl]="state">
+            <option [value]="PublishState.published">已发布</option>
+            <option [value]="PublishState.draft">草稿</option>
           </select>
         </div>
-        <div  class="form-group"
-              [ngClass]="{ 
-                'has-error': (!content.valid && content.touched), 
-                'has-success': (content.valid && content.touched)
-              }">
+        <div  class="form-group" [ngClass]="controlStateClass(content)">
           <label for="announcementContent">
             <h5>公告内容</h5>
           </label>
-          <sa-markdown-editor class="form-control announcement-content" 
-                           title="文章内容"
-                           [config]="{ lineWrapping: true }"
-                           [formControl]="content">
+          <sa-markdown-editor 
+            class="form-control announcement-content" 
+            title="文章内容"
+            [config]="{ lineWrapping: true }"
+            [formControl]="content">
           </sa-markdown-editor>
         </div>
         <hr>
@@ -57,24 +48,24 @@
           <div class="btn-group">
             <button type="button"
                     class="btn btn-default active"
-                    [ngClass]="{ 'active': publishState == 'all'}"
-                    (click)="switchState('all')">
+                    [ngClass]="{ 'active': isState(PublishState.all) }"
+                    (click)="switchState(PublishState.all)">
               <span>全部</span>
-              <span *ngIf="publishState == 'all'">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(PublishState.all)">&nbsp;({{ currentListTotal }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
-                    [ngClass]="{ 'active': publishState == 1 }"
-                    (click)="switchState(1)">
+                    [ngClass]="{ 'active': isState(PublishState.published) }"
+                    (click)="switchState(PublishState.published)">
               <span>已发布</span>
-              <span *ngIf="publishState == 1">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(PublishState.published)">&nbsp;({{ currentListTotal }})</span>
             </button>
             <button type="button"
                     class="btn btn-default"
-                    [ngClass]="{ 'active': publishState == 0 }"
-                    (click)="switchState(0)">
+                    [ngClass]="{ 'active': isState(PublishState.draft) }"
+                    (click)="switchState(PublishState.draft)">
               <span>草稿</span>
-              <span *ngIf="publishState == 0">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(PublishState.draft)">&nbsp;({{ currentListTotal }})</span>
             </button>
           </div>
           <span>&nbsp;&nbsp;</span>
@@ -162,10 +153,10 @@
                          [innerHTML]="parseMarkdown(announcement.content)"></div>
                   </td>
                   <td align="center">
-                    <span>{{ announcement.state == 1 ? '已发布' : '草稿' }}</span>
+                    <span>{{ announcement.state === PublishState.published ? '已发布' : '草稿' }}</span>
                     <span>&nbsp;&nbsp;</span>
-                    <i class="ion-md-checkmark text-success" *ngIf="announcement.state == 1"></i>
-                    <i class="ion-md-create text-warning" *ngIf="announcement.state == 0"></i>
+                    <i class="ion-md-checkmark text-success" *ngIf="announcement.state === PublishState.published"></i>
+                    <i class="ion-md-create text-warning" *ngIf="announcement.state === PublishState.draft"></i>
                   </td>
                   <td>
                     <div class="text-center">

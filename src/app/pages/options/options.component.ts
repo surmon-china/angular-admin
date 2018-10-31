@@ -4,15 +4,48 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import * as lodash from 'lodash';
+import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
-import { Base64 } from 'js-base64';
-import * as lodash from 'lodash';
 
-import { SaHttpRequesterService } from '@app/services';
-import { mergeFormControlsToInstance } from '@app/pages/pages.utils';
 import * as API_PATH from '@app/constants/api';
+import { SaHttpRequesterService } from '@app/services';
+import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.utils';
+
+interface IAuth {
+  name: string;
+  slogan: string;
+  gravatar?: string;
+  password?: string;
+  new_password?: string;
+  rel_new_password?: string;
+}
+
+const DEFAULT_AUTH_FORM = {
+  name: '',
+  slogan: '',
+  gravatar: '',
+  password: '',
+  new_password: '',
+  rel_new_password: ''
+};
+
+const DEFAULT_OPTION_FORM = {
+  _id: null,
+  title: '',
+  sub_title: '',
+  keywords: [],
+  description: '',
+  site_url: '',
+  site_email: '',
+  site_icp: '',
+  seo_ping_sites: [],
+  blacklist_ips: [],
+  blacklist_mails: [],
+  blacklist_keywords: []
+};
 
 @Component({
   selector: 'page-options',
@@ -21,6 +54,8 @@ import * as API_PATH from '@app/constants/api';
   template: require('./options.html')
 })
 export class OptionsComponent implements OnInit {
+
+  controlStateClass = formControlStateClass;
 
   // api
   private _authApiPath = API_PATH.AUTH;
@@ -56,29 +91,32 @@ export class OptionsComponent implements OnInit {
 
     // authForm
     this.authForm = this._fb.group({
-      name: ['', Validators.compose([Validators.required])],
-      slogan: ['', Validators.compose([Validators.required])],
-      gravatar: [''],
-      password: [''],
-      new_password: [''],
-      rel_new_password: [''],
+      name: [DEFAULT_AUTH_FORM.name, Validators.compose([Validators.required])],
+      slogan: [DEFAULT_AUTH_FORM.slogan, Validators.compose([Validators.required])],
+      gravatar: [DEFAULT_AUTH_FORM.gravatar],
+      password: [DEFAULT_AUTH_FORM.password],
+      new_password: [DEFAULT_AUTH_FORM.new_password],
+      rel_new_password: [DEFAULT_AUTH_FORM.rel_new_password],
     });
     mergeFormControlsToInstance(this, this.authForm);
 
     // optionForm
     this.optionForm = this._fb.group({
-      _id: [null],
-      title: ['', Validators.compose([Validators.required])],
-      sub_title: ['', Validators.compose([Validators.required])],
-      keywords: [[], Validators.compose([Validators.required])],
-      description: ['', Validators.compose([Validators.required])],
-      site_url: ['', Validators.compose([Validators.required])],
-      site_email: ['', Validators.compose([Validators.pattern('([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+')])],
-      site_icp: [''],
-      seo_ping_sites: [[]],
-      blacklist_ips: [[]],
-      blacklist_mails: [[]],
-      blacklist_keywords: [[]]
+      _id: [DEFAULT_OPTION_FORM._id],
+      title: [DEFAULT_OPTION_FORM.title, Validators.compose([Validators.required])],
+      sub_title: [DEFAULT_OPTION_FORM.sub_title, Validators.compose([Validators.required])],
+      keywords: [DEFAULT_OPTION_FORM.keywords, Validators.compose([Validators.required])],
+      description: [DEFAULT_OPTION_FORM.description, Validators.compose([Validators.required])],
+      site_url: [DEFAULT_OPTION_FORM.site_url, Validators.compose([Validators.required])],
+      site_email: [
+        DEFAULT_OPTION_FORM.site_email,
+        Validators.compose([Validators.pattern('([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+')])
+      ],
+      site_icp: [DEFAULT_OPTION_FORM.site_icp],
+      seo_ping_sites: [DEFAULT_OPTION_FORM.seo_ping_sites],
+      blacklist_ips: [DEFAULT_OPTION_FORM.blacklist_ips],
+      blacklist_mails: [DEFAULT_OPTION_FORM.blacklist_mails],
+      blacklist_keywords: [DEFAULT_OPTION_FORM.blacklist_keywords]
     });
     mergeFormControlsToInstance(this, this.optionForm);
   }
@@ -116,15 +154,16 @@ export class OptionsComponent implements OnInit {
 
   // 提交权限表单
   public submitAuthForm() {
-    if (this.authForm.valid) {
-      const authFormData = lodash.cloneDeep(this.authForm.value);
-      Object.keys(authFormData).forEach(key => {
-        const value = authFormData[key];
-        const isPassword = key.includes('password');
-        authFormData[key] = isPassword ? Base64.encode(value) : value;
-      });
-      this.putAuth(authFormData);
+    if (!this.authForm.valid) {
+      return false;
     }
+    const authFormData = lodash.cloneDeep(this.authForm.value);
+    Object.keys(authFormData).forEach(key => {
+      const value = authFormData[key];
+      const isPassword = key.includes('password');
+      authFormData[key] = isPassword ? Base64.encode(value) : value;
+    });
+    this.putAuth(authFormData);
   }
 
   // 提交设置表单
@@ -152,14 +191,7 @@ export class OptionsComponent implements OnInit {
         console.info('密码更新成功，正跳转至登陆页');
         setTimeout(() => this._router.navigate(['/auth']), 960);
       } else {
-        this.authForm.reset({
-          name,
-          slogan,
-          gravatar,
-          password: '',
-          new_password: '',
-          rel_new_password: ''
-        });
+        this.authForm.reset(Object.assign({}, DEFAULT_AUTH_FORM, { name, slogan, gravatar }));
       }
     });
   }
@@ -182,7 +214,7 @@ export class OptionsComponent implements OnInit {
   }
 
   // 更新用户
-  public putAuth(auth: any) {
+  public putAuth(auth: IAuth) {
     this.handleAuthChange(this._httpService.put(this._authApiPath, auth));
   }
 
