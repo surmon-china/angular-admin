@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'checkbox-inputs',
+  selector: 'box-checkbox-inputs',
   template: require('./checkboxInputs.html'),
 })
-export class CheckboxInputs {
+export class CheckboxInputsComponent {
   public checkboxModel = [{
     name: 'Check 1',
     checked: false,
@@ -26,7 +26,5 @@ export class CheckboxInputs {
     baCheckboxClass: 'class'
   };
 
-  constructor() {
-  }
-
+  constructor() {}
 }

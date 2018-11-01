@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'without-labels-form',
+  selector: 'box-without-labels-form',
   template: require('./withoutLabelsForm.html'),
 })
-export class WithoutLabelsForm {
+export class WithoutLabelsFormComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

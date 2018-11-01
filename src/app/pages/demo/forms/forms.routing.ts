@@ -1,10 +1,15 @@
+/**
+ * @file Demo 表单演示路由
+ * @module app/page/demo/componennt/forms/routes
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Routes, RouterModule } from '@angular/router';
 
 import { FormsComponent } from './forms.component';
 import { InputsComponent } from './components/inputs/inputs.component';
 import { LayoutsComponent } from './components/layouts/layouts.component';
 
-// noinspection TypeScriptValidateTypes
 const routes: Routes = [
   {
     path: '',

@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'large-buttons',
+  selector: 'box-large-buttons',
   template: require('./largeButtons.html'),
 })
-export class LargeButtons {
+export class LargeButtonsComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

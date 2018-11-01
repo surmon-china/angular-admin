@@ -6,13 +6,14 @@ import { SaModule } from '@/app/sa.module';
 import { routing } from './tables.routing';
 import { TablesComponent } from './tables.component';
 import { BasicTablesComponent } from './components/basicTables/basicTables.component';
+import { ResponsiveTableComponent } from './components/basicTables/components/responsiveTable';
+import { StripedTableComponent } from './components/basicTables/components/stripedTable';
+import { BorderedTableComponent } from './components/basicTables/components/borderedTable';
+import { HoverTableComponent } from './components/basicTables/components/hoverTable';
+import { CondensedTableComponent } from './components/basicTables/components/condensedTable';
+import { ContextualTableComponent } from './components/basicTables/components/contextualTable';
+
 import { BasicTablesService } from './components/basicTables/basicTables.service';
-import { ResponsiveTable } from './components/basicTables/components/responsiveTable';
-import { StripedTable } from './components/basicTables/components/stripedTable';
-import { BorderedTable } from './components/basicTables/components/borderedTable';
-import { HoverTable } from './components/basicTables/components/hoverTable';
-import { CondensedTable } from './components/basicTables/components/condensedTable';
-import { ContextualTable } from './components/basicTables/components/contextualTable';
 
 
 @NgModule({
@@ -25,12 +26,12 @@ import { ContextualTable } from './components/basicTables/components/contextualT
   declarations: [
     TablesComponent,
     BasicTablesComponent,
-    HoverTable,
-    BorderedTable,
-    CondensedTable,
-    StripedTable,
-    ContextualTable,
-    ResponsiveTable
+    HoverTableComponent,
+    BorderedTableComponent,
+    CondensedTableComponent,
+    StripedTableComponent,
+    ContextualTableComponent,
+    ResponsiveTableComponent
   ],
   providers: [
     BasicTablesService,

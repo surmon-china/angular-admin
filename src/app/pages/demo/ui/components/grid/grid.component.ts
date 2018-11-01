@@ -1,13 +1,12 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'grid',
+  selector: 'page-grid',
   encapsulation: ViewEncapsulation.None,
   styles: [require('./grid.scss')],
   template: require('./grid.html'),
 })
-export class Grid {
+export class GridComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

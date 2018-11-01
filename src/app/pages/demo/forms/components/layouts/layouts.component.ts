@@ -1,4 +1,10 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+/**
+ * @file Demo Layout 表单演示页面
+ * @module app/page/demo/componennt/forms/layout
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'page-layouts',

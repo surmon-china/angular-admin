@@ -1,14 +1,13 @@
-import {Component} from '@angular/core';
-
-import {BasicTablesService} from '../../basicTables.service';
+import { Component } from '@angular/core';
+import { BasicTablesService } from '../../basicTables.service';
 
 @Component({
-  selector: 'hover-table',
+  selector: 'box-hover-table',
   template: require('./hoverTable.html')
 })
-export class HoverTable {
+export class HoverTableComponent {
 
-  metricsTableData:Array<any>;
+  metricsTableData: Array<any>;
 
   constructor(private _basicTablesService: BasicTablesService) {
     this.metricsTableData = _basicTablesService.metricsTableData;

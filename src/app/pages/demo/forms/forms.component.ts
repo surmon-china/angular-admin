@@ -1,4 +1,10 @@
-import {Component} from '@angular/core';
+/**
+ * @file Demo 表单演示页面
+ * @module app/page/demo/componennt/forms
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'page-forms',
@@ -7,6 +13,5 @@ import {Component} from '@angular/core';
 })
 export class FormsComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

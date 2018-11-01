@@ -126,7 +126,7 @@
             <div class="offset-sm-2 col-sm-10">
               <button type="submit" 
                       class="btn btn-default btn-with-icon"
-                      [disabled]="!optionForm.valid">
+                      [disabled]="!optionForm.valid || fetching.option">
                 <i class="ion-md-done-all"></i>
                 <span>保存修改</span>
               </button>
@@ -208,7 +208,7 @@
             <div class="offset-sm-2 col-sm-10">
               <button type="submit" 
                       class="btn btn-default  btn-with-icon"
-                      [disabled]="!authForm.valid">
+                      [disabled]="!authForm.valid || fetching.auth">
                 <i class="ion-md-done-all"></i>
                 <span>保存修改</span>
               </button>

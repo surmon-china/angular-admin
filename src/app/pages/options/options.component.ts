@@ -12,6 +12,7 @@ import { FormGroup, AbstractControl, FormBuilder, Validators, ValidationErrors }
 
 import * as API_PATH from '@app/constants/api';
 import { SaHttpRequesterService } from '@app/services';
+import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.utils';
 
 interface IAuth {
@@ -58,8 +59,13 @@ export class OptionsComponent implements OnInit {
   controlStateClass = formControlStateClass;
 
   // api
-  private _authApiPath = API_PATH.AUTH;
-  private _optionApiPath = API_PATH.OPTION;
+  private _authApiPath: TApiPath = API_PATH.AUTH;
+  private _optionApiPath: TApiPath = API_PATH.OPTION;
+
+  public fetching: IFetching = {
+    auth: false,
+    option: false
+  };
 
   // authForm
   public authForm: FormGroup;
@@ -191,40 +197,53 @@ export class OptionsComponent implements OnInit {
         console.info('密码更新成功，正跳转至登陆页');
         setTimeout(() => this._router.navigate(['/auth']), 960);
       } else {
+        this.fetching.auth = false;
         this.authForm.reset(Object.assign({}, DEFAULT_AUTH_FORM, { name, slogan, gravatar }));
       }
+    })
+    .catch(_ => {
+      this.fetching.option = false;
     });
   }
 
   // 解析返回的设置表单数据
-  public handleOptionChange = optionPromise => {
-    optionPromise.then(({ result: options }) => {
-      const format = value => value.toString().replace(/,/g, '\n');
-      options.seo_ping_sites = format(options.ping_sites);
-      options.blacklist_ips = format(options.blacklist.ips);
-      options.blacklist_mails = format(options.blacklist.mails);
-      options.blacklist_keywords = format(options.blacklist.keywords);
-      this.optionForm.reset(options);
-    });
+  public handleOptionChange = (optionPromise: Promise<any>) => {
+    return optionPromise
+      .then(({ result: options }) => {
+        const format = value => value.toString().replace(/,/g, '\n');
+        options.seo_ping_sites = format(options.ping_sites);
+        options.blacklist_ips = format(options.blacklist.ips);
+        options.blacklist_mails = format(options.blacklist.mails);
+        options.blacklist_keywords = format(options.blacklist.keywords);
+        this.optionForm.reset(options);
+        this.fetching.option = false;
+      })
+      .catch(_ => {
+        this.fetching.option = false;
+      });
   }
 
   // 获取用户
   public getUserAuth() {
+    this.fetching.auth = true;
     this.handleAuthChange(this._httpService.get(this._authApiPath));
   }
 
   // 更新用户
   public putAuth(auth: IAuth) {
+    this.fetching.auth = true;
     this.handleAuthChange(this._httpService.put(this._authApiPath, auth));
   }
 
   // 获取配置
   public getOptions() {
+    this.fetching.option = true;
     this.handleOptionChange(this._httpService.get(this._optionApiPath));
   }
 
   // 更新配置
   public putOptions(options: any) {
+    this.fetching.option = true;
     this.handleOptionChange(this._httpService.put(this._optionApiPath, options));
   }
 
