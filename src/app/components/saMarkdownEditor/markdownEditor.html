@@ -21,8 +21,8 @@
   </div>
   <div class="editor-content"
        [ngClass]="{ 
-          'preview-full': previewMode == 2, 
-          'preview-both': previewMode == 1
+          'preview-full': previewMode === 2, 
+          'preview-both': previewMode === 1
        }">
     <div class="editor" (keyup)="keyDownListen($event)">
       <textarea id="editor"></textarea>

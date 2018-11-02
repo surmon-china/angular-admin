@@ -36,7 +36,6 @@ export const handleBatchSelectChange = (options: ISelectChangeOptions): void => 
 export const handleItemSelectChange = (options: ISelectChangeOptions): TSelectedAll => {
   const { data } = options;
   options.selectedIds = data.filter(item => item.selected).map(item => item._id);
-  console.log(options.selectedIds.length, data.length);
   return options.selectedIds.length === data.length;
 };
 

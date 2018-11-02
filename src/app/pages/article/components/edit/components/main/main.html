@@ -5,15 +5,15 @@
           'has-error': (!_title.valid && _title.touched), 
           'has-success': (_title.valid && _title.touched)
         }">
-    <label for="articleTitle" class="col-sm-1 form-control-label text-right">文章标题</label>
+    <label for="article-title" class="col-sm-1 form-control-label text-right">文章标题</label>
     <div class="col-sm-5">
       <input type="text"
              autofocus
              class="form-control form-control-lg" 
              title="文章标题" 
              placeholder="文章标题" 
-             name="articleTitle"
-             id="articleTitle"
+             name="article-title"
+             id="article-title"
              [formControl]="_title"
              (change)="titleChangeHandle($event)">
     </div>
@@ -23,14 +23,14 @@
           'has-warning': (!_keywords.valid && _keywords.touched), 
           'has-success': (_keywords.valid && _keywords.touched)
         }">
-    <label for="articleKeywords" class="col-sm-1 form-control-label text-right">文章关键词</label>
+    <label for="article-keywords" class="col-sm-1 form-control-label text-right">文章关键词</label>
     <div class="col-sm-5">
       <input type="text"
              class="form-control form-control-lg" 
              title="多个关键词以 ' , ' 隔开" 
              placeholder="多个关键词以 ' , ' 隔开" 
-             name="articleKeywords"
-             id="articleKeywords"
+             name="article-keywords"
+             id="article-keywords"
              [formControl]="_keywords"
              (change)="keywordsChangeHandle($event)">
     </div>
@@ -40,13 +40,13 @@
           'has-warning': (!_description.valid && _description.touched), 
           'has-success': (_description.valid && _description.touched)
         }">
-    <label for="articleDescription" class="col-sm-1 form-control-label text-right">文章描述</label>
+    <label for="article-description" class="col-sm-1 form-control-label text-right">文章描述</label>
     <div class="col-sm-10">
       <textarea class="form-control article-description"
                 cols="30" 
                 rows="20" 
-                name="articleDescription" 
-                id="articleDescription" 
+                name="article-description" 
+                id="article-description" 
                 title="文章描述"
                 placeholder="文章描述"
                 [formControl]="_description"
@@ -88,10 +88,11 @@
         }">
     <label for="articleContent" class="col-sm-1 form-control-label text-right">文章内容</label>
     <div class="col-sm-10">
-      <sa-markdown-editor  class="form-control article-content" 
-                        title="文章内容"
-                        [formControl]="_content"
-                        (change)="contentChangeHandle($event)">
+      <sa-markdown-editor 
+        class="form-control article-content" 
+        title="文章内容"
+        [formControl]="_content"
+        (change)="contentChangeHandle($event)">
       </sa-markdown-editor>
     </div>
   </div>

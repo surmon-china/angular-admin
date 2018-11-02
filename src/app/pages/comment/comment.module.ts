@@ -1,3 +1,9 @@
+/**
+ * @file 评论页面模块
+ * @module app/page/comment/module
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

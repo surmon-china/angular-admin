@@ -8,6 +8,11 @@ export type TApiPath = string;
 export type TSelectedIds = string[];
 export type TSelectedAll = boolean;
 
+// 请求参数
+export interface IGetParams {
+  [key: string]: number | string;
+}
+
 // 请求状态
 export interface IFetching {
   [key: string]: boolean;
@@ -42,6 +47,7 @@ export enum EPublishState {
 
 // 公开状态
 export enum EPublicState {
+  all = 'all',
   password = 0, // 需要密码
   public = 1, // 公开状态
   secret = -1 // 私密
@@ -49,12 +55,14 @@ export enum EPublicState {
 
 // 转载状态
 export enum EOriginState {
+  all = 'all',
   original = 0, // 原创
   reprint = 1, // 转载
   hybrid = -1 // 混合
 }
 
 export enum ECommentState {
+  all = 'all',
   auditing = 0, // 待审核
   published = 1, // 通过正常
   deleted = -1, // 已删除

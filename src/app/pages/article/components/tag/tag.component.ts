@@ -4,12 +4,32 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import * as lodash from 'lodash';
+import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
-import { ModalDirective } from 'ngx-bootstrap';
-import { SaHttpRequesterService } from '@app/services';
+import { SaHttpRequesterService, IRequestParams } from '@app/services';
+import { TApiPath, TSelectedIds, TSelectedAll, IResponseData, IFetching } from '@app/pages/pages.constants';
+import { ITag } from '@app/pages/article/article.utils';
 import * as API_PATH from '@app/constants/api';
+import {
+  mergeFormControlsToInstance,
+  handleBatchSelectChange,
+  handleItemSelectChange,
+  formControlStateClass
+} from '@app/pages/pages.utils';
+
+const DEFAULT_EDIT_FORM = {
+  name: '',
+  slug: '',
+  description: '',
+  extends: [{ name: 'icon', value: 'icon-tag'}]
+};
+
+const DEFAULT_SEARCH_FORM = {
+  keyword: ''
+};
 
 @Component({
   selector: 'page-article-tag',
@@ -19,13 +39,17 @@ import * as API_PATH from '@app/constants/api';
 })
 export class ArticleTagComponent implements OnInit {
 
+  controlStateClass = formControlStateClass;
+
   @ViewChild('delModal') delModal: ModalDirective;
 
-
-  private _apiPath = API_PATH.TAG;
+  private _apiPath: TApiPath = API_PATH.TAG;
 
   public editForm: FormGroup;
   public searchForm: FormGroup;
+
+  // searchForm
+  public keyword: AbstractControl;
 
   // editForm
   public name: AbstractControl;
@@ -33,54 +57,39 @@ export class ArticleTagComponent implements OnInit {
   public description: AbstractControl;
   public extends: AbstractControl;
 
-  // searchForm
-  public keyword: AbstractControl;
-  public tags = {
-    data: [],
-    pagination: {
-      current_page: 1,
-      total_page: 0,
-      per_page: 10,
-      total: 0
-    }
-  };
-
   // 其他初始化
-  public del_tag: any;
-  public edit_tag: any;
-  public tagsSelectAll: boolean = false;
-  public selectedTags = [];
-  public fetching = {
-    tag: false
+  public activeTag: ITag;
+  public tagsSelectAll: TSelectedAll = false;
+  public selectedTags: TSelectedIds = [];
+  public tags: IResponseData<ITag> = {
+    data: [],
+    pagination: null
+  };
+  public fetching: IFetching = {
+    get: false,
+    post: false
   };
 
   // 构造函数
   constructor(private _fb: FormBuilder, private _httpService: SaHttpRequesterService) {
 
     this.editForm = this._fb.group({
-      'name': ['', Validators.compose([Validators.required])],
-      'slug': ['', Validators.compose([Validators.required])],
-      'description': ['', Validators.compose([Validators.required])],
-      'extends': [[{ name: 'icon', value: 'icon-tag'}]]
+      name: [DEFAULT_EDIT_FORM.name, Validators.compose([Validators.required])],
+      slug: [DEFAULT_EDIT_FORM.slug, Validators.compose([Validators.required])],
+      description: [DEFAULT_EDIT_FORM.description, Validators.compose([Validators.required])],
+      extends: [DEFAULT_EDIT_FORM.extends]
     });
 
     this.searchForm = this._fb.group({
-      'keyword': ['', Validators.compose([Validators.required])]
+      keyword: [DEFAULT_SEARCH_FORM.keyword, Validators.compose([Validators.required])]
     });
 
-    this.name = this.editForm.controls.name;
-    this.slug = this.editForm.controls.slug;
-    this.extends = this.editForm.controls.extends;
-    this.keyword = this.searchForm.controls.keyword;
-    this.description = this.editForm.controls.description;
-  }
-
-  ngOnInit() {
-    this.getTags();
+    mergeFormControlsToInstance(this, this.editForm);
+    mergeFormControlsToInstance(this, this.searchForm);
   }
 
   // 删除自定义配置项目
-  public delExtendItem(index) {
+  public delExtendItem(index: number) {
     this.extends.value.splice(index, 1);
   }
 
@@ -90,171 +99,159 @@ export class ArticleTagComponent implements OnInit {
   }
 
   // 多选切换
-  public batchSelectChange(is_select) {
-    if (!this.tags.data.length) { return; }
-    this.selectedTags = [];
-    this.tags.data.forEach(item => {
-      item.selected = is_select;
-      is_select && this.selectedTags.push(item._id);
-    });
+  public batchSelectChange(isSelect: boolean) {
+    const data = this.tags.data;
+    const selectedIds = this.selectedTags;
+    handleBatchSelectChange({ data, selectedIds, isSelect });
   }
 
   // 单个切换
   public itemSelectChange() {
-    this.selectedTags = [];
-    const tags = this.tags.data;
-    tags.forEach(item => {
-      item.selected && this.selectedTags.push(item._id);
-    });
-    if (!this.selectedTags.length) {
-      this.tagsSelectAll = false;
-    } else if (!!this.selectedTags.length && this.selectedTags.length === tags.length) {
-      this.tagsSelectAll = true;
-    }
+    const data = this.tags.data;
+    const selectedIds = this.selectedTags;
+    this.tagsSelectAll = handleItemSelectChange({ data, selectedIds });
   }
 
   // 重置编辑表单
   public resetEditForm(): void {
-    this.editForm.reset({
-      name: '',
-      slug: '',
-      description: '',
-      extends: [{ name: 'icon', value: 'icon-tag'}]
-    });
-    this.edit_tag = null;
+    this.editForm.reset(DEFAULT_EDIT_FORM);
+    this.activeTag = null;
   }
 
   // 重置搜索表单
   public resetSearchForm(): void {
-    this.searchForm.reset({
-      keyword: ''
-    });
+    this.searchForm.reset(DEFAULT_SEARCH_FORM);
   }
 
   // 提交表单
-  public submitTag(values: Object): void {
+  public handleSubmitTag(tag: ITag): void {
     if (this.editForm.valid) {
-      this.edit_tag ? this.doPutTag(values) : this.addTag(values);
+      this.activeTag ? this.doPutTag(tag) : this.addTag(tag);
     }
   }
 
+  // 分页获取标签
+  public handlePageChanged(event: any): void {
+    this.getTags({ page: event.page });
+  }
+
+  // 刷新本页本类型标签
+  public refreshTags(): void {
+    this.getTags({ page: this.tags.pagination.current_page });
+  }
+
   // 提交搜索
-  public searchTags(values: Object): void {
+  public searchTags(): void {
     if (this.searchForm.valid) {
       this.getTags();
     }
   }
 
-  // 刷新本页本类型标签
-  public refreshTags(): void {
-    this.getTags();
-  }
-
-  // 分页获取标签
-  public pageChanged(event: any): void {
-    this.getTags({ page: event.page });
-  }
-
-  // 获取标签
-  public getTags(params: any = {}) {
-    // 搜索词具有高优先级
-    if (this.keyword.value) {
-      params.keyword = this.keyword.value;
-    }
-    // 如果请求的是第一页，则设置翻页组件的当前页为第一页
-    if (!params.page || Object.is(params.page, 1)) {
-      this.tags.pagination.current_page = 1;
-    }
-    // 如果没有指定页数，则请求当前页
-    if (!params.page) {
-      params.page = this.tags.pagination.current_page;
-    }
-    // 固定每页请求的数量
-    params.per_page = this.tags.pagination.per_page;
-    // 请求
-    this.fetching.tag = true;
-    this._httpService.get(this._apiPath, params)
-    .then(tags => {
-      this.tags = tags.result;
-      this.selectedTags = [];
-      this.tagsSelectAll = false;
-      this.fetching.tag = false;
-    })
-    .catch(error => {
-      this.fetching.tag = false;
-    });
-  }
-
-  // 添加标签
-  public addTag(tag) {
-    this._httpService.post(this._apiPath, tag)
-    .then(_tag => {
-      this.resetEditForm();
-      this.resetSearchForm();
-      this.getTags();
-    });
-
-  }
-
   // 修改标签
-  public putTag(tag) {
-    this.edit_tag = tag;
+  public putTag(tag: ITag) {
+    this.activeTag = lodash.cloneDeep(tag);
     this.editForm.reset(tag);
   }
 
-  // 修改标签提交
-  public doPutTag(tag) {
-    tag = Object.assign(this.edit_tag, tag);
-    this._httpService.put(`${this._apiPath}/${tag._id}`, tag)
-    .then(_tag => {
-      this.getTags({ page: this.tags.pagination.current_page });
-      this.resetEditForm();
-      this.edit_tag = null;
-    });
-
-  }
-
   // 删除标签弹窗
-  public delTagModal(tag) {
-    this.del_tag = tag;
+  public delTagModal(tag: ITag) {
+    this.activeTag = lodash.cloneDeep(tag);
     this.delModal.show();
   }
 
   // 删除弹窗取消
-  public canceldDelTagModal(tag) {
+  public canceldDelTagModal() {
     this.delModal.hide();
-    this.del_tag = null;
-  }
-
-  // 确认删除标签
-  public doDelTag() {
-    this._httpService.delete(`${this._apiPath}/${this.del_tag._id}`)
-    .then(tag => {
-      this.delModal.hide();
-      this.del_tag = null;
-      this.getTags({ page: this.tags.pagination.current_page });
-    })
-    .catch(err => {
-      this.delModal.hide();
-    });
+    this.activeTag = null;
   }
 
   // 批量删除标签弹窗
   public delTagsModal() {
-    this.del_tag = null;
+    this.activeTag = null;
     this.delModal.show();
+  }
+
+  // 获取标签
+  public getTags(params: IRequestParams = {}): Promise<any> {
+
+    // 搜索词
+    if (this.keyword.value) {
+      params.keyword = this.keyword.value;
+    }
+
+    // 请求
+    this.fetching.get = true;
+
+    return this._httpService.get(this._apiPath, params)
+      .then(tags => {
+        this.tags = tags.result;
+        this.selectedTags = [];
+        this.tagsSelectAll = false;
+        this.fetching.get = false;
+      })
+      .catch(_ => {
+        this.fetching.get = false;
+      });
+  }
+
+  // 添加标签
+  public addTag(tag: ITag) {
+    this.fetching.post = true;
+    this._httpService.post(this._apiPath, tag)
+      .then(_ => {
+        this.fetching.post = false;
+        this.resetEditForm();
+        this.resetSearchForm();
+        this.getTags();
+      })
+      .catch(_ => {
+        this.fetching.post = false;
+      });
+  }
+
+  // 修改标签提交
+  public doPutTag(tag: ITag) {
+    this.fetching.post = true;
+    const newTag = Object.assign({}, this.activeTag, tag);
+    this._httpService.put(`${this._apiPath}/${tag._id}`, newTag)
+    .then(_ => {
+      this.refreshTags();
+      this.resetEditForm();
+      this.activeTag = null;
+      this.fetching.post = false;
+    })
+    .catch(_ => {
+      this.fetching.post = false;
+    });
+  }
+
+  // 确认删除标签
+  public doDelTag() {
+    this._httpService.delete(`${this._apiPath}/${this.activeTag._id}`)
+    .then(_ => {
+      this.delModal.hide();
+      this.activeTag = null;
+      this.refreshTags();
+    })
+    .catch(_ => {
+      this.delModal.hide();
+    });
   }
 
   // 确认批量删除
   public doDelTags() {
     this._httpService.delete(this._apiPath, { tags: this.selectedTags })
-    .then(tags => {
+    .then(_ => {
       this.delModal.hide();
-      this.getTags({ page: this.tags.pagination.current_page });
+      this.refreshTags();
     })
-    .catch(err => {
+    .catch(_ => {
       this.delModal.hide();
     });
+  }
+
+  ngOnInit() {
+    this.getTags();
   }
 }
 

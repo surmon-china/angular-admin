@@ -176,7 +176,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
     return false;
   }
 
-  // 根据url读取一张图片
+  // 根据 url 读取一张图片
   protected changePictureFromURL(url: string): any {
     const image = new Image();
     image.onload = _ => {
@@ -210,6 +210,11 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
     this.picture = picture;
     this.onModelChange(picture);
     this.pictureChange.emit(picture);
+  }
+
+  // 手动输入的图片地址发生了变化
+  public inputImageUrlChange(picture: string)  {
+    this.emitPicture(picture);
   }
 
   // 写数据

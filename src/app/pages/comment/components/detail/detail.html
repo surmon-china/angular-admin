@@ -15,7 +15,7 @@
           <div class="col-sm-2">
             <div class="form-control">
               <span *ngIf="comment.post_id != 0">{{ article ? article.title : '未知文章' }}</span>
-              <span *ngIf="comment.post_id == 0">留言板</span>
+              <span *ngIf="comment.post_id === 0">留言板</span>
             </div>
           </div>
         </div>
@@ -24,10 +24,10 @@
                 'has-error': (!likes.valid && likes.touched), 
                 'has-success': (likes.valid && likes.touched)
               }">
-          <label for="comment_likes" class="col-sm-1 form-control-label text-right">喜欢人数</label>
+          <label for="comment-likes" class="col-sm-1 form-control-label text-right">喜欢人数</label>
           <div class="col-sm-2">
             <input type="number" 
-                   id="comment_likes" 
+                   id="comment-likes" 
                    class="form-control" 
                    placeholder="喜欢人数" 
                    [formControl]="likes">
@@ -38,9 +38,9 @@
                 'has-error': (!is_top.valid && is_top.touched), 
                 'has-success': (is_top.valid && is_top.touched)
               }">
-          <label for="comment_is_top" class="col-sm-1 form-control-label text-right">是否置顶</label>
+          <label for="comment-is-top" class="col-sm-1 form-control-label text-right">是否置顶</label>
           <div class="col-sm-2">
-            <select class="form-control c-select" id="comment_is_top" [formControl]="is_top">
+            <select class="form-control c-select" id="comment-is-top" [formControl]="is_top">
               <option [value]="false">不置顶</option>
               <option [value]="true">置顶</option>
             </select>
@@ -51,9 +51,9 @@
                 'has-error': (!state.valid && state.touched), 
                 'has-success': (state.valid && state.touched)
               }">
-          <label for="comment_state" class="col-sm-1 form-control-label text-right">状态</label>
+          <label for="comment-state" class="col-sm-1 form-control-label text-right">状态</label>
           <div class="col-sm-2">
-            <select class="form-control c-select" id="comment_state" [formControl]="state">
+            <select class="form-control c-select" id="comment-state" [formControl]="state">
               <option [value]="-2">垃圾评论</option>
               <option [value]="-1">已删除</option>
               <option [value]="0">待审核</option>
@@ -66,10 +66,10 @@
                 'has-error': (!user_name.valid && user_name.touched), 
                 'has-success': (user_name.valid && user_name.touched)
               }">
-          <label for="comment_user_name" class="col-sm-1 form-control-label text-right">用户名</label>
+          <label for="comment-user-name" class="col-sm-1 form-control-label text-right">用户名</label>
           <div class="col-sm-2">
             <input type="text" 
-                   id="comment_user_name" 
+                   id="comment-user-name" 
                    class="form-control" 
                    placeholder="用户名" 
                    [formControl]="user_name">
@@ -80,10 +80,10 @@
                 'has-error': (!user_email.valid && user_email.touched), 
                 'has-success': (user_email.valid && user_email.touched)
               }">
-          <label for="comment_user_email" class="col-sm-1 form-control-label text-right">用户邮箱</label>
+          <label for="comment-user-email" class="col-sm-1 form-control-label text-right">用户邮箱</label>
           <div class="col-sm-2">
             <input type="email" 
-                   id="comment_user_email" 
+                   id="comment-user-email" 
                    class="form-control" 
                    placeholder="用户邮箱" 
                    [formControl]="user_email">
@@ -94,10 +94,10 @@
                 'has-error': (!user_site.valid && user_site.touched), 
                 'has-success': (user_site.valid && user_site.touched)
               }">
-          <label for="comment_user_site" class="col-sm-1 form-control-label text-right">用户地址</label>
+          <label for="comment-user-site" class="col-sm-1 form-control-label text-right">用户地址</label>
           <div class="col-sm-2">
             <input type="url" 
-                   id="comment_user_site" 
+                   id="comment-user-site" 
                    class="form-control" 
                    placeholder="用户的个人网址" 
                    [formControl]="user_site">
@@ -144,7 +144,7 @@
               <ng-template [ngIf]="comment.id && comments && comments.data.length">
                 <option *ngFor="let item of comments.data" 
                         [ngValue]="item.id"
-                        [disabled]="item.id == comment.id">
+                        [disabled]="item.id === comment.id">
                   <span>ID：{{ item.id }}  -  {{ item.author.name }}：{{ item.content | truncate : 160 }}</span>
                 </option>
               </ng-template>
@@ -156,11 +156,11 @@
                 'has-error': (!content.valid && content.touched), 
                 'has-success': (content.valid && content.touched)
               }">
-          <label for="comment_content" class="col-sm-1 form-control-label text-right">内容</label>
+          <label for="comment-content" class="col-sm-1 form-control-label text-right">内容</label>
           <div class="col-sm-5">
             <markdown-editor  class="form-control comemnt-content" 
                               title="评论内容"
-                              id="comment_content"
+                              id="comment-content"
                               [formControl]="content">
             </markdown-editor>
           </div>
@@ -175,7 +175,7 @@
             <div class="comment-extend" *ngFor="let extend of extends.value; let i = index">
               <div class="extend-key">
                 <input type="text" 
-                       id="comment_name"
+                       id="comment-name"
                        class="form-control"
                        placeholder="key" 
                        [(ngModel)]="extend.name"
@@ -183,7 +183,7 @@
               </div>
               <div class="extend-value">
                 <input type="text" 
-                       id="comment_name"
+                       id="comment-name"
                        class="form-control"
                        placeholder="value" 
                        [(ngModel)]="extend.value"

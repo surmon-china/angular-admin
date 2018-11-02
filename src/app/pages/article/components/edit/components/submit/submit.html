@@ -1,10 +1,10 @@
 <form name="articleSubmit" class="form-horizontal">
   <div class="form-group row">
-    <label for="articleStatus" class="col-3 text-center form-control-label">来源</label>
+    <label for="article-status" class="col-3 text-center form-control-label">来源</label>
     <div class="col-6">
       <select class="form-control c-select" 
-              id="articleOrigin" 
-              name="articleOrigin" 
+              id="article-origin" 
+              name="article-origin" 
               [(ngModel)]="origin"
               (change)="originChange.emit($event.target.value)">
         <option value="0">原创</option>
@@ -14,11 +14,11 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="articleStatus" class="col-3 text-center form-control-label">状态</label>
+    <label for="article-status" class="col-3 text-center form-control-label">状态</label>
     <div class="col-6">
       <select class="form-control c-select" 
-              id="articleStatus" 
-              name="articleStatus" 
+              id="article-status" 
+              name="article-status" 
               [(ngModel)]="state"
               (change)="stateChange.emit($event.target.value)">
         <option value="1">直接发布</option>
@@ -28,11 +28,11 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="articlePublic" class="col-3 text-center form-control-label">公开度</label>
+    <label for="article-public" class="col-3 text-center form-control-label">公开度</label>
     <div class="col-6">
       <select class="form-control c-select" 
-              id="articlePublic" 
-              name="articlePublic" 
+              id="article-public" 
+              name="article-public" 
               [(ngModel)]="ppublic"
               (change)="ppublicChange.emit($event.target.value)">
         <option value="1">公开</option>
@@ -42,12 +42,12 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="articlePassword" class="col-3 text-center form-control-label">文章密码</label>
+    <label for="article-password" class="col-3 text-center form-control-label">文章密码</label>
     <div class="col-6">
        <input type="password" 
               class="form-control" 
-              id="articlePassword" 
-              name="articlePassword" 
+              id="article-password" 
+              name="article-password" 
               placeholder="文章密码" 
               [(ngModel)]="password"
               (change)="passwordChange.emit($event.target.value)"

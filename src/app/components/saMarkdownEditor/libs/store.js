@@ -34,7 +34,7 @@ var api = {},
   api.clear = function() {}
   api.transact = function(key, transactionFn) {
     var val = api.get(key)
-    if (typeof val == 'undefined') { val = {} }
+    if (typeof val === 'undefined') { val = {} }
     transactionFn(val)
     api.set(key, val)
   }
