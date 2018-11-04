@@ -15,11 +15,12 @@ import { SaHttpRequesterService } from '@app/services';
 import { browserParse, osParse } from '../../comment.ua';
 import { IComment } from '../../comment.utils';
 import { IGetParams } from '@app/pages/pages.constants';
+import { handleBatchSelectChange, handleItemSelectChange, formControlStateClass } from '@app/pages/pages.utils';
 import {
   TApiPath,
   TSelectedIds,
   TSelectedAll,
-  ESORT_TYPE,
+  ESortType,
   ECommentState,
   ECommentPostType,
   IResponseData,
@@ -27,9 +28,12 @@ import {
 } from '@app/pages/pages.constants';
 
 const DEFAULT_GET_PARAMS = {
-  sort: ESORT_TYPE.desc,
+  sort: ESortType.desc,
   state: ECommentState.all
 };
+
+type TCommentId = IComment['_id'];
+type TCommentPostId = IComment['post_id'];
 
 @Component({
   selector: 'page-comment-list',
@@ -39,6 +43,7 @@ const DEFAULT_GET_PARAMS = {
 })
 export class CommentListComponent implements OnInit {
 
+  SortType = ESortType;
   CommentState = ECommentState;
   CommentPostType = ECommentPostType;
 
@@ -55,20 +60,21 @@ export class CommentListComponent implements OnInit {
   public getParams: IGetParams = lodash.cloneDeep(DEFAULT_GET_PARAMS);
 
   // 初始化数据
-  public post_id: IComment['post_id'] = null;
+  public post_id: TCommentPostId = null;
   public comments: IResponseData<IComment> = {
     data: [],
     pagination: null
   };
   public fetching: IFetching = {
-    get: false
+    get: false,
+    put: false
   };
 
   // 其他数据
-  public todoDelComments: TSelectedIds = [];
+  public todoDelCommentId: TCommentId = null;
   public commentsSelectAll: TSelectedAll = false;
   public selectedComments: TSelectedIds = [];
-  public selectedPostIds: IComment['post_id'][] = [];
+  public selectedPostIds: TCommentPostId[] = [];
 
   constructor(private _fb: FormBuilder,
               private _route: ActivatedRoute,
@@ -101,49 +107,33 @@ export class CommentListComponent implements OnInit {
   }
 
   // 评论列表多选切换
-  public batchSelectChange(is_select): void {
-    if (!this.comments.data.length) {
-      return;
-    }
-    this.selectedComments = [];
-    this.selectedPostIds = [];
-    this.comments.data.forEach(item => {
-      item.selected = is_select;
-      if (is_select) {
-        this.selectedComments.push(item._id);
-        this.selectedPostIds.push(item.post_id);
-      }
-    });
+  public batchSelectChange(isSelect: boolean): void {
+    const data = this.comments.data;
+    const selectedIds = this.selectedComments;
+    this.selectedComments = handleBatchSelectChange({ data, selectedIds, isSelect });
+    this.selectedPostIds = isSelect ? data.map(comment => comment.post_id) : [];
   }
 
   // 评论列表单个切换
   public itemSelectChange(): void {
-    this.selectedComments = [];
-    this.selectedPostIds = [];
-    this.comments.data.forEach(item => {
-      if (item.selected) {
-        this.selectedComments.push(item._id);
-        this.selectedPostIds.push(item.post_id);
-      }
-    });
-    if (!this.selectedComments.length) {
-      this.commentsSelectAll = false;
-    }
-    if (!!this.selectedComments.length && this.selectedComments.length === this.comments.data.length) {
-      this.commentsSelectAll = true;
-    }
+    const data = this.comments.data;
+    const selectedIds = this.selectedComments;
+    const result = handleItemSelectChange({ data, selectedIds });
+    this.commentsSelectAll = result.all;
+    this.selectedComments = result.selectedIds;
+    this.selectedPostIds = data.filter(comment => comment.selected).map(comment => comment.post_id);
   }
 
   // 弹窗
-  public delCommentModal(comment) {
-    this.todoDelComments = comment;
+  public delCommentModal(comment?: TCommentId) {
+    this.todoDelCommentId = comment ? comment : null;
     this.delModal.show();
   }
 
   // 弹窗取消
   public cancelCommentModal() {
     this.delModal.hide();
-    this.todoDelComments = null;
+    this.todoDelCommentId = null;
   }
 
   // 切换评论类型
@@ -165,7 +155,7 @@ export class CommentListComponent implements OnInit {
   // 清空搜索条件
   public resetGetParams(): void {
     this.searchForm.reset({ keyword: '' });
-    this.getParams.sort = ESORT_TYPE.desc;
+    this.getParams.sort = ESortType.desc;
   }
 
   // 刷新评论列表
@@ -215,31 +205,29 @@ export class CommentListComponent implements OnInit {
   }
 
   // 更新评论状态
-  public updateCommentState(comments: any, post_ids: any, state: number) {
-    post_ids = lodash.unique(post_ids);
+  public updateCommentsState(state: ECommentState, comment: IComment) {
+    const comments = comment ? [comment._id] : this.selectedComments;
+    const post_ids = (comment ? [comment.post_id] : lodash.uniq(this.selectedPostIds)).filter(id => id);
+    this.fetching.put = true;
     this._httpService.patch(this._apiPath, { comments, post_ids, state })
     .then(_ => {
       this.refreshComments();
+      this.fetching.put = false;
+    })
+    .catch(_ => {
+      this.fetching.put = false;
     });
   }
 
   // 彻底删除评论
   public delComments() {
-    const comments = this.todoDelComments || this.selectedComments;
-    let post_ids = [];
-    const _post_ids = [];
-    if (comments.length === 1) {
-      const currentComment = this.comments.data.find(c => comments[0] === c._id);
-      if (currentComment) {
-        post_ids = [currentComment.post_id];
-      }
-    } else {
-      post_ids = this.selectedPostIds;
-    }
-    post_ids = lodash.unique(post_ids, _post_ids);
+    const delSingleComment = this.todoDelCommentId;
+    const todoDelComment = this.comments.data.find(c => delSingleComment === c._id);
+    const comments = this.todoDelCommentId ? [this.todoDelCommentId] : this.selectedComments;
+    const post_ids = (delSingleComment && todoDelComment ? [todoDelComment.post_id] : lodash.uniq(this.selectedPostIds)).filter(id => id);
     this._httpService.delete(this._apiPath, { comments, post_ids })
     .then(_ => {
-      this.todoDelComments = null;
+      this.todoDelCommentId = null;
       this.delModal.hide();
       this.refreshComments();
     })

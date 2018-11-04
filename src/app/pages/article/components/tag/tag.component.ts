@@ -102,14 +102,16 @@ export class ArticleTagComponent implements OnInit {
   public batchSelectChange(isSelect: boolean) {
     const data = this.tags.data;
     const selectedIds = this.selectedTags;
-    handleBatchSelectChange({ data, selectedIds, isSelect });
+    this.selectedTags = handleBatchSelectChange({ data, selectedIds, isSelect });
   }
 
   // 单个切换
   public itemSelectChange() {
     const data = this.tags.data;
     const selectedIds = this.selectedTags;
-    this.tagsSelectAll = handleItemSelectChange({ data, selectedIds });
+    const result = handleItemSelectChange({ data, selectedIds });
+    this.tagsSelectAll = result.all;
+    this.selectedTags = result.selectedIds;
   }
 
   // 重置编辑表单

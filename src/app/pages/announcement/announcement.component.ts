@@ -183,14 +183,16 @@ export class AnnouncementComponent implements OnInit {
   public handleBatchSelectChange(isSelect: boolean) {
     const data = this.announcements.data;
     const selectedIds = this.selectedAnnouncements;
-    handleBatchSelectChange({ data, selectedIds, isSelect });
+    this.selectedAnnouncements = handleBatchSelectChange({ data, selectedIds, isSelect });
   }
 
   // 单个切换
   public handleItemSelectChange(): void {
     const data = this.announcements.data;
     const selectedIds = this.selectedAnnouncements;
-    this.announcementsSelectAll = handleItemSelectChange({ data, selectedIds });
+    const result = handleItemSelectChange({ data, selectedIds });
+    this.announcementsSelectAll = result.all;
+    this.selectedAnnouncements = result.selectedIds;
   }
 
   // 分页获取公告

@@ -6,7 +6,7 @@
 
 import { IDataExtends } from '@app/pages/pages.constants';
 
-// 文章数据
+// 评论数据
 export interface IComment {
   ip?: number;
   id?: number;
@@ -28,10 +28,4 @@ export interface IComment {
   create_at: string;
   selected?: boolean;
   extends: IDataExtends[];
-}
-
-export enum EArticlePatchAction {
-  ToRecycle = 1, // 移回收站
-  ToDraft = 2, // 移草稿
-  ToPublished = 3 // 移已发布
 }

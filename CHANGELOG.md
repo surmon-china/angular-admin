@@ -1,6 +1,9 @@
 
 ## CHANGELOG
 
+### todo
+列表切换单个选择时有问题
+
 ### v2.1.0
 
 - 重构 Typescript 部分

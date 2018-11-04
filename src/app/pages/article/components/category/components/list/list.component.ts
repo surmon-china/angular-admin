@@ -34,14 +34,16 @@ export class ArticleCategoryListComponent {
   public batchSelectChange(isSelect: boolean): void {
     const data = this.categories.data;
     const selectedIds = this.selectedCategories;
-    handleBatchSelectChange({ data, selectedIds, isSelect });
+    this.selectedCategories = handleBatchSelectChange({ data, selectedIds, isSelect });
   }
 
   // 单个切换
   public itemSelectChange(): void {
     const data = this.categories.data;
     const selectedIds = this.selectedCategories;
-    this.categoriesSelectAll = handleItemSelectChange({ data, selectedIds });
+    const result = handleItemSelectChange({ data, selectedIds });
+    this.categoriesSelectAll = result.all;
+    this.selectedCategories = result.selectedIds;
   }
 
   // 刷新列表

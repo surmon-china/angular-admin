@@ -75,18 +75,19 @@ export enum ECommentPostType {
 }
 
 // 评论本身的类型
-export enum ECOMMENT_PARENT_TYPE {
+export enum ECommentParentType {
   self = 0 // 自身一级评论
 }
 
 // 排序状态
-export enum ESORT_TYPE {
+export enum ESortType {
+  desc = -1, // 降序
   asc = 1, // 升序
-  desc = -1 // 降序
+  hot = 2 // 最热
 }
 
 // 喜欢类型
-export enum ELIKE_TYPE {
+export enum ELikeType {
   comment = 1,
   page = 2
 }

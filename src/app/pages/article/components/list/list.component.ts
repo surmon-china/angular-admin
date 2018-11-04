@@ -105,14 +105,16 @@ export class ArticleListComponent implements OnInit {
   public batchSelectChange(isSelect: boolean): void {
     const data = this.articles.data;
     const selectedIds = this.selectedArticles;
-    handleBatchSelectChange({ data, selectedIds, isSelect });
+    this.selectedArticles = handleBatchSelectChange({ data, selectedIds, isSelect });
   }
 
   // 文章列表单个切换
   public itemSelectChange(): void {
     const data = this.articles.data;
     const selectedIds = this.selectedArticles;
-    this.articlesSelectAll = handleItemSelectChange({ data, selectedIds });
+    const result = handleItemSelectChange({ data, selectedIds });
+    this.articlesSelectAll = result.all;
+    this.selectedArticles  = result.selectedIds;
   }
 
   // 清空搜索条件
