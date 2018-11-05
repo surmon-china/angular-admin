@@ -12,8 +12,8 @@ import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap';
 import { SaHttpRequesterService } from '@app/services';
 import { IGetParams } from '@app/pages/pages.constants';
-import { handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.utils';
-import { IArticle, ICategory, ITag, EArticlePatchAction, buildLevelCategories } from '@app/pages/article/article.utils';
+import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
+import { IArticle, ICategory, ITag, EArticlePatchAction, buildLevelCategories } from '@/app/pages/article/article.service';
 import {
   TApiPath,
   TSelectedIds,

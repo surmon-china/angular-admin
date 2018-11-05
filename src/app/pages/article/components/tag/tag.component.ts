@@ -11,14 +11,14 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
 import { TApiPath, TSelectedIds, TSelectedAll, IResponseData, IFetching } from '@app/pages/pages.constants';
-import { ITag } from '@app/pages/article/article.utils';
+import { ITag } from '@/app/pages/article/article.service';
 import * as API_PATH from '@app/constants/api';
 import {
   mergeFormControlsToInstance,
   handleBatchSelectChange,
   handleItemSelectChange,
   formControlStateClass
-} from '@app/pages/pages.utils';
+} from '@/app/pages/pages.service';
 
 const DEFAULT_EDIT_FORM = {
   name: '',

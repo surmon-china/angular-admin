@@ -13,7 +13,7 @@ import { FormGroup, AbstractControl, FormBuilder, Validators, ValidationErrors }
 import * as API_PATH from '@app/constants/api';
 import { SaHttpRequesterService } from '@app/services';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.utils';
+import { mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
 
 interface IAuth {
   name: string;
@@ -202,7 +202,7 @@ export class OptionsComponent implements OnInit {
       }
     })
     .catch(_ => {
-      this.fetching.option = false;
+      this.fetching.auth = false;
     });
   }
 

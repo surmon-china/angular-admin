@@ -11,7 +11,6 @@ import { SaModule } from '@/app/sa.module';
 import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 
 import { routing } from './comment.routing';
-
 import { CommentComponent } from './comment.component';
 import { CommentListComponent } from './components/list';
 import { CommentDetailComponent } from './components/detail';

@@ -5,7 +5,7 @@
  */
 
 import { FormGroup, AbstractControl } from '@angular/forms';
-import { TSelectedIds, TSelectedAll } from './pages.constants';
+import { TSelectedIds } from './pages.constants';
 
 interface ISelectChangeOptions {
   data: any[];

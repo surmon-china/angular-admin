@@ -13,12 +13,7 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 import * as API_PATH from '@app/constants/api';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
 import { TApiPath, TSelectedIds, TSelectedAll, EPublishState, IResponseData, IFetching } from '@app/pages/pages.constants';
-import {
-  mergeFormControlsToInstance,
-  handleBatchSelectChange,
-  handleItemSelectChange,
-  formControlStateClass
-} from '@app/pages/pages.utils';
+import { mergeFormControlsToInstance, handleBatchSelectChange, handleItemSelectChange, formControlStateClass } from '@/app/pages/pages.service';
 
 // 公告
 interface IAnnouncement {

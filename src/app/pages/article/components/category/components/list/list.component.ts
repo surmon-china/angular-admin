@@ -6,8 +6,8 @@
 
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { IFetching, IResponseData, TSelectedAll, TSelectedIds } from '@app/pages/pages.constants';
-import { handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.utils';
-import { ICategory } from '@app/pages/article/article.utils';
+import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
+import { ICategory } from '@/app/pages/article/article.service';
 
 @Component({
   selector: 'box-category-list',

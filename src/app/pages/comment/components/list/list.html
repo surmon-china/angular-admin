@@ -4,7 +4,7 @@
       <div class="contnet-top-tools">
         <div class="pull-left">
           <div class="btn-group">
-            <button class="btn btn-success" *ngIf="post_id === CommentPostType.guestbook;else postListTitle">
+            <button class="btn btn-success" *ngIf="isGuestbook(post_id);else postListTitle">
               <strong>留言板评论列表</strong>
             </button>
             <ng-template #postListTitle>
@@ -98,17 +98,13 @@
                    class="form-control with-default-addon" 
                    placeholder="评论内容、作者信息">
             <span class="input-group-btn">
-              <button class="btn btn-default" 
-                      type="submit"
-                      [disabled]="!searchForm.valid">搜索</button>
+              <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
             </span>
           </div>
         </form>
         <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
         <div class="pull-right form-inline">
-          <select class="form-control c-select" 
-                  [(ngModel)]="getParams.sort"
-                  (ngModelChange)="getComments()">
+          <select class="form-control c-select" [(ngModel)]="getParams.sort" (ngModelChange)="getComments()">
             <option [value]="SortType.desc" default>最新评论</option>
             <option [value]="SortType.asc">最早评论</option>
             <option [value]="SortType.hot">最热评论</option>
@@ -243,7 +239,7 @@
                      <div class="button-wrapper">
                       <a class="btn btn-info btn-sm"
                          target="_blank"
-                         [href]="comment.post_id === CommentPostType.guestbook ? 'https://surmon.me/guestbook' : ('https://surmon.me/article/' + comment.post_id)">
+                         [href]="isGuestbook(comment.post_id) ? 'https://surmon.me/guestbook' : ('https://surmon.me/article/' + comment.post_id)">
                         <span>宿主页面</span>
                       </a>
                     </div>

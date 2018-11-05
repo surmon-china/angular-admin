@@ -2,11 +2,7 @@
       class="category-edit-form" 
       [formGroup]="editForm" 
       (ngSubmit)="submitEditForm()">
-  <div class="form-group" 
-        [ngClass]="{
-          'has-error': (!name.valid && name.touched), 
-          'has-success': (name.valid && name.touched)
-        }">
+  <div class="form-group" [ngClass]="controlStateClass(name)">
     <label for="category-name">
       <h5>名称</h5>
     </label>
@@ -17,11 +13,7 @@
            [formControl]="name">
     <span class="help-block sub-little-text">这将是它在站点上显示的名字</span>
   </div>
-  <div class="form-group" 
-       [ngClass]="{
-          'has-error': (!slug.valid && slug.touched), 
-          'has-success': (slug.valid && slug.touched)
-      }">
+  <div class="form-group" [ngClass]="controlStateClass(slug)">
     <label for="category-slug">
       <h5>别名</h5>
     </label>
@@ -32,11 +24,7 @@
            [formControl]="slug">
     <span class="help-block sub-little-text">“别名”是在URL中使用的别称，建议小写，字母、数字、连字符（-）</span>
   </div>
-  <div class="form-group" 
-      [ngClass]="{
-        'has-error': (!pid.valid && pid.touched), 
-        'has-success': (pid.valid && pid.touched)
-      }">
+  <div class="form-group" [ngClass]="controlStateClass(pid)">
     <label for="category-parent">
       <h5>父分类</h5>
     </label>
@@ -55,11 +43,7 @@
     </select>
     <span class="help-block sub-little-text">可以选择父级分类</span>
   </div>
-  <div class="form-group" 
-        [ngClass]="{
-          'has-error': (!description.valid && description.touched), 
-          'has-success': (description.valid && description.touched)
-        }">
+  <div class="form-group" [ngClass]="controlStateClass(description)">
     <label for="category-description">
       <h5>描述</h5>
     </label>
@@ -73,11 +57,7 @@
     </textarea>
     <span class="help-block sub-little-text">该分类的描述</span>
   </div>
-  <div  class="form-group"
-        [ngClass]="{ 
-          'has-error': (!extends.valid && extends.touched), 
-          'has-success': (extends.valid && extends.touched)
-        }">
+  <div  class="form-group"[ngClass]="controlStateClass(extends)">
     <label for="category_extends">
       <h5>自定义扩展</h5>
     </label>

@@ -12,28 +12,16 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 
 import * as API_PATH from '@app/constants/api';
 import { SaHttpRequesterService } from '@app/services';
-import { browserParse, osParse } from '../../comment.ua';
-import { IComment } from '../../comment.utils';
 import { IGetParams } from '@app/pages/pages.constants';
-import { handleBatchSelectChange, handleItemSelectChange, formControlStateClass } from '@app/pages/pages.utils';
-import {
-  TApiPath,
-  TSelectedIds,
-  TSelectedAll,
-  ESortType,
-  ECommentState,
-  ECommentPostType,
-  IResponseData,
-  IFetching
-} from '@app/pages/pages.constants';
+import { browserParse, osParse } from '@app/pages/comment/comment.ua.service';
+import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
+import { TApiPath, TSelectedIds, TSelectedAll, IResponseData, IFetching } from '@app/pages/pages.constants';
+import { IComment, TCommentId, TCommentPostId, ESortType, ECommentState, ECommentPostType } from '@app/pages/comment/comment.constants';
 
 const DEFAULT_GET_PARAMS = {
   sort: ESortType.desc,
   state: ECommentState.all
 };
-
-type TCommentId = IComment['_id'];
-type TCommentPostId = IComment['post_id'];
 
 @Component({
   selector: 'page-comment-list',
@@ -45,7 +33,6 @@ export class CommentListComponent implements OnInit {
 
   SortType = ESortType;
   CommentState = ECommentState;
-  CommentPostType = ECommentPostType;
 
   @ViewChild('delModal') public delModal: ModalDirective;
 
@@ -99,6 +86,11 @@ export class CommentListComponent implements OnInit {
   get currentListTotal(): number {
     const pagination = this.comments.pagination;
     return pagination && pagination.total || 0;
+  }
+
+  // 判断是留言板
+  public isGuestbook(postId: TCommentPostId): boolean {
+    return Number(postId) === Number(ECommentPostType.guestbook);
   }
 
   // 判断公告类型

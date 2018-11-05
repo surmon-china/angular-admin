@@ -9,7 +9,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { SaHttpRequesterService } from '@app/services';
 import { TApiPath, IFetching, IResponseData, TSelectedIds } from '@app/pages/pages.constants';
-import { ICategory, buildLevelCategories } from '@app/pages/article/article.utils';
+import { ICategory, buildLevelCategories } from '@/app/pages/article/article.service';
 import * as API_PATH from '@app/constants/api';
 
 @Component({

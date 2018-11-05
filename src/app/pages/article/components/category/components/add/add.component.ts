@@ -7,9 +7,9 @@
 import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
-import { ICategory } from '@app/pages/article/article.utils';
+import { ICategory } from '@/app/pages/article/article.service';
 import { IFetching, IResponseData } from '@app/pages/pages.constants';
-import { mergeFormControlsToInstance } from '@app/pages/pages.utils';
+import { mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
 
 const DEFAULT_FORM = {
   name: '',
@@ -26,6 +26,8 @@ const DEFAULT_FORM = {
   template: require('./add.html')
 })
 export class ArticleCategoryAddComponent implements OnChanges {
+
+  controlStateClass = formControlStateClass;
 
   @Input() fetching: IFetching;
   @Input() category: ICategory;

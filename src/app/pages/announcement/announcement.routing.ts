@@ -6,6 +6,7 @@
 
 import { Routes, RouterModule } from '@angular/router';
 import { AnnouncementComponent } from './announcement.component';
+
 const routes: Routes = [
   { path: '', component: AnnouncementComponent }
 ];
