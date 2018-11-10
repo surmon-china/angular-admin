@@ -1,6 +1,6 @@
 /**
  * @file Demo UI 演示页面
- * @module app/page/demo/componennt/ui
+ * @module app/page/demo/component/ui
  * @author Surmon <https://github.com/surmon-china>
  */
 

@@ -1,6 +1,6 @@
 /**
  * @file 评论页面组件
- * @module app/page/comment/componennt
+ * @module app/page/comment/component
  * @author Surmon <https://github.com/surmon-china>
  */
 

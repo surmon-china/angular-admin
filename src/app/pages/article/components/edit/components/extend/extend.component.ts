@@ -1,6 +1,6 @@
 /**
  * @file 文章编辑页面扩展信息组件
- * @module app/page/article/componennt/extend
+ * @module app/page/article/component/extend
  * @author Surmon <https://github.com/surmon-china>
  */
 

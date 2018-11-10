@@ -6,7 +6,7 @@
 
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
-import { Component, ElementRef, ViewEncapsulation, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewEncapsulation, AfterViewChecked } from '@angular/core';
 
 import { SaHttpRequesterService } from '@app/services';
 import { TApiPath } from '@app/pages/pages.constants';
@@ -21,6 +21,8 @@ import * as API_PATH from '@app/constants/api';
 })
 export class AuthComponent implements AfterViewChecked {
 
+  @ViewChild('pwdInput') input: ElementRef;
+
   private _apiPath: TApiPath = API_PATH.AUTH;
 
   public password: string = '';
@@ -28,14 +30,12 @@ export class AuthComponent implements AfterViewChecked {
   public slogans = [
     'Done is better than perfect.',
     '远离颠倒梦想，究竟涅槃',
-    'དཀར་གསལ་ཟླ་བ་ཤར་བྱུང་།, ཤར་ཕྱོགས་རི་བོའི་རྩེ་ནས།',
+    // 'དཀར་གསལ་ཟླ་བ་ཤར་བྱུང་།, ཤར་ཕྱོགས་རི་བོའི་རྩེ་ནས།',
     '应无所住，而生其心'
   ];
   public slogan: string = this.slogans[Math.floor(Math.random() * (this.slogans.length))];
 
-  constructor(public elem: ElementRef,
-              private _router: Router,
-              private _httpService: SaHttpRequesterService) {}
+  constructor(private _router: Router, private _httpService: SaHttpRequesterService) {}
 
   toEditMode() {
     this.editMode = !this.editMode;
@@ -67,9 +67,6 @@ export class AuthComponent implements AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    const inputs = this.elem.nativeElement.getElementsByTagName('input');
-    if (inputs.length && inputs[0].focus) {
-      inputs[0].focus();
-    }
+    return this.input && this.input.nativeElement && this.input.nativeElement.focus();
   }
 }

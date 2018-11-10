@@ -18,4 +18,6 @@ export const ARTICLE = '/article';
 
 export const COMMENT = '/comment';
 
+export const STATISTIC = '/statistic';
+
 export const TAG = '/tag';

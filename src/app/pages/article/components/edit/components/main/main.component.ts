@@ -1,6 +1,6 @@
 /**
  * @file 文章编辑页面核心组件
- * @module app/page/article/componennt/main
+ * @module app/page/article/component/main
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -8,7 +8,11 @@ import { Component, EventEmitter, ViewEncapsulation, Input, Output, OnInit, OnCh
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
+import * as API_PATH from '@app/constants/api';
 import { SaHttpRequesterService } from '@app/services';
+import { IArticle, ITag, TArticleId, EArticlePatchAction } from '@/app/pages/article/article.service';
+import { TApiPath, EOriginState, EPublicState, EPublishState, IFetching } from '@app/pages/pages.constants';
+import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
 
 @Component({
   selector: 'box-article-edit-main',
@@ -18,7 +22,8 @@ import { SaHttpRequesterService } from '@app/services';
 })
 export class ArticleEditMainComponent implements OnInit, OnChanges {
 
-  // input
+  controlStateClass = formControlStateClass;
+
   @Input() tag;
   @Input() title;
   @Input() content;
@@ -30,29 +35,26 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   @Output() keywordsChange: EventEmitter<any> = new EventEmitter();
   @Output() descriptionChange: EventEmitter<any> = new EventEmitter();
 
+  private _tagApiPath: TApiPath = API_PATH.TAG;
+
   // form
   public editForm: FormGroup;
-  public _title: AbstractControl;
-  public _content: AbstractControl;
-  public _keywords: AbstractControl;
-  public _description: AbstractControl;
+  public formTitle: AbstractControl;
+  public formContent: AbstractControl;
+  public formKeywords: AbstractControl;
+  public formDescription: AbstractControl;
 
-  // init
-  public tags: any = { data: [] };
+  public tags: ITag[] = [];
+  public fetching: IFetching = { tag: false };
 
-  constructor(private _fb: FormBuilder,
-              private _route: ActivatedRoute,
-              private _httpService: SaHttpRequesterService) {
-    this.editForm = _fb.group({
-      '_title': ['', Validators.compose([Validators.required])],
-      '_content': [[], Validators.compose([Validators.required])],
-      '_keywords': [[], Validators.compose([Validators.required])],
-      '_description': ['', Validators.compose([Validators.required])]
+  constructor(private _fb: FormBuilder, private _httpService: SaHttpRequesterService) {
+    this.editForm = this._fb.group({
+      formTitle: ['', Validators.compose([Validators.required])],
+      formContent: [[], Validators.compose([Validators.required])],
+      formKeywords: [[], Validators.compose([Validators.required])],
+      formDescription: ['', Validators.compose([Validators.required])]
     });
-    this._title = this.editForm.controls['_title'];
-    this._content = this.editForm.controls['_content'];
-    this._keywords = this.editForm.controls['_keywords'];
-    this._description = this.editForm.controls['_description'];
+    mergeFormControlsToInstance(this, this.editForm);
   }
 
   // 初始化
@@ -62,69 +64,71 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   }
 
   // 数据更新后重新初始化表单
-  ngOnChanges(changes) {
+  ngOnChanges() {
     this.resetEditForm();
-    if (changes.tag) { this.buildTagsCheck(); }
+    this.resetTagsCheck();
   }
 
   // 重置数据
   public resetEditForm() {
-    this._title.setValue(this.title);
-    this._content.setValue(this.content);
-    this._keywords.setValue(this.keywords);
-    this._description.setValue(this.description);
+    this.formTitle.setValue(this.title);
+    this.formContent.setValue(this.content);
+    this.formKeywords.setValue(this.keywords);
+    this.formDescription.setValue(this.description);
   }
 
   // 标题格式化
-  public titleChangeHandle(event) {
+  public handleTitleChange(event) {
     const newTitle = event.target.value.replace(/(^\s*)|(\s*$)/g, '');
-    this._title.setValue(newTitle);
+    this.formTitle.setValue(newTitle);
     this.titleChange.emit(newTitle);
   }
 
   // 关键词格式化
-  public keywordsChangeHandle(event) {
+  public handleKeywordsChange(event) {
     const newWords = event.target.value.replace(/\s/g, '').split(',');
-    this._keywords.setValue(newWords);
+    this.formKeywords.setValue(newWords);
     this.keywordsChange.emit(newWords);
   }
 
   // 描述内容格式化
-  public descriptionChangeHandle(event) {
+  public handleDescriptionChange(event) {
     const newDescription = event.target.value.replace(/(^\s*)|(\s*$)/g, '');
-    this._description.setValue(newDescription);
+    this.formDescription.setValue(newDescription);
     this.descriptionChange.emit(newDescription);
   }
 
   // 文章内容格式化
-  public contentChangeHandle(event) {
+  public handleContentChange(event) {
     if (event.content !== undefined) {
       this.contentChange.emit(event.content);
     }
   }
 
   // 标签选择格式化
-  public tagChangeHandle() {
-    const selectedTags = Array.from(this.tags.data.filter(t => t.selected), t => (<any>t)._id);
+  public handleTagChange() {
+    const selectedTags = this.tags.filter(t => t.selected).map(t => t._id);
     this.tagChange.emit(selectedTags);
   }
 
   // 选择标签
-  public buildTagsCheck() {
-    this.tags.data.forEach(tag => {
-      if (this.tag.includes(tag._id)) {
-        tag.selected = true;
-      }
+  public resetTagsCheck() {
+    this.tags.forEach(tag => {
+      tag.selected = this.tag.includes(tag._id);
     });
   }
 
   // 获取所有标签
   public getTags() {
-    this._httpService.get('/tag', { per_page: 1000 })
+    this.fetching.tag = true;
+    this._httpService.get(this._tagApiPath, { per_page: 1000 })
     .then(tags => {
-      this.tags = tags.result;
-      this.buildTagsCheck();
+      this.fetching.tag = false;
+      this.tags = tags.result.data;
+      this.resetTagsCheck();
     })
-    .catch(error => {});
+    .catch(_ => {
+      this.fetching.tag = false;
+    });
   }
 }

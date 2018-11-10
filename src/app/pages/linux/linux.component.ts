@@ -1,6 +1,6 @@
 /**
  * @file 服务器管理页面组件
- * @module app/page/linux/componennt
+ * @module app/page/linux/component
  * @author Surmon <https://github.com/surmon-china>
  */
 

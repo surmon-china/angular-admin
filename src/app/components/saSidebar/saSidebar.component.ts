@@ -1,6 +1,6 @@
 /**
  * @file 侧边栏菜单组件
- * @module app/componennt/sidebar
+ * @module app/component/sidebar
  * @author Surmon <https://github.com/surmon-china>
  */
 

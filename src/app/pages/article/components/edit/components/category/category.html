@@ -1,14 +1,14 @@
 <div class="category-list">
-  <p class="text-muted" *ngIf="!categories.data.length">暂无分类</p>
-  <ng-template [ngIf]="categories && categories.data.length">
-    <div title="{{ category.name }}" 
-         class="category-item-checkbox" 
-         *ngFor="let category of categories.data">
+  <sa-loading-spider [show]="fetching.get"></sa-loading-spider>
+  <p class="text-muted" *ngIf="!categories.length;else dstaList">暂无分类</p>
+  <ng-template #dstaList>
+    <div [title]="category.name" class="category-item-checkbox" *ngFor="let category of categories">
       <sa-checkbox [(ngModel)]="category.checked" (ngModelChange)="itemSelectChange($event, category)">
         <span sa-checkbox-label>
           <span>&nbsp;</span>
           <span *ngIf="category.level">└</span>
-          <span *ngFor="let num of categoryLevelMark(category.level)">─</span>
+          <strong>{{ ''.padEnd(category.level, '─') }}</strong>
+          <span>&nbsp;</span>
           <span>{{ category.name }}</span>
         </span>
       </sa-checkbox>
@@ -16,7 +16,7 @@
     </div>
   </ng-template>
   <hr>
-  <button class="btn btn-sm btn-default btn-with-icon" (click)="getCategories()">
+  <button class="btn btn-sm btn-default btn-with-icon" (click)="getCategories()" [disabled]="fetching.get">
     <i class="ion-md-refresh"></i>
     <span>更新分类</span>
   </button>

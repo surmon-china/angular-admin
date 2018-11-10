@@ -1,18 +1,20 @@
 <div class="auth-main">
   <div class="auth-block">
     <div class="secret-titles">
-      <div class="title" *ngIf="!editMode" (dblclick)="toEditMode($event)">
+      <div class="title" *ngIf="!editMode" (dblclick)="toEditMode()" (touchend)="toEditMode()">
         <span>{{ slogan || '-----------' }}</span>
       </div>
       <input type="password"
              class="input"
              id="password"
              autocomplete
+             #pwdInput
              *ngIf="editMode"
              [(ngModel)]="password"
              (keyup.esc)="quitEdit($event)"
              (keyup.enter)="onEnter($event)"
-             (dblclick)="toEditMode($event)">
+             (dblclick)="toEditMode()"
+             (touchend)="toEditMode()">
     </div>
   </div>
 </div>

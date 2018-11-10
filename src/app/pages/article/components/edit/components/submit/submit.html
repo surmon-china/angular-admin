@@ -7,9 +7,9 @@
               name="article-origin" 
               [(ngModel)]="origin"
               (change)="originChange.emit($event.target.value)">
-        <option value="0">原创</option>
-        <option value="1">转载</option>
-        <option value="2">混合</option>
+        <option [value]="OriginState.original">原创</option>
+        <option [value]="OriginState.reprint">转载</option>
+        <option [value]="OriginState.hybrid">混合</option>
       </select>
     </div>
   </div>
@@ -21,9 +21,9 @@
               name="article-status" 
               [(ngModel)]="state"
               (change)="stateChange.emit($event.target.value)">
-        <option value="1">直接发布</option>
-        <option value="0">存为草稿</option>
-        <option value="-1">已删除</option>
+        <option [value]="PublishState.published">直接发布</option>
+        <option [value]="PublishState.draft">存为草稿</option>
+        <option [value]="PublishState.recycle">已删除</option>
       </select>
     </div>
   </div>
@@ -35,9 +35,9 @@
               name="article-public" 
               [(ngModel)]="ppublic"
               (change)="ppublicChange.emit($event.target.value)">
-        <option value="1">公开</option>
-        <option value="0">密码访问</option>
-        <option value="-1">私密</option>
+        <option [value]="PublicState.public">公开</option>
+        <option [value]="PublicState.password">密码访问</option>
+        <option [value]="PublicState.secret">私密</option>
       </select>
     </div>
   </div>
@@ -51,14 +51,13 @@
               placeholder="文章密码" 
               [(ngModel)]="password"
               (change)="passwordChange.emit($event.target.value)"
-              [disabled]="ppublic != 0">
+              [disabled]="ppublic !== PublicState.password">
     </div>
   </div>
   <hr>
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-block btn-default btn-with-icon" 
-               (click)="submitArticle.emit()">
+      <button class="btn btn-block btn-default btn-with-icon" (click)="submitArticle.emit()">
         <i class="ion-md-done-all"></i>
         <span>{{ isEdit ? '修改' : '发布' }}文章</span>
       </button>

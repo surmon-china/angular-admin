@@ -1,5 +1,5 @@
 <aside class="al-sidebar" (mouseleave)="hoverElemTop=outOfArea" sidebarResize>
-  <div class="al-sidebar-list-item" [hidden]="sidebarCollapsed">
+  <div class="al-sidebar-list-item user" [hidden]="sidebarCollapsed">
     <a [routerLink]="['/options']" class="al-sidebar-user">
       <img src="{{ _appState.state.adminInfo.gravatar }}" class="al-sidebar-user-gravatar">
       <div class="al-sidebar-user-profile">
@@ -8,15 +8,19 @@
       </div>
     </a>
   </div>
-  <ul id="al-sidebar-list" class="al-sidebar-list">
-    <sa-menu-item
-      [menuItem]="item"
-      (itemHover)="hoverItem($event)"
-      (toggleSubMenu)="toggleSubMenu($event)"
-      *ngFor="let item of menuItems">
-    </sa-menu-item>
-  </ul>
-  <div class="sidebar-hover-elem" 
-       [ngClass]="{'show-hover-elem': showHoverElem }"
-       [ngStyle]="{top: hoverElemTop + 'px', height: hoverElemHeight + 'px'}"></div>
+  <div class="al-sidebar-menu">
+    <ul id="al-sidebar-list" class="al-sidebar-list">
+        <sa-menu-item
+          [menuItem]="item"
+          (itemHover)="hoverItem($event)"
+          (toggleSubMenu)="toggleSubMenu($event)"
+          *ngFor="let item of menuItems">
+        </sa-menu-item>
+      </ul>
+      <div
+        class="sidebar-hover-elem" 
+        [ngClass]="{'show-hover-elem': showHoverElem }"
+        [ngStyle]="{top: hoverElemTop + 'px', height: hoverElemHeight + 'px'}">
+      </div>
+  </div>
 </aside>

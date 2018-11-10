@@ -41,6 +41,12 @@ a.al-logo {
   }
 }
 
+@media (max-width: $resXS) {
+  a.al-logo {
+    width: auto;
+  }
+}
+
 .user-profile {
   float: right;
   // min-width: 230px;

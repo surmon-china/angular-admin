@@ -12,9 +12,6 @@ import { SaModule } from '@/app/sa.module';
 import { DashboardComponent } from './dashboard.component';
 import { routing } from './dashboard.routing';
 
-import { SiteStatisticsComponent } from './siteStatistics';
-import { SiteStatisticsService } from './siteStatistics/siteStatistics.service';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -23,11 +20,7 @@ import { SiteStatisticsService } from './siteStatistics/siteStatistics.service';
     routing
   ],
   declarations: [
-    DashboardComponent,
-    SiteStatisticsComponent
-  ],
-  providers: [
-    SiteStatisticsService
+    DashboardComponent
   ]
 })
 export default class DashboardModule {}

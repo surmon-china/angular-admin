@@ -124,11 +124,35 @@ export const PAGES_MENU = [
         path: 'linux',
         data: {
           menu: {
-            title: 'Aliyun管理',
+            title: 'Aliyun DMS',
             icon: 'ion-logo-tux',
             selected: false,
             expanded: false,
             order: 9
+          }
+        }
+      },
+      {
+        path: '',
+        data: {
+          menu: {
+            title: 'Aliyun ECS',
+            url: 'https://s.click.taobao.com/LLXJJKw',
+            icon: 'ion-md-cloud',
+            order: 700,
+            target: '_blank'
+          }
+        }
+      },
+      {
+        path: '',
+        data: {
+          menu: {
+            title: 'SRE service',
+            url: 'https://sre.surmon.me',
+            icon: 'ion-md-construct',
+            order: 800,
+            target: '_blank'
           }
         }
       },

@@ -58,5 +58,5 @@ export enum EOriginState {
   all = 'all',
   original = 0, // 原创
   reprint = 1, // 转载
-  hybrid = -1 // 混合
+  hybrid = 2 // 混合
 }

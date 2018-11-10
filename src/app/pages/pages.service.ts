@@ -49,6 +49,6 @@ export const handleItemSelectChange = (options: ISelectChangeOptions): IItemSele
 };
 
 // 表单验证
-export const formControlStateClass = (control: AbstractControl): string => {
-  return control.touched ? (control.valid ? 'has-success' : 'has-error') : '';
+export const formControlStateClass = (control: AbstractControl, errClassName?: string): string => {
+  return control.touched ? (control.valid ? 'has-success' : (errClassName || 'has-error')) : '';
 };

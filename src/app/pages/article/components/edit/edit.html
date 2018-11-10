@@ -1,12 +1,13 @@
 <div class="row">
   <div class="col-md-9" style="position: relative; z-index: 2;">
     <sa-card title="撰写新文章" baCardClass="with-scroll">
-      <box-article-edit-main 
-          [(tag)]="article.tag"
-          [(title)]="article.title"
-          [(content)]="article.content"
-          [(keywords)]="article.keywords"
-          [(description)]="article.description">
+      <box-article-edit-main
+        #editForm
+        [(tag)]="article.tag"
+        [(title)]="article.title"
+        [(content)]="article.content"
+        [(keywords)]="article.keywords"
+        [(description)]="article.description">
       </box-article-edit-main>
     </sa-card>
   </div>

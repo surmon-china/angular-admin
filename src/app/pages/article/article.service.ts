@@ -7,16 +7,17 @@
 import * as lodash from 'lodash';
 import { IDataExtends, EPublicState, EPublishState, EOriginState } from '@app/pages/pages.constants';
 
+export type TArticleId = string;
+
 // 文章数据
 export interface IArticle {
   id?: number;
-  _id?: string;
-  name: string;
+  _id?: TArticleId;
   title: string;
   description: string;
   content?: string;
   keywords: string[];
-  meta: {
+  meta?: {
     likes: number;
     views: number;
     comments: number;
@@ -24,8 +25,8 @@ export interface IArticle {
   origin: EOriginState;
   public: EPublicState;
   state: EPublishState;
-  update_at: string;
-  create_at: string;
+  update_at?: string;
+  create_at?: string;
   tag: ITag[];
   category: ICategory[];
   extends: IDataExtends[];
@@ -43,6 +44,7 @@ export interface ICategory {
   update_at: string;
   create_at: string;
   selected?: boolean;
+  checked?: boolean;
   extends: IDataExtends[];
   children?: ICategory[];
 }
@@ -67,7 +69,7 @@ export enum EArticlePatchAction {
 }
 
 // 构建有级别的分类数据（保证两级数据可用）
-export const buildLevelCategories = (categories: ICategory[]): ICategory[] => {
+export const buildLevelCategories = (categories: ICategory[], selectedIds?: ICategory['_id'][]): ICategory[] => {
 
   const todoDeletes = [];
   const newCategories = [];
@@ -88,6 +90,9 @@ export const buildLevelCategories = (categories: ICategory[]): ICategory[] => {
   const runBuildLevelAndOptimize = (parent, level) => {
     parent.forEach(child => {
       child.level = level;
+      if (selectedIds && selectedIds.length) {
+        child.checked = selectedIds.includes(child._id);
+      }
       newCategories.push(child);
       if (child.children && child.children.length) {
         runBuildLevelAndOptimize(child.children, level + 1);

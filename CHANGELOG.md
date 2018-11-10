@@ -7,6 +7,7 @@
 - 重构所有类型和接口
 - 增加 loading-bar 组件
 - 增加 loading-spider 组件
+- 响应式适应移动端
 
 ### v2.0.0
 

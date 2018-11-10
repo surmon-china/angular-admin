@@ -1,10 +1,11 @@
 /**
  * @file 文章编辑页面状态选择及发布组件
- * @module app/page/article/componennt/submit
+ * @module app/page/article/component/submit
  * @author Surmon <https://github.com/surmon-china>
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { EOriginState, EPublicState, EPublishState, IFetching } from '@app/pages/pages.constants';
 
 @Component({
   selector: 'box-article-edit-submit',
@@ -12,6 +13,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 
 export class ArticleEditSubmitComponent {
+
+  OriginState = EOriginState;
+  PublicState = EPublicState;
+  PublishState = EPublishState;
 
   @Input() isEdit;
   @Input() state;

@@ -30,7 +30,7 @@ type TMenuCollapsedState = boolean;
     require('./app.scss')
   ],
   template: `
-    <main [ngClass]="{'menu-collapsed': _isMenuCollapsed}" saThemeRun>
+    <main [ngClass]="_isMenuCollapsed ? 'menu-collapsed': ''" saThemeRun>
       <ngx-loading-bar color="#017170" height="4px" diameter="20px"></ngx-loading-bar>
       <simple-notifications [options]="notificationsOptions"></simple-notifications>
       <div class="additional-bg"></div>
@@ -59,7 +59,9 @@ export class AppComponent implements AfterViewInit, OnInit {
 
     // 订阅菜单折叠事件
     this._state.subscribe('menu.isCollapsed', (isCollapsed: TMenuCollapsedState): void => {
-      this._isMenuCollapsed = isCollapsed;
+      setTimeout(() => {
+        this._isMenuCollapsed = isCollapsed;
+      }, 0);
     });
 
     // 路由拦截器
