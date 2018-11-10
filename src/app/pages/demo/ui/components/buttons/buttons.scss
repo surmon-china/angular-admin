@@ -1,22 +1,27 @@
 .basic-btns {
   padding-top: 8px;
   margin-bottom: -8px;
+
   h5 {
     line-height: 35px;
     font-size: 12px;
+
     &.row-sm {
       line-height: 30px;
     }
+
     &.row-xs {
       line-height: 22px;
     }
   }
+
   & > .row {
     padding-bottom: 4px;
   }
 }
 
 .btns-row {
+
   & > div {
     margin-bottom: 12px;
   }
@@ -45,6 +50,7 @@ ul.btn-list {
   padding: 0;
   padding-top: 6px;
   clear: both;
+
   li {
     margin: 0px 0 12px 18px;
     padding: 0;
@@ -79,6 +85,7 @@ $btn-icon-size: 34px;
 .progress-buttons-container {
   text-align: center;
   font-size: 16px;
+  
   span.button-title {
     display: inline-block;
     width: 100%;

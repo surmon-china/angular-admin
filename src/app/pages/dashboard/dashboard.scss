@@ -1,3 +1,81 @@
+@import "../../theme/sass/conf/conf";
+
+.pie-charts {
+  color: $content-text;
+
+  .pie-chart-item-container {
+    position: relative;
+    padding: 0 15px;
+    float: left;
+    box-sizing: border-box;
+
+    .card {
+      height: 115px;
+
+      .card-body {
+        padding: 15px;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1325px) {
+    .pie-chart-item-container {
+      width: 25%;
+      flex: 0 0 25%
+    }
+  }
+  @media screen and (min-width: 700px) and (max-width: 1325px)  {
+    .pie-chart-item-container {
+      width: 50%;
+      flex: 0 0 50%
+    }
+  }
+  @media screen and (max-width: 700px)  {
+    .pie-chart-item-container {
+      width: 100%;
+      flex: 0 0 100%
+    }
+  }
+
+  .pie-chart-item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 1em;
+
+    .description {
+      display: inline-block;
+      font-size: 18px;
+      opacity: 0.9;
+      
+      .description-stats {
+        padding-top: .5em;
+        font-size: 24px;
+      }
+    }
+
+    .chart-icon {
+      font-size: 4em;
+    }
+  }
+  @media screen and
+  (min-width: 1325px) and (max-width: 1650px),
+  (min-width: 700px) and (max-width: 830px) {
+    .chart-icon {
+      display: none;
+    }
+  }
+  .angular {
+    margin-top: 100px;
+  }
+  .angular .chart {
+    margin-top: 0;
+  }
+}
+
 @media screen and (min-width: 1620px) {
   .row.shift-up {
     > * {
@@ -12,12 +90,14 @@
   }
 }
 
-.user-stats-card {
-  .card-title {
-    padding: 0 0 15px;
+.medium-card {
+  
+  .card-body {
+    overflow-y: auto;
   }
 }
 
-.blurCalendar {
-  height: 475px;
+.adsense-iframe {
+  width: 100%;
+  height: 100%;
 }

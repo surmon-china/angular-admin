@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 
-
 @Component({
-  selector: 'disabled-buttons',
+  selector: 'box-disabled-buttons',
   template: require('./disabledButtons.html'),
 })
-export class DisabledButtons {
+export class DisabledButtonsComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

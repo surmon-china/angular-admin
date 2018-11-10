@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'contextual-table',
+  selector: 'box-contextual-table',
   template: require('./contextualTable.html'),
 })
-export class ContextualTable {
+export class ContextualTableComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

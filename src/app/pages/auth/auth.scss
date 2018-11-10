@@ -1,1 +1,95 @@
-@import '../../theme/sass/auth';
+@import '~app/theme/sass/conf/conf';
+
+$text-color: #ffffff;
+
+.auth-main {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.auth-block {
+  width: 540px;
+  margin: 0 auto;
+  border-radius: 5px;
+  @include bg-translucent-dark(0.55);
+  color: #fff;
+  padding: 32px;
+
+  h1 {
+    font-weight: $font-light;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  p {
+    font-size: 16px;
+  }
+
+  a {
+    color: $primary;
+    outline: none;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $primary-dark;
+    }
+  }
+
+  .control-label {
+    padding-top: 11px;
+    color: $text-color;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  > .secret-titles {
+
+    > .title,
+    > .input {
+      text-align: center;
+      display: block;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      border: none;
+      background: none;
+      font-size: 32px;
+      height: 35px;
+      line-height: 35px;
+      color: #fff;
+    }
+  }
+}
+
+.auth-input {
+  width: 300px;
+  margin-bottom: 24px;
+
+  input {
+    display: block;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    padding: 4px 10px;
+    outline: none;
+  }
+}
+
+@media (max-width: $resXS) {
+  .auth-block {
+    width: 70%;
+
+    > .secret-titles {
+
+      > .title {
+        font-size: 1.4em;
+      }
+    }
+  }
+}

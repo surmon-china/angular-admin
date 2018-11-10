@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'standard-inputs',
+  selector: 'box-standard-inputs',
   template: require('./standardInputs.html'),
 })
-export class StandardInputs {
+export class StandardInputsComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

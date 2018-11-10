@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'horizontal-form',
+  selector: 'box-horizontal-form',
   template: require('./horizontalForm.html'),
 })
-export class HorizontalForm {
+export class HorizontalFormComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

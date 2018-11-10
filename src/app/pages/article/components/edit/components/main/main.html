@@ -1,75 +1,67 @@
-<form class="form-horizontal article-editor-main-form" 
-      name="articleForm" [formGroup]="editForm">
-  <div class="form-group row" 
-       [ngClass]="{ 
-          'has-error': (!_title.valid && _title.touched), 
-          'has-success': (_title.valid && _title.touched)
-        }">
-    <label for="articleTitle" class="col-sm-1 form-control-label text-right">文章标题</label>
+<form class="form-horizontal article-editor-main-form" name="articleForm" [formGroup]="editForm">
+  <div class="form-group row" [ngClass]="controlStateClass(formTitle)">
+    <label for="article-title" class="col-sm-1 form-control-label text-right">文章标题</label>
     <div class="col-sm-5">
-      <input type="text"
-             autofocus
-             class="form-control form-control-lg" 
-             title="文章标题" 
-             placeholder="文章标题" 
-             name="articleTitle"
-             id="articleTitle"
-             [formControl]="_title"
-             (change)="titleChangeHandle($event)">
+      <input
+        autofocus
+        type="text"
+        title="文章标题" 
+        placeholder="文章标题" 
+        id="article-title"
+        name="article-title"
+        class="form-control form-control-lg" 
+        [formControl]="formTitle"
+        (change)="handleTitleChange($event)"/>
     </div>
   </div>
-  <div class="form-group row"
-        [ngClass]="{ 
-          'has-warning': (!_keywords.valid && _keywords.touched), 
-          'has-success': (_keywords.valid && _keywords.touched)
-        }">
-    <label for="articleKeywords" class="col-sm-1 form-control-label text-right">文章关键词</label>
+  <div class="form-group row" [ngClass]="controlStateClass(formKeywords, 'has-warning')">
+    <label for="article-keywords" class="col-sm-1 form-control-label text-right">文章关键词</label>
     <div class="col-sm-5">
-      <input type="text"
-             class="form-control form-control-lg" 
-             title="多个关键词以 ' , ' 隔开" 
-             placeholder="多个关键词以 ' , ' 隔开" 
-             name="articleKeywords"
-             id="articleKeywords"
-             [formControl]="_keywords"
-             (change)="keywordsChangeHandle($event)">
+      <input
+        type="text"
+        class="form-control form-control-lg" 
+        title="多个关键词以 ' , ' 隔开" 
+        placeholder="多个关键词以 ' , ' 隔开" 
+        name="article-keywords"
+        id="article-keywords"
+        [formControl]="formKeywords"
+        (change)="handleKeywordsChange($event)">
     </div>
   </div>
-  <div class="form-group row"
-        [ngClass]="{ 
-          'has-warning': (!_description.valid && _description.touched), 
-          'has-success': (_description.valid && _description.touched)
-        }">
-    <label for="articleDescription" class="col-sm-1 form-control-label text-right">文章描述</label>
+  <div class="form-group row" [ngClass]="controlStateClass(formDescription, 'has-warning')">
+    <label for="article-description" class="col-sm-1 form-control-label text-right">文章描述</label>
     <div class="col-sm-10">
-      <textarea class="form-control article-description"
-                cols="30" 
-                rows="20" 
-                name="articleDescription" 
-                id="articleDescription" 
-                title="文章描述"
-                placeholder="文章描述"
-                [formControl]="_description"
-                (change)="descriptionChangeHandle($event)">
+      <textarea
+        class="form-control article-description"
+        cols="30" 
+        rows="20" 
+        name="article-description" 
+        id="article-description" 
+        title="文章描述"
+        placeholder="文章描述"
+        [formControl]="formDescription"
+        (change)="handleDescriptionChange($event)">
       </textarea>
     </div>
   </div>
-  <div class="form-group row"
-       [ngClass]="{ 'has-success': tag.length && editForm.touched }">
+  <div class="form-group row" [ngClass]="{ 'has-success': tag.length && editForm.touched }">
     <label class="col-sm-1 form-control-label text-right">文章标签</label>
     <div class="col-sm-10 col-sm-offset-1">
       <div class="form--control article-tags" title="选择文章标签">
         <div class="tags-list">
-          <button class="btn btn-article-tag-item btn-with-icon btn-default text-muted disabled" 
-                  *ngIf="!tags.data.length">
+          <button class="btn btn-article-tag-item btn-with-icon btn-default text-muted disabled" *ngIf="!tags.length">
             <i class="ion-md-information-circle-outline"></i>
             <span>暂无标签</span>
           </button>
-          <button class="btn btn-sm article-tag-item" 
-                *ngFor="let tag of tags.data"
-                [ngClass]="{ 'btn-primary': tag.selected, 'btn-default': !tag.selected }"
-                (click)="tag.selected = !tag.selected;tagChangeHandle()"
-                title="{{ tag.description || tag.name }}">{{ tag.name }}</button>
+          <button 
+            class="btn btn-sm article-tag-item" 
+            *ngFor="let tag of tags"
+            [ngClass]="tag.selected ? 'btn-primary' : 'btn-default'"
+            (click)="tag.selected = !tag.selected;handleTagChange()"
+            [title]="tag.description || tag.name"
+            [disabled]="fetching.tag">
+            <span>{{ tag.name }}</span>
+          </button>
         </div>
         <hr>
         <div class="clearfix">
@@ -81,18 +73,15 @@
       </div>
     </div>
   </div>
-  <div class="form-group row"
-       [ngClass]="{ 
-          'has-danger': (!_content.valid && _content.touched), 
-          'has-success': (_content.valid && _content.touched)
-        }">
+  <div class="form-group row" [ngClass]="controlStateClass(formContent, 'has-danger')">
     <label for="articleContent" class="col-sm-1 form-control-label text-right">文章内容</label>
     <div class="col-sm-10">
-      <markdown-editor  class="form-control article-content" 
-                        title="文章内容"
-                        [formControl]="_content"
-                        (change)="contentChangeHandle($event)">
-      </markdown-editor>
+      <sa-markdown-editor 
+        class="form-control article-content" 
+        title="文章内容"
+        [formControl]="formContent"
+        (change)="handleContentChange($event)">
+      </sa-markdown-editor>
     </div>
   </div>
 </form>

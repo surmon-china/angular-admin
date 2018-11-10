@@ -1,6 +1,6 @@
 @import "sass/conf/conf";
 @import "~bootstrap/scss/bootstrap.scss";
-@import "sass/bootstrap-overrides/overrides";
+@import "sass/bootstrap/overrides";
 @import "~animate.css/animate";
 @import "sass/typography";
 @import "sass/buttons";
@@ -12,3 +12,4 @@
 @import "sass/form";
 @import "sass/notifications";
 @import "sass/model";
+@import "sass/common";

@@ -1,17 +1,22 @@
-import { Routes, RouterModule }  from '@angular/router';
+/**
+ * @file Demo 表单演示路由
+ * @module app/page/demo/component/forms/routes
+ * @author Surmon <https://github.com/surmon-china>
+ */
 
-import { Forms } from './forms.component';
-import { Inputs } from './components/inputs/inputs.component';
-import { Layouts } from './components/layouts/layouts.component';
+import { Routes, RouterModule } from '@angular/router';
 
-// noinspection TypeScriptValidateTypes
+import { FormsComponent } from './forms.component';
+import { InputsComponent } from './components/inputs/inputs.component';
+import { LayoutsComponent } from './components/layouts/layouts.component';
+
 const routes: Routes = [
   {
     path: '',
-    component: Forms,
+    component: FormsComponent,
     children: [
-      { path: 'inputs', component: Inputs },
-      { path: 'layouts', component: Layouts }
+      { path: 'inputs', component: InputsComponent },
+      { path: 'layouts', component: LayoutsComponent }
     ]
   }
 ];

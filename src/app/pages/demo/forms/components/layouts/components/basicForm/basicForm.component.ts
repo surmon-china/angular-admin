@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'basic-form',
+  selector: 'box-basic-form',
   template: require('./basicForm.html'),
 })
-export class BasicForm {
+export class BasicFormComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

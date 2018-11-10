@@ -1,0 +1,48 @@
+<li *ngIf="!menuItem.hidden" 
+    [title]="menuItem.title" 
+    [ngClass]="{
+      'al-sidebar-list-item': !child,
+      'sa-sidebar-sublist-item': child,
+      'selected': menuItem.selected && !menuItem.expanded,
+      'with-sub-menu': menuItem.children,
+      'sa-sidebar-item-expanded': menuItem.expanded
+    }">
+
+  <a *ngIf="!menuItem.children && !menuItem.url" 
+      (mouseenter)="onHoverItem($event, item)" 
+      [routerLink]="menuItem.route.paths" 
+      class="al-sidebar-list-link">
+    <i *ngIf="menuItem.icon" class="{{ menuItem.icon }}"></i>
+    <span>{{ menuItem.title }}</span>
+  </a>
+
+  <a *ngIf="!menuItem.children && menuItem.url" 
+      (mouseenter)="onHoverItem($event, item)" 
+      [href]="menuItem.url" 
+      [target]="menuItem.target" 
+      class="al-sidebar-list-link">
+    <i *ngIf="menuItem.icon" class="{{ menuItem.icon }}"></i>
+    <span>{{ menuItem.title }}</span>
+  </a>
+
+  <a href 
+     class="al-sidebar-list-link"
+     *ngIf="menuItem.children" 
+     (mouseenter)="onHoverItem($event, item)" 
+     (click)="onToggleSubMenu($event, menuItem)">
+    <i *ngIf="menuItem.icon" class="{{ menuItem.icon }}"></i>
+    <span>{{ menuItem.title }}</span>
+    <b class="ion-ios-arrow-up" [ngClass]="{'ion-ios-arrow-down': menuItem.expanded}"></b>
+  </a>
+
+  <ul class="al-sidebar-sublist"  
+      *ngIf="menuItem.children" 
+      [ngClass]="{'slide-right': menuItem.slideRight}">
+    <sa-menu-item [menuItem]="subItem"
+                  [child]="true"
+                  (itemHover)="onHoverItem($event)"
+                  (toggleSubMenu)="onToggleSubMenu($event, subItem)"
+                  *ngFor="let subItem of menuItem.children">
+    </sa-menu-item>
+  </ul>
+</li>

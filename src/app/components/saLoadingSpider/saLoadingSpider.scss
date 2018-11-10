@@ -1,0 +1,29 @@
+@import '../../theme/sass/conf/conf';
+$height: 52px;
+
+.sa-loading-spider {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  transition: opacity .25s;
+
+  &.none {
+    z-index: -1;
+    opacity: 0;
+  }
+
+  &.flex {
+    z-index: 2;
+    opacity: 1;
+  }
+
+  > .loader-mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: #b5b5b566;
+  }
+}

@@ -1,13 +1,12 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'buttons',
+  selector: 'page-buttons',
   encapsulation: ViewEncapsulation.None,
   styles: [require('./buttons.scss')],
   template: require('./buttons.html'),
 })
-export class Buttons {
+export class ButtonsComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

@@ -1,9 +1,7 @@
 <div class="row">
   <div class="col-md-12">
-    <ba-card title="评论详情" baCardClass="with-scroll">
-      <form class="comment-form form-horizontal"
-            [formGroup]="editForm" 
-            (ngSubmit)="submitComment(editForm.value)">
+    <sa-card title="评论详情" baCardClass="with-scroll">
+      <form class="comment-form form-horizontal" [formGroup]="editForm" (ngSubmit)="submitComment()">
         <div class="form-group row">
           <label class="col-sm-1 form-control-label text-right">ID</label>
           <div class="col-sm-2">
@@ -12,92 +10,68 @@
         </div>
         <div class="form-group row">
           <label class="col-sm-1 form-control-label text-right">所在文章</label>
-          <div class="col-sm-2">
+          <div class="col-sm-5">
             <div class="form-control">
-              <span *ngIf="comment.post_id != 0">{{ article ? article.title : '未知文章' }}</span>
-              <span *ngIf="comment.post_id == 0">留言板</span>
+              <span *ngIf="comment.post_id !== CommentPostType.guestbook;else guestbookTitle">{{ article ? article.title : '未知文章' }}</span>
+              <ng-template #guestbookTitle><span>留言板</span></ng-template>
             </div>
           </div>
         </div>
-        <div  class="form-group row"
-              [ngClass]="{ 
-                'has-error': (!likes.valid && likes.touched), 
-                'has-success': (likes.valid && likes.touched)
-              }">
-          <label for="comment_likes" class="col-sm-1 form-control-label text-right">喜欢人数</label>
+        <div  class="form-group row" [ngClass]="controlStateClass(likes)">
+          <label for="comment-likes" class="col-sm-1 form-control-label text-right">喜欢人数</label>
           <div class="col-sm-2">
             <input type="number" 
-                   id="comment_likes" 
+                   id="comment-likes" 
                    class="form-control" 
                    placeholder="喜欢人数" 
                    [formControl]="likes">
           </div>
         </div>
-        <div  class="form-group row"
-              [ngClass]="{ 
-                'has-error': (!is_top.valid && is_top.touched), 
-                'has-success': (is_top.valid && is_top.touched)
-              }">
-          <label for="comment_is_top" class="col-sm-1 form-control-label text-right">是否置顶</label>
+        <div  class="form-group row" [ngClass]="controlStateClass(is_top)">
+          <label for="comment-is-top" class="col-sm-1 form-control-label text-right">是否置顶</label>
           <div class="col-sm-2">
-            <select class="form-control c-select" id="comment_is_top" [formControl]="is_top">
+            <select class="form-control c-select" id="comment-is-top" [formControl]="is_top">
               <option [value]="false">不置顶</option>
               <option [value]="true">置顶</option>
             </select>
           </div>
         </div>
-        <div  class="form-group row"
-              [ngClass]="{ 
-                'has-error': (!state.valid && state.touched), 
-                'has-success': (state.valid && state.touched)
-              }">
-          <label for="comment_state" class="col-sm-1 form-control-label text-right">状态</label>
+        <div  class="form-group row" [ngClass]="controlStateClass(state)">
+          <label for="comment-state" class="col-sm-1 form-control-label text-right">状态</label>
           <div class="col-sm-2">
-            <select class="form-control c-select" id="comment_state" [formControl]="state">
-              <option [value]="-2">垃圾评论</option>
-              <option [value]="-1">已删除</option>
-              <option [value]="0">待审核</option>
-              <option [value]="1">审核通过</option>
+            <select class="form-control c-select" id="comment-state" [formControl]="state">
+              <option [value]="CommentState.spam">垃圾评论</option>
+              <option [value]="CommentState.deleted">已删除</option>
+              <option [value]="CommentState.auditing">待审核</option>
+              <option [value]="CommentState.published">审核通过</option>
             </select>
           </div>
         </div>
-        <div  class="form-group row"
-              [ngClass]="{ 
-                'has-error': (!user_name.valid && user_name.touched), 
-                'has-success': (user_name.valid && user_name.touched)
-              }">
-          <label for="comment_user_name" class="col-sm-1 form-control-label text-right">用户名</label>
+        <div  class="form-group row" [ngClass]="controlStateClass(user_name)">
+          <label for="comment-user-name" class="col-sm-1 form-control-label text-right">用户名</label>
           <div class="col-sm-2">
             <input type="text" 
-                   id="comment_user_name" 
+                   id="comment-user-name" 
                    class="form-control" 
                    placeholder="用户名" 
                    [formControl]="user_name">
           </div>
         </div>
-        <div  class="form-group row"
-              [ngClass]="{ 
-                'has-error': (!user_email.valid && user_email.touched), 
-                'has-success': (user_email.valid && user_email.touched)
-              }">
-          <label for="comment_user_email" class="col-sm-1 form-control-label text-right">用户邮箱</label>
+        <div  class="form-group row" [ngClass]="controlStateClass(user_email)">
+          <label for="comment-user-email" class="col-sm-1 form-control-label text-right">用户邮箱</label>
           <div class="col-sm-2">
             <input type="email" 
-                   id="comment_user_email" 
+                   id="comment-user-email" 
                    class="form-control" 
                    placeholder="用户邮箱" 
                    [formControl]="user_email">
           </div>
         </div>
-        <div  class="form-group row"
-              [ngClass]="{ 
-                'has-error': (!user_site.valid && user_site.touched), 
-                'has-success': (user_site.valid && user_site.touched)
-              }">
-          <label for="comment_user_site" class="col-sm-1 form-control-label text-right">用户地址</label>
+        <div  class="form-group row" [ngClass]="controlStateClass(user_site)">
+          <label for="comment-user-site" class="col-sm-1 form-control-label text-right">用户地址</label>
           <div class="col-sm-2">
             <input type="url" 
-                   id="comment_user_site" 
+                   id="comment-user-site" 
                    class="form-control" 
                    placeholder="用户的个人网址" 
                    [formControl]="user_site">
@@ -113,69 +87,64 @@
           <label class="col-sm-1 form-control-label text-right">客户端信息</label>
           <div class="col-sm-5">
             <div class="form-control">
-              <span *ngIf="comment.ip">{{ comment.ip }}</span>
-              <span *ngIf="!comment.ip" class="text-muted">未知ip</span>
+              <span *ngIf="comment.ip;else unknowIp">{{ comment.ip }}</span>
+              <ng-template #unknowIp>
+                <span class="text-muted">未知ip</span>
+              </ng-template>
             </div>
             <br>
             <div class="form-control">
-              <span *ngIf="comment.ip_location">{{ comment.ip_location.country }}{{ comment.ip_location.city }}</span>
-              <span *ngIf="!comment.ip_location" class="text-muted">未知物理地址</span>
+              <span *ngIf="comment.ip_location;else unknowIpLocation">{{ comment.ip_location.country }}{{ comment.ip_location.city }}</span>
+              <ng-template #unknowIpLocation>
+                <span class="text-muted">未知物理地址</span>
+              </ng-template>
             </div>
             <br>
             <div class="form-control">
               <span>操作系统：</span>
-              <span *ngIf="comment.agent" [innerHTML]="OSParse(comment.agent)"></span>
+              <span *ngIf="comment.agent" [innerHTML]="osParse(comment.agent)"></span>
               <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span>浏览器：</span>
-              <span *ngIf="comment.agent" [innerHTML]="UAParse(comment.agent)"></span>
-              <span *ngIf="!comment.agent" class="text-muted">未知地址</span>
+              <span *ngIf="comment.agent;else unknowUa" [innerHTML]="browserParse(comment.agent)"></span>
+              <ng-template #unknowUa>
+                <span class="text-muted">未知设备</span>
+              </ng-template>
             </div>
           </div>
         </div>
-        <div class="form-group row"
-              [ngClass]="{ 
-                'has-error': (!pid.valid && pid.touched), 
-                'has-success': (pid.valid && pid.touched)
-              }">
+        <div class="form-group row" [ngClass]="controlStateClass(pid)">
           <label for="PID" class="col-sm-1 form-control-label text-right">父级评论</label>
           <div class="col-sm-5">
             <select class="form-control c-select" [formControl]="pid">
-              <option default value="0">无父级评论</option>
+              <option default [value]="0">无父级评论</option>
               <ng-template [ngIf]="comment.id && comments && comments.data.length">
                 <option *ngFor="let item of comments.data" 
                         [ngValue]="item.id"
-                        [disabled]="item.id == comment.id">
+                        [disabled]="item.id === comment.id">
                   <span>ID：{{ item.id }}  -  {{ item.author.name }}：{{ item.content | truncate : 160 }}</span>
                 </option>
               </ng-template>
             </select>
           </div>
         </div>
-        <div  class="form-group row"
-              [ngClass]="{ 
-                'has-error': (!content.valid && content.touched), 
-                'has-success': (content.valid && content.touched)
-              }">
-          <label for="comment_content" class="col-sm-1 form-control-label text-right">内容</label>
+        <div  class="form-group row" [ngClass]="controlStateClass(content)">
+          <label for="comment-content" class="col-sm-1 form-control-label text-right">内容</label>
           <div class="col-sm-5">
-            <markdown-editor  class="form-control comemnt-content" 
-                              title="评论内容"
-                              id="comment_content"
-                              [formControl]="content">
-            </markdown-editor>
+            <sa-markdown-editor
+              class="form-control comemnt-content" 
+              title="评论内容"
+              id="comment-content"
+              [formControl]="content">
+            </sa-markdown-editor>
           </div>
         </div>
-        <div  class="form-group row"
-              [ngClass]="{ 
-                'has-error': (!extends.valid && extends.touched), 
-                'has-success': (extends.valid && extends.touched)
-              }">
+        <div  class="form-group row" [ngClass]="controlStateClass(extends)">
           <label for="comment_extends" class="col-sm-1 form-control-label text-right">自定义扩展</label>
           <div class="col-sm-5">
             <div class="comment-extend" *ngFor="let extend of extends.value; let i = index">
               <div class="extend-key">
                 <input type="text" 
-                       id="comment_name"
+                       id="comment-name"
                        class="form-control"
                        placeholder="key" 
                        [(ngModel)]="extend.name"
@@ -183,7 +152,7 @@
               </div>
               <div class="extend-value">
                 <input type="text" 
-                       id="comment_name"
+                       id="comment-name"
                        class="form-control"
                        placeholder="value" 
                        [(ngModel)]="extend.value"
@@ -203,16 +172,16 @@
         <div class="row">
           <div class="col-sm-1"></div>
           <div class="col-sm-11">
-            <button type="submit" class="btn btn-success"
-                    [disabled]="!editForm.valid">提交更改</button>
+            <button type="submit" class="btn btn-success" [disabled]="!editForm.valid">提交更改</button>
             <span>&nbsp;&nbsp;</span>
             <a [href]="" class="btn btn-info" (click)="getCommentDetail()">刷新评论</a>
             <span>&nbsp;&nbsp;</span>
             <a class="btn btn-default"
+               *ngIf="comment.post_id !== undefined && comment.post_id !== null"
                [routerLink]="['/comment/post/', comment.post_id]">回到宿主页面评论列表</a>
           </div>
         </div>
       </form>
-    </ba-card>
+    </sa-card>
   </div>
 </div>
