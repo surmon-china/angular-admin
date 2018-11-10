@@ -15,6 +15,7 @@ import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, S
 
 import { AppState } from '@app/app.service';
 import { TOKEN } from '@app/constants/auth';
+import * as API_PATH from '@app/constants/api';
 import { NO_PERMISSION } from '@/app/constants/http';
 import { checkTokenIsOk } from '@app/discriminators/token';
 import { isIndexPage, isAuthPage, isDashboardPage } from '@app/discriminators/url';
@@ -70,7 +71,9 @@ export class AppComponent implements AfterViewInit, OnInit {
       const url: string = this._router.url;
 
       // 如果是发生登录事件，则拉取初始化信息
-      if (isDashboardPage(url) && (<any>event).navigationTrigger && (<any>event).navigationTrigger === 'imperative') {
+      if (isDashboardPage(url) &&
+         (event as any).navigationTrigger &&
+         (event as any).navigationTrigger === 'imperative') {
         this.initAppOptions();
       }
 
@@ -110,7 +113,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       return;
     }
     this._isOptionInited = true;
-    this._httpService.get('/auth')
+    this._httpService.get(API_PATH.AUTH)
     .then(({ result: adminInfo }) => {
       if (Object.keys(adminInfo).length) {
         this._appState.set('adminInfo', adminInfo);
@@ -125,7 +128,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   // 初始化根据服务端验证 Token 有效性
   public checkTokenValidity(): void  {
-    this._httpService.patch('/auth')
+    this._httpService.patch(API_PATH.AUTH)
     .then(({ result: tokenIsValidity }) => {
       console.log('远程 Token 验证结果：', tokenIsValidity);
       // 通过验证，则初始化 APP
