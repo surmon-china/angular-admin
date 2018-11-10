@@ -13,6 +13,9 @@
     padding: 0;
     display: inline-block;
     width: 200px;
-    height: 200px;
+    height: auto;
+    min-height: 40px;
+    background-color: transparent;
+    border: none;
   }
 }

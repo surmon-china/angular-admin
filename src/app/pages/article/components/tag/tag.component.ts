@@ -215,7 +215,7 @@ export class ArticleTagComponent implements OnInit {
   public doPutTag(tag: ITag) {
     this.fetching.post = true;
     const newTag = Object.assign({}, this.activeTag, tag);
-    this._httpService.put(`${this._apiPath}/${tag._id}`, newTag)
+    this._httpService.put(`${this._apiPath}/${newTag._id}`, newTag)
     .then(_ => {
       this.refreshTags();
       this.resetEditForm();

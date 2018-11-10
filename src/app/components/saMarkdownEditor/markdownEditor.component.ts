@@ -7,9 +7,10 @@
 import marked from 'marked';
 import { ModalDirective } from 'ngx-bootstrap';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { AfterViewInit, ViewChild, Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
-import { isPostArticlePage, isAnnouncementPage } from '@app/discriminators/url';
+
 import * as KEYCODE from '@app/constants/keycode';
+import { isPostArticlePage, isAnnouncementPage } from '@app/discriminators/url';
+import { AfterViewInit, ViewChild, Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
 
 const hljs = require('highlight.js');
 const CodeMirror = require('codemirror');
@@ -120,6 +121,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
 
   // 计时器
   public timer = null;
+  public modelConfirm: boolean = false;
 
   @ViewChild('bakModal') bakModal: ModalDirective;
 
@@ -209,7 +211,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
       if (this.timer) {
         clearTimeout(this.timer);
       }
-      if (content === store.get(location.pathname)) {
+      if (content !== store.get(location.pathname)) {
         this.timer = setTimeout(() => {
           store.set(location.pathname, content);
         }, EDIT_CONFIG.draftTimer);
@@ -265,8 +267,9 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
         this.editor.setValue(this.content);
         return false;
       }
-      if (bak && currentValue !== bak) {
+      if (bak && currentValue !== bak && !this.modelConfirm) {
         this.bakModal.show();
+        this.modelConfirm = true;
       }
       this.content = currentValue;
     } else if (bak) {

@@ -36,8 +36,8 @@
               [(ngModel)]="ppublic"
               (change)="ppublicChange.emit($event.target.value)">
         <option [value]="PublicState.public">公开</option>
-        <option [value]="PublicState.password">密码访问</option>
         <option [value]="PublicState.secret">私密</option>
+        <option [value]="PublicState.password">密码访问</option>
       </select>
     </div>
   </div>
@@ -51,7 +51,7 @@
               placeholder="文章密码" 
               [(ngModel)]="password"
               (change)="passwordChange.emit($event.target.value)"
-              [disabled]="ppublic !== PublicState.password">
+              [disabled]="ppublic != PublicState.password">
     </div>
   </div>
   <hr>

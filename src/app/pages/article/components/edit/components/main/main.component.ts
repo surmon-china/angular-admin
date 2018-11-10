@@ -50,7 +50,7 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   constructor(private _fb: FormBuilder, private _httpService: SaHttpRequesterService) {
     this.editForm = this._fb.group({
       formTitle: ['', Validators.compose([Validators.required])],
-      formContent: [[], Validators.compose([Validators.required])],
+      formContent: ['', Validators.compose([Validators.required])],
       formKeywords: [[], Validators.compose([Validators.required])],
       formDescription: ['', Validators.compose([Validators.required])]
     });

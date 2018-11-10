@@ -14,8 +14,8 @@ $sidebar-user-height: 11rem;
   background-color: $sidebar;
   height: calc(100vh - #{$top-height});
   position: fixed;
-  z-index: 99999;
-  @include scrollbars(4px, #fff, $sidebar-border);
+  z-index: 99;
+  @include scrollbars(4px, $sidebar-border, rgba($sidebar-border, .1));
 }
 
 .al-sidebar-menu {
