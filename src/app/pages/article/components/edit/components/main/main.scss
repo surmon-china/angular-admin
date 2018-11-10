@@ -1,27 +1,27 @@
 @import '../../../../../../theme/sass/conf/conf';
 .article-editor-main-form {
 
-	.article-tags {
+  .article-tags {
 
     .tags-list {
-    	margin-top: .5em;
-	    display: flex;
-	    justify-content: flex-start;
-	    flex-wrap: wrap;
+      margin-top: .5em;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
 
-    	.article-tag-item {
-				margin-right: .5rem;
-	    	margin-bottom: .5rem;
-			}
+      .article-tag-item {
+        margin-right: .5rem;
+        margin-bottom: .5rem;
+      }
     }
-	}
+  }
 
-	.article-description {
-		line-height: 1.8em;
-	} 
+  .article-description {
+    line-height: 1.8em;
+  } 
 
-	.article-content {
-		padding: 0;
-		line-height: inherit;
-	}
+  .article-content {
+    padding: 0;
+    line-height: inherit;
+  }
 }

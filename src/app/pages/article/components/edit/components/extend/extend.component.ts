@@ -1,12 +1,18 @@
+/**
+ * @file 文章编辑页面扩展信息组件
+ * @module app/page/article/component/extend
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'article-edit-extend',
+  selector: 'box-article-edit-extend',
   template: require('./extend.html'),
   styles: [require('./extend.scss')]
 })
 
-export class ArticleEditExtend {
+export class ArticleEditExtendComponent {
 
   @Input() extends;
   @Output() extendsChange: EventEmitter<any> = new EventEmitter();

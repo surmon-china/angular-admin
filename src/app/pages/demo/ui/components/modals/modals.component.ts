@@ -2,11 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
-  selector: 'modals',
+  selector: 'page-modals',
   styles: [require('./modals.scss')],
   template: require('./modals.html')
 })
-export class Modals {
+export class ModalsComponent {
   @ViewChild('childModal') childModal: ModalDirective;
 
   showChildModal(): void {

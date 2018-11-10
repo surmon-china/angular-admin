@@ -1,49 +1,37 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
-    <ba-card title="添加标签" baCardClass="with-scroll">
+    <sa-card title="添加标签" baCardClass="with-scroll">
       <form class="tag-form"
             [formGroup]="editForm" 
-            (ngSubmit)="submitTag(editForm.value)">
-        <div class="form-group"
-              [ngClass]="{ 
-                'has-error': (!name.valid && name.touched), 
-                'has-success': (name.valid && name.touched)
-              }">
-          <label for="tag_name">
+            (ngSubmit)="handleSubmitTag(editForm.value)">
+        <div class="form-group" [ngClass]="controlStateClass(name)">
+          <label for="tag-name">
             <h5>标签名称</h5>
           </label>
           <input type="text" 
-                 id="tag_name"
+                 id="tag-name"
                  class="form-control"
                  placeholder="标签名称" 
                  [formControl]="name">
           <span class="help-block sub-little-text">这将是它在站点上显示的名字</span>
         </div>
-        <div  class="form-group"
-              [ngClass]="{ 
-                'has-error': (!slug.valid && slug.touched), 
-                'has-success': (slug.valid && slug.touched)
-              }">
-          <label for="tag_slug">
+        <div  class="form-group" [ngClass]="controlStateClass(slug)">
+          <label for="tag-slug">
             <h5>别名</h5>
           </label>
           <input type="text" 
-                 id="tag_slug" 
+                 id="tag-slug" 
                  class="form-control" 
                  placeholder="标签名称" 
                  [formControl]="slug">
           <span class="help-block sub-little-text">“别名”是在URL中使用的别称，建议小写，字母、数字、连字符（-）</span>
         </div>
-        <div  class="form-group"
-              [ngClass]="{ 
-                'has-error': (!description.valid && description.touched), 
-                'has-success': (description.valid && description.touched)
-              }">
-          <label for="tag_description">
+        <div  class="form-group" [ngClass]="controlStateClass(description)">
+          <label for="tag-description">
             <h5>描述</h5>
           </label>
           <textarea name="tagDescription"
-                    id="tag_description"
+                    id="tag-description"
                     class="form-control tag-description"
                     cols="30"
                     rows="20"
@@ -52,18 +40,13 @@
           </textarea>
           <span class="help-block sub-little-text">该标签的描述</span>
         </div>
-        <div  class="form-group"
-              [ngClass]="{ 
-                'has-error': (!extends.valid && extends.touched), 
-                'has-success': (extends.valid && extends.touched)
-              }">
+        <div  class="form-group" [ngClass]="controlStateClass(extends)">
           <label for="tag_extends">
             <h5>自定义扩展</h5>
           </label>
           <div class="tag-extend" *ngFor="let extend of extends.value; let i = index">
             <div class="extend-key">
               <input type="text" 
-                     id="tag_name"
                      class="form-control"
                      placeholder="key" 
                      [(ngModel)]="extend.name"
@@ -71,7 +54,6 @@
             </div>
             <div class="extend-value">
               <input type="text" 
-                     id="tag_name"
                      class="form-control"
                      placeholder="value" 
                      [(ngModel)]="extend.value"
@@ -96,7 +78,7 @@
           <div class="col-md-12">
             <button type="submit" class="btn btn-success btn-with-icon" [disabled]="!editForm.valid">
               <i class="ion-md-done-all"></i>
-              <span>{{ edit_tag ? '修改' : '添加' }}标签</span>
+              <span>{{ activeTag ? '修改' : '添加' }}标签</span>
             </button>
             <span>&nbsp;&nbsp;</span>
             <button class="btn btn-default btn-with-icon" (click)="resetEditForm()">
@@ -106,10 +88,10 @@
           </div>
         </div>
       </form>
-    </ba-card>
+    </sa-card>
   </div>
   <div class="col-md-8 col-xs-12">
-    <ba-card title="标签管理" baCardClass="with-scroll">
+    <sa-card title="标签管理" baCardClass="with-scroll">
       <div class="contnet-top-tools">
         <div class="pull-left">
           <div class="btn-group" role="group">
@@ -142,7 +124,7 @@
         </div>
         <form class="pull-right form-inline navbar-form tag-search-form"
               [formGroup]="searchForm" 
-              (ngSubmit)="searchTags(searchForm.value)">
+              (ngSubmit)="searchTags()">
           <div class="input-group">
             <input type="text" 
                    placeholder="搜索相关标签"
@@ -158,16 +140,17 @@
       </div>
       <div class="table-responsive">
         <div class="tag-list">
-          <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
+            <sa-loading-spider [show]="fetching.get"></sa-loading-spider>
+            <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
             <thead class="thead-inverse">
               <tr>
                 <th class="batch-checkbox">
-                  <ba-checkbox [(ngModel)]="tagsSelectAll" (ngModelChange)="batchSelectChange($event)">
-                    <span ba-checkbox-label>
+                  <sa-checkbox [(ngModel)]="tagsSelectAll" (ngModelChange)="batchSelectChange($event)">
+                    <span sa-checkbox-label>
                       <span>&nbsp;</span>
                       <strong>ID</strong>
                     </span>
-                  </ba-checkbox>
+                  </sa-checkbox>
                 </th>
                 <th>名称</th>
                 <th>别名</th>
@@ -177,23 +160,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngIf="!tags || !tags.data.length">
+              <tr *ngIf="!tags.data.length;else dataList">
                 <td colspan="6">
                   <p class="text-muted text-center tag-err-msg">
-                    <span *ngIf="fetching.tag">数据请求中...</span>
-                    <span *ngIf="!fetching.tag">暂无数据</span>
+                    <span>{{ fetching.get ? '数据请求中...' : '暂无数据' }}</span>
                   <p>
                 </td>
               </tr>
-              <ng-template [ngIf]="tags && tags.data.length">
+              <ng-template #dataList>
                 <tr *ngFor="let tag of tags.data">
                   <td class="batch-checkbox">
-                    <ba-checkbox [(ngModel)]="tag.selected" (ngModelChange)="itemSelectChange()">
-                      <span ba-checkbox-label>
+                    <sa-checkbox [(ngModel)]="tag.selected" (ngModelChange)="itemSelectChange()">
+                      <span sa-checkbox-label>
                         <span>&nbsp;</span>
                         <strong>{{ tag.id }}</strong>
                       </span>
-                    </ba-checkbox>
+                    </sa-checkbox>
                   </td>
                   <td>{{ tag.name }}</td>
                   <td>
@@ -223,7 +205,7 @@
             </tbody>
           </table>
           <br>
-          <div class="text-center">
+          <div class="text-center" *ngIf="tags.pagination">
             <pagination class="pagination-xs"
                         firstText="首页"
                         lastText="末页"
@@ -236,12 +218,12 @@
                         [maxSize]="7"
                         [boundaryLinks]="true"
                         [rotate]="false"
-                        (pageChanged)="pageChanged($event)">
+                        (pageChanged)="handlePageChanged($event)">
             </pagination>
           </div>
         </div>
       </div>
-    </ba-card>
+    </sa-card>
   </div>
   <!-- 删除确认弹窗 -->
   <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -258,11 +240,11 @@
             <span class="icon text-warning">
               <i class="ion-md-information-circle-outline"></i>
             </span>
-            <span>确定要删除{{ del_tag ? '这个' : '选中' }}标签吗？</span>
+            <span>确定要删除{{ activeTag ? '这个' : '选中' }}标签吗？</span>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary confirm-btn" (click)="(del_tag ? doDelTag() : doDelTags())">确认删除</button>
+          <button class="btn btn-primary confirm-btn" (click)="(activeTag ? doDelTag() : doDelTags())">确认删除</button>
           <span>&nbsp;</span>
           <button class="btn btn-default confirm-btn" (click)="canceldDelTagModal()">取消</button>
         </div>

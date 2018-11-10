@@ -1,12 +1,17 @@
-import { NgModule }      from '@angular/core';
-import { CommonModule }  from '@angular/common';
+/**
+ * @file 公告管理模块
+ * @module app/page/annoucement/module
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
-import { NgaModule }     from 'app/nga.module';
+import { SaModule } from '@/app/sa.module';
 
-import { routing }       from './announcement.routing';
-
-import { Announcement }  from './announcement.component';
+import { routing } from './announcement.routing';
+import { AnnouncementComponent } from './announcement.component';
 
 @NgModule({
   imports: [
@@ -16,12 +21,12 @@ import { Announcement }  from './announcement.component';
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     FormsModule,
-    NgaModule,
+    SaModule,
     routing
   ],
   providers: [],
   declarations: [
-    Announcement
+    AnnouncementComponent
   ]
 })
 export default class AnnouncementModule {}

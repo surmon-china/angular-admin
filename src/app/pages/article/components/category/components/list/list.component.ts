@@ -1,42 +1,54 @@
+/**
+ * @file 分类页面列表组件
+ * @module app/page/article/component/category/list
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
+import { IFetching, IResponseData, TSelectedAll, TSelectedIds } from '@app/pages/pages.constants';
+import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
+import { ICategory } from '@/app/pages/article/article.service';
 
 @Component({
-  selector: 'article-category-list',
+  selector: 'box-category-list',
   encapsulation: ViewEncapsulation.Emulated,
   template: require('./list.html'),
   styles: [require('./list.scss')]
 })
 
-export class ArticleCategoryList {
+export class ArticleCategoryListComponent {
 
-  @Input() categories;
+  @Input() fetching: IFetching;
+  @Input() categories: IResponseData<ICategory>;
   @Output() delCategoryRequest = new EventEmitter();
   @Output() delCategoriesRequest = new EventEmitter();
   @Output() editCategoryRequest = new EventEmitter();
   @Output() refreshList = new EventEmitter();
 
-  public categoriesSelectAll:boolean = false;
-  public selectedCategories = [];
+  public categoriesSelectAll: TSelectedAll = false;
+  public selectedCategories: TSelectedIds = [];
 
   constructor() {}
 
-  // 级别标记
-  public categoryLevelMark = level => Array.from({ length: level }, () => '');
-
   // 多选切换
-  public batchSelectChange(is_select) {
-    if(!this.categories.data.length) return;
-    this.selectedCategories = [];
-    this.categories.data.forEach(item => { item.selected = is_select; is_select && this.selectedCategories.push(item._id) });
+  public batchSelectChange(isSelect: boolean): void {
+    const data = this.categories.data;
+    const selectedIds = this.selectedCategories;
+    this.selectedCategories = handleBatchSelectChange({ data, selectedIds, isSelect });
   }
 
   // 单个切换
-  public itemSelectChange() {
-    this.selectedCategories = [];
-    const categories = this.categories.data;
-    categories.forEach(item => { item.selected && this.selectedCategories.push(item._id) });
-    if(!this.selectedCategories.length) this.categoriesSelectAll = false;
-    if(!!this.selectedCategories.length && this.selectedCategories.length == categories.length) this.categoriesSelectAll = true;
+  public itemSelectChange(): void {
+    const data = this.categories.data;
+    const selectedIds = this.selectedCategories;
+    const result = handleItemSelectChange({ data, selectedIds });
+    this.categoriesSelectAll = result.all;
+    this.selectedCategories = result.selectedIds;
+  }
+
+  // 刷新列表
+  public refreshCategories() {
+    this.refreshList.emit();
   }
 
   // 编辑分类

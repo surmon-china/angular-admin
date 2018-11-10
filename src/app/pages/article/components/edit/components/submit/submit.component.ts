@@ -1,11 +1,22 @@
+/**
+ * @file 文章编辑页面状态选择及发布组件
+ * @module app/page/article/component/submit
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { EOriginState, EPublicState, EPublishState, IFetching } from '@app/pages/pages.constants';
 
 @Component({
-  selector: 'article-edit-submit',
+  selector: 'box-article-edit-submit',
   template: require('./submit.html')
 })
 
-export class ArticleEditSubmit {
+export class ArticleEditSubmitComponent {
+
+  OriginState = EOriginState;
+  PublicState = EPublicState;
+  PublishState = EPublishState;
 
   @Input() isEdit;
   @Input() state;

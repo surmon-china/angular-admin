@@ -1,11 +1,16 @@
-import { Routes, RouterModule }  from '@angular/router';
+/**
+ * @file 页面路由
+ * @module app/page/routes
+ * @author Surmon <https://github.com/surmon-china>
+ */
 
-import { Pages } from './pages.component';
+import { Routes, RouterModule } from '@angular/router';
+import { PagesComponent } from './pages.component';
 
 const routes: Routes = [
   { path: 'auth', loadChildren: './auth/auth.module' },
   { path: '',
-    component: Pages,
+    component: PagesComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', loadChildren: './dashboard/dashboard.module' },

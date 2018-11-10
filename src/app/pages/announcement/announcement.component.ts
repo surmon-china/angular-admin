@@ -1,238 +1,277 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+/**
+ * @file 公告管理页面组件
+ * @module app/page/annoucement/component
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import marked from 'marked';
+import * as lodash from 'lodash';
 import { ModalDirective } from 'ngx-bootstrap';
-import { ApiService } from '@app/api.service';
-const marked = require('marked');
+import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
+import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+
+import * as API_PATH from '@app/constants/api';
+import { SaHttpRequesterService, IRequestParams } from '@app/services';
+import { TApiPath, TSelectedIds, TSelectedAll, EPublishState, IResponseData, IFetching } from '@app/pages/pages.constants';
+import { mergeFormControlsToInstance, handleBatchSelectChange, handleItemSelectChange, formControlStateClass } from '@/app/pages/pages.service';
+
+// 公告
+interface IAnnouncement {
+  id?: number;
+  _id?: string;
+  state: number;
+  content: string;
+  update_at: string;
+  create_at: string;
+  selected?: boolean;
+}
+
+const DEFAULT_EDIT_FORM = {
+  content: '',
+  state: EPublishState.published
+};
+
+const DEFAULT_SEARCH_FORM = {
+  keyword: ''
+};
 
 @Component({
-	selector: 'announcement',
-	encapsulation: ViewEncapsulation.None,
-	styles: [require('./announcement.scss')],
-	template: require('./announcement.html')
+  selector: 'page-announcement',
+  encapsulation: ViewEncapsulation.None,
+  styles: [require('./announcement.scss')],
+  template: require('./announcement.html')
 })
-export class Announcement {
+export class AnnouncementComponent implements OnInit {
 
-	@ViewChild('delModal') delModal: ModalDirective;
+  PublishState = EPublishState;
+  controlStateClass = formControlStateClass;
 
-  private _apiUrl = '/announcement';
+  @ViewChild('delModal') delModal: ModalDirective;
 
-	public searchState:any = 'all';
-	public editForm:FormGroup;
-	public searchForm:FormGroup;
-	public state:AbstractControl;
-	public keyword:AbstractControl;
-	public content:AbstractControl;
-	public announcements = { 
-		data: [],
-		pagination: {
-			current_page: 1,
-			total_page: 0,
-			per_page: 10,
-			total: 0
-		}
-	};
-	public fetching = {
-		announcement: false
-	};
-	public del_announcement:any;
-	public edit_announcement:any;
-	public announcementsSelectAll:boolean = false;
-	public selectedAnnouncements = [];
+  private _apiPath: TApiPath = API_PATH.ANNOUNCEMENT;
 
-	constructor(private _fb:FormBuilder,
-							private _apiService:ApiService) {
+  // 表单
+  public editForm: FormGroup;
+  public searchForm: FormGroup;
+  public state: AbstractControl;
+  public keyword: AbstractControl;
+  public content: AbstractControl;
 
-		this.editForm = _fb.group({
-			'content': ['', Validators.compose([Validators.required])],
-			'state': ['1', Validators.compose([Validators.required])]
-		});
+  // 业务
+  public activeAnnouncement: IAnnouncement = null;
+  public announcementsSelectAll: TSelectedAll = false;
+  public selectedAnnouncements: TSelectedIds = [];
+  public publishState: EPublishState = EPublishState.all;
+  public fetching: IFetching = { get: false };
+  public announcements: IResponseData<IAnnouncement> = {
+    data: [],
+    pagination: null
+  };
 
-		this.searchForm = _fb.group({
-			'keyword': ['', Validators.compose([Validators.required])]
-		});
+  constructor(private _fb: FormBuilder, private _httpService: SaHttpRequesterService) {
 
-		this.state = this.editForm.controls['state'];
-		this.content = this.editForm.controls['content'];
-		this.keyword = this.searchForm.controls['keyword'];
-	}
+    // 实例表单
+    this.editForm = this._fb.group({
+      content: [DEFAULT_EDIT_FORM.content, Validators.compose([Validators.required])],
+      state: [DEFAULT_EDIT_FORM.state, Validators.compose([Validators.required])]
+    });
 
-	ngOnInit() {
-		marked.setOptions({
-			renderer: new marked.Renderer(),
-			gfm: true,
-			tables: true,
-			breaks: false,
-			pedantic: false,
-			sanitize: false,
-			smartLists: true,
-			smartypants: false
-		});
-		this.getAnnouncements();
-	}
+    this.searchForm = this._fb.group({
+      keyword: [DEFAULT_SEARCH_FORM.keyword, Validators.compose([Validators.required])]
+    });
 
-	// 解析Markdown
-	public parseMarkdown(content) {
-		return marked(content);
-	}
+    mergeFormControlsToInstance(this, this.editForm);
+    mergeFormControlsToInstance(this, this.searchForm);
+  }
 
-	// 多选切换
-	public batchSelectChange(is_select) {
-		if(!this.announcements.data.length) return;
-		this.selectedAnnouncements = [];
-		this.announcements.data.forEach(item => { item.selected = is_select; is_select && this.selectedAnnouncements.push(item._id) });
-	}
+  ngOnInit() {
+    marked.setOptions({
+      renderer: new marked.Renderer(),
+      gfm: true,
+      tables: true,
+      breaks: false,
+      pedantic: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false
+    });
+    this.getAnnouncements();
+  }
 
-	// 单个切换
-	public itemSelectChange() {
-		this.selectedAnnouncements = [];
-		const announcements = this.announcements.data;
-		announcements.forEach(item => { item.selected && this.selectedAnnouncements.push(item._id) });
-		if(!this.selectedAnnouncements.length) this.announcementsSelectAll = false;
-		if(!!this.selectedAnnouncements.length && this.selectedAnnouncements.length == announcements.length) this.announcementsSelectAll = true;
-	}
+  // 当前数据数量
+  get currentListTotal(): number {
+    const pagination = this.announcements.pagination;
+    return pagination && pagination.total || 0;
+  }
 
-	// 切换公告类型
-	public switchState(state: any): void {
-		if(state == undefined || Object.is(state, this.searchState)) return;
-		this.searchState = state;
-		this.getAnnouncements();
-	}
+  // 解析 Markdown
+  public parseMarkdown(content: string): string {
+    return marked(content);
+  }
 
-	// 重置编辑表单
-	public resetForm(): void {
-		this.editForm.reset({
-			content: '',
-			state: '1'
-		});
-		this.edit_announcement = null;
-	}
+  // 判断公告类型
+  public isState(state: EPublishState): boolean {
+    return this.publishState === state;
+  }
 
-	// 重置搜索
-	public resetSearchForm():void {
-		this.searchForm.reset({ keyword: '' });
-	}
+  // 切换公告类型
+  public switchState(state: EPublishState): void {
+    if (state === this.publishState) {
+      return;
+    }
+    this.publishState = state;
+    this.getAnnouncements();
+  }
 
-	// 提交表单
-	public submitAnnouncement(values:Object):void {
-		if (this.editForm.valid) {
-			this.edit_announcement ? this.doPutAnnouncement(values) : this.addAnnouncement(values);
-		}
-	}
+  // 重置编辑表单
+  public resetEditForm(): void {
+    this.editForm.reset(DEFAULT_EDIT_FORM);
+    this.activeAnnouncement = null;
+  }
 
-	// 提交搜索
-	public searchAnnouncements(values: Object): any {
-		if (this.searchForm.valid) {
-			this.getAnnouncements();
-		}
-	}
+  // 重置搜索
+  public resetSearchForm(): void {
+    this.searchForm.reset(DEFAULT_SEARCH_FORM);
+  }
 
-	// 刷新本页本类型公告
-	public refreshAnnouncements(): any {
-		this.getAnnouncements({ page: this.announcements.pagination.current_page });
-	}
+  // 修改公告
+  public editAnnouncement(announcement: IAnnouncement) {
+    this.activeAnnouncement = lodash.cloneDeep(announcement);
+    this.editForm.reset(announcement);
+  }
 
-	// 分页获取公告
-	public pageChanged(event: any): any {
-		this.getAnnouncements({ page: event.page });
-	}
+  // 提交表单
+  public submitEditForm(announcement: IAnnouncement): void {
+    if (this.editForm.valid) {
+      this.activeAnnouncement
+        ? this.putAnnouncement(announcement)
+        : this.addAnnouncement(announcement);
+    }
+  }
 
-	// 获取公告
-	public getAnnouncements(params: any = {}) {
-		// 是否搜索
-		if(this.keyword.value) {
-			params.keyword = this.keyword.value;
-		}
-		// 如果请求的是全部数据，则优化参数
-		if(!Object.is(this.searchState, 'all')) {
-			params.state = this.searchState
-		}
-		// 如果请求的是第一页，则设置翻页组件的当前页为第一页
-		if(!params.page || Object.is(params.page, 1)) {
-			this.announcements.pagination.current_page = 1;
-		}
-		this.fetching.announcement = true;
-		this._apiService.get(this._apiUrl, params)
-		.then(announcements => {
-			this.announcements = announcements.result;
-			this.selectedAnnouncements = [];
-			this.announcementsSelectAll = false;
-			this.fetching.announcement = false;
-		})
-		.catch(error => {
-			this.fetching.announcement = false;
-		});
-	}
+  // 提交搜索
+  public submitSearchForm(): void {
+    if (this.searchForm.valid) {
+      this.getAnnouncements();
+    }
+  }
 
-	// 添加公告
-	public addAnnouncement(announcement) {
-		this._apiService.post(this._apiUrl, announcement)
-		.then(_announcement => {
-			this.resetForm();
-			this.getAnnouncements();
-		})
-		.catch(error => {});
-	}
+  // 删除公告弹窗
+  public openDelModal(announcement) {
+    this.activeAnnouncement = lodash.cloneDeep(announcement);
+    this.delModal.show();
+  }
 
-	// 修改公告
-	public putAnnouncement(announcement) {
-		this.edit_announcement = announcement;
-		this.editForm.reset(announcement);
-	}
+  // 删除弹窗取消
+  public canceldDelModal() {
+    this.delModal.hide();
+    this.activeAnnouncement = null;
+  }
 
-	// 修改公告提交
-	public doPutAnnouncement(announcement) {
-		this._apiService.put(
-			`${this._apiUrl}/${this.edit_announcement._id}`,
-			Object.assign(this.edit_announcement, announcement)
-		)
-		.then(_announcement => {
-			this.getAnnouncements({ page: this.announcements.pagination.current_page });
-			this.edit_announcement = null;
-			this.resetForm();
-		})
-		.catch(error => {});;
-	}
+  // 批量删除公告弹窗
+  public openBatchDelModal() {
+    this.activeAnnouncement = null;
+    this.delModal.show();
+  }
 
-	// 删除公告弹窗
-	public delAnnouncementModal(announcement) {
-		this.del_announcement = announcement;
-		this.delModal.show();
-	}
+  // 多选切换
+  public handleBatchSelectChange(isSelect: boolean) {
+    const data = this.announcements.data;
+    const selectedIds = this.selectedAnnouncements;
+    this.selectedAnnouncements = handleBatchSelectChange({ data, selectedIds, isSelect });
+  }
 
-	// 删除弹窗取消
-	public canceldDelAnnouncementModal(announcement) {
-		this.delModal.hide();
-		this.del_announcement = null;
-	}
+  // 单个切换
+  public handleItemSelectChange(): void {
+    const data = this.announcements.data;
+    const selectedIds = this.selectedAnnouncements;
+    const result = handleItemSelectChange({ data, selectedIds });
+    this.announcementsSelectAll = result.all;
+    this.selectedAnnouncements = result.selectedIds;
+  }
 
-	// 确认删除公告
-	public doDelAnnouncement() {
-		this._apiService.delete(`${this._apiUrl}/${this.del_announcement._id}`)
-		.then(announcement => {
-			this.delModal.hide();
-			this.del_announcement = null;
-			this.getAnnouncements({ page: this.announcements.pagination.current_page });
-		})
-		.catch(err => {
-			this.delModal.hide();
-		});
-	}
+  // 分页获取公告
+  public handlePageChanged(event: any): void {
+    this.getAnnouncements({ page: event.page });
+  }
 
-	// 批量删除公告弹窗
-	public delAnnouncementsModal(announcements) {
-		this.del_announcement = null;
-		this.delModal.show();
-	}
+  // 刷新
+  public refreshAnnouncements(): void {
+    this.getAnnouncements({ page: this.announcements.pagination.current_page });
+  }
 
-	// 确认批量删除
-	public doDelAnnouncements() {
-		this._apiService.delete(this._apiUrl, { announcements: this.selectedAnnouncements })
-		.then(announcements => {
-			this.delModal.hide();
-			this.getAnnouncements({ page: this.announcements.pagination.current_page });
-		})
-		.catch(err => {
-			this.delModal.hide();
-		});
-	}
+  // 获取公告
+  public getAnnouncements(params: IRequestParams = {}): Promise<any> {
+
+    // 搜索
+    if (this.keyword.value) {
+      params.keyword = this.keyword.value;
+    }
+
+    // 非全部数据
+    if (this.publishState !== EPublishState.all) {
+      params.state = this.publishState;
+    }
+
+    this.fetching.get = true;
+
+    return this._httpService.get(this._apiPath, params)
+      .then(announcements => {
+        this.announcements = announcements.result;
+        this.selectedAnnouncements = [];
+        this.announcementsSelectAll = false;
+        this.fetching.get = false;
+      })
+      .catch(_ => {
+        this.fetching.get = false;
+      });
+  }
+
+  // 添加公告
+  public addAnnouncement(announcement: IAnnouncement): Promise<any> {
+    return this._httpService.post(this._apiPath, announcement)
+      .then(_ => {
+        this.resetEditForm();
+        this.refreshAnnouncements();
+      });
+  }
+
+  // 更新公告
+  public putAnnouncement(announcement: IAnnouncement): Promise<any> {
+    return this._httpService.put(
+      `${this._apiPath}/${this.activeAnnouncement._id}`,
+      Object.assign(this.activeAnnouncement, announcement)
+    )
+    .then(_ => {
+      this.resetEditForm();
+      this.refreshAnnouncements();
+      this.activeAnnouncement = null;
+    });
+  }
+
+  // 删除公告
+  public doDelAnnouncement() {
+    this._httpService.delete(`${this._apiPath}/${this.activeAnnouncement._id}`)
+    .then(_ => {
+      this.delModal.hide();
+      this.activeAnnouncement = null;
+      this.refreshAnnouncements();
+    })
+    .catch(_ => {
+      this.delModal.hide();
+    });
+  }
+
+  // 批量删除
+  public doDelAnnouncements() {
+    this._httpService.delete(this._apiPath, { announcements: this.selectedAnnouncements })
+    .then(_ => {
+      this.delModal.hide();
+      this.refreshAnnouncements();
+      this.selectedAnnouncements = [];
+    })
+    .catch(_ => {
+      this.delModal.hide();
+    });
+  }
 }

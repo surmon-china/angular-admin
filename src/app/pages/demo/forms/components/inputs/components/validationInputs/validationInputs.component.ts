@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'validation-inputs',
+  selector: 'box-validation-inputs',
   template: require('./validationInputs.html'),
 })
-export class ValidationInputs {
+export class ValidationInputsComponent {
   public checkboxModel = [{
     name: 'Checkbox with success',
     state: false,
@@ -26,6 +26,5 @@ export class ValidationInputs {
     baCheckboxClass: 'class'
   };
 
-  constructor() {
-  }
+  constructor() {}
 }

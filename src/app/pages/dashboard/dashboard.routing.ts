@@ -1,12 +1,16 @@
-import { Routes, RouterModule }  from '@angular/router';
+/**
+ * @file 仪表盘页面路由
+ * @module app/page/dashboard/routes
+ * @author Surmon <https://github.com/surmon-china>
+ */
 
-import { Dashboard } from './dashboard.component';
+import { Routes, RouterModule } from '@angular/router';
+import { DashboardComponent } from './dashboard.component';
 
-// noinspection TypeScriptValidateTypes
 const routes: Routes = [
   {
     path: '',
-    component: Dashboard
+    component: DashboardComponent
   }
 ];
 

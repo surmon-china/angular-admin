@@ -1,12 +1,17 @@
-import {Component} from '@angular/core';
+/**
+ * @file Demo UI 演示页面
+ * @module app/page/demo/component/ui
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ui',
+  selector: 'page-ui',
   styles: [],
   template: `<router-outlet></router-outlet>`
 })
-export class Ui {
+export class UiComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

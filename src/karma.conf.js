@@ -1,3 +1,9 @@
+/**
+ * @file Karma 配置模块
+ * @module karma.config
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 

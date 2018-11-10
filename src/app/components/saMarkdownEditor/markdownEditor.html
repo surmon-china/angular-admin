@@ -1,0 +1,58 @@
+<div class="markdown-editor" [ngClass]="{ 'fullscreen': fullscreen }">
+  <div class="editor-toolbar">
+    <ul class="menus">
+      <li class="bold" (click)="toggleBold()">粗体</li>
+      <li class="italic" (click)="toggleItalic()">斜体</li>
+      <li class="quote" (click)="drawQuote()">引用</li>
+      <li class="code" (click)="drawCode()">代码</li>
+      <li class="link" (click)="drawLink()">链接</li>
+      <li class="image" (click)="drawImage()">图片</li>
+      <li class="-h3" (click)="drawH3Title('\n' + '### ')">H3</li>
+      <li class="save" (click)="saveAsMarkdown()">保存</li>
+    </ul>
+    <ul class="right">
+      <li class="preview-full" (click)="previewMode = 2;parseMarked();">Full</li>
+      <li class="preview-both" (click)="previewMode = 1;parseMarked();">Both</li>
+      <li class="preview-none" (click)="previewMode = 0">None</li>
+      <li class="fullscreen" (click)="fullscreen = !fullscreen">
+        <span *ngIf="fullscreen">exit</span>
+        <span>Fullscreen</span>
+      </ul>
+  </div>
+  <div class="editor-content"
+       [ngClass]="{ 
+          'preview-full': previewMode === 2, 
+          'preview-both': previewMode === 1
+       }">
+    <div class="editor" (keyup)="keyDownListen($event)">
+      <textarea id="editor"></textarea>
+    </div>
+    <div class="marked" [innerHTML]="markedHtml"></div>
+  </div>
+  <!-- 删除确认弹窗 -->
+  <div bsModal #bakModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="cancelBakModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">确认操作</h4>
+        </div>
+        <div class="modal-body">
+          <div class="message">
+            <span class="icon text-warning">
+              <i class="ion-md-information-circle-outline"></i>
+            </span>
+            <span>发现本地有不同版本的草稿，是否使用？</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary confirm-btn" (click)="useArticleBak()">确认使用</button>
+          <span>&nbsp;</span>
+          <button class="btn btn-default confirm-btn" (click)="cancelBakModal()">不使用</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

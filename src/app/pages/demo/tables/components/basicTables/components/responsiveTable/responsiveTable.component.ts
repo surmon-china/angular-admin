@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'responsive-table',
+  selector: 'box-responsive-table',
   template: require('./responsiveTable.html'),
 })
-export class ResponsiveTable {
+export class ResponsiveTableComponent {
 
-  constructor() {
-  }
+  constructor() {}
 }

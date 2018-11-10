@@ -1,6 +1,6 @@
 {
   "name": "angular-admin",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": {
     "name": "Surmon",
     "email": "surmon@foxmail.com",
@@ -41,6 +41,8 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "@angularclass/hmr": "^2.1.3",
+    "@ngx-loading-bar/core": "^2.2.0",
+    "@ngx-loading-bar/http-client": "^2.2.0",
     "@types/codemirror": "^0.0.58",
     "@types/js-base64": "^2.3.1",
     "@types/systemjs": "^0.20.6",
@@ -52,6 +54,8 @@
     "highlight.js": "^9.12.0",
     "ionicons": "^4.2.5",
     "js-base64": "^2.4.8",
+    "loaders.css": "^0.1.2",
+    "loadsh": "^0.0.3",
     "marked": "^0.4.0",
     "ngx-bootstrap": "^3.0.1",
     "normalize.css": "^8.0.0",

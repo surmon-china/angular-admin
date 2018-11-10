@@ -1,29 +1,96 @@
 <div class="row">
   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <site-statistics></site-statistics>
+    <div class="row pie-charts">
+      <sa-card *ngFor="let item of defaultStatistics" 
+               class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+        <div class="pie-chart-item">
+          <div class="description">
+            <h4>{{ item.description }}</h4>
+            <p class="description-stats">{{ statistics[item.type] || '...' }}</p>
+          </div>
+          <i class="chart-icon {{ item.icon }}"></i>
+        </div>
+      </sa-card>
+    </div>    
   </div>
 </div>
 <div class="row">
-  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-           title="用户来源渠道" 
-           baCardClass="traffic-panel medium-card">
-    <!-- <traffic-chart></traffic-chart> -->
-  </ba-card>
-  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-           title="用户来源地区" 
+  <sa-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+           title="最近收到评论" 
            baCardClass="medium-card">
-    <!-- <users-map></users-map> -->
-  </ba-card>
+    <div class="vertical-scroll">
+      <table class="table table-no-borders table-hover">
+        <thead>
+        <tr class="black-muted-bg">
+          <th class="browser-icons">ID</th>
+          <th class="browser-icons">POST_ID</th>
+          <th>Content</th>
+          <th class="align-right">发布时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of comments" class="no-top-border">
+          <td ngClass="nowrap">{{ item.id }}</td>
+          <td ngClass="nowrap">{{ item.post_id }}</td>
+          <td ngClass="align-left">{{ item.content | truncate: 20 }}</td>
+          <td class="align-right">{{ item.create_at | dataToLocale }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </sa-card>
+  <sa-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+           title="最近收到留言" 
+           baCardClass="medium-card">
+    <div class="vertical-scroll">
+      <table class="table table-no-borders table-hover">
+        <thead>
+        <tr class="black-muted-bg">
+          <th class="browser-icons">ID</th>
+          <th class="browser-icons">POST_ID</th>
+          <th>Content</th>
+          <th class="align-right">发布时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of guestbooks" class="no-top-border">
+          <td ngClass="nowrap">{{ item.id }}</td>
+          <td ngClass="nowrap">{{ item.post_id }}</td>
+          <td ngClass="align-left">{{ item.content | truncate: 20 }}</td>
+          <td class="align-right">{{ item.create_at | dataToLocale }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </sa-card>
 </div>
 <div class="row">
-  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-           title="今日流量" 
+  <sa-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+           title="最近发布文章" 
            baCardClass="medium-card">
-    <!-- <line-chart></line-chart> -->
-  </ba-card>
-  <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" 
-           title="待办事项"
-           baCardClass="medium-card with-scroll">
-    <!-- <todo></todo> -->
-  </ba-card>
+    <div class="vertical-scroll">
+      <table class="table table-no-borders table-hover">
+        <thead>
+        <tr class="black-muted-bg">
+          <th class="browser-icons">ID</th>
+          <th>Title</th>
+          <th class="align-right"> 发布时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of articles" class="no-top-border">
+          <td ngClass="nowrap">{{ item.id }}</td>
+          <td ngClass="align-left">{{ item.title | truncate: 20 }}</td>
+          <td class="align-right">{{ item.create_at | dataToLocale }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </sa-card>
+  <sa-card 
+    class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" 
+    title="嵌套的统计数据"
+    baCardClass="medium-card with-scroll">
+    <iframe src="https://www.google.com/adsense/new/u/0/pub-4710915636313788/home" class="adsense-iframe"></iframe>
+  </sa-card>
 </div>

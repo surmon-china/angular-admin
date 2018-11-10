@@ -1,27 +1,26 @@
-import { NgModule }      from '@angular/core';
-import { CommonModule }  from '@angular/common';
+/**
+ * @file 仪表盘页面模块
+ * @module app/page/dashboard/module
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgaModule } from 'app/nga.module';
+import { SaModule } from '@/app/sa.module';
 
-import { Dashboard } from './dashboard.component';
-import { routing }       from './dashboard.routing';
-
-import { siteStatistics } from './siteStatistics';
-import { SiteStatisticsService } from './siteStatistics/siteStatistics.service';
+import { DashboardComponent } from './dashboard.component';
+import { routing } from './dashboard.routing';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    NgaModule,
+    SaModule,
     routing
   ],
   declarations: [
-    siteStatistics,
-    Dashboard
-  ],
-  providers: [
-    SiteStatisticsService
+    DashboardComponent
   ]
 })
 export default class DashboardModule {}

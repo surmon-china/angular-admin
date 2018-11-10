@@ -1,3 +1,9 @@
+/**
+ * @file App 全局状态
+ * @module app/global-state
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -14,9 +20,8 @@ export class GlobalState {
   }
 
   notifyDataChanged(event, value) {
-
-    const current = this._data[event];
-    if (current !== value) {
+    const currentValue = this._data[event];
+    if (currentValue !== value) {
       this._data[event] = value;
       this._data.next({
         event: event,

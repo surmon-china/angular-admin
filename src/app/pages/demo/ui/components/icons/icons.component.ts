@@ -1,18 +1,20 @@
-import {Component} from '@angular/core';
-
-import {IconsService} from './icons.service';
-
+import { Component, OnInit } from '@angular/core';
+import { IconsService } from './icons.service';
+import { layoutPaths } from 'app/theme';
 import 'style-loader!./icons.scss';
 
 @Component({
-  selector: 'icons',
+  selector: 'page-icons',
   templateUrl: './icons.html',
 })
-export class Icons {
+export class IconsComponent implements OnInit {
 
-  icons:any;
+  icons: any;
 
-  constructor(private _iconsService: IconsService) {
+  constructor(private _iconsService: IconsService) {}
+
+  public getIconPath(input: string): string {
+    return layoutPaths.images.root + 'theme/icon/kameleon/' + input + '.svg';
   }
 
   ngOnInit() {
