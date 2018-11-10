@@ -1,8 +1,9 @@
 
 ## CHANGELOG
 
-### v2.1.0
+### v3.0.0
 
+- update Angular to v7.0.0
 - 重构 Typescript 部分
 - 重构所有类型和接口
 - 增加 loading-bar 组件

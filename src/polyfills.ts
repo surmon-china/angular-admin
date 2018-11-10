@@ -2,9 +2,7 @@
  * @file polyfill 模块
  * @module polyfill
  * @author Surmon <https://github.com/surmon-china>
- */
-
-import 'core-js/es7/reflect';
+ ct';
 
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.
