@@ -10,12 +10,11 @@ $sidebar-user-height: 11rem;
   top: $top-height;
   left: 0;
   z-index: 997;
+  position: fixed;
   display: flex;
   flex-direction: column;
   background-color: $sidebar;
   height: calc(100vh - #{$top-height});
-  position: fixed;
-  z-index: 99;
   @include scrollbars($sidebar-scroll-width, $sidebar-border, rgba($sidebar-border, .1));
 }
 
@@ -373,6 +372,9 @@ a.al-sidebar-user {
 @media (max-width: $resXS) {
   .menu-collapsed {
     @include sidebar-hidden();
+  }
+  .al-sidebar {
+    z-index: 999;
   }
   .al-main {
     margin-left: 0;

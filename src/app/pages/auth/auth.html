@@ -4,17 +4,17 @@
       <div class="title" *ngIf="!editMode" (dblclick)="toEditMode()" (touchend)="toEditMode()">
         <span>{{ slogan || '-----------' }}</span>
       </div>
-      <input type="password"
-             class="input"
-             id="password"
-             autocomplete
-             #pwdInput
-             *ngIf="editMode"
-             [(ngModel)]="password"
-             (keyup.esc)="quitEdit($event)"
-             (keyup.enter)="onEnter($event)"
-             (dblclick)="toEditMode()"
-             (touchend)="toEditMode()">
+      <input
+        type="password"
+        class="input"
+        id="password"
+        autocomplete
+        #pwdInput
+        *ngIf="editMode"
+        [(ngModel)]="password"
+        (keyup.esc)="quitEdit($event)"
+        (keyup.enter)="onEnter($event)"
+        (blur)="quitEdit()" />
     </div>
   </div>
 </div>

@@ -38,7 +38,7 @@ export class AuthComponent implements AfterViewChecked {
   constructor(private _router: Router, private _httpService: SaHttpRequesterService) {}
 
   toEditMode() {
-    this.editMode = !this.editMode;
+    this.editMode = true;
   }
 
   quitEdit() {
