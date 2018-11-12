@@ -1,23 +1,25 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
     <sa-card title="添加分类" baCardClass="with-scroll">
-      <box-category-add #editCategoryForm
-                        [fetching]="fetching"
-                        [category]="todoEditCategory"
-                        [categories]="categories.data"
-                        (resetForm)="resetEditForm()"
-                        (submitForm)="todoEditCategory ? doEditCategory($event) : addCategory($event)">
+      <box-category-add
+        #editCategoryForm
+        [fetching]="fetching"
+        [category]="todoEditCategory"
+        [categories]="categories.data"
+        (resetForm)="resetEditForm()"
+        (submitForm)="todoEditCategory ? doEditCategory($event) : addCategory($event)">
       </box-category-add>
     </sa-card>
   </div>
   <div class="col-md-8 col-xs-12">
     <sa-card title="分类管理" baCardClass="with-scroll">
-      <box-category-list [fetching]="fetching"
-                         [categories]="categories"
-                         (refreshList)="getCategories()"
-                         (editCategoryRequest)="editCategory($event)"
-                         (delCategoryRequest)="delCategory($event)"
-                         (delCategoriesRequest)="delCategories($event)">
+      <box-category-list
+        [fetching]="fetching"
+        [categories]="categories"
+        (refreshList)="getCategories()"
+        (editCategoryRequest)="editCategory($event)"
+        (delCategoryRequest)="delCategory($event)"
+        (delCategoriesRequest)="delCategories($event)">
       </box-category-list>
     </sa-card>
   </div>
