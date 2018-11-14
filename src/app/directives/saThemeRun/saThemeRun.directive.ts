@@ -5,7 +5,7 @@
  */
 
 import { Directive, HostBinding, OnInit } from '@angular/core';
-import { SaThemeConfigProvider, isMobile } from '../../theme';
+import { SaThemeConfigProvider, isMobile } from 'app/theme';
 
 @Directive({
   selector: '[saThemeRun]'

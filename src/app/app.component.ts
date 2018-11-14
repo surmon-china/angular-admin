@@ -13,9 +13,9 @@ import { layoutPaths } from '@app/theme/theme.constants';
 import { SaThemeConfig } from '@app/theme/theme.config';
 import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
 
+import * as API_PATH from '@app/constants/api';
 import { AppState } from '@app/app.service';
 import { TOKEN } from '@app/constants/auth';
-import * as API_PATH from '@app/constants/api';
 import { NO_PERMISSION } from '@/app/constants/http';
 import { checkTokenIsOk } from '@app/discriminators/token';
 import { isIndexPage, isAuthPage, isDashboardPage } from '@app/discriminators/url';

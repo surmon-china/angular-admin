@@ -1,7 +1,8 @@
 <ul class="al-msg-center clearfix">
   <li class="dropdown">
     <a href class="dropdown-toggle" id="msg-dd1" data-toggle="dropdown" aria-expanded="false">
-      <i class="ion-ios-notifications"></i><span>5</span>
+      <i class="ion-ios-notifications"></i>
+      <span>5</span>
       <div class="notification-ring"></div>
     </a>
     <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd1">
@@ -14,8 +15,7 @@
       <div class="msg-list">
         <a *ngFor="let msg of notifications" href class="clearfix">
           <div class="img-area">
-            <img [ngClass]="{'photo-msg-item': !msg.image}"
-                 src="{{ ( msg.image ||  '/assets/img/app/profile/Admin.jpg') }}">
+            <img [ngClass]="{ 'photo-msg-item': !msg.image }" src="{{ ( msg.image ||  '/assets/img/app/profile/Admin.jpg') }}">
           </div>
           <div class="msg-area">
             <div>{{ msg.text }}</div>
@@ -28,7 +28,8 @@
   </li>
   <li class="dropdown">
     <a href class="msg dropdown-toggle" id="msg-dd2" data-toggle="dropdown" aria-expanded="false">
-      <i class="ion-ios-mail"></i><span>5</span>
+      <i class="ion-ios-mail"></i>
+      <span>5</span>
       <div class="notification-ring"></div>
     </a>
     <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd2">
@@ -41,8 +42,7 @@
       <div class="msg-list">
         <a *ngFor="let msg of messages" href class="clearfix">
           <div class="img-area">
-            <img [ngClass]="{'photo-msg-item': !msg.image}"
-                 src="{{ ( msg.image ||  '/assets/img/app/profile/Admin.jpg') }}">
+            <img [ngClass]="{ 'photo-msg-item': !msg.image }" src="{{ ( msg.image ||  '/assets/img/app/profile/Admin.jpg') }}">
           </div>
           <div class="msg-area">
             <div>{{ msg.text }}</div>

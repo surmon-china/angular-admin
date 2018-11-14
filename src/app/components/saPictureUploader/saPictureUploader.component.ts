@@ -15,6 +15,8 @@ import { SaHttpRequesterService } from '@app/services';
 import * as qiniu from 'qiniu-js';
 import 'rxjs/add/operator/toPromise';
 
+type TPictureUrl = string;
+
 @Component({
   selector: 'sa-picture-uploader',
   styles: [require('./saPictureUploader.scss')],
@@ -36,17 +38,17 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   // 输入
   @Input() canDelete: boolean = true;
   @Input() uploadSizeLimit: number = 3000000;
-  @Input() defaultPicture: string = 'assets/img/theme/no-photo.png';
+  @Input() defaultPicture: TPictureUrl = 'assets/img/theme/no-photo.png';
 
   // 输出事件
   @Output() handleUpload: EventEmitter<any> = new EventEmitter();
-  @Output() pictureChange:  EventEmitter<any> = new EventEmitter();
+  @Output() pictureChange: EventEmitter<any> = new EventEmitter();
   @Output() handleUploadCompleted: EventEmitter<any> = new EventEmitter();
 
   // 初始化
   public upToken: string = '';
-  public picture: string = '';
   public tokenOk: boolean = false;
+  public picture: TPictureUrl = '';
   public uploadInProgress: boolean = false;
   public onModelChange: Function = () => {};
   public onModelTouched: Function = () => {};
@@ -61,15 +63,17 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   }
 
   // 获取上传 token
-  public getUpToken(): any {
-    this._httpService.get(QINIU).then((res: any) => {
-      if (res && res.result && res.result.upToken) {
-        this.tokenOk = true;
-        this.upToken = res.result.upToken;
-      }
-    }).catch(_ => {
-      this.tokenOk = false;
-    });
+  public getUpToken(): void {
+    this._httpService.get(QINIU)
+      .then((res: any) => {
+        if (res && res.result && res.result.upToken) {
+          this.tokenOk = true;
+          this.upToken = res.result.upToken;
+        }
+      })
+      .catch(_ => {
+        this.tokenOk = false;
+      });
   }
 
   // 要上传的文件变更时（组件拦截）
@@ -109,7 +113,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   }
 
   // 文件上传
-  public qiniuUploadPicture(file: File):  any {
+  public qiniuUploadPicture(file: File): void {
 
     // 上传
     const doUpload = upFile => {
@@ -123,9 +127,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
         mimeType: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']
       };
 
-      const upOptions = {
-        useCdnDomain: true
-      };
+      const upOptions = { useCdnDomain: true };
 
       // 开始上传
       const observable = qiniu.upload(upFile, keyName, this.upToken, putExtra, upOptions);
@@ -177,7 +179,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   }
 
   // 根据 url 读取一张图片
-  protected changePictureFromURL(url: string): any {
+  protected changePictureFromURL(url: string): void {
     const image = new Image();
     image.onload = _ => {
       this.emitPicture(url);
@@ -190,7 +192,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   }
 
   // 根据 base64 读取一张图片
-  protected changePictureFromDataURL(file: File): any {
+  protected changePictureFromDataURL(file: File): void {
     const reader = new FileReader();
     reader.addEventListener('load', (event: Event) => {
       this.picture = (event.target as any).result;
@@ -206,14 +208,14 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   }
 
   // 更新及传出数据
-  public emitPicture(picture: string): any {
+  public emitPicture(picture: TPictureUrl): void {
     this.picture = picture;
     this.onModelChange(picture);
     this.pictureChange.emit(picture);
   }
 
   // 手动输入的图片地址发生了变化
-  public inputImageUrlChange(picture: string)  {
+  public inputImageUrlChange(picture: TPictureUrl): void {
     this.emitPicture(picture);
   }
 

@@ -10,7 +10,6 @@ import { Injectable } from '@angular/core';
 export class SaImageLoaderService {
 
   public load(src: string): Promise<any> {
-
     return new Promise((resolve, reject) => {
       const img = new Image();
       const text = `Image with src ${src} loaded `;

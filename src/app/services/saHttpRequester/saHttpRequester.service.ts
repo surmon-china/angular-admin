@@ -6,13 +6,13 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-
 import { NotificationsService } from 'angular2-notifications';
 import { checkTokenIsOk } from '@app/discriminators/token';
+
+import { api } from '@/environments/environment';
+import { isAuthPage } from '@app/discriminators/url';
 import { TOKEN, TOKEN_HEADER } from '@app/constants/auth';
 import { SERVER_ERROR, GATEWAY_TIMEOUT, UNKNOWN_ERROR } from '@/app/constants/http';
-import { isAuthPage } from '@app/discriminators/url';
-import { api } from '@/environments/environment';
 
 import 'rxjs/add/operator/toPromise';
 
