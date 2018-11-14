@@ -14,9 +14,9 @@ import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularcla
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
+import { SaModule } from '@app/sa.module';
 import { ENV_PROVIDERS } from '@app/environment';
 import { AppComponent } from '@app/app.component';
-import { SaModule } from '@app/sa.module';
 import { PagesModule } from '@app/pages/pages.module';
 import { GlobalState } from '@app/global.state';
 import { RoutingModule } from '@app/app.routing';

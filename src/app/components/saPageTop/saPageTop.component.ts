@@ -11,6 +11,8 @@ import { GlobalState } from 'app/global.state';
 import { AppState } from 'app/app.service';
 import { TOKEN } from '@app/constants/auth';
 
+type TCollapsedState = boolean;
+
 @Component({
   selector: 'sa-page-top',
   styles: [require('./saPageTop.scss')],
@@ -19,14 +21,14 @@ import { TOKEN } from '@app/constants/auth';
 })
 export class SaPageTopComponent {
 
-  public isScrolled: boolean = false;
-  public isMenuCollapsed: boolean = false;
-  public isProfileCollapsed: boolean = false;
+  public isScrolled: TCollapsedState = false;
+  public isMenuCollapsed: TCollapsedState = false;
+  public isProfileCollapsed: TCollapsedState = false;
 
   constructor(private _router: Router,
               private _state: GlobalState,
               private _appState: AppState) {
-    this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
+    this._state.subscribe('menu.isCollapsed', isCollapsed => {
       this.isMenuCollapsed = isCollapsed;
     });
   }
@@ -48,7 +50,7 @@ export class SaPageTopComponent {
     return false;
   }
 
-  public scrolledChanged(isScrolled: boolean) {
+  public scrolledChanged(isScrolled: TCollapsedState) {
     this.isScrolled = isScrolled;
   }
 }
