@@ -15,9 +15,11 @@ The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/).
 The api of this project is accompanied by the [nodepress](https://github.com/surmon-china/nodepress) program, and if you want to run up, you need to install [nodepress](https://github.com/surmon-china/nodepress).
 
 If you only need to demonstrate the project locally, you need to comment on the following lines of code:
-- [src/app/app.component.ts:54](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L54)
-- [src/app/app.component.ts:114](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L114)
-- [src/app/app.component.ts:120](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L120)
+- [src/app/app.component.ts:77](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L77)
+- [src/app/app.component.ts:82](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L82)
+- [src/app/app.component.ts:161](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L161)
+- [src/app/app.component.ts:162](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L162)
+- [src/app/app.component.ts:163](https://github.com/surmon-china/angular-admin/blob/master/src/app/app.component.ts#L163)
 
 **CHANGELOG**
 
