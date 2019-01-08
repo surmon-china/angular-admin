@@ -1,6 +1,6 @@
 /**
- * @file App service 模块
- * @module app/app-service
+ * @file App service
+ * @module app.service
  * @author Surmon <https://github.com/surmon-china>
  */
 

@@ -1,6 +1,6 @@
 /**
- * @file App routes 模块
- * @module app/app-routes
+ * @file App routes
+ * @module app.routes
  * @author Surmon <https://github.com/surmon-china>
  */
 

@@ -15,7 +15,7 @@ import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
 import { browserParse, osParse } from '@app/pages/comment/comment.ua.service';
 import { mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
-import { IComment, TCommentId, ECommentState, ECommentPostType, ECommentParentType } from '@app/pages/comment/comment.constants';
+import { IComment, TCommentId, ECommentState, ECommentPostType, ECommentParentType, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
 
 const DEFAULT_COMMENT: IComment = {
   pid: ECommentParentType.self,
@@ -52,7 +52,7 @@ export class CommentDetailComponent implements OnInit {
 
   // 评论内容
   public comment_id: TCommentId = null;
-  public comments: IComment[] = null;
+  public comments: TResponsePaginationComment = null;
   public article: IArticle = null;
   public comment: IComment = lodash.cloneDeep(DEFAULT_COMMENT);
   public fetching: IFetching = {
@@ -74,9 +74,11 @@ export class CommentDetailComponent implements OnInit {
   public user_site: AbstractControl;
   public extends: AbstractControl;
 
-  constructor(private _fb: FormBuilder,
-              private _route: ActivatedRoute,
-              private _httpService: SaHttpRequesterService) {
+  constructor(
+    private _fb: FormBuilder,
+    private _route: ActivatedRoute,
+    private _httpService: SaHttpRequesterService
+  ) {
 
     this.editForm = this._fb.group({
       pid: [DEFAULT_COMMENT.pid, Validators.compose([Validators.required])],
@@ -119,19 +121,20 @@ export class CommentDetailComponent implements OnInit {
   // 获取评论信息
   public getCommentDetail() {
     this.fetching.get = true;
-    this._httpService.get(`${this._apiPath}/${this.comment_id}`)
-    .then(comment => {
-      this.fetching.get = false;
-      this.comment = comment.result;
-      this.updateEditForm(this.comment);
-      if (this.comment.post_id !== ECommentPostType.guestbook) {
-        this.getCommentArticleDetail();
-      }
-      this.getComments({ post_id: this.comment.post_id, per_page: 1000 });
-    })
-    .catch(_ => {
-      this.fetching.get = false;
-    });
+    this._httpService
+      .get<IComment>(`${this._apiPath}/${this.comment_id}`)
+      .then(comment => {
+        this.fetching.get = false;
+        this.comment = comment.result;
+        this.updateEditForm(this.comment);
+        if (this.comment.post_id !== ECommentPostType.guestbook) {
+          this.getCommentArticleDetail();
+        }
+        this.getComments({ post_id: this.comment.post_id, per_page: 1000 });
+      })
+      .catch(_ => {
+        this.fetching.get = false;
+      });
   }
 
   // 提交修改评论
@@ -169,27 +172,29 @@ export class CommentDetailComponent implements OnInit {
   // 获取评论列表
   public getComments(params: IRequestParams) {
     this.fetching.comments = true;
-    this._httpService.get(this._apiPath, params)
-    .then(comments => {
-      this.comments = comments.result;
-      this.fetching.comments = false;
-    })
-    .catch(_ => {
-      this.fetching.comments = false;
-    });
+    this._httpService
+      .get<TResponsePaginationComment>(this._apiPath, params)
+      .then(comments => {
+        this.comments = comments.result;
+        this.fetching.comments = false;
+      })
+      .catch(_ => {
+        this.fetching.comments = false;
+      });
   }
 
   // 获取文章详情
   public getCommentArticleDetail() {
     this.fetching.article = true;
-    this._httpService.get(`/article/${this.comment.post_id}`)
-    .then(article => {
-      this.article = article.result;
-      this.fetching.article = false;
-    })
-    .catch(_ => {
-      this.fetching.article = false;
-    });
+    this._httpService
+      .get<IArticle>(`/article/${this.comment.post_id}`)
+      .then(article => {
+        this.article = article.result;
+        this.fetching.article = false;
+      })
+      .catch(_ => {
+        this.fetching.article = false;
+      });
   }
 
   // 初始化

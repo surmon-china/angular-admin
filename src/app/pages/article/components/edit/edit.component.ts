@@ -78,14 +78,15 @@ export class ArticleEditComponent implements OnInit {
   // 获取文章信息
   public getArticle(article_id: string) {
     this.fetching.get = true;
-    this._httpService.get(`${this._apiPath}/${article_id}`)
-    .then(article => {
-      this.fetching.get = false;
-      this.article = article.result;
-    })
-    .catch(_ => {
-      this.fetching.get = false;
-    });
+    this._httpService
+      .get<IArticle>(`${this._apiPath}/${article_id}`)
+      .then(article => {
+        this.fetching.get = false;
+        this.article = article.result;
+      })
+      .catch(_ => {
+        this.fetching.get = false;
+      });
   }
 
   // 初始化

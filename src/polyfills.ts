@@ -1,5 +1,5 @@
 /**
- * @file polyfill 模块
+ * @file polyfill
  * @module polyfill
  * @author Surmon <https://github.com/surmon-china>
  ct';

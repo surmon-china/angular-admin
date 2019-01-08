@@ -5,14 +5,13 @@
  */
 
 import * as lodash from 'lodash';
+import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
-import { TApiPath, TSelectedIds, TSelectedAll, IResponseData, IFetching } from '@app/pages/pages.constants';
-import { ITag } from '@/app/pages/article/article.service';
-import * as API_PATH from '@app/constants/api';
+import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
+import { ITag, TResponsePaginationTag } from '@/app/pages/article/article.service';
 import {
   mergeFormControlsToInstance,
   handleBatchSelectChange,
@@ -61,7 +60,7 @@ export class ArticleTagComponent implements OnInit {
   public activeTag: ITag;
   public tagsSelectAll: TSelectedAll = false;
   public selectedTags: TSelectedIds = [];
-  public tags: IResponseData<ITag> = {
+  public tags: TResponsePaginationTag = {
     data: [],
     pagination: null
   };
@@ -184,7 +183,8 @@ export class ArticleTagComponent implements OnInit {
     // 请求
     this.fetching.get = true;
 
-    return this._httpService.get(this._apiPath, params)
+    return this._httpService
+      .get<TResponsePaginationTag>(this._apiPath, params)
       .then(tags => {
         this.tags = tags.result;
         this.selectedTags = [];

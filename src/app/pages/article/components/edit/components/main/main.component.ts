@@ -4,15 +4,13 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import * as API_PATH from '@app/constants/api';
 import { Component, EventEmitter, ViewEncapsulation, Input, Output, OnInit, OnChanges } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-
-import * as API_PATH from '@app/constants/api';
-import { SaHttpRequesterService } from '@app/services';
-import { IArticle, ITag, TArticleId, EArticlePatchAction } from '@/app/pages/article/article.service';
-import { TApiPath, EOriginState, EPublicState, EPublishState, IFetching } from '@app/pages/pages.constants';
+import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
+import { SaHttpRequesterService } from '@app/services';
+import { ITag, TResponsePaginationTag } from '@/app/pages/article/article.service';
 
 @Component({
   selector: 'box-article-edit-main',
@@ -121,7 +119,8 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   // 获取所有标签
   public getTags() {
     this.fetching.tag = true;
-    this._httpService.get(this._tagApiPath, { per_page: 1000 })
+    this._httpService
+    .get<TResponsePaginationTag>(this._tagApiPath, { per_page: 1000 })
     .then(tags => {
       this.fetching.tag = false;
       this.tags = tags.result.data;

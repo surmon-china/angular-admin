@@ -4,7 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { IDataExtends } from '@app/pages/pages.constants';
+import { IDataExtends, IResponsePaginationData } from '@app/pages/pages.constants';
 
 // 评论状态
 export enum ECommentState {
@@ -64,3 +64,4 @@ export interface IComment {
 
 export type TCommentId = IComment['_id'];
 export type TCommentPostId = IComment['post_id'];
+export type TResponsePaginationComment = IResponsePaginationData<IComment>;

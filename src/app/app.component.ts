@@ -1,24 +1,22 @@
 /**
  * @file App 顶级入口组件
- * @module app/app-component
+ * @module app.component
  * @author Surmon <https://github.com/surmon-china>
  */
 
 import { Router } from '@angular/router';
-import { Component, ViewEncapsulation, AfterViewInit, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
-
 import { GlobalState } from '@app/global.state';
 import { layoutPaths } from '@app/theme/theme.constants';
 import { SaThemeConfig } from '@app/theme/theme.config';
 import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
-
-import * as API_PATH from '@app/constants/api';
 import { AppState } from '@app/app.service';
 import { TOKEN } from '@app/constants/auth';
 import { NO_PERMISSION } from '@/app/constants/http';
 import { checkTokenIsOk } from '@app/discriminators/token';
 import { isIndexPage, isAuthPage, isDashboardPage } from '@app/discriminators/url';
+import * as API_PATH from '@app/constants/api';
 
 type TMenuCollapsedState = boolean;
 
@@ -45,15 +43,15 @@ export class AppComponent implements AfterViewInit, OnInit {
   private _isOptionInited = false;
   private _isMenuCollapsed: TMenuCollapsedState = false;
 
-  constructor(private _state: GlobalState,
-              private _appState: AppState,
-              private _router: Router,
-              private _config: SaThemeConfig,
-              private _spinner: SaThemeSpinnerService,
-              private _imageLoader: SaImageLoaderService,
-              private _httpService: SaHttpRequesterService,
-              private viewContainerRef: ViewContainerRef,
-              private _notificationsService: NotificationsService) {
+  constructor(
+    private _state: GlobalState,
+    private _appState: AppState,
+    private _router: Router,
+    private _config: SaThemeConfig,
+    private _spinner: SaThemeSpinnerService,
+    private _imageLoader: SaImageLoaderService,
+    private _httpService: SaHttpRequesterService,
+    private _notificationsService: NotificationsService) {
 
     // 初始化加载图片
     this._loadImages();
@@ -102,7 +100,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   public remiveTokenToLogin(): void {
     localStorage.removeItem(TOKEN);
     setTimeout(() => {
-      this._notificationsService.error('误闯禁地', '...', { timeOut: 1000 });
+      this._notificationsService.error('久违', '...', { timeOut: 1000 });
       this._router.navigate(['/auth']);
     }, 0);
   }
@@ -113,22 +111,23 @@ export class AppComponent implements AfterViewInit, OnInit {
       return;
     }
     this._isOptionInited = true;
-    this._httpService.get(API_PATH.AUTH)
-    .then(({ result: adminInfo }) => {
-      if (Object.keys(adminInfo).length) {
-        this._appState.set('adminInfo', adminInfo);
-      }
-    })
-    .catch(error => {
-      if (error.status === NO_PERMISSION) {
-        this._router.navigate(['/auth']);
-      }
-    });
+    this._httpService
+      .get(API_PATH.ADMIN_INFO)
+      .then(({ result: adminInfo }) => {
+        if (Object.keys(adminInfo).length) {
+          this._appState.set('adminInfo', adminInfo);
+        }
+      })
+      .catch(error => {
+        if (error.status === NO_PERMISSION) {
+          this._router.navigate(['/auth']);
+        }
+      });
   }
 
   // 初始化根据服务端验证 Token 有效性
   public checkTokenValidity(): void  {
-    this._httpService.patch(API_PATH.AUTH)
+    this._httpService.post(API_PATH.CHECK_TOKEN)
     .then(({ result: tokenIsValidity }) => {
       console.log('远程 Token 验证结果：', tokenIsValidity);
       // 通过验证，则初始化 APP

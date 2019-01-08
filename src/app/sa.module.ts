@@ -1,6 +1,6 @@
 /**
  * @file 全局公共模块
- * @module app/sa-module
+ * @module app/sa.module
  * @author Surmon <https://github.com/surmon-china>
  */
 

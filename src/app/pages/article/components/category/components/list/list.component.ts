@@ -5,7 +5,7 @@
  */
 
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { IFetching, IResponseData, TSelectedAll, TSelectedIds } from '@app/pages/pages.constants';
+import { IFetching, IResponsePaginationData, TSelectedAll, TSelectedIds } from '@app/pages/pages.constants';
 import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
 import { ICategory } from '@/app/pages/article/article.service';
 
@@ -19,7 +19,7 @@ import { ICategory } from '@/app/pages/article/article.service';
 export class ArticleCategoryListComponent {
 
   @Input() fetching: IFetching;
-  @Input() categories: IResponseData<ICategory>;
+  @Input() categories: IResponsePaginationData<ICategory>;
   @Output() delCategoryRequest = new EventEmitter();
   @Output() delCategoriesRequest = new EventEmitter();
   @Output() editCategoryRequest = new EventEmitter();

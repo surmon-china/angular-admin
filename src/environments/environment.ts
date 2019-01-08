@@ -1,6 +1,6 @@
 /**
  * @file 开发环境配置
- * @module env/env-dev
+ * @module env/environment
  * @author Surmon <https://github.com/surmon-china>
  */
 

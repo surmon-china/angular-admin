@@ -1,5 +1,5 @@
 /**
- * @file App constants/keycode 模块
+ * @file App constants/keycode
  * @module app/constants/keycode
  * @author Surmon <https://github.com/surmon-china>
  */

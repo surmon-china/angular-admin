@@ -1,6 +1,6 @@
 /**
  * @file 生产环境配置
- * @module env/env-prod
+ * @module env/production
  * @author Surmon <https://github.com/surmon-china>
  */
 
