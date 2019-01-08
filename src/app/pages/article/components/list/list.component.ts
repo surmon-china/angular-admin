@@ -13,7 +13,12 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { SaHttpRequesterService } from '@app/services';
 import { IGetParams } from '@app/pages/pages.constants';
 import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
-import { IArticle, ICategory, ITag, EArticlePatchAction, buildLevelCategories } from '@/app/pages/article/article.service';
+import {
+  buildLevelCategories,
+  TResponsePaginationTag,
+  TResponsePaginationArticle,
+  TResponsePaginationCategory,
+} from '@/app/pages/article/article.service';
 import {
   TApiPath,
   TSelectedIds,
@@ -21,7 +26,6 @@ import {
   EOriginState,
   EPublicState,
   EPublishState,
-  IResponseData,
   IFetching
 } from '@app/pages/pages.constants';
 
@@ -61,13 +65,13 @@ export class ArticleListComponent implements OnInit {
   public getParams: IGetParams = lodash.cloneDeep(DEFAULT_GET_PARAMS);
 
   // 初始化数据
-  public tags: IResponseData<ITag> = {
+  public tags: TResponsePaginationTag = {
     data: []
   };
-  public categories: IResponseData<ICategory> = {
+  public categories: TResponsePaginationCategory = {
     data: []
   };
-  public articles: IResponseData<IArticle> = {
+  public articles: TResponsePaginationArticle = {
     data: [],
     pagination: null
   };
@@ -179,22 +183,24 @@ export class ArticleListComponent implements OnInit {
 
     this.fetching.article = true;
 
-    this._httpService.get(this._articleApiPath, params)
-    .then(articles => {
-      this.articles = articles.result;
-      this.articlesSelectAll = false;
-      this.selectedArticles = [];
-      this.fetching.article = false;
-    })
-    .catch(_ => {
-      this.fetching.article = false;
-    });
+    this._httpService
+      .get<TResponsePaginationArticle>(this._articleApiPath, params)
+      .then(articles => {
+        this.articles = articles.result;
+        this.articlesSelectAll = false;
+        this.selectedArticles = [];
+        this.fetching.article = false;
+      })
+      .catch(_ => {
+        this.fetching.article = false;
+      });
   }
 
   // 获取标签列表
   public getTags(): void {
     this.fetching.tag = true;
-    this._httpService.get(this._tagApiPath)
+    this._httpService
+      .get<TResponsePaginationTag>(this._tagApiPath)
       .then(tags => {
         this.tags = tags.result;
         this.fetching.tag = false;
@@ -207,7 +213,8 @@ export class ArticleListComponent implements OnInit {
   // 获取分类列表
   public getCategories(): void {
     this.fetching.category = true;
-    this._httpService.get(this._categoryApiPath)
+    this._httpService
+      .get<TResponsePaginationCategory>(this._categoryApiPath)
       .then(categories => {
         this.fetching.category = false;
         this.categories = categories.result;
@@ -221,41 +228,39 @@ export class ArticleListComponent implements OnInit {
   // 对于所有修改进行相应统一处理
   public patchArticles(data: Object): void {
       this.fetching.put = true;
-      this._httpService.patch(this._articleApiPath, data)
-        .then(_ => {
-          this.fetching.put = false;
-          this.refreshArticles();
-        })
-        .catch(_ => {
-          this.fetching.put = false;
-        });
+      this._httpService.patch(this._articleApiPath, data).then(_ => {
+        this.fetching.put = false;
+        this.refreshArticles();
+      }).catch(_ => {
+        this.fetching.put = false;
+      });
   }
 
   // 移至回收站
   public moveToRecycle(articleIds?: TSelectedIds) {
     const articles = articleIds || this.selectedArticles;
-    const action = EArticlePatchAction.ToRecycle;
-    this.patchArticles({ articles, action });
+    const state = EPublishState.recycle;
+    this.patchArticles({ articles, state });
   }
 
   // 恢复文章（移至草稿）
   public moveToDraft(articleIds?: TSelectedIds) {
     const articles = articleIds || this.selectedArticles;
-    const action = EArticlePatchAction.ToDraft;
-    this.patchArticles({ articles, action });
+    const state = EPublishState.draft;
+    this.patchArticles({ articles, state });
   }
 
   // 快速发布（移至已发布）
   public moveToPublished(articleIds?: TSelectedIds) {
     const articles = articleIds || this.selectedArticles;
-    const action = EArticlePatchAction.ToPublished;
-    this.patchArticles({ articles, action });
+    const state = EPublishState.published;
+    this.patchArticles({ articles, state });
   }
 
-  // 彻底删除文章
+  // 彻底删除文章（批量删除）
   public delArticles() {
-    const articles: TSelectedIds = this.todoDelArticleId ? [this.todoDelArticleId] : this.selectedArticles;
-    this._httpService.delete(this._articleApiPath, { articles })
+    const article_ids: TSelectedIds = this.todoDelArticleId ? [this.todoDelArticleId] : this.selectedArticles;
+    this._httpService.delete(this._articleApiPath, { article_ids })
       .then(_ => {
         this.delModal.hide();
         this.todoDelArticleId = null;

@@ -5,6 +5,7 @@
  */
 
 import * as lodash from 'lodash';
+import { IResponsePaginationData } from '@app/pages/pages.constants';
 import { IDataExtends, EPublicState, EPublishState, EOriginState } from '@app/pages/pages.constants';
 
 export type TArticleId = string;
@@ -62,14 +63,13 @@ export interface ITag {
   selected?: boolean;
 }
 
-export enum EArticlePatchAction {
-  ToRecycle = 1, // 移回收站
-  ToDraft = 2, // 移草稿
-  ToPublished = 3 // 移已发布
-}
+// 分页数据
+export type TResponsePaginationTag = IResponsePaginationData<ITag>;
+export type TResponsePaginationArticle = IResponsePaginationData<IArticle>;
+export type TResponsePaginationCategory = IResponsePaginationData<ICategory>;
 
 // 构建有级别的分类数据（保证两级数据可用）
-export const buildLevelCategories = (categories: ICategory[], selectedIds?: ICategory['_id'][]): ICategory[] => {
+export function buildLevelCategories(categories: ICategory[], selectedIds?: ICategory['_id'][]): ICategory[] {
 
   const todoDeletes = [];
   const newCategories = [];
@@ -104,4 +104,4 @@ export const buildLevelCategories = (categories: ICategory[], selectedIds?: ICat
   runBuildLevelAndOptimize(todoBuildCategories, 0);
 
   return newCategories;
-};
+}

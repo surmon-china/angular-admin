@@ -1,6 +1,6 @@
 /**
- * @file App 未知模块
- * @module app/environment
+ * @file App 环境配置
+ * @module app.environment
  * @author Surmon <https://github.com/surmon-china>
  */
 

@@ -5,12 +5,12 @@
  */
 
 import * as lodash from 'lodash';
+import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { SaHttpRequesterService } from '@app/services';
-import { TApiPath, IFetching, IResponseData, TSelectedIds } from '@app/pages/pages.constants';
-import { ICategory, buildLevelCategories } from '@/app/pages/article/article.service';
-import * as API_PATH from '@app/constants/api';
+import { TApiPath, IFetching, TSelectedIds } from '@app/pages/pages.constants';
+import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@/app/pages/article/article.service';
 
 @Component({
   selector: 'page-article-category',
@@ -23,7 +23,7 @@ export class ArticleCategoryComponent implements OnInit {
 
   private _apiPath: TApiPath = API_PATH.CATEGORY;
 
-  public categories: IResponseData<ICategory> = {
+  public categories: TResponsePaginationCategory = {
     data: []
   };
   public fetching: IFetching = {
@@ -84,7 +84,7 @@ export class ArticleCategoryComponent implements OnInit {
   // 获取分类
   public getCategories() {
     this.fetching.get = true;
-    this._httpService.get(this._apiPath, { per_page: 100 })
+    this._httpService.get<TResponsePaginationCategory>(this._apiPath, { per_page: 100 })
     .then(categories => {
       this.categories = categories.result;
       this.fetching.get = false;
@@ -125,7 +125,7 @@ export class ArticleCategoryComponent implements OnInit {
 
   // 批量删除
   public doDelCategories() {
-    this._httpService.delete(this._apiPath, { categories: this.todoDelCategories })
+    this._httpService.delete(this._apiPath, { categorie_ids: this.todoDelCategories })
     .then(_ => {
       this.todoDelCategories = null;
       this.delModal.hide();

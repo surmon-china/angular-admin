@@ -33,6 +33,11 @@ export interface IPagination {
 
 // 数据体结构
 export interface IResponseData<T> {
+  data: T;
+}
+
+// 数据体结构
+export interface IResponsePaginationData<T> {
   data: T[];
   pagination?: IPagination;
 }

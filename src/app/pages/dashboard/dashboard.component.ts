@@ -4,13 +4,12 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-
 import * as API_PATH from '@app/constants/api';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { SaHttpRequesterService } from '@app/services';
-import { IArticle } from '@app/pages/article/article.service';
-import { IComment } from '@app/pages/comment/comment.constants';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
+import { IComment, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
+import { IArticle, TResponsePaginationArticle } from '@/app/pages/article/article.service';
 
 interface IStatistics {
   [key: string]: number;
@@ -64,7 +63,8 @@ export class DashboardComponent  implements OnInit {
 
   getStatisticsData() {
     this.fetching.statistics = true;
-    return this._httpService.get(this._statisticApiPath)
+    return this._httpService
+      .get<IStatistics>(this._statisticApiPath)
       .then(statistics => {
         this.statistics = statistics.result;
         this.fetching.statistics = false;
@@ -76,7 +76,8 @@ export class DashboardComponent  implements OnInit {
 
   getArticlesData() {
     this.fetching.articles = true;
-    return this._httpService.get(this._articleApiPath)
+    return this._httpService
+      .get<TResponsePaginationArticle>(this._articleApiPath)
       .then(articles => {
         this.articles = articles.result.data;
         this.fetching.articles = false;
@@ -90,7 +91,8 @@ export class DashboardComponent  implements OnInit {
     const type = guestbook ? 'guestbooks' : 'comments';
     const params = guestbook ? { post_id: 0 } : {};
     this.fetching[type] = true;
-    return this._httpService.get(this._commentApiPath, params)
+    return this._httpService
+      .get<TResponsePaginationComment>(this._commentApiPath, params)
       .then(comments => {
         this[type] = comments.result.data;
         this.fetching[type] = false;

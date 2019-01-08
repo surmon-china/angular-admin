@@ -9,7 +9,7 @@ import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnInit, OnCh
 import * as API_PATH from '@app/constants/api';
 import { SaHttpRequesterService } from '@app/services';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { ICategory, buildLevelCategories } from '@/app/pages/article/article.service';
+import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@/app/pages/article/article.service';
 
 @Component({
   selector: 'box-article-edit-category',
@@ -54,7 +54,8 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
   // 获取所有分类
   public getCategories() {
     this.fetching.get = true;
-    this._httpService.get(this._apiPath)
+    this._httpService
+    .get<TResponsePaginationCategory>(this._apiPath)
     .then(categories => {
       this.fetching.get = false;
       this.originalCategories = categories.result.data;

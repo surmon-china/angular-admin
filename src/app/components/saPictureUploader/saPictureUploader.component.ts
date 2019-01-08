@@ -7,13 +7,11 @@
 import { Component, ViewChild, Input, Output, OnInit, forwardRef, EventEmitter, ElementRef, Renderer } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
-
-import { api } from '@/environments/environment';
-import { QINIU } from '@app/constants/api';
+import { api as ENV_API } from '@/environments/environment';
 import { SaHttpRequesterService } from '@app/services';
-
-import * as qiniu from 'qiniu-js';
 import 'rxjs/add/operator/toPromise';
+import * as API_PATH from '@app/constants/api';
+import * as qiniu from 'qiniu-js';
 
 type TPictureUrl = string;
 
@@ -54,9 +52,11 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   public onModelTouched: Function = () => {};
 
   // 构造函数
-  constructor(private _renderer: Renderer,
-              private _httpService: SaHttpRequesterService,
-              private _notificationsService: NotificationsService) {}
+  constructor(
+    private _renderer: Renderer,
+    private _httpService: SaHttpRequesterService,
+    private _notificationsService: NotificationsService
+  ) {}
 
   ngOnInit() {
     this.getUpToken();
@@ -64,16 +64,14 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
 
   // 获取上传 token
   public getUpToken(): void {
-    this._httpService.get(QINIU)
-      .then((res: any) => {
-        if (res && res.result && res.result.upToken) {
-          this.tokenOk = true;
-          this.upToken = res.result.upToken;
-        }
-      })
-      .catch(_ => {
-        this.tokenOk = false;
-      });
+    this._httpService.get(API_PATH.UP_TOKEN).then((res: any) => {
+      if (res && res.result && res.result.upToken) {
+        this.tokenOk = true;
+        this.upToken = res.result.upToken;
+      }
+    }).catch(_ => {
+      this.tokenOk = false;
+    });
   }
 
   // 要上传的文件变更时（组件拦截）
@@ -150,7 +148,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
         },
         complete: res => {
           console.warn('上传完成', res);
-          const picture_url = `${api.STATIC_URL}/${res.key}`;
+          const picture_url = `${ENV_API.STATIC_URL}/${res.key}`;
           this.uploadInProgress = false;
           this.handleUploadCompleted.emit(picture_url);
           this.changePictureFromURL(picture_url);

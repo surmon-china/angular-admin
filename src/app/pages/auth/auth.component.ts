@@ -7,7 +7,6 @@
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { Component, ViewChild, ElementRef, ViewEncapsulation, AfterViewChecked } from '@angular/core';
-
 import { SaHttpRequesterService } from '@app/services';
 import { TApiPath } from '@app/pages/pages.constants';
 import { TOKEN } from '@app/constants/auth';
@@ -23,7 +22,7 @@ export class AuthComponent implements AfterViewChecked {
 
   @ViewChild('pwdInput') input: ElementRef;
 
-  private _apiPath: TApiPath = API_PATH.AUTH;
+  private loginApiPath: TApiPath = API_PATH.LOGIN;
 
   public password: string = '';
   public editMode: boolean = false;
@@ -54,10 +53,10 @@ export class AuthComponent implements AfterViewChecked {
 
   onSubmit() {
     this._httpService
-    .post(this._apiPath, { password: Base64.encode(this.password) })
+    .post(this.loginApiPath, { password: Base64.encode(this.password) })
     .then(auth => {
-      if (auth.result.token) {
-        localStorage.setItem(TOKEN, auth.result.token);
+      if (auth.result.access_token) {
+        localStorage.setItem(TOKEN, auth.result.access_token);
         this._router.navigate(['/dashboard']);
       }
     })

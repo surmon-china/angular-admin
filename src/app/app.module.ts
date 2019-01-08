@@ -1,6 +1,6 @@
 /**
- * @file App module 模块
- * @module app/app-module
+ * @file App module
+ * @module app.module
  * @author Surmon <https://github.com/surmon-china>
  */
 

@@ -6,13 +6,12 @@
 
 import marked from 'marked';
 import * as lodash from 'lodash';
+import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-
-import * as API_PATH from '@app/constants/api';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
-import { TApiPath, TSelectedIds, TSelectedAll, EPublishState, IResponseData, IFetching } from '@app/pages/pages.constants';
+import { TApiPath, TSelectedIds, TSelectedAll, EPublishState, IResponsePaginationData, IFetching } from '@app/pages/pages.constants';
 import { mergeFormControlsToInstance, handleBatchSelectChange, handleItemSelectChange, formControlStateClass } from '@/app/pages/pages.service';
 
 // 公告
@@ -25,6 +24,8 @@ interface IAnnouncement {
   create_at: string;
   selected?: boolean;
 }
+
+type TResponseAnnouncement = IResponsePaginationData<IAnnouncement>;
 
 const DEFAULT_EDIT_FORM = {
   content: '',
@@ -63,7 +64,7 @@ export class AnnouncementComponent implements OnInit {
   public selectedAnnouncements: TSelectedIds = [];
   public publishState: EPublishState = EPublishState.all;
   public fetching: IFetching = { get: false };
-  public announcements: IResponseData<IAnnouncement> = {
+  public announcements: TResponseAnnouncement = {
     data: [],
     pagination: null
   };
@@ -215,7 +216,7 @@ export class AnnouncementComponent implements OnInit {
 
     this.fetching.get = true;
 
-    return this._httpService.get(this._apiPath, params)
+    return this._httpService.get<TResponseAnnouncement>(this._apiPath, params)
       .then(announcements => {
         this.announcements = announcements.result;
         this.selectedAnnouncements = [];
@@ -229,7 +230,7 @@ export class AnnouncementComponent implements OnInit {
 
   // 添加公告
   public addAnnouncement(announcement: IAnnouncement): Promise<any> {
-    return this._httpService.post(this._apiPath, announcement)
+    return this._httpService.post<IAnnouncement>(this._apiPath, announcement)
       .then(_ => {
         this.resetEditForm();
         this.refreshAnnouncements();
@@ -238,7 +239,7 @@ export class AnnouncementComponent implements OnInit {
 
   // 更新公告
   public putAnnouncement(announcement: IAnnouncement): Promise<any> {
-    return this._httpService.put(
+    return this._httpService.put<IAnnouncement>(
       `${this._apiPath}/${this.activeAnnouncement._id}`,
       Object.assign(this.activeAnnouncement, announcement)
     )
@@ -251,7 +252,8 @@ export class AnnouncementComponent implements OnInit {
 
   // 删除公告
   public doDelAnnouncement() {
-    this._httpService.delete(`${this._apiPath}/${this.activeAnnouncement._id}`)
+    this._httpService
+    .delete<IAnnouncement>(`${this._apiPath}/${this.activeAnnouncement._id}`)
     .then(_ => {
       this.delModal.hide();
       this.activeAnnouncement = null;
@@ -264,7 +266,8 @@ export class AnnouncementComponent implements OnInit {
 
   // 批量删除
   public doDelAnnouncements() {
-    this._httpService.delete(this._apiPath, { announcements: this.selectedAnnouncements })
+    this._httpService
+    .delete<any>(this._apiPath, { announcement_ids: this.selectedAnnouncements })
     .then(_ => {
       this.delModal.hide();
       this.refreshAnnouncements();
