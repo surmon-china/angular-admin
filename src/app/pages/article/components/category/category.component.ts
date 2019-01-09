@@ -8,9 +8,9 @@ import * as lodash from 'lodash';
 import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { SaHttpRequesterService } from '@app/services';
-import { TApiPath, IFetching, TSelectedIds } from '@app/pages/pages.constants';
 import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@/app/pages/article/article.service';
+import { TApiPath, IFetching, TSelectedIds } from '@app/pages/pages.constants';
+import { SaHttpRequesterService } from '@app/services';
 
 @Component({
   selector: 'page-article-category',

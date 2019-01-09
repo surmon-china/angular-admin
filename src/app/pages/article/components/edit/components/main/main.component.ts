@@ -7,10 +7,10 @@
 import * as API_PATH from '@app/constants/api';
 import { Component, EventEmitter, ViewEncapsulation, Input, Output, OnInit, OnChanges } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
-import { SaHttpRequesterService } from '@app/services';
 import { ITag, TResponsePaginationTag } from '@/app/pages/article/article.service';
+import { TApiPath, IFetching } from '@app/pages/pages.constants';
+import { SaHttpRequesterService } from '@app/services';
 
 @Component({
   selector: 'box-article-edit-main',

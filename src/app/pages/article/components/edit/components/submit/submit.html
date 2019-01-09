@@ -2,13 +2,15 @@
   <div class="form-group row">
     <label for="article-status" class="col-3 text-center form-control-label">来源</label>
     <div class="col-6">
-      <select class="form-control c-select" 
-              id="article-origin" 
-              name="article-origin" 
-              [(ngModel)]="origin"
-              (change)="originChange.emit($event.target.value)">
-        <option [value]="OriginState.original">原创</option>
-        <option [value]="OriginState.reprint">转载</option>
+      <select
+        class="form-control c-select" 
+        id="article-origin" 
+        name="article-origin" 
+        [(ngModel)]="origin"
+        (change)="originChange.emit($event.target.value)"
+      >
+        <option [value]="OriginState.Original">原创</option>
+        <option [value]="OriginState.Reprint">转载</option>
         <option [value]="OriginState.hybrid">混合</option>
       </select>
     </div>
@@ -16,42 +18,48 @@
   <div class="form-group row">
     <label for="article-status" class="col-3 text-center form-control-label">状态</label>
     <div class="col-6">
-      <select class="form-control c-select" 
-              id="article-status" 
-              name="article-status" 
-              [(ngModel)]="state"
-              (change)="stateChange.emit($event.target.value)">
-        <option [value]="PublishState.published">直接发布</option>
-        <option [value]="PublishState.draft">存为草稿</option>
-        <option [value]="PublishState.recycle">已删除</option>
+      <select
+        class="form-control c-select" 
+        id="article-status" 
+        name="article-status" 
+        [(ngModel)]="state"
+        (change)="stateChange.emit($event.target.value)"
+      >
+        <option [value]="PublishState.Published">直接发布</option>
+        <option [value]="PublishState.Draft">存为草稿</option>
+        <option [value]="PublishState.Recycle">已删除</option>
       </select>
     </div>
   </div>
   <div class="form-group row">
     <label for="article-public" class="col-3 text-center form-control-label">公开度</label>
     <div class="col-6">
-      <select class="form-control c-select" 
-              id="article-public" 
-              name="article-public" 
-              [(ngModel)]="ppublic"
-              (change)="ppublicChange.emit($event.target.value)">
-        <option [value]="PublicState.public">公开</option>
-        <option [value]="PublicState.secret">私密</option>
-        <option [value]="PublicState.password">密码访问</option>
+      <select
+        class="form-control c-select" 
+        id="article-public" 
+        name="article-public" 
+        [(ngModel)]="ppublic"
+        (change)="ppublicChange.emit($event.target.value)"
+      >
+        <option [value]="PublicState.Public">公开</option>
+        <option [value]="PublicState.Secret">私密</option>
+        <option [value]="PublicState.Password">密码访问</option>
       </select>
     </div>
   </div>
   <div class="form-group row">
     <label for="article-password" class="col-3 text-center form-control-label">文章密码</label>
     <div class="col-6">
-       <input type="password" 
-              class="form-control" 
-              id="article-password" 
-              name="article-password" 
-              placeholder="文章密码" 
-              [(ngModel)]="password"
-              (change)="passwordChange.emit($event.target.value)"
-              [disabled]="ppublic != PublicState.password">
+       <input
+        type="password" 
+        class="form-control" 
+        id="article-password" 
+        name="article-password" 
+        placeholder="文章密码" 
+        [(ngModel)]="password"
+        (change)="passwordChange.emit($event.target.value)"
+        [disabled]="ppublic != PublicState.Password"
+      />
     </div>
   </div>
   <hr>

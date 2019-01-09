@@ -5,11 +5,10 @@
  */
 
 import * as lodash from 'lodash';
+import * as API_PATH from '@app/constants/api';
 import { ActivatedRoute } from '@angular/router';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-
-import * as API_PATH from '@app/constants/api';
 import { IArticle } from '@/app/pages/article/article.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
@@ -18,9 +17,9 @@ import { mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/
 import { IComment, TCommentId, ECommentState, ECommentPostType, ECommentParentType, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
 
 const DEFAULT_COMMENT: IComment = {
-  pid: ECommentParentType.self,
+  pid: ECommentParentType.Self,
   post_id: null,
-  state: ECommentState.published,
+  state: ECommentState.Published,
   is_top: false,
   likes: 0,
   agent: '',
@@ -127,7 +126,7 @@ export class CommentDetailComponent implements OnInit {
         this.fetching.get = false;
         this.comment = comment.result;
         this.updateEditForm(this.comment);
-        if (this.comment.post_id !== ECommentPostType.guestbook) {
+        if (this.comment.post_id !== ECommentPostType.Guestbook) {
           this.getCommentArticleDetail();
         }
         this.getComments({ post_id: this.comment.post_id, per_page: 1000 });

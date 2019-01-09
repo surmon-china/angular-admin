@@ -4,13 +4,13 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-
 import * as API_PATH from '@app/constants/api';
-import { SaHttpRequesterService } from '@app/services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { IArticle, TArticleId } from '@/app/pages/article/article.service';
-import { TApiPath, EOriginState, EPublicState, EPublishState, IFetching } from '@app/pages/pages.constants';
+import { TApiPath, IFetching } from '@app/pages/pages.constants';
+import { SaHttpRequesterService } from '@app/services';
+import { EPublishState, EPublicState, EOriginState } from '@app/constants/state';
 
 const DEFAULT_ARTICLE = {
   title: '',
@@ -18,9 +18,9 @@ const DEFAULT_ARTICLE = {
   description: '',
   content: '',
   thumb: '',
-  origin: EOriginState.original,
-  state: EPublishState.published,
-  public: EPublicState.public,
+  origin: EOriginState.Original,
+  state: EPublishState.Published,
+  public: EPublicState.Public,
   password: '',
   tag: [],
   category: [],
@@ -46,10 +46,12 @@ export class ArticleEditComponent implements OnInit {
     post: false
   };
 
-  constructor(public elem: ElementRef,
-              private router: Router,
-              private route: ActivatedRoute,
-              private httpService: SaHttpRequesterService) {}
+  constructor(
+    public elem: ElementRef,
+    private router: Router,
+    private route: ActivatedRoute,
+    private httpService: SaHttpRequesterService
+  ) {}
 
   // 提交文章
   public submitArticle(): void {

@@ -5,8 +5,9 @@
  */
 
 import * as lodash from 'lodash';
+import { IDataExtends } from '@app/pages/pages.constants';
 import { IResponsePaginationData } from '@app/pages/pages.constants';
-import { IDataExtends, EPublicState, EPublishState, EOriginState } from '@app/pages/pages.constants';
+import { EPublishState, EPublicState, EOriginState } from '@app/constants/state';
 
 export type TArticleId = string;
 

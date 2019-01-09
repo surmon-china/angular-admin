@@ -5,12 +5,11 @@
  */
 
 import * as lodash from 'lodash';
+import * as API_PATH from '@app/constants/api';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { FormGroup, AbstractControl, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
-
-import * as API_PATH from '@app/constants/api';
+import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SaHttpRequesterService } from '@app/services';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';

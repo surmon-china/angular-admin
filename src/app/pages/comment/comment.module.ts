@@ -33,5 +33,4 @@ import { CommentDetailComponent } from './components/detail';
     CommentDetailComponent
   ]
 })
-export default class CommentModule {
-}
+export default class CommentModule {}

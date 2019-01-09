@@ -19,10 +19,13 @@ export class SaMultiCheckboxComponent implements ControlValueAccessor {
   public model: NgModel;
   public state: boolean;
 
-  public constructor(@Self() state: NgModel) {
+  constructor(@Self() state: NgModel) {
     this.model = state;
     state.valueAccessor = this;
   }
+
+  public onChange(value: any): void {}
+  public onTouch(value: any): void {}
 
   public getProp(item: any, propName: string): string {
     const prop = this.propertiesMapping[propName];
@@ -33,8 +36,7 @@ export class SaMultiCheckboxComponent implements ControlValueAccessor {
     }
     return item[prop];
   }
-  public onChange(value: any): void {}
-  public onTouch(value: any): void {}
+
   public writeValue(state: any): void {
     this.state = state;
   }
@@ -45,6 +47,7 @@ export class SaMultiCheckboxComponent implements ControlValueAccessor {
       this.model.viewToModelUpdate(state);
     };
   }
+
   public registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }

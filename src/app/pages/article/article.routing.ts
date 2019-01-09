@@ -5,7 +5,6 @@
  */
 
 import { Routes, RouterModule } from '@angular/router';
-
 import { ArticleComponent } from './article.component';
 import { ArticleTagComponent } from './components/tag';
 import { ArticleEditComponent } from './components/edit';

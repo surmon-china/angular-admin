@@ -4,13 +4,12 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { Router, Routes, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-
+import { Router, Routes, NavigationEnd } from '@angular/router';
+import { Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { GlobalState } from 'app/global.state';
 import { AppState } from 'app/app.service';
 import { SaMenuService } from './saMenu.service';
-import { GlobalState } from 'app/global.state';
 
 @Component({
   selector: 'sa-menu',
@@ -34,12 +33,13 @@ export class SaMenuComponent implements OnInit, OnDestroy {
   public outOfArea = -200;
   protected onRouteChange: Subscription;
 
-  constructor(private router: Router,
-              private service: SaMenuService,
-              private state: GlobalState,
-              private appState: AppState) {
-    this.onRouteChange = this.router.events.subscribe((event) => {
-
+  constructor(
+    private router: Router,
+    private service: SaMenuService,
+    private state: GlobalState,
+    private appState: AppState
+  ) {
+    this.onRouteChange = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.menuItems) {
           this.selectMenuAndNotify();

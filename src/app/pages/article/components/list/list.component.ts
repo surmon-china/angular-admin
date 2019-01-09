@@ -4,30 +4,17 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
-import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-
 import * as lodash from 'lodash';
 import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap';
+import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
+import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SaHttpRequesterService } from '@app/services';
 import { IGetParams } from '@app/pages/pages.constants';
 import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
-import {
-  buildLevelCategories,
-  TResponsePaginationTag,
-  TResponsePaginationArticle,
-  TResponsePaginationCategory,
-} from '@/app/pages/article/article.service';
-import {
-  TApiPath,
-  TSelectedIds,
-  TSelectedAll,
-  EOriginState,
-  EPublicState,
-  EPublishState,
-  IFetching
-} from '@app/pages/pages.constants';
+import { buildLevelCategories, TResponsePaginationTag, TResponsePaginationArticle, TResponsePaginationCategory } from '@/app/pages/article/article.service';
+import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
+import { EPublishState, EPublicState, EOriginState } from '@app/constants/state';
 
 const DEFAULT_SEARCH_FORM = {
   keyword: ''
@@ -36,9 +23,9 @@ const DEFAULT_SEARCH_FORM = {
 const DEFAULT_GET_PARAMS = {
   tag: 'all',
   category: 'all',
-  state: EPublishState.all,
-  public: EPublicState.all,
-  origin: EOriginState.all
+  state: EPublishState.All,
+  public: EPublicState.All,
+  origin: EOriginState.All
 };
 
 @Component({
@@ -239,21 +226,21 @@ export class ArticleListComponent implements OnInit {
   // 移至回收站
   public moveToRecycle(articleIds?: TSelectedIds) {
     const articles = articleIds || this.selectedArticles;
-    const state = EPublishState.recycle;
+    const state = EPublishState.Recycle;
     this.patchArticles({ articles, state });
   }
 
   // 恢复文章（移至草稿）
   public moveToDraft(articleIds?: TSelectedIds) {
     const articles = articleIds || this.selectedArticles;
-    const state = EPublishState.draft;
+    const state = EPublishState.Draft;
     this.patchArticles({ articles, state });
   }
 
   // 快速发布（移至已发布）
   public moveToPublished(articleIds?: TSelectedIds) {
     const articles = articleIds || this.selectedArticles;
-    const state = EPublishState.published;
+    const state = EPublishState.Published;
     this.patchArticles({ articles, state });
   }
 

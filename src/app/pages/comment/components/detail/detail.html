@@ -12,7 +12,7 @@
           <label class="col-sm-1 form-control-label text-right">所在文章</label>
           <div class="col-sm-5">
             <div class="form-control">
-              <span *ngIf="comment.post_id !== CommentPostType.guestbook;else guestbookTitle">{{ article ? article.title : '未知文章' }}</span>
+              <span *ngIf="comment.post_id !== CommentPostType.Guestbook;else guestbookTitle">{{ article ? article.title : '未知文章' }}</span>
               <ng-template #guestbookTitle><span>留言板</span></ng-template>
             </div>
           </div>
@@ -20,11 +20,13 @@
         <div  class="form-group row" [ngClass]="controlStateClass(likes)">
           <label for="comment-likes" class="col-sm-1 form-control-label text-right">喜欢人数</label>
           <div class="col-sm-2">
-            <input type="number" 
-                   id="comment-likes" 
-                   class="form-control" 
-                   placeholder="喜欢人数" 
-                   [formControl]="likes">
+            <input
+              type="number" 
+              id="comment-likes" 
+              class="form-control" 
+              placeholder="喜欢人数" 
+              [formControl]="likes"
+            />
           </div>
         </div>
         <div  class="form-group row" [ngClass]="controlStateClass(is_top)">
@@ -43,38 +45,44 @@
               <option [value]="CommentState.spam">垃圾评论</option>
               <option [value]="CommentState.deleted">已删除</option>
               <option [value]="CommentState.auditing">待审核</option>
-              <option [value]="CommentState.published">审核通过</option>
+              <option [value]="CommentState.Published">审核通过</option>
             </select>
           </div>
         </div>
         <div  class="form-group row" [ngClass]="controlStateClass(user_name)">
           <label for="comment-user-name" class="col-sm-1 form-control-label text-right">用户名</label>
           <div class="col-sm-2">
-            <input type="text" 
-                   id="comment-user-name" 
-                   class="form-control" 
-                   placeholder="用户名" 
-                   [formControl]="user_name">
+            <input
+              type="text" 
+              id="comment-user-name" 
+              class="form-control" 
+              placeholder="用户名" 
+              [formControl]="user_name"
+            >
           </div>
         </div>
         <div  class="form-group row" [ngClass]="controlStateClass(user_email)">
           <label for="comment-user-email" class="col-sm-1 form-control-label text-right">用户邮箱</label>
           <div class="col-sm-2">
-            <input type="email" 
-                   id="comment-user-email" 
-                   class="form-control" 
-                   placeholder="用户邮箱" 
-                   [formControl]="user_email">
+            <input
+              type="email" 
+              id="comment-user-email" 
+              class="form-control" 
+              placeholder="用户邮箱" 
+              [formControl]="user_email"
+            >
           </div>
         </div>
         <div  class="form-group row" [ngClass]="controlStateClass(user_site)">
           <label for="comment-user-site" class="col-sm-1 form-control-label text-right">用户地址</label>
           <div class="col-sm-2">
-            <input type="url" 
-                   id="comment-user-site" 
-                   class="form-control" 
-                   placeholder="用户的个人网址" 
-                   [formControl]="user_site">
+            <input
+              type="url" 
+              id="comment-user-site" 
+              class="form-control" 
+              placeholder="用户的个人网址" 
+              [formControl]="user_site"
+            >
           </div>
         </div>
         <div class="form-group row">
@@ -83,7 +91,7 @@
             <div class="form-control">{{ comment.create_at | dataToLocale }}</div>
           </div>
         </div>
-        <div  class="form-group row">
+        <div class="form-group row">
           <label class="col-sm-1 form-control-label text-right">客户端信息</label>
           <div class="col-sm-5">
             <div class="form-control">
@@ -118,9 +126,11 @@
             <select class="form-control c-select" [formControl]="pid">
               <option default [value]="0">无父级评论</option>
               <ng-template [ngIf]="comment.id && comments && comments.data.length">
-                <option *ngFor="let item of comments.data" 
-                        [ngValue]="item.id"
-                        [disabled]="item.id === comment.id">
+                <option
+                  *ngFor="let item of comments.data" 
+                  [ngValue]="item.id"
+                  [disabled]="item.id === comment.id"
+                >
                   <span>ID：{{ item.id }}  -  {{ item.author.name }}：{{ item.content | truncate : 160 }}</span>
                 </option>
               </ng-template>
@@ -134,8 +144,8 @@
               class="form-control comemnt-content" 
               title="评论内容"
               id="comment-content"
-              [formControl]="content">
-            </sa-markdown-editor>
+              [formControl]="content"
+            ></sa-markdown-editor>
           </div>
         </div>
         <div  class="form-group row" [ngClass]="controlStateClass(extends)">
@@ -143,20 +153,24 @@
           <div class="col-sm-5">
             <div class="comment-extend" *ngFor="let extend of extends.value; let i = index">
               <div class="extend-key">
-                <input type="text" 
-                       id="comment-name"
-                       class="form-control"
-                       placeholder="key" 
-                       [(ngModel)]="extend.name"
-                       [ngModelOptions]="{ standalone: true }">
+                <input
+                  type="text" 
+                  id="comment-name"
+                  class="form-control"
+                  placeholder="key" 
+                  [(ngModel)]="extend.name"
+                  [ngModelOptions]="{ standalone: true }"
+                />
               </div>
               <div class="extend-value">
-                <input type="text" 
-                       id="comment-name"
-                       class="form-control"
-                       placeholder="value" 
-                       [(ngModel)]="extend.value"
-                       [ngModelOptions]="{ standalone: true }">
+                <input
+                  type="text" 
+                  id="comment-name"
+                  class="form-control"
+                  placeholder="value" 
+                  [(ngModel)]="extend.value"
+                  [ngModelOptions]="{ standalone: true }"
+                />
               </div>
               <div class="extend-del">
                 <button class="btn btn-warning" (click)="delExtendItem(i)">
@@ -176,9 +190,11 @@
             <span>&nbsp;&nbsp;</span>
             <a [href]="" class="btn btn-info" (click)="getCommentDetail()">刷新评论</a>
             <span>&nbsp;&nbsp;</span>
-            <a class="btn btn-default"
-               *ngIf="comment.post_id !== undefined && comment.post_id !== null"
-               [routerLink]="['/comment/post/', comment.post_id]">回到宿主页面评论列表</a>
+            <a
+              class="btn btn-default"
+              *ngIf="comment.post_id !== undefined && comment.post_id !== null"
+              [routerLink]="['/comment/post/', comment.post_id]"
+            >回到宿主页面评论列表</a>
           </div>
         </div>
       </form>

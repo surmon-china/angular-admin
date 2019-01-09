@@ -5,30 +5,22 @@
  */
 
 import * as lodash from 'lodash';
+import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-
-import * as API_PATH from '@app/constants/api';
-import { SaHttpRequesterService } from '@app/services';
-import { IGetParams } from '@app/pages/pages.constants';
-import { browserParse, osParse } from '@app/pages/comment/comment.ua.service';
 import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
 import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
-import {
-  IComment,
-  TCommentId,
-  TCommentPostId,
-  ESortType,
-  ECommentState,
-  ECommentPostType,
-  TResponsePaginationComment
-} from '@app/pages/comment/comment.constants';
+import { browserParse, osParse } from '@app/pages/comment/comment.ua.service';
+import { IGetParams } from '@app/pages/pages.constants';
+import { SaHttpRequesterService } from '@app/services';
+import { IComment, TCommentId, TCommentPostId, ECommentState, ECommentPostType, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
+import { ESortType } from '@app/constants/state';
 
 const DEFAULT_GET_PARAMS = {
-  sort: ESortType.desc,
-  state: ECommentState.all
+  sort: ESortType.Desc,
+  state: ECommentState.All
 };
 
 @Component({
@@ -71,9 +63,11 @@ export class CommentListComponent implements OnInit {
   public selectedComments: TSelectedIds = [];
   public selectedPostIds: TCommentPostId[] = [];
 
-  constructor(private fb: FormBuilder,
-              private route: ActivatedRoute,
-              private httpService: SaHttpRequesterService) {
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private httpService: SaHttpRequesterService
+  ) {
 
     this.searchForm = this.fb.group({
       keyword: ['', Validators.compose([Validators.required])]
@@ -98,7 +92,7 @@ export class CommentListComponent implements OnInit {
 
   // 判断是留言板
   public isGuestbook(postId: TCommentPostId): boolean {
-    return Number(postId) === Number(ECommentPostType.guestbook);
+    return Number(postId) === Number(ECommentPostType.Guestbook);
   }
 
   // 判断公告类型
@@ -155,7 +149,7 @@ export class CommentListComponent implements OnInit {
   // 清空搜索条件
   public resetGetParams(): void {
     this.searchForm.reset({ keyword: '' });
-    this.getParams.sort = ESortType.desc;
+    this.getParams.sort = ESortType.Desc;
   }
 
   // 刷新评论列表
@@ -206,10 +200,10 @@ export class CommentListComponent implements OnInit {
 
   // 更新评论状态
   public updateCommentsState(state: ECommentState, comment: IComment) {
-    const comments = comment ? [comment._id] : this.selectedComments;
+    const comment_ids = comment ? [comment._id] : this.selectedComments;
     const post_ids = (comment ? [comment.post_id] : lodash.uniq(this.selectedPostIds)).filter(id => id);
     this.fetching.put = true;
-    this.httpService.patch(this.apiPath, { comments, post_ids, state })
+    this.httpService.patch(this.apiPath, { comment_ids, post_ids, state })
       .then(_ => {
         this.refreshComments();
         this.fetching.put = false;

@@ -63,8 +63,7 @@ export class DashboardComponent  implements OnInit {
 
   getStatisticsData() {
     this.fetching.statistics = true;
-    return this.httpService
-      .get<IStatistics>(this.statisticApiPath)
+    return this.httpService.get<IStatistics>(this.statisticApiPath)
       .then(statistics => {
         this.statistics = statistics.result;
         this.fetching.statistics = false;
@@ -76,8 +75,7 @@ export class DashboardComponent  implements OnInit {
 
   getArticlesData() {
     this.fetching.articles = true;
-    return this.httpService
-      .get<TResponsePaginationArticle>(this.articleApiPath)
+    return this.httpService.get<TResponsePaginationArticle>(this.articleApiPath)
       .then(articles => {
         this.articles = articles.result.data;
         this.fetching.articles = false;
@@ -91,8 +89,7 @@ export class DashboardComponent  implements OnInit {
     const type = guestbook ? 'guestbooks' : 'comments';
     const params = guestbook ? { post_id: 0 } : {};
     this.fetching[type] = true;
-    return this.httpService
-      .get<TResponsePaginationComment>(this.commentApiPath, params)
+    return this.httpService.get<TResponsePaginationComment>(this.commentApiPath, params)
       .then(comments => {
         this[type] = comments.result.data;
         this.fetching[type] = false;

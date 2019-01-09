@@ -1,16 +1,18 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
     <sa-card title="添加公告">
-      <form class="announcement-form"
-            [formGroup]="editForm" 
-            (ngSubmit)="submitEditForm(editForm.value)">
+      <form
+        class="announcement-form"
+        [formGroup]="editForm" 
+        (ngSubmit)="submitEditForm(editForm.value)"
+      >
         <div class="form-group" [ngClass]="controlStateClass(state)">
           <label for="announcement-type">
             <h5>公告状态</h5>
           </label>
           <select class="form-control c-select" id="announcement-type" [formControl]="state">
-            <option [value]="PublishState.published">已发布</option>
-            <option [value]="PublishState.draft">草稿</option>
+            <option [value]="PublishState.Published">已发布</option>
+            <option [value]="PublishState.Draft">草稿</option>
           </select>
         </div>
         <div  class="form-group" [ngClass]="controlStateClass(content)">
@@ -27,9 +29,11 @@
         </div>
         <hr>
         <div class="col-sm-12">
-          <button type="submit"
-                  class="btn btn-success btn-with-icon"
-                  [disabled]="!editForm.valid">
+          <button
+            type="submit"
+            class="btn btn-success btn-with-icon"
+            [disabled]="!editForm.valid"
+          >
             <i class="ion-md-done-all"></i>
             <span>{{ activeAnnouncement ? '修改' : '添加' }}公告</span>
           </button>
@@ -47,46 +51,58 @@
       <div class="clearfix">
         <div class="pull-left">
           <div class="btn-group">
-            <button type="button"
-                    class="btn btn-default active"
-                    [ngClass]="{ 'active': isState(PublishState.all) }"
-                    (click)="switchState(PublishState.all)">
+            <button
+              type="button"
+              class="btn btn-default active"
+              [ngClass]="{ 'active': isState(PublishState.All) }"
+              (click)="switchState(PublishState.All)"
+            >
               <span>全部</span>
-              <span *ngIf="isState(PublishState.all)">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(PublishState.All)">&nbsp;({{ currentListTotal }})</span>
             </button>
-            <button type="button"
-                    class="btn btn-default"
-                    [ngClass]="{ 'active': isState(PublishState.published) }"
-                    (click)="switchState(PublishState.published)">
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(PublishState.Published) }"
+              (click)="switchState(PublishState.Published)"
+            >
               <span>已发布</span>
-              <span *ngIf="isState(PublishState.published)">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(PublishState.Published)">&nbsp;({{ currentListTotal }})</span>
             </button>
-            <button type="button"
-                    class="btn btn-default"
-                    [ngClass]="{ 'active': isState(PublishState.draft) }"
-                    (click)="switchState(PublishState.draft)">
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(PublishState.Draft) }"
+              (click)="switchState(PublishState.Draft)"
+            >
               <span>草稿</span>
-              <span *ngIf="isState(PublishState.draft)">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(PublishState.Draft)">&nbsp;({{ currentListTotal }})</span>
             </button>
           </div>
           <span>&nbsp;&nbsp;</span>
           <div class="btn-group" role="group">
-            <button type="button" 
-                    class="btn btn-default btn-with-icon" 
-                    (click)="refreshAnnouncements()">
+            <button
+              type="button" 
+              class="btn btn-default btn-with-icon" 
+              (click)="refreshAnnouncements()"
+            >
               <i class="ion-md-refresh"></i>
               <span>刷新</span>
             </button>
-            <button type="button" 
-                    class="btn btn-default btn-with-icon"
-                    (click)="resetSearchForm()">
+            <button
+              type="button" 
+              class="btn btn-default btn-with-icon"
+              (click)="resetSearchForm()"
+            >
               <i class="ion-md-trash"></i>
               <span>清空关键词</span>
             </button>
             <div class="btn-group" dropdown [isDisabled]="!selectedAnnouncements.length">
-              <button type="button"
-                      class="btn btn-default btn-with-icon dropdown-toggle"
-                      dropdownToggle>
+              <button
+                type="button"
+                class="btn btn-default btn-with-icon dropdown-toggle"
+                dropdownToggle
+              >
                 <i class="ion-md-list"></i>
                 <span>批量操作</span>
               </button>
@@ -98,14 +114,18 @@
             </div>
           </div>
         </div>
-        <form class="pull-right form-inline navbar-form announcement-search-form" 
-              [formGroup]="searchForm" 
-              (ngSubmit)="submitSearchForm(searchForm.value)">
+        <form
+          class="pull-right form-inline navbar-form announcement-search-form" 
+          [formGroup]="searchForm" 
+          (ngSubmit)="submitSearchForm(searchForm.value)"
+        >
           <div class="input-group" style="margin: 0">
-            <input type="text"
-                   placeholder="公告内容"
-                   [formControl]="keyword"
-                   class="form-control with-default-addon">
+            <input
+              type="text"
+              placeholder="公告内容"
+              [formControl]="keyword"
+              class="form-control with-default-addon"
+            >
             <span class="input-group-btn">
               <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
             </span>
@@ -150,24 +170,30 @@
                     </sa-checkbox>
                   </td>
                   <td>
-                    <div class="content ql-editor" 
-                         [innerHTML]="parseMarkdown(announcement.content)"></div>
+                    <div
+                      class="content ql-editor" 
+                      [innerHTML]="parseMarkdown(announcement.content)"
+                    ></div>
                   </td>
                   <td align="center">
-                    <span>{{ announcement.state === PublishState.published ? '已发布' : '草稿' }}</span>
+                    <span>{{ announcement.state === PublishState.Published ? '已发布' : '草稿' }}</span>
                     <span>&nbsp;&nbsp;</span>
-                    <i class="ion-md-checkmark text-success" *ngIf="announcement.state === PublishState.published"></i>
-                    <i class="ion-md-create text-warning" *ngIf="announcement.state === PublishState.draft"></i>
+                    <i class="ion-md-checkmark text-success" *ngIf="announcement.state === PublishState.Published"></i>
+                    <i class="ion-md-create text-warning" *ngIf="announcement.state === PublishState.Draft"></i>
                   </td>
                   <td>
                     <div class="text-center">
                       <div class="btn-group" role="group">
-                        <button type="button"
-                                class="btn btn-sm btn-warning"
-                                (click)="editAnnouncement(announcement)">编辑公告</button>
-                        <button type="button"
-                                class="btn btn-sm btn-danger"
-                                (click)="openDelModal(announcement)">删除公告</button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-warning"
+                          (click)="editAnnouncement(announcement)"
+                        >编辑公告</button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-danger"
+                          (click)="openDelModal(announcement)"
+                        >删除公告</button>
                       </div>
                     </div>
                   </td>
@@ -177,20 +203,21 @@
           </table>
           <br>
           <div class="text-center" *ngIf="announcements.pagination">
-            <pagination class="pagination-xs"
-                        firstText="首页"
-                        lastText="末页"
-                        nextText="下一页"
-                        previousText="上一页"
-                        pageBtnClass="btn-primary"
-                        [totalItems]="announcements.pagination.total"
-                        [itemsPerPage]="announcements.pagination.per_page"
-                        [(ngModel)]="announcements.pagination.current_page"
-                        [maxSize]="7"
-                        [boundaryLinks]="true"
-                        [rotate]="false"
-                        (pageChanged)="handlePageChanged($event)">
-            </pagination>
+            <pagination
+              class="pagination-xs"
+              firstText="首页"
+              lastText="末页"
+              nextText="下一页"
+              previousText="上一页"
+              pageBtnClass="btn-primary"
+              [totalItems]="announcements.pagination.total"
+              [itemsPerPage]="announcements.pagination.per_page"
+              [(ngModel)]="announcements.pagination.current_page"
+              [maxSize]="7"
+              [boundaryLinks]="true"
+              [rotate]="false"
+              (pageChanged)="handlePageChanged($event)"
+            ></pagination>
           </div>
         </div>
       </div>

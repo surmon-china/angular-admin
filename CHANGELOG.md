@@ -1,6 +1,12 @@
 
 ## CHANGELOG
 
+### v3.1.0
+
+- 升级
+- 优化 API
+- 重新规范代码格式
+
 ### v3.0.0
 
 - update Angular to v7.0.0

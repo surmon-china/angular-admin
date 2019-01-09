@@ -20,12 +20,12 @@
     </sa-card>
     <sa-card title="发布选项" baCardClass="with-scroll">
       <box-article-edit-submit 
-          [isEdit]="!!article._id"
-          [(state)]="article.state" 
-          [(origin)]="article.origin" 
-          [(ppublic)]="article.public" 
-          [(password)]="article.password" 
-          (submitArticle)="submitArticle()">
+        [isEdit]="!!article._id"
+        [(state)]="article.state" 
+        [(origin)]="article.origin" 
+        [(ppublic)]="article.Public" 
+        [(password)]="article.password" 
+        (submitArticle)="submitArticle()">
       </box-article-edit-submit>
     </sa-card>
     <sa-card title="缩略图" baCardClass="with-scroll">

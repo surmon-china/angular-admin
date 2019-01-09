@@ -20,7 +20,8 @@ import { Component, AfterViewInit, ViewChild, ViewEncapsulation, Input, ElementR
       <div></div>
       <div></div>
     </div>
-  </div>`
+  </div>
+  `
 })
 export class SaLoadingSpiderComponent implements AfterViewInit {
 
