@@ -9,7 +9,7 @@ export class StripedTableComponent {
 
   smartTableData: Array<any>;
 
-  constructor(private _basicTablesService: BasicTablesService) {
-    this.smartTableData = _basicTablesService.smartTableData;
+  constructor(private basicTablesService: BasicTablesService) {
+    this.smartTableData = basicTablesService.smartTableData;
   }
 }

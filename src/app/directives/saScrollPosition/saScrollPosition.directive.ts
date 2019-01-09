@@ -14,7 +14,7 @@ export class SaScrollPositionDirective implements OnInit {
   @Input() public maxHeight: number;
   @Output() public scrollChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private _isScrolled: boolean;
+  private isScrolled: boolean;
 
   public ngOnInit(): void {
     this.onWindowScroll();
@@ -23,8 +23,8 @@ export class SaScrollPositionDirective implements OnInit {
   @HostListener('window:scroll')
   onWindowScroll(): void {
     const isScrolled = window.scrollY > this.maxHeight;
-    if (isScrolled !== this._isScrolled) {
-      this._isScrolled = isScrolled;
+    if (isScrolled !== this.isScrolled) {
+      this.isScrolled = isScrolled;
       this.scrollChange.emit(isScrolled);
     }
   }

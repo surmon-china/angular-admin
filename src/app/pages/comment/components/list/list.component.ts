@@ -44,7 +44,7 @@ export class CommentListComponent implements OnInit {
 
   @ViewChild('delModal') public delModal: ModalDirective;
 
-  private _apiPath: TApiPath = API_PATH.COMMENT;
+  private apiPath: TApiPath = API_PATH.COMMENT;
 
   // 搜索参数
   public osParse = osParse;
@@ -71,11 +71,11 @@ export class CommentListComponent implements OnInit {
   public selectedComments: TSelectedIds = [];
   public selectedPostIds: TCommentPostId[] = [];
 
-  constructor(private _fb: FormBuilder,
-              private _route: ActivatedRoute,
-              private _httpService: SaHttpRequesterService) {
+  constructor(private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private httpService: SaHttpRequesterService) {
 
-    this.searchForm = this._fb.group({
+    this.searchForm = this.fb.group({
       keyword: ['', Validators.compose([Validators.required])]
     });
     this.keyword = this.searchForm.controls.keyword;
@@ -84,7 +84,7 @@ export class CommentListComponent implements OnInit {
   // 初始化
   ngOnInit() {
     // 如果是修改，则请求文章数据
-    this._route.params.subscribe(({ post_id }) => {
+    this.route.params.subscribe(({ post_id }) => {
       this.post_id = post_id;
       this.getComments();
     });
@@ -191,7 +191,7 @@ export class CommentListComponent implements OnInit {
     this.fetching.get = true;
 
     // 请求评论
-    this._httpService.get<TResponsePaginationComment>(this._apiPath, params)
+    this.httpService.get<TResponsePaginationComment>(this.apiPath, params)
       .then(comments => {
         this.comments = comments.result;
         this.commentsSelectAll = false;
@@ -209,7 +209,7 @@ export class CommentListComponent implements OnInit {
     const comments = comment ? [comment._id] : this.selectedComments;
     const post_ids = (comment ? [comment.post_id] : lodash.uniq(this.selectedPostIds)).filter(id => id);
     this.fetching.put = true;
-    this._httpService.patch(this._apiPath, { comments, post_ids, state })
+    this.httpService.patch(this.apiPath, { comments, post_ids, state })
       .then(_ => {
         this.refreshComments();
         this.fetching.put = false;
@@ -231,7 +231,7 @@ export class CommentListComponent implements OnInit {
       :  lodash.uniq(this.selectedPostIds)
     ).filter(id => id);
 
-    this._httpService.delete(this._apiPath, { comment_ids, post_ids })
+    this.httpService.delete(this.apiPath, { comment_ids, post_ids })
     .then(_ => {
       this.todoDelCommentId = null;
       this.delModal.hide();

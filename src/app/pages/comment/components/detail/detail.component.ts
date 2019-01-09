@@ -45,7 +45,7 @@ export class CommentDetailComponent implements OnInit {
   CommentPostType = ECommentPostType;
   controlStateClass = formControlStateClass;
 
-  private _apiPath: TApiPath = API_PATH.COMMENT;
+  private apiPath: TApiPath = API_PATH.COMMENT;
 
   public osParse = osParse;
   public browserParse = browserParse;
@@ -75,12 +75,12 @@ export class CommentDetailComponent implements OnInit {
   public extends: AbstractControl;
 
   constructor(
-    private _fb: FormBuilder,
-    private _route: ActivatedRoute,
-    private _httpService: SaHttpRequesterService
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private httpService: SaHttpRequesterService
   ) {
 
-    this.editForm = this._fb.group({
+    this.editForm = this.fb.group({
       pid: [DEFAULT_COMMENT.pid, Validators.compose([Validators.required])],
       state: [DEFAULT_COMMENT.state, Validators.compose([Validators.required])],
       is_top: [DEFAULT_COMMENT.is_top, Validators.compose([Validators.required])],
@@ -121,8 +121,8 @@ export class CommentDetailComponent implements OnInit {
   // 获取评论信息
   public getCommentDetail() {
     this.fetching.get = true;
-    this._httpService
-      .get<IComment>(`${this._apiPath}/${this.comment_id}`)
+    this.httpService
+      .get<IComment>(`${this.apiPath}/${this.comment_id}`)
       .then(comment => {
         this.fetching.get = false;
         this.comment = comment.result;
@@ -159,7 +159,7 @@ export class CommentDetailComponent implements OnInit {
     });
 
     this.fetching.put = true;
-    this._httpService.put(`${this._apiPath}/${putComment._id}`, putComment)
+    this.httpService.put(`${this.apiPath}/${putComment._id}`, putComment)
     .then(newComment => {
       this.comment = newComment.result;
       this.fetching.put = false;
@@ -172,8 +172,8 @@ export class CommentDetailComponent implements OnInit {
   // 获取评论列表
   public getComments(params: IRequestParams) {
     this.fetching.comments = true;
-    this._httpService
-      .get<TResponsePaginationComment>(this._apiPath, params)
+    this.httpService
+      .get<TResponsePaginationComment>(this.apiPath, params)
       .then(comments => {
         this.comments = comments.result;
         this.fetching.comments = false;
@@ -186,7 +186,7 @@ export class CommentDetailComponent implements OnInit {
   // 获取文章详情
   public getCommentArticleDetail() {
     this.fetching.article = true;
-    this._httpService
+    this.httpService
       .get<IArticle>(`/article/${this.comment.post_id}`)
       .then(article => {
         this.article = article.result;
@@ -199,7 +199,7 @@ export class CommentDetailComponent implements OnInit {
 
   // 初始化
   ngOnInit() {
-    this._route.params.subscribe(({ comment_id }) => {
+    this.route.params.subscribe(({ comment_id }) => {
       if (comment_id) {
         this.comment_id = comment_id;
       }

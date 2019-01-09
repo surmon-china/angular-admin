@@ -32,13 +32,13 @@ export class SaMenuComponent implements OnInit, OnDestroy {
   public hoverElemHeight: number;
   public hoverElemTop: number;
   public outOfArea = -200;
-  protected _onRouteChange: Subscription;
+  protected onRouteChange: Subscription;
 
-  constructor(private _router: Router,
-              private _service: SaMenuService,
-              private _state: GlobalState,
-              private _appState: AppState) {
-    this._onRouteChange = this._router.events.subscribe((event) => {
+  constructor(private router: Router,
+              private service: SaMenuService,
+              private state: GlobalState,
+              private appState: AppState) {
+    this.onRouteChange = this.router.events.subscribe((event) => {
 
       if (event instanceof NavigationEnd) {
         if (this.menuItems) {
@@ -52,17 +52,17 @@ export class SaMenuComponent implements OnInit, OnDestroy {
 
   public selectMenuAndNotify(): void {
     if (this.menuItems) {
-      this.menuItems = this._service.selectMenuItem(this.menuItems);
-      this._state.notifyDataChanged('menu.activeLink', this._service.getCurrentItem());
+      this.menuItems = this.service.selectMenuItem(this.menuItems);
+      this.state.notifyDataChanged('menu.activeLink', this.service.getCurrentItem());
     }
   }
 
   public ngOnInit(): void {
-    this.menuItems = this._service.convertRoutesToMenus(this.menuRoutes);
+    this.menuItems = this.service.convertRoutesToMenus(this.menuRoutes);
   }
 
   public ngOnDestroy(): void {
-    this._onRouteChange.unsubscribe();
+    this.onRouteChange.unsubscribe();
   }
 
   public hoverItem($event): void {

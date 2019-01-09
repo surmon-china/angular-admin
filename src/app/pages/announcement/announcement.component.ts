@@ -49,7 +49,7 @@ export class AnnouncementComponent implements OnInit {
 
   @ViewChild('delModal') delModal: ModalDirective;
 
-  private _apiPath: TApiPath = API_PATH.ANNOUNCEMENT;
+  private apiPath: TApiPath = API_PATH.ANNOUNCEMENT;
 
   // 表单
   public editForm: FormGroup;
@@ -69,15 +69,15 @@ export class AnnouncementComponent implements OnInit {
     pagination: null
   };
 
-  constructor(private _fb: FormBuilder, private _httpService: SaHttpRequesterService) {
+  constructor(private fb: FormBuilder, private httpService: SaHttpRequesterService) {
 
     // 实例表单
-    this.editForm = this._fb.group({
+    this.editForm = this.fb.group({
       content: [DEFAULT_EDIT_FORM.content, Validators.compose([Validators.required])],
       state: [DEFAULT_EDIT_FORM.state, Validators.compose([Validators.required])]
     });
 
-    this.searchForm = this._fb.group({
+    this.searchForm = this.fb.group({
       keyword: [DEFAULT_SEARCH_FORM.keyword, Validators.compose([Validators.required])]
     });
 
@@ -216,7 +216,7 @@ export class AnnouncementComponent implements OnInit {
 
     this.fetching.get = true;
 
-    return this._httpService.get<TResponseAnnouncement>(this._apiPath, params)
+    return this.httpService.get<TResponseAnnouncement>(this.apiPath, params)
       .then(announcements => {
         this.announcements = announcements.result;
         this.selectedAnnouncements = [];
@@ -230,7 +230,7 @@ export class AnnouncementComponent implements OnInit {
 
   // 添加公告
   public addAnnouncement(announcement: IAnnouncement): Promise<any> {
-    return this._httpService.post<IAnnouncement>(this._apiPath, announcement)
+    return this.httpService.post<IAnnouncement>(this.apiPath, announcement)
       .then(_ => {
         this.resetEditForm();
         this.refreshAnnouncements();
@@ -239,8 +239,8 @@ export class AnnouncementComponent implements OnInit {
 
   // 更新公告
   public putAnnouncement(announcement: IAnnouncement): Promise<any> {
-    return this._httpService.put<IAnnouncement>(
-      `${this._apiPath}/${this.activeAnnouncement._id}`,
+    return this.httpService.put<IAnnouncement>(
+      `${this.apiPath}/${this.activeAnnouncement._id}`,
       Object.assign(this.activeAnnouncement, announcement)
     )
     .then(_ => {
@@ -252,8 +252,8 @@ export class AnnouncementComponent implements OnInit {
 
   // 删除公告
   public doDelAnnouncement() {
-    this._httpService
-    .delete<IAnnouncement>(`${this._apiPath}/${this.activeAnnouncement._id}`)
+    this.httpService
+    .delete<IAnnouncement>(`${this.apiPath}/${this.activeAnnouncement._id}`)
     .then(_ => {
       this.delModal.hide();
       this.activeAnnouncement = null;
@@ -266,8 +266,8 @@ export class AnnouncementComponent implements OnInit {
 
   // 批量删除
   public doDelAnnouncements() {
-    this._httpService
-    .delete<any>(this._apiPath, { announcement_ids: this.selectedAnnouncements })
+    this.httpService
+    .delete<any>(this.apiPath, { announcement_ids: this.selectedAnnouncements })
     .then(_ => {
       this.delModal.hide();
       this.refreshAnnouncements();

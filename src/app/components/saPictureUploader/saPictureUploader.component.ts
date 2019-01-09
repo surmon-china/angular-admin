@@ -4,14 +4,14 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import * as qiniu from 'qiniu-js';
+import * as API_PATH from '@app/constants/api';
 import { Component, ViewChild, Input, Output, OnInit, forwardRef, EventEmitter, ElementRef, Renderer } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { api as ENV_API } from '@/environments/environment';
 import { SaHttpRequesterService } from '@app/services';
 import 'rxjs/add/operator/toPromise';
-import * as API_PATH from '@app/constants/api';
-import * as qiniu from 'qiniu-js';
 
 type TPictureUrl = string;
 
@@ -28,10 +28,10 @@ type TPictureUrl = string;
 export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor {
 
   // 上传进度
-  private _uploadProgress: string = '0';
+  private uploadProgress: string = '0';
 
   // 元素域
-  @ViewChild('fileUpload') protected _fileUpload: ElementRef;
+  @ViewChild('fileUpload') protected fileUpload: ElementRef;
 
   // 输入
   @Input() canDelete: boolean = true;
@@ -53,9 +53,9 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
 
   // 构造函数
   constructor(
-    private _renderer: Renderer,
-    private _httpService: SaHttpRequesterService,
-    private _notificationsService: NotificationsService
+    private renderer: Renderer,
+    private httpService: SaHttpRequesterService,
+    private notificationsService: NotificationsService
   ) {}
 
   ngOnInit() {
@@ -64,7 +64,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
 
   // 获取上传 token
   public getUpToken(): void {
-    this._httpService.get(API_PATH.UP_TOKEN).then((res: any) => {
+    this.httpService.get(API_PATH.UP_TOKEN).then((res: any) => {
       if (res && res.result && res.result.upToken) {
         this.tokenOk = true;
         this.upToken = res.result.upToken;
@@ -84,14 +84,14 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
     }
 
     // 当前文件
-    const file = this._fileUpload.nativeElement.files[0];
+    const file = this.fileUpload.nativeElement.files[0];
     if (!file) {
       return false;
     }
 
     // 大于限定尺寸，不上传
     if (file.size > this.uploadSizeLimit) {
-      this._notificationsService.error('上传失败', '文件不合法！', { timeOut: 500 });
+      this.notificationsService.error('上传失败', '文件不合法！', { timeOut: 500 });
       return false;
     }
 
@@ -116,7 +116,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
     // 上传
     const doUpload = upFile => {
 
-      this._notificationsService.info('开始上传', '文件开始上传', { timeOut: 850 });
+      this.notificationsService.info('开始上传', '文件开始上传', { timeOut: 850 });
 
       const keyName = `nodepress/image/${upFile.name.replace(/ /ig, '')}`;
       const putExtra = {
@@ -138,13 +138,13 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
           console.warn('上传有一个新进度', res);
           this.uploadInProgress = true;
           if (res.total && res.total.percent) {
-            this._uploadProgress = (res.total.percent || '').toString().slice(0, 5);
+            this.uploadProgress = (res.total.percent || '').toString().slice(0, 5);
           }
         },
         error: err => {
           console.warn('上传失败', err);
           this.uploadInProgress = false;
-          this._notificationsService.error('上传失败', err.message, { timeOut: 850 });
+          this.notificationsService.error('上传失败', err.message, { timeOut: 850 });
         },
         complete: res => {
           console.warn('上传完成', res);
@@ -152,7 +152,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
           this.uploadInProgress = false;
           this.handleUploadCompleted.emit(picture_url);
           this.changePictureFromURL(picture_url);
-          this._notificationsService.success('上传成功', '图片上传成功', { timeOut: 850 });
+          this.notificationsService.success('上传成功', '图片上传成功', { timeOut: 850 });
         }
       });
     };
@@ -172,7 +172,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
       return false;
     }
     this.onModelTouched();
-    this._renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
+    this.renderer.invokeElementMethod(this.fileUpload.nativeElement, 'click');
     return false;
   }
 
@@ -183,7 +183,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
       this.emitPicture(url);
     };
     image.onerror = _ => {
-      this._notificationsService.error('预览失败', '七牛问题！', { timeOut: 800 });
+      this.notificationsService.error('预览失败', '七牛问题！', { timeOut: 800 });
       this.emitPicture(url);
     };
     image.src = url;

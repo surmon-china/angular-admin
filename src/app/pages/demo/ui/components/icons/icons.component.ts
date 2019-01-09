@@ -11,13 +11,13 @@ export class IconsComponent implements OnInit {
 
   icons: any;
 
-  constructor(private _iconsService: IconsService) {}
+  constructor(private iconsService: IconsService) {}
 
   public getIconPath(input: string): string {
     return layoutPaths.images.root + 'theme/icon/kameleon/' + input + '.svg';
   }
 
   ngOnInit() {
-    this.icons = this._iconsService.getAll();
+    this.icons = this.iconsService.getAll();
   }
 }

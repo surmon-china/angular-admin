@@ -9,21 +9,21 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SaThemeSpinnerService {
 
-  private _element: HTMLElement;
-  private _selector: string = 'preloader';
+  private element: HTMLElement;
+  private selector: string = 'preloader';
 
   constructor() {
-    this._element = document.getElementById(this._selector);
+    this.element = document.getElementById(this.selector);
   }
 
   public show(): void {
-    this._element.style.display = 'block';
+    this.element.style.display = 'block';
   }
 
   public hide(delay: number = 0): void {
     setTimeout(() => {
-      if (this._element) {
-        this._element.style.display = 'none';
+      if (this.element) {
+        this.element.style.display = 'none';
       }
     }, delay);
   }

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 @Injectable()
 export class SaMsgCenterService {
 
-  private _notifications = [
+  private notifications = [
     {
       name: 'Vlad',
       text: 'Vlad posted a new article.',
@@ -41,7 +41,7 @@ export class SaMsgCenterService {
     }
   ];
 
-  private _messages = [
+  private messages = [
     {
       name: 'Nasta',
       text: 'After you get up and running, you can place Font Awesome icons just about...',
@@ -80,10 +80,10 @@ export class SaMsgCenterService {
   ];
 
   public getMessages(): Array<Object> {
-    return this._messages;
+    return this.messages;
   }
 
   public getNotifications(): Array<Object> {
-    return this._notifications;
+    return this.notifications;
   }
 }

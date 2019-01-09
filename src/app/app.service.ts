@@ -30,7 +30,7 @@ export class AppState {
   constructor() {}
 
   get state() {
-    return this._state = this._clone(this._state);
+    return this.state = this.clone(this.state);
   }
 
   set state(value) {
@@ -44,10 +44,10 @@ export class AppState {
 
   set(prop: string, value: any) {
     this.stateChange.next(value);
-    return this._state[prop] = value;
+    return this.state[prop] = value;
   }
 
-  private _clone(object: IinternalState) {
+  private clone(object: IinternalState) {
     return JSON.parse(JSON.stringify(object));
   }
 }

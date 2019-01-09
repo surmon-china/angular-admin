@@ -29,7 +29,7 @@ type TMenuCollapsedState = boolean;
     require('./app.scss')
   ],
   template: `
-    <main [ngClass]="_isMenuCollapsed ? 'menu-collapsed': ''" saThemeRun>
+    <main [ngClass]="isMenuCollapsed ? 'menu-collapsed': ''" saThemeRun>
       <ngx-loading-bar color="#017170" height="4px" diameter="20px"></ngx-loading-bar>
       <simple-notifications [options]="notificationsOptions"></simple-notifications>
       <div class="additional-bg"></div>
@@ -40,33 +40,33 @@ type TMenuCollapsedState = boolean;
 })
 export class AppComponent implements AfterViewInit, OnInit {
 
-  private _isOptionInited = false;
-  private _isMenuCollapsed: TMenuCollapsedState = false;
+  private isOptionInited = false;
+  private isMenuCollapsed: TMenuCollapsedState = false;
 
   constructor(
-    private _state: GlobalState,
-    private _appState: AppState,
-    private _router: Router,
-    private _config: SaThemeConfig,
-    private _spinner: SaThemeSpinnerService,
-    private _imageLoader: SaImageLoaderService,
-    private _httpService: SaHttpRequesterService,
-    private _notificationsService: NotificationsService) {
+    private state: GlobalState,
+    private appState: AppState,
+    private router: Router,
+    private config: SaThemeConfig,
+    private spinner: SaThemeSpinnerService,
+    private imageLoader: SaImageLoaderService,
+    private httpService: SaHttpRequesterService,
+    private notificationsService: NotificationsService) {
 
     // 初始化加载图片
-    this._loadImages();
+    this.loadImages();
 
     // 订阅菜单折叠事件
-    this._state.subscribe('menu.isCollapsed', (isCollapsed: TMenuCollapsedState): void => {
+    this.state.subscribe('menu.isCollapsed', (isCollapsed: TMenuCollapsedState): void => {
       setTimeout(() => {
-        this._isMenuCollapsed = isCollapsed;
+        this.isMenuCollapsed = isCollapsed;
       }, 0);
     });
 
     // 路由拦截器
-    this._router.events.subscribe(event => {
+    this.router.events.subscribe(event => {
 
-      const url: string = this._router.url;
+      const url: string = this.router.url;
 
       // 如果是发生登录事件，则拉取初始化信息
       if (isDashboardPage(url) &&
@@ -100,34 +100,34 @@ export class AppComponent implements AfterViewInit, OnInit {
   public remiveTokenToLogin(): void {
     localStorage.removeItem(TOKEN);
     setTimeout(() => {
-      this._notificationsService.error('久违', '...', { timeOut: 1000 });
-      this._router.navigate(['/auth']);
+      this.notificationsService.error('久违', '...', { timeOut: 1000 });
+      this.router.navigate(['/auth']);
     }, 0);
   }
 
   // 初始化时拉取全局设置
   public initAppOptions(): void {
-    if (this._isOptionInited) {
+    if (this.isOptionInited) {
       return;
     }
-    this._isOptionInited = true;
-    this._httpService
+    this.isOptionInited = true;
+    this.httpService
       .get(API_PATH.ADMIN_INFO)
       .then(({ result: adminInfo }) => {
         if (Object.keys(adminInfo).length) {
-          this._appState.set('adminInfo', adminInfo);
+          this.appState.set('adminInfo', adminInfo);
         }
       })
       .catch(error => {
         if (error.status === NO_PERMISSION) {
-          this._router.navigate(['/auth']);
+          this.router.navigate(['/auth']);
         }
       });
   }
 
   // 初始化根据服务端验证 Token 有效性
   public checkTokenValidity(): void  {
-    this._httpService.post(API_PATH.CHECK_TOKEN)
+    this.httpService.post(API_PATH.CHECK_TOKEN)
     .then(({ result: tokenIsValidity }) => {
       console.log('远程 Token 验证结果：', tokenIsValidity);
       // 通过验证，则初始化 APP
@@ -141,16 +141,16 @@ export class AppComponent implements AfterViewInit, OnInit {
     });
   }
 
-  private _loadImages(): void {
+  private loadImages(): void {
     // register some loaders
-    const imageLoaer = this._imageLoader.load(layoutPaths.images.root + 'background.jpg');
+    const imageLoaer = this.imageLoader.load(layoutPaths.images.root + 'background.jpg');
     SaThemePreloaderService.registerLoader(imageLoaer);
   }
 
   // 程序初始化，关闭加载状态
   ngAfterViewInit() {
     SaThemePreloaderService.load().then(_ => {
-      this._spinner.hide();
+      this.spinner.hide();
     });
   }
 

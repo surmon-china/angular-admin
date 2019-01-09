@@ -12,28 +12,28 @@ import { SaThemeConfigProvider, isMobile } from 'app/theme';
 })
 export class SaThemeRunDirective implements OnInit {
 
-  private _classes: Array<string> = [];
+  private classes: Array<string> = [];
   @HostBinding('class') classesString: string;
 
-  constructor(private _saConfig: SaThemeConfigProvider) {}
+  constructor(private saConfig: SaThemeConfigProvider) {}
 
   public ngOnInit(): void {
-    this._assignTheme();
-    this._assignMobile();
+    this.assignTheme();
+    this.assignMobile();
   }
 
-  private _assignTheme(): void {
-    this._addClass(this._saConfig.get().theme.name);
+  private assignTheme(): void {
+    this.addClass(this.saConfig.get().theme.name);
   }
 
-  private _assignMobile(): void {
+  private assignMobile(): void {
     if (isMobile()) {
-      this._addClass('mobile');
+      this.addClass('mobile');
     }
   }
 
-  private _addClass(cls: string) {
-    this._classes.push(cls);
-    this.classesString = this._classes.join(' ');
+  private addClass(cls: string) {
+    this.classes.push(cls);
+    this.classesString = this.classes.join(' ');
   }
 }

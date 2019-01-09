@@ -21,7 +21,7 @@ export class ArticleCategoryComponent implements OnInit {
   @ViewChild('delModal') delModal: ModalDirective;
   @ViewChild('editCategoryForm') editCategoryForm;
 
-  private _apiPath: TApiPath = API_PATH.CATEGORY;
+  private apiPath: TApiPath = API_PATH.CATEGORY;
 
   public categories: TResponsePaginationCategory = {
     data: []
@@ -34,7 +34,7 @@ export class ArticleCategoryComponent implements OnInit {
   public todoEditCategory: ICategory;
   public todoDelCategories: TSelectedIds;
 
-  constructor(private _httpService: SaHttpRequesterService) {}
+  constructor(private httpService: SaHttpRequesterService) {}
 
   ngOnInit() {
     this.getCategories();
@@ -84,7 +84,7 @@ export class ArticleCategoryComponent implements OnInit {
   // 获取分类
   public getCategories() {
     this.fetching.get = true;
-    this._httpService.get<TResponsePaginationCategory>(this._apiPath, { per_page: 100 })
+    this.httpService.get<TResponsePaginationCategory>(this.apiPath, { per_page: 100 })
     .then(categories => {
       this.categories = categories.result;
       this.fetching.get = false;
@@ -98,7 +98,7 @@ export class ArticleCategoryComponent implements OnInit {
   // 添加分类
   public addCategory(category: ICategory) {
     this.fetching.post = true;
-    const request = this._httpService.post(this._apiPath, category);
+    const request = this.httpService.post(this.apiPath, category);
     this.handlePostRequest(request);
   }
 
@@ -106,13 +106,13 @@ export class ArticleCategoryComponent implements OnInit {
   public doEditCategory(category: ICategory) {
     this.fetching.post = true;
     const newCategory = Object.assign(this.todoEditCategory, category);
-    const request = this._httpService.put(`${ this._apiPath }/${ newCategory._id }`, newCategory);
+    const request = this.httpService.put(`${ this.apiPath }/${ newCategory._id }`, newCategory);
     this.handlePostRequest(request);
   }
 
   // 删除分类
   public doDelCategory() {
-    this._httpService.delete(`${ this._apiPath }/${ this.todoDelCategory._id }`)
+    this.httpService.delete(`${ this.apiPath }/${ this.todoDelCategory._id }`)
     .then(_ => {
       this.todoDelCategory = null;
       this.delModal.hide();
@@ -125,7 +125,7 @@ export class ArticleCategoryComponent implements OnInit {
 
   // 批量删除
   public doDelCategories() {
-    this._httpService.delete(this._apiPath, { categorie_ids: this.todoDelCategories })
+    this.httpService.delete(this.apiPath, { categorie_ids: this.todoDelCategories })
     .then(_ => {
       this.todoDelCategories = null;
       this.delModal.hide();

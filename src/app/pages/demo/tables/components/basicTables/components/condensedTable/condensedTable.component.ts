@@ -9,7 +9,7 @@ export class CondensedTableComponent {
 
   peopleTableData: Array<any>;
 
-  constructor(private _basicTablesService: BasicTablesService) {
-    this.peopleTableData = _basicTablesService.peopleTableData;
+  constructor(private basicTablesService: BasicTablesService) {
+    this.peopleTableData = basicTablesService.peopleTableData;
   }
 }

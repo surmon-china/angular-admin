@@ -23,13 +23,13 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
   @Input() category;
   @Output() categoryChange: EventEmitter<any> = new EventEmitter();
 
-  private _apiPath: TApiPath = API_PATH.CATEGORY;
+  private apiPath: TApiPath = API_PATH.CATEGORY;
 
   public categories: ICategory[] = [];
   public originalCategories: ICategory[] = [];
   public fetching: IFetching = { get: false };
 
-  constructor(private _httpService: SaHttpRequesterService) {}
+  constructor(private httpService: SaHttpRequesterService) {}
 
   ngOnInit() {
     this.getCategories();
@@ -54,8 +54,8 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
   // 获取所有分类
   public getCategories() {
     this.fetching.get = true;
-    this._httpService
-    .get<TResponsePaginationCategory>(this._apiPath)
+    this.httpService
+    .get<TResponsePaginationCategory>(this.apiPath)
     .then(categories => {
       this.fetching.get = false;
       this.originalCategories = categories.result.data;

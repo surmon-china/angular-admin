@@ -23,14 +23,14 @@ export class SaSidebarComponent implements OnInit, AfterViewInit {
   public isMenuCollapsed: boolean = false;
   public isMenuShouldCollapsed: boolean = false;
 
-  constructor(private _elementRef: ElementRef, private _state: GlobalState) {
-    this._state.subscribe('menu.isCollapsed', (isCollapsed: boolean) => {
+  constructor(private elementRef: ElementRef, private state: GlobalState) {
+    this.state.subscribe('menu.isCollapsed', (isCollapsed: boolean) => {
       this.isMenuCollapsed = isCollapsed;
     });
   }
 
   public ngOnInit(): void {
-    if (this._shouldMenuCollapse()) {
+    if (this.shouldMenuCollapse()) {
       this.menuCollapse();
     }
   }
@@ -41,7 +41,7 @@ export class SaSidebarComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize')
   public onWindowResize(): void {
-    const isMenuShouldCollapsed = this._shouldMenuCollapse();
+    const isMenuShouldCollapsed = this.shouldMenuCollapse();
     if (this.isMenuShouldCollapsed !== isMenuShouldCollapsed) {
       this.menuCollapseStateChange(isMenuShouldCollapsed);
     }
@@ -59,14 +59,14 @@ export class SaSidebarComponent implements OnInit, AfterViewInit {
 
   public menuCollapseStateChange(isCollapsed: boolean): void {
     this.isMenuCollapsed = isCollapsed;
-    this._state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
+    this.state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
   }
 
   public updateSidebarHeight(): void {
-    this.menuHeight = this._elementRef.nativeElement.childNodes[0].clientHeight - 215;
+    this.menuHeight = this.elementRef.nativeElement.childNodes[0].clientHeight - 215;
   }
 
-  private _shouldMenuCollapse(): boolean {
+  private shouldMenuCollapse(): boolean {
     return window.innerWidth <= layoutSizes.resWidthCollapseSidebar;
   }
 }

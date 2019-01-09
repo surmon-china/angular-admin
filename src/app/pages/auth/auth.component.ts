@@ -34,7 +34,7 @@ export class AuthComponent implements AfterViewChecked {
   ];
   public slogan: string = this.slogans[Math.floor(Math.random() * (this.slogans.length))];
 
-  constructor(private _router: Router, private _httpService: SaHttpRequesterService) {}
+  constructor(private router: Router, private httpService: SaHttpRequesterService) {}
 
   toEditMode() {
     this.editMode = true;
@@ -52,12 +52,12 @@ export class AuthComponent implements AfterViewChecked {
   }
 
   onSubmit() {
-    this._httpService
+    this.httpService
     .post(this.loginApiPath, { password: Base64.encode(this.password) })
     .then(auth => {
       if (auth.result.access_token) {
         localStorage.setItem(TOKEN, auth.result.access_token);
-        this._router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard']);
       }
     })
     .catch(err => {
