@@ -18,52 +18,54 @@ export class SaCardBlurDirective {
 
   @HostBinding('class.card-blur') isEnabled = false;
 
-  private _bodyBgSize: BgMetrics;
+  private bodyBgSize: BgMetrics;
 
-  constructor(private _el: ElementRef,
-              private _saConfig: SaThemeConfigProvider,
-              private _saCardBlurHelper: SaCardBlurHelperService) {
-    if (this._isEnabled()) {
-      this._saCardBlurHelper.init();
-      this._getBodyImageSizesOnBgLoad();
-      this._recalculateCardStylesOnBgLoad();
+  constructor(
+    private el: ElementRef,
+    private saConfig: SaThemeConfigProvider,
+    private saCardBlurHelper: SaCardBlurHelperService
+  ) {
+    if (this.getEnabledState()) {
+      this.saCardBlurHelper.init();
+      this.getBodyImageSizesOnBgLoad();
+      this.recalculateCardStylesOnBgLoad();
       this.isEnabled = true;
     }
   }
 
   @HostListener('window:resize')
   _onWindowResize(): void {
-    if (this._isEnabled()) {
-      this._bodyBgSize = this._saCardBlurHelper.getBodyBgImageSizes();
-      this._recalculateCardStyle();
+    if (this.getEnabledState()) {
+      this.bodyBgSize = this.saCardBlurHelper.getBodyBgImageSizes();
+      this.recalculateCardStyle();
     }
   }
 
-  private _getBodyImageSizesOnBgLoad(): void {
-    this._saCardBlurHelper.bodyBgLoad().subscribe(() => {
-      this._bodyBgSize = this._saCardBlurHelper.getBodyBgImageSizes();
+  private getBodyImageSizesOnBgLoad(): void {
+    this.saCardBlurHelper.bodyBgLoad().subscribe(() => {
+      this.bodyBgSize = this.saCardBlurHelper.getBodyBgImageSizes();
     });
   }
 
-  private _recalculateCardStylesOnBgLoad(): void {
-    this._saCardBlurHelper.bodyBgLoad().subscribe((event) => {
-      setTimeout(this._recalculateCardStyle.bind(this));
+  private recalculateCardStylesOnBgLoad(): void {
+    this.saCardBlurHelper.bodyBgLoad().subscribe((event) => {
+      setTimeout(this.recalculateCardStyle.bind(this));
     });
   }
 
-  private _recalculateCardStyle(): void {
-    if (!this._bodyBgSize) {
+  private recalculateCardStyle(): void {
+    if (!this.bodyBgSize) {
       return;
     }
-    const sizeX = Math.round(this._bodyBgSize.width) + 'px ';
-    const sizeY = Math.round(this._bodyBgSize.height) + 'px';
-    this._el.nativeElement.style.backgroundSize = sizeX + sizeY;
-    const positionX = Math.floor(this._bodyBgSize.positionX) + 'px ';
-    const positionY = Math.floor(this._bodyBgSize.positionY) + 'px';
-    this._el.nativeElement.style.backgroundPosition = positionX + positionY;
+    const sizeX = Math.round(this.bodyBgSize.width) + 'px ';
+    const sizeY = Math.round(this.bodyBgSize.height) + 'px';
+    this.el.nativeElement.style.backgroundSize = sizeX + sizeY;
+    const positionX = Math.floor(this.bodyBgSize.positionX) + 'px ';
+    const positionY = Math.floor(this.bodyBgSize.positionY) + 'px';
+    this.el.nativeElement.style.backgroundPosition = positionX + positionY;
   }
 
-  private _isEnabled() {
-    return this._saConfig.get().theme.name === 'blur';
+  private getEnabledState() {
+    return this.saConfig.get().theme.name === 'blur';
   }
 }

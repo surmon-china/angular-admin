@@ -59,8 +59,8 @@ export class OptionsComponent implements OnInit {
   controlStateClass = formControlStateClass;
 
   // api
-  private _authApiPath: TApiPath = API_PATH.AUTH;
-  private _optionApiPath: TApiPath = API_PATH.OPTION;
+  private authApiPath: TApiPath = API_PATH.AUTH;
+  private optionApiPath: TApiPath = API_PATH.OPTION;
 
   public fetching: IFetching = {
     auth: false,
@@ -91,12 +91,12 @@ export class OptionsComponent implements OnInit {
   public blacklist_mails: AbstractControl;
   public blacklist_keywords: AbstractControl;
 
-  constructor(private _router: Router,
-              private _fb: FormBuilder,
-              private _httpService: SaHttpRequesterService) {
+  constructor(private router: Router,
+              private fb: FormBuilder,
+              private httpService: SaHttpRequesterService) {
 
     // authForm
-    this.authForm = this._fb.group({
+    this.authForm = this.fb.group({
       name: [DEFAULT_AUTH_FORM.name, Validators.compose([Validators.required])],
       slogan: [DEFAULT_AUTH_FORM.slogan, Validators.compose([Validators.required])],
       gravatar: [DEFAULT_AUTH_FORM.gravatar],
@@ -107,7 +107,7 @@ export class OptionsComponent implements OnInit {
     mergeFormControlsToInstance(this, this.authForm);
 
     // optionForm
-    this.optionForm = this._fb.group({
+    this.optionForm = this.fb.group({
       _id: [DEFAULT_OPTION_FORM._id],
       title: [DEFAULT_OPTION_FORM.title, Validators.compose([Validators.required])],
       sub_title: [DEFAULT_OPTION_FORM.sub_title, Validators.compose([Validators.required])],
@@ -195,7 +195,7 @@ export class OptionsComponent implements OnInit {
       if (this.authForm.value.rel_new_password) {
         // tslint:disable-next-line:no-console
         console.info('密码更新成功，正跳转至登陆页');
-        setTimeout(() => this._router.navigate(['/auth']), 960);
+        setTimeout(() => this.router.navigate(['/auth']), 960);
       } else {
         this.fetching.auth = false;
         this.authForm.reset(Object.assign({}, DEFAULT_AUTH_FORM, { name, slogan, gravatar }));
@@ -226,25 +226,25 @@ export class OptionsComponent implements OnInit {
   // 获取用户
   public getUserAuth() {
     this.fetching.auth = true;
-    this.handleAuthChange(this._httpService.get(this._authApiPath));
+    this.handleAuthChange(this.httpService.get(this.authApiPath));
   }
 
   // 更新用户
   public putAuth(auth: IAuth) {
     this.fetching.auth = true;
-    this.handleAuthChange(this._httpService.put(this._authApiPath, auth));
+    this.handleAuthChange(this.httpService.put(this.authApiPath, auth));
   }
 
   // 获取配置
   public getOptions() {
     this.fetching.option = true;
-    this.handleOptionChange(this._httpService.get(this._optionApiPath));
+    this.handleOptionChange(this.httpService.get(this.optionApiPath));
   }
 
   // 更新配置
   public putOptions(options: any) {
     this.fetching.option = true;
-    this.handleOptionChange(this._httpService.put(this._optionApiPath, options));
+    this.handleOptionChange(this.httpService.put(this.optionApiPath, options));
   }
 
   ngOnInit() {

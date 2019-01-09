@@ -27,13 +27,13 @@ export class SaLoadingSpiderComponent implements AfterViewInit {
   @Input() type = 400;
   @Input() show = false;
 
-  @ViewChild('loadingSpider') private _loadingSpider: ElementRef;
+  @ViewChild('loadingSpider') private loadingSpider: ElementRef;
 
   get className() {
     return this.show ? 'flex' : 'none';
   }
 
   ngAfterViewInit () {
-    // console.log('加载动画就行了', this._loadingSpider);
+    // console.log('加载动画就行了', this.loadingSpider);
   }
 }

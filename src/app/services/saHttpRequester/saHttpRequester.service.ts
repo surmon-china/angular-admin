@@ -50,22 +50,22 @@ export interface IResponseData<T> {
 export class SaHttpRequesterService {
 
   // 默认 token 和 headers
-  private _token = '';
-  private _headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+  private token = '';
+  private headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
 
-  constructor(private _http: HttpClient, private _notificationsService: NotificationsService) {}
+  constructor(private http: HttpClient, private notificationsService: NotificationsService) {}
 
   // 成功处理
   private handleResponseSuccess<T>(response: IResponseData<T>): Promise<IResponseData<T>> {
     if (response.status === EHttpStatus.Success) {
-      this._notificationsService.success(
+      this.notificationsService.success(
         response.message,
         '数据请求成功',
         { timeOut: 1000 }
       );
       return Promise.resolve(response);
     } else {
-      this._notificationsService.error(
+      this.notificationsService.error(
         response.message,
         response.error,
         { timeOut: 1000 }
@@ -79,7 +79,7 @@ export class SaHttpRequesterService {
     const error = response.error;
     const errorMessage = (error && error.message) || '请求失败';
     const errorDetail = (error && error.error) || response.message || response.statusText;
-    this._notificationsService.error(errorMessage, errorDetail, { timeOut: 1000 });
+    this.notificationsService.error(errorMessage, errorDetail, { timeOut: 1000 });
     console.warn('数据请求失败：', response);
     return Promise.reject(response);
   }
@@ -89,16 +89,16 @@ export class SaHttpRequesterService {
 
     // 跳转去登陆
     if (isAuthPage(url)) {
-      this._headers = this._headers.delete(TOKEN_HEADER);
+      this.headers = this.headers.delete(TOKEN_HEADER);
       return;
     }
 
     // 检查 token，创建一个合理的头
     if (checkTokenIsOk()) {
-      this._token = localStorage.getItem(TOKEN);
-      this._headers = this._headers.set(TOKEN_HEADER, `Bearer ${this._token}`);
+      this.token = localStorage.getItem(TOKEN);
+      this.headers = this.headers.set(TOKEN_HEADER, `Bearer ${this.token}`);
     } else {
-      this._notificationsService.warn('Token 无效', 'Token 不存在或是无效的', { timeOut: 1000 });
+      this.notificationsService.warn('Token 无效', 'Token 不存在或是无效的', { timeOut: 1000 });
     }
   }
 
@@ -124,35 +124,35 @@ export class SaHttpRequesterService {
     }
     this.checkRequestCondition();
     const requestUrl = this.buildRequestUrl(url);
-    const request = this._http.get(requestUrl, { params, headers: this._headers });
+    const request = this.http.get(requestUrl, { params, headers: this.headers });
     return this.handleRequest<T>(request);
   }
 
   post<T>(url: TRequestUrlPath, data?: TRequestData): Promise<IResponseData<T | any>> {
     this.checkRequestCondition(url);
     const requestUrl = this.buildRequestUrl(url);
-    const request = this._http.post(requestUrl, data, { headers: this._headers });
+    const request = this.http.post(requestUrl, data, { headers: this.headers });
     return this.handleRequest(request);
   }
 
   put<T>(url: TRequestUrlPath, data?: TRequestData): Promise<IResponseData<T | any>> {
     this.checkRequestCondition();
     const requestUrl = this.buildRequestUrl(url);
-    const request = this._http.put(requestUrl, data, { headers: this._headers });
+    const request = this.http.put(requestUrl, data, { headers: this.headers });
     return this.handleRequest(request);
   }
 
   patch<T>(url: TRequestUrlPath, data?: TRequestData): Promise<IResponseData<T | any>> {
     this.checkRequestCondition();
     const requestUrl = this.buildRequestUrl(url);
-    const request = this._http.patch(requestUrl, data, { headers: this._headers });
+    const request = this.http.patch(requestUrl, data, { headers: this.headers });
     return this.handleRequest(request);
   }
 
   delete<T>(url: TRequestUrlPath, data?: TRequestData): Promise<IResponseData<T | any>> {
     this.checkRequestCondition();
     const requestUrl = this.buildRequestUrl(url);
-    const request = this._http.request('delete', requestUrl, { body: data, headers: this._headers });
+    const request = this.http.request('delete', requestUrl, { body: data, headers: this.headers });
     return this.handleRequest(request);
   }
 }

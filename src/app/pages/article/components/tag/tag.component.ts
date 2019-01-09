@@ -42,7 +42,7 @@ export class ArticleTagComponent implements OnInit {
 
   @ViewChild('delModal') delModal: ModalDirective;
 
-  private _apiPath: TApiPath = API_PATH.TAG;
+  private apiPath: TApiPath = API_PATH.TAG;
 
   public editForm: FormGroup;
   public searchForm: FormGroup;
@@ -70,16 +70,16 @@ export class ArticleTagComponent implements OnInit {
   };
 
   // 构造函数
-  constructor(private _fb: FormBuilder, private _httpService: SaHttpRequesterService) {
+  constructor(private fb: FormBuilder, private httpService: SaHttpRequesterService) {
 
-    this.editForm = this._fb.group({
+    this.editForm = this.fb.group({
       name: [DEFAULT_EDIT_FORM.name, Validators.compose([Validators.required])],
       slug: [DEFAULT_EDIT_FORM.slug, Validators.compose([Validators.required])],
       description: [DEFAULT_EDIT_FORM.description, Validators.compose([Validators.required])],
       extends: [DEFAULT_EDIT_FORM.extends]
     });
 
-    this.searchForm = this._fb.group({
+    this.searchForm = this.fb.group({
       keyword: [DEFAULT_SEARCH_FORM.keyword, Validators.compose([Validators.required])]
     });
 
@@ -183,8 +183,8 @@ export class ArticleTagComponent implements OnInit {
     // 请求
     this.fetching.get = true;
 
-    return this._httpService
-      .get<TResponsePaginationTag>(this._apiPath, params)
+    return this.httpService
+      .get<TResponsePaginationTag>(this.apiPath, params)
       .then(tags => {
         this.tags = tags.result;
         this.selectedTags = [];
@@ -199,7 +199,7 @@ export class ArticleTagComponent implements OnInit {
   // 添加标签
   public addTag(tag: ITag) {
     this.fetching.post = true;
-    this._httpService.post(this._apiPath, tag)
+    this.httpService.post(this.apiPath, tag)
       .then(_ => {
         this.fetching.post = false;
         this.resetEditForm();
@@ -215,7 +215,7 @@ export class ArticleTagComponent implements OnInit {
   public doPutTag(tag: ITag) {
     this.fetching.post = true;
     const newTag = Object.assign({}, this.activeTag, tag);
-    this._httpService.put(`${this._apiPath}/${newTag._id}`, newTag)
+    this.httpService.put(`${this.apiPath}/${newTag._id}`, newTag)
     .then(_ => {
       this.refreshTags();
       this.resetEditForm();
@@ -229,7 +229,7 @@ export class ArticleTagComponent implements OnInit {
 
   // 确认删除标签
   public doDelTag() {
-    this._httpService.delete(`${this._apiPath}/${this.activeTag._id}`)
+    this.httpService.delete(`${this.apiPath}/${this.activeTag._id}`)
     .then(_ => {
       this.delModal.hide();
       this.activeTag = null;
@@ -242,7 +242,7 @@ export class ArticleTagComponent implements OnInit {
 
   // 确认批量删除
   public doDelTags() {
-    this._httpService.delete(this._apiPath, { tags: this.selectedTags })
+    this.httpService.delete(this.apiPath, { tags: this.selectedTags })
     .then(_ => {
       this.delModal.hide();
       this.refreshTags();

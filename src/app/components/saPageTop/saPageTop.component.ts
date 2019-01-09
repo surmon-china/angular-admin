@@ -25,10 +25,10 @@ export class SaPageTopComponent {
   public isMenuCollapsed: TCollapsedState = false;
   public isProfileCollapsed: TCollapsedState = false;
 
-  constructor(private _router: Router,
-              private _state: GlobalState,
-              private _appState: AppState) {
-    this._state.subscribe('menu.isCollapsed', isCollapsed => {
+  constructor(private router: Router,
+              private state: GlobalState,
+              private appState: AppState) {
+    this.state.subscribe('menu.isCollapsed', isCollapsed => {
       this.isMenuCollapsed = isCollapsed;
     });
   }
@@ -36,12 +36,12 @@ export class SaPageTopComponent {
   public logout() {
     console.log('退出系统');
     localStorage.removeItem(TOKEN);
-    this._router.navigate(['/auth']);
+    this.router.navigate(['/auth']);
   }
 
   public toggleMenu() {
     this.isMenuCollapsed = !this.isMenuCollapsed;
-    this._state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
+    this.state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
     return false;
   }
 

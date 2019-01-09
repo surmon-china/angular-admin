@@ -15,8 +15,8 @@ export class SaCardBlurHelperService {
   private imageLoadSubject: Subject<void>;
 
   public init() {
-    this._genBgImage();
-    this._genImageLoadSubject();
+    this.genBgImage();
+    this.genImageLoadSubject();
   }
 
   public bodyBgLoad(): Subject<void> {
@@ -43,13 +43,13 @@ export class SaCardBlurHelperService {
     return { width: finalWidth, height: finalHeight, positionX: (elemW - finalWidth) / 2, positionY: (elemH - finalHeight) / 2};
   }
 
-  private _genBgImage(): void {
+  private genBgImage(): void {
     this.image = new Image();
     const computedStyle = getComputedStyle(document.body.querySelector('main'), ':before');
     this.image.src = computedStyle.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2');
   }
 
-  private _genImageLoadSubject(): void {
+  private genImageLoadSubject(): void {
     this.imageLoadSubject = new Subject<void>();
     this.image.onerror = _ => {
       this.imageLoadSubject.complete();

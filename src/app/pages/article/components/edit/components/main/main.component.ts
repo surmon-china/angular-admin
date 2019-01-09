@@ -33,7 +33,7 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   @Output() keywordsChange: EventEmitter<any> = new EventEmitter();
   @Output() descriptionChange: EventEmitter<any> = new EventEmitter();
 
-  private _tagApiPath: TApiPath = API_PATH.TAG;
+  private tagApiPath: TApiPath = API_PATH.TAG;
 
   // form
   public editForm: FormGroup;
@@ -45,8 +45,8 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   public tags: ITag[] = [];
   public fetching: IFetching = { tag: false };
 
-  constructor(private _fb: FormBuilder, private _httpService: SaHttpRequesterService) {
-    this.editForm = this._fb.group({
+  constructor(private fb: FormBuilder, private httpService: SaHttpRequesterService) {
+    this.editForm = this.fb.group({
       formTitle: ['', Validators.compose([Validators.required])],
       formContent: ['', Validators.compose([Validators.required])],
       formKeywords: [[], Validators.compose([Validators.required])],
@@ -119,8 +119,8 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   // 获取所有标签
   public getTags() {
     this.fetching.tag = true;
-    this._httpService
-    .get<TResponsePaginationTag>(this._tagApiPath, { per_page: 1000 })
+    this.httpService
+    .get<TResponsePaginationTag>(this.tagApiPath, { per_page: 1000 })
     .then(tags => {
       this.fetching.tag = false;
       this.tags = tags.result.data;

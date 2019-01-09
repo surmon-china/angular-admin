@@ -11,12 +11,12 @@ import { ColorHelper } from './theme.constants';
 @Injectable()
 export class SaThemeConfig {
 
-  constructor(private _saConfig: SaThemeConfigProvider) {
-    this._config();
+  constructor(private saConfig: SaThemeConfigProvider) {
+    this.config();
   }
 
-  private _config() {
-    this._saConfig.changeTheme({ name: 'dark' });
+  private config() {
+    this.saConfig.changeTheme({ name: 'dark' });
 
     // let colorScheme = {
     //   primary: '#209e91',
@@ -25,7 +25,7 @@ export class SaThemeConfig {
     //   warning: '#dfb81c',
     //   danger: '#e85656',
     // };
-    // this._saConfig.changeColors({
+    // this.saConfig.changeColors({
     //   default: '#4e4e55',
     //   defaultText: '#e2e2e2',
     //   border: '#dddddd',

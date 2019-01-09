@@ -16,8 +16,8 @@ export class SaContentTopComponent {
 
   public activePageTitle = '';
 
-  constructor(private _state: GlobalState) {
-    this._state.subscribe('menu.activeLink', (activeLink) => {
+  constructor(private state: GlobalState) {
+    this.state.subscribe('menu.activeLink', (activeLink) => {
       if (activeLink) {
         this.activePageTitle = activeLink.title;
       }

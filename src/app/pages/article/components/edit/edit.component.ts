@@ -36,7 +36,7 @@ export class ArticleEditComponent implements OnInit {
 
   @ViewChild('editForm') editFormMain: ElementRef;
 
-  private _apiPath: TApiPath = API_PATH.ARTICLE;
+  private apiPath: TApiPath = API_PATH.ARTICLE;
 
   // 文章内容
   public article_id: TArticleId = null;
@@ -47,9 +47,9 @@ export class ArticleEditComponent implements OnInit {
   };
 
   constructor(public elem: ElementRef,
-              private _router: Router,
-              private _route: ActivatedRoute,
-              private _httpService: SaHttpRequesterService) {}
+              private router: Router,
+              private route: ActivatedRoute,
+              private httpService: SaHttpRequesterService) {}
 
   // 提交文章
   public submitArticle(): void {
@@ -59,13 +59,13 @@ export class ArticleEditComponent implements OnInit {
     this.fetching.post = true;
     const isSubmitNewPost = !this.article._id;
     const request = this.article._id
-      ? this._httpService.put(`${this._apiPath}/${this.article._id}`, this.article)
-      : this._httpService.post(this._apiPath, this.article);
+      ? this.httpService.put(`${this.apiPath}/${this.article._id}`, this.article)
+      : this.httpService.post(this.apiPath, this.article);
     request
       .then(article => {
         this.fetching.post = false;
         if (isSubmitNewPost) {
-          this._router.navigate([`/article/edit/${article.result._id}`]);
+          this.router.navigate([`/article/edit/${article.result._id}`]);
         } else {
           this.article = article.result;
         }
@@ -78,8 +78,8 @@ export class ArticleEditComponent implements OnInit {
   // 获取文章信息
   public getArticle(article_id: string) {
     this.fetching.get = true;
-    this._httpService
-      .get<IArticle>(`${this._apiPath}/${article_id}`)
+    this.httpService
+      .get<IArticle>(`${this.apiPath}/${article_id}`)
       .then(article => {
         this.fetching.get = false;
         this.article = article.result;
@@ -92,7 +92,7 @@ export class ArticleEditComponent implements OnInit {
   // 初始化
   ngOnInit() {
     // 如果是修改，则请求文章数据
-    this._route.params.subscribe(({ article_id }) => {
+    this.route.params.subscribe(({ article_id }) => {
       this.article_id = article_id;
       if (article_id) {
         this.getArticle(article_id);

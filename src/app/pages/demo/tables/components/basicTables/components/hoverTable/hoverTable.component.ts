@@ -9,7 +9,7 @@ export class HoverTableComponent {
 
   metricsTableData: Array<any>;
 
-  constructor(private _basicTablesService: BasicTablesService) {
-    this.metricsTableData = _basicTablesService.metricsTableData;
+  constructor(private basicTablesService: BasicTablesService) {
+    this.metricsTableData = basicTablesService.metricsTableData;
   }
 }

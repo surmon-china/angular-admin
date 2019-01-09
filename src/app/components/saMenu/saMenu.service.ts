@@ -4,26 +4,26 @@ import { Router, Routes } from '@angular/router';
 @Injectable()
 export class SaMenuService {
 
-  protected _currentMenuItem = {};
+  protected currentMenuItem = {};
 
-  constructor(private _router: Router) {}
+  constructor(private router: Router) {}
 
   public convertRoutesToMenus(routes: Routes): any[] {
-    const items = this._convertArrayToItems(routes);
-    return this._skipEmpty(items);
+    const items = this.convertArrayToItems(routes);
+    return this.skipEmpty(items);
   }
 
   public getCurrentItem(): any {
-    return this._currentMenuItem;
+    return this.currentMenuItem;
   }
 
   public selectMenuItem(menuItems: any[]): any[] {
     const items = [];
     menuItems.forEach(item => {
-      this._selectItem(item);
+      this.selectItem(item);
 
       if (item.selected) {
-        this._currentMenuItem = item;
+        this.currentMenuItem = item;
       }
 
       if (item.children && item.children.length > 0) {
@@ -34,7 +34,7 @@ export class SaMenuService {
     return items;
   }
 
-  protected _skipEmpty(items: any[]): any[] {
+  protected skipEmpty(items: any[]): any[] {
     const menu = [];
     items.forEach(item => {
       let menuItem;
@@ -54,15 +54,15 @@ export class SaMenuService {
     return [].concat.apply([], menu);
   }
 
-  protected _convertArrayToItems(routes: any[], parent?: any): any[] {
+  protected convertArrayToItems(routes: any[], parent?: any): any[] {
     const items = [];
     routes.forEach(route => {
-      items.push(this._convertObjectToItem(route, parent));
+      items.push(this.convertObjectToItem(route, parent));
     });
     return items;
   }
 
-  protected _convertObjectToItem(object, parent?: any): any {
+  protected convertObjectToItem(object, parent?: any): any {
     let item: any = {};
     if (object.data && object.data.menu) {
       // this is a menu object
@@ -87,10 +87,10 @@ export class SaMenuService {
     }
 
     if (object.children && object.children.length > 0) {
-      item.children = this._convertArrayToItems(object.children, item);
+      item.children = this.convertArrayToItems(object.children, item);
     }
 
-    const prepared = this._prepareItem(item);
+    const prepared = this.prepareItem(item);
 
     // if current item is selected or expanded - then parent is expanded too
     if ((prepared.selected || prepared.expanded) && parent) {
@@ -100,18 +100,18 @@ export class SaMenuService {
     return prepared;
   }
 
-  protected _prepareItem(object: any): any {
+  protected prepareItem(object: any): any {
     if (!object.skip) {
       object.target = object.target || '';
       object.pathMatch = object.pathMatch  || 'full';
-      return this._selectItem(object);
+      return this.selectItem(object);
     }
 
     return object;
   }
 
-  protected _selectItem(object: any): any {
-    object.selected = this._router.isActive(this._router.createUrlTree(object.route.paths), object.pathMatch === 'full');
+  protected selectItem(object: any): any {
+    object.selected = this.router.isActive(this.router.createUrlTree(object.route.paths), object.pathMatch === 'full');
     return object;
   }
 }

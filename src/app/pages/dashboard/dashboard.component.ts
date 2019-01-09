@@ -43,9 +43,9 @@ const DEFAULT_STATISTICS_DATA = [
 })
 export class DashboardComponent  implements OnInit {
 
-  private _statisticApiPath: TApiPath = API_PATH.STATISTIC;
-  private _articleApiPath: TApiPath = API_PATH.ARTICLE;
-  private _commentApiPath: TApiPath = API_PATH.COMMENT;
+  private statisticApiPath: TApiPath = API_PATH.STATISTIC;
+  private articleApiPath: TApiPath = API_PATH.ARTICLE;
+  private commentApiPath: TApiPath = API_PATH.COMMENT;
 
   public defaultStatistics = DEFAULT_STATISTICS_DATA;
   public statistics: IStatistics = {};
@@ -59,12 +59,12 @@ export class DashboardComponent  implements OnInit {
     guestbooks: false
   };
 
-  constructor(private _httpService: SaHttpRequesterService) {}
+  constructor(private httpService: SaHttpRequesterService) {}
 
   getStatisticsData() {
     this.fetching.statistics = true;
-    return this._httpService
-      .get<IStatistics>(this._statisticApiPath)
+    return this.httpService
+      .get<IStatistics>(this.statisticApiPath)
       .then(statistics => {
         this.statistics = statistics.result;
         this.fetching.statistics = false;
@@ -76,8 +76,8 @@ export class DashboardComponent  implements OnInit {
 
   getArticlesData() {
     this.fetching.articles = true;
-    return this._httpService
-      .get<TResponsePaginationArticle>(this._articleApiPath)
+    return this.httpService
+      .get<TResponsePaginationArticle>(this.articleApiPath)
       .then(articles => {
         this.articles = articles.result.data;
         this.fetching.articles = false;
@@ -91,8 +91,8 @@ export class DashboardComponent  implements OnInit {
     const type = guestbook ? 'guestbooks' : 'comments';
     const params = guestbook ? { post_id: 0 } : {};
     this.fetching[type] = true;
-    return this._httpService
-      .get<TResponsePaginationComment>(this._commentApiPath, params)
+    return this.httpService
+      .get<TResponsePaginationComment>(this.commentApiPath, params)
       .then(comments => {
         this[type] = comments.result.data;
         this.fetching[type] = false;

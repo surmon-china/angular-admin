@@ -10,10 +10,12 @@ import { Component, AfterViewInit, ViewChild, HostListener, Input, ElementRef } 
   selector: 'sa-back-top',
   styles: [require('./saBackTop.scss')],
   template: `
-    <i #baBackTop
-       class="back-top sa-back-top ion-md-arrow-up"
-       title="Back to Top"
-       [ngStyle]="{ display: isShow ? 'block' : 'none' }"></i>
+    <i
+      #baBackTop
+      class="back-top sa-back-top ion-md-arrow-up"
+      title="Back to Top"
+      [ngStyle]="{ display: isShow ? 'block' : 'none' }"
+    ></i>
   `
 })
 export class SaBackTopComponent implements AfterViewInit {
@@ -24,7 +26,7 @@ export class SaBackTopComponent implements AfterViewInit {
   @Input() showSpeed = 500;
   @Input() moveSpeed = 1000;
 
-  @ViewChild('baBackTop') private _selector: ElementRef;
+  @ViewChild('baBackTop') private selector: ElementRef;
 
   ngAfterViewInit () {
     this.onWindowScroll();
@@ -38,7 +40,7 @@ export class SaBackTopComponent implements AfterViewInit {
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
-    const el = this._selector.nativeElement;
+    const el = this.selector.nativeElement;
     this.isShow = window.scrollY > this.position;
   }
 }

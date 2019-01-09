@@ -18,8 +18,8 @@ export class SaMsgCenterComponent {
   public messages: Array<Object>;
   public notifications: Array<Object>;
 
-  constructor(private _saMsgCenterService: SaMsgCenterService) {
-    this.messages = this._saMsgCenterService.getMessages();
-    this.notifications = this._saMsgCenterService.getNotifications();
+  constructor(private saMsgCenterService: SaMsgCenterService) {
+    this.messages = this.saMsgCenterService.getMessages();
+    this.notifications = this.saMsgCenterService.getNotifications();
   }
 }

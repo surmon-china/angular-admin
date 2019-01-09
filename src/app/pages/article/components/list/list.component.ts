@@ -55,9 +55,9 @@ export class ArticleListComponent implements OnInit {
 
   @ViewChild('delModal') delModal: ModalDirective;
 
-  private _tagApiPath: TApiPath = API_PATH.TAG;
-  private _articleApiPath: TApiPath = API_PATH.ARTICLE;
-  private _categoryApiPath: TApiPath = API_PATH.CATEGORY;
+  private tagApiPath: TApiPath = API_PATH.TAG;
+  private articleApiPath: TApiPath = API_PATH.ARTICLE;
+  private categoryApiPath: TApiPath = API_PATH.CATEGORY;
 
   // 搜索参数
   public searchForm: FormGroup;
@@ -87,8 +87,8 @@ export class ArticleListComponent implements OnInit {
   public articlesSelectAll: TSelectedAll = false;
   public selectedArticles: TSelectedIds = [];
 
-  constructor(private _fb: FormBuilder, private _httpService: SaHttpRequesterService) {
-    this.searchForm = this._fb.group({
+  constructor(private fb: FormBuilder, private httpService: SaHttpRequesterService) {
+    this.searchForm = this.fb.group({
       keyword: [DEFAULT_SEARCH_FORM.keyword, Validators.compose([Validators.required])]
     });
     this.keyword = this.searchForm.controls.keyword;
@@ -183,8 +183,8 @@ export class ArticleListComponent implements OnInit {
 
     this.fetching.article = true;
 
-    this._httpService
-      .get<TResponsePaginationArticle>(this._articleApiPath, params)
+    this.httpService
+      .get<TResponsePaginationArticle>(this.articleApiPath, params)
       .then(articles => {
         this.articles = articles.result;
         this.articlesSelectAll = false;
@@ -199,8 +199,8 @@ export class ArticleListComponent implements OnInit {
   // 获取标签列表
   public getTags(): void {
     this.fetching.tag = true;
-    this._httpService
-      .get<TResponsePaginationTag>(this._tagApiPath)
+    this.httpService
+      .get<TResponsePaginationTag>(this.tagApiPath)
       .then(tags => {
         this.tags = tags.result;
         this.fetching.tag = false;
@@ -213,8 +213,8 @@ export class ArticleListComponent implements OnInit {
   // 获取分类列表
   public getCategories(): void {
     this.fetching.category = true;
-    this._httpService
-      .get<TResponsePaginationCategory>(this._categoryApiPath)
+    this.httpService
+      .get<TResponsePaginationCategory>(this.categoryApiPath)
       .then(categories => {
         this.fetching.category = false;
         this.categories = categories.result;
@@ -228,7 +228,7 @@ export class ArticleListComponent implements OnInit {
   // 对于所有修改进行相应统一处理
   public patchArticles(data: Object): void {
       this.fetching.put = true;
-      this._httpService.patch(this._articleApiPath, data).then(_ => {
+      this.httpService.patch(this.articleApiPath, data).then(_ => {
         this.fetching.put = false;
         this.refreshArticles();
       }).catch(_ => {
@@ -260,7 +260,7 @@ export class ArticleListComponent implements OnInit {
   // 彻底删除文章（批量删除）
   public delArticles() {
     const article_ids: TSelectedIds = this.todoDelArticleId ? [this.todoDelArticleId] : this.selectedArticles;
-    this._httpService.delete(this._articleApiPath, { article_ids })
+    this.httpService.delete(this.articleApiPath, { article_ids })
       .then(_ => {
         this.delModal.hide();
         this.todoDelArticleId = null;
