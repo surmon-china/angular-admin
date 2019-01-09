@@ -5,6 +5,5 @@ import { Component } from '@angular/core';
   template: require('./groupInputs.html'),
 })
 export class GroupInputsComponent {
-
   constructor() {}
 }

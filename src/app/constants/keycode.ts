@@ -4,11 +4,6 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-// 退出
-export const ESC = 27;
-
-// F5
-export const F5 = 122;
-
-// S
-export const S = 83;
+export const ESC = 27; // 退出
+export const F5 = 122; // F5
+export const S = 83; // S

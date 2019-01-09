@@ -4,19 +4,19 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import * as API_PATH from '@app/constants/api';
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { GlobalState } from '@app/global.state';
 import { layoutPaths } from '@app/theme/theme.constants';
 import { SaThemeConfig } from '@app/theme/theme.config';
-import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
 import { AppState } from '@app/app.service';
-import { TOKEN } from '@app/constants/auth';
 import { NO_PERMISSION } from '@/app/constants/http';
 import { checkTokenIsOk } from '@app/discriminators/token';
 import { isIndexPage, isAuthPage, isDashboardPage } from '@app/discriminators/url';
-import * as API_PATH from '@app/constants/api';
+import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
+import { TOKEN } from '@app/constants/auth';
 
 type TMenuCollapsedState = boolean;
 
@@ -51,7 +51,8 @@ export class AppComponent implements AfterViewInit, OnInit {
     private spinner: SaThemeSpinnerService,
     private imageLoader: SaImageLoaderService,
     private httpService: SaHttpRequesterService,
-    private notificationsService: NotificationsService) {
+    private notificationsService: NotificationsService
+  ) {
 
     // 初始化加载图片
     this.loadImages();
@@ -69,9 +70,11 @@ export class AppComponent implements AfterViewInit, OnInit {
       const url: string = this.router.url;
 
       // 如果是发生登录事件，则拉取初始化信息
-      if (isDashboardPage(url) &&
-         (event as any).navigationTrigger &&
-         (event as any).navigationTrigger === 'imperative') {
+      if (
+        isDashboardPage(url) &&
+        (event as any).navigationTrigger &&
+        (event as any).navigationTrigger === 'imperative'
+      ) {
         this.initAppOptions();
       }
 
@@ -142,9 +145,9 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   private loadImages(): void {
-    // register some loaders
-    const imageLoaer = this.imageLoader.load(layoutPaths.images.root + 'background.jpg');
-    SaThemePreloaderService.registerLoader(imageLoaer);
+    SaThemePreloaderService.registerLoader(
+      this.imageLoader.load(layoutPaths.images.root + 'background.jpg')
+    );
   }
 
   // 程序初始化，关闭加载状态

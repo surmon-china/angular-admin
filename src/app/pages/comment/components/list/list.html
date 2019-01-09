@@ -12,66 +12,82 @@
                 <strong>文章 {{ post_id }} 评论列表</strong>
               </button>
             </ng-template>
-            <button type="button"
-                    class="btn btn-default active"
-                    [ngClass]="{ 'active': isState(CommentState.all)}"
-                    (click)="switchState(CommentState.all)">
+            <button
+              type="button"
+              class="btn btn-default active"
+              [ngClass]="{ 'active': isState(CommentState.All)}"
+              (click)="switchState(CommentState.All)"
+            >
               <span>全部</span>
-              <span *ngIf="isState(CommentState.all)">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(CommentState.All)">&nbsp;({{ currentListTotal }})</span>
             </button>
-            <button type="button"
-                    class="btn btn-default"
-                    [ngClass]="{ 'active': isState(CommentState.published) }"
-                    (click)="switchState(CommentState.published)">
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(CommentState.Published) }"
+              (click)="switchState(CommentState.Published)"
+            >
               <span>已发布</span>
-              <span *ngIf="isState(CommentState.published)">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(CommentState.Published)">&nbsp;({{ currentListTotal }})</span>
             </button>
-            <button type="button"
-                    class="btn btn-default"
-                    [ngClass]="{ 'active': isState(CommentState.auditing) }"
-                    (click)="switchState(CommentState.auditing)">
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(CommentState.auditing) }"
+              (click)="switchState(CommentState.auditing)"
+            >
               <span>待审核</span>
               <span *ngIf="isState(CommentState.auditing)">&nbsp;({{ currentListTotal }})</span>
             </button>
-            <button type="button"
-                    class="btn btn-default"
-                    [ngClass]="{ 'active': isState(CommentState.deleted) }"
-                    (click)="switchState(CommentState.deleted)">
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(CommentState.deleted) }"
+              (click)="switchState(CommentState.deleted)"
+            >
               <span>回收站</span>
               <span *ngIf="isState(CommentState.deleted)">&nbsp;({{ currentListTotal }})</span>
             </button>
-            <button type="button"
-                    class="btn btn-default"
-                    [ngClass]="{ 'active': isState(CommentState.spam) }"
-                    (click)="switchState(CommentState.spam)">
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(CommentState.spam) }"
+              (click)="switchState(CommentState.spam)"
+            >
               <span>垃圾评论</span>
               <span *ngIf="isState(CommentState.spam)">&nbsp;({{ currentListTotal }})</span>
             </button>
           </div>
           <span>&nbsp;&nbsp;</span>
           <div class="btn-group">
-            <button type="button" 
-                    class="btn btn-default btn-with-icon"
-                    (click)="refreshComments()">
+            <button
+              type="button" 
+              class="btn btn-default btn-with-icon"
+              (click)="refreshComments()"
+            >
               <i class="ion-md-refresh"></i>
               <span>刷新</span>
             </button>
-            <button type="button" 
-                    class="btn btn-default btn-with-icon"
-                    (click)="resetGetParams()">
+            <button
+              type="button" 
+              class="btn btn-default btn-with-icon"
+              (click)="resetGetParams()"
+            >
               <i class="ion-md-trash"></i>
               <span>清空搜索条件</span>
             </button>
             <div class="btn-group" dropdown [isDisabled]="!selectedComments.length">
-              <button type="button" 
-                      class="btn btn-default btn-with-icon dropdown-toggle"
-                      dropdownToggle>
+              <button
+                type="button" 
+                class="btn btn-default btn-with-icon dropdown-toggle"
+                dropdownToggle
+              >
                 <i class="ion-md-list"></i>
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" *dropdownMenu>
                 <li class="dropdown-item">
-                  <a [href]="" (click)="updateCommentsState(CommentState.published)">审核通过</a>
+                  <a [href]="" (click)="updateCommentsState(CommentState.Published)">审核通过</a>
                 </li>
                 <li class="dropdown-item">
                   <a [href]="" (click)="updateCommentsState(CommentState.auditing)">移至待审核</a>
@@ -89,14 +105,18 @@
             </div>
           </div>
         </div>
-        <form class="pull-right form-inline comment-search-form"
-              [formGroup]="searchForm" 
-              (ngSubmit)="searchComments()">
+        <form
+          class="pull-right form-inline comment-search-form"
+          [formGroup]="searchForm" 
+          (ngSubmit)="searchComments()"
+        >
           <div class="input-group">
-            <input type="text"
-                   [formControl]="keyword" 
-                   class="form-control with-default-addon" 
-                   placeholder="评论内容、作者信息">
+            <input
+              type="text"
+              [formControl]="keyword" 
+              class="form-control with-default-addon" 
+              placeholder="评论内容、作者信息"
+            />
             <span class="input-group-btn">
               <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
             </span>
@@ -105,9 +125,9 @@
         <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
         <div class="pull-right form-inline">
           <select class="form-control c-select" [(ngModel)]="getParams.sort" (ngModelChange)="getComments()">
-            <option [value]="SortType.desc" default>最新评论</option>
-            <option [value]="SortType.asc">最早评论</option>
-            <option [value]="SortType.hot">最热评论</option>
+            <option [value]="SortType.Desc" default>最新评论</option>
+            <option [value]="SortType.Asc">最早评论</option>
+            <option [value]="SortType.Hot">最热评论</option>
           </select>
         </div>
       </div>
@@ -205,14 +225,14 @@
                   <td>{{ comment.is_top ? '是' : '否' }}</td>
                   <td>{{ comment.create_at | dataToLocale }}</td>
                   <td>
-                    <i class="ion-md-checkmark text-success" *ngIf="comment.state === CommentState.published"></i>
+                    <i class="ion-md-checkmark text-success" *ngIf="comment.state === CommentState.Published"></i>
                     <i class="ion-md-create text-warning" *ngIf="comment.state === CommentState.auditing"></i>
                     <i class="ion-md-trash text-danger" *ngIf="comment.state === CommentState.deleted"></i>
                     <i class="ion-md-nuclear text-danger" *ngIf="comment.state === CommentState.spam"></i>
                     <span>&nbsp;</span>
                     <span [ngSwitch]="comment.state">
                       <span *ngSwitchCase="CommentState.auditing">待审核</span>
-                      <span *ngSwitchCase="CommentState.published">已发布</span>
+                      <span *ngSwitchCase="CommentState.Published">已发布</span>
                     </span>
                     <span *ngIf="comment.state === CommentState.deleted">已删除</span>
                     <span *ngIf="comment.state === CommentState.spam">垃圾评论</span>
@@ -222,12 +242,12 @@
                       <a class="btn btn-success btn-sm" [routerLink]="['/comment/detail/', comment._id]">评论详情</a>
                     </div>
                     <div class="button-wrapper" *ngIf="comment.state === CommentState.auditing">
-                      <button class="btn btn-warning btn-sm" (click)="updateCommentsState(CommentState.published, comment)">审核通过</button>
+                      <button class="btn btn-warning btn-sm" (click)="updateCommentsState(CommentState.Published, comment)">审核通过</button>
                     </div>
                     <div class="button-wrapper" *ngIf="comment.state === CommentState.deleted || comment.state === CommentState.spam">
                       <button class="btn btn-warning btn-sm" (click)="updateCommentsState(CommentState.auditing, comment)">恢复评论</button>
                     </div>
-                    <div class="button-wrapper" *ngIf="comment.state === CommentState.published">
+                    <div class="button-wrapper" *ngIf="comment.state === CommentState.Published">
                       <button class="btn btn-danger btn-sm" (click)="updateCommentsState(CommentState.spam, comment)">标为垃圾</button>
                     </div>
                     <div class="button-wrapper" *ngIf="comment.state !== CommentState.deleted">
@@ -250,20 +270,21 @@
           </table>
            <br>
           <div class="text-center" *ngIf="comments.pagination">
-            <pagination class="pagination-xs"
-                        firstText="首页"
-                        lastText="末页"
-                        nextText="下一页"
-                        previousText="上一页"
-                        pageBtnClass="btn-primary"
-                        [totalItems]="comments.pagination.total"
-                        [itemsPerPage]="comments.pagination.per_page"
-                        [(ngModel)]="comments.pagination.current_page"
-                        [maxSize]="7"
-                        [boundaryLinks]="true"
-                        [rotate]="false"
-                        (pageChanged)="pageChanged($event)">
-            </pagination>
+            <pagination
+              class="pagination-xs"
+              firstText="首页"
+              lastText="末页"
+              nextText="下一页"
+              previousText="上一页"
+              pageBtnClass="btn-primary"
+              [totalItems]="comments.pagination.total"
+              [itemsPerPage]="comments.pagination.per_page"
+              [(ngModel)]="comments.pagination.current_page"
+              [maxSize]="7"
+              [boundaryLinks]="true"
+              [rotate]="false"
+              (pageChanged)="pageChanged($event)"
+            ></pagination>
           </div>
         </div>
       </div>

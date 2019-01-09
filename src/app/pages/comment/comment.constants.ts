@@ -8,28 +8,27 @@ import { IDataExtends, IResponsePaginationData } from '@app/pages/pages.constant
 
 // 评论状态
 export enum ECommentState {
-  all = 'all',
-  auditing = 0, // 待审核
-  published = 1, // 通过正常
-  deleted = -1, // 已删除
-  spam = -2 // 垃圾评论
+  All = 'all',
+  Auditing = 0, // 待审核
+  Published = 1, // 通过正常
+  Deleted = -1, // 已删除
+  Spam = -2, // 垃圾评论
 }
 
 // 评论宿主页面的 POST_ID 类型
 export enum ECommentPostType {
-  guestbook = 0 // 留言板
+  Guestbook = 0, // 留言板
 }
 
 // 评论本身的类型
 export enum ECommentParentType {
-  self = 0 // 自身一级评论
+  Self = 0, // 自身一级评论
 }
 
-// 排序状态
-export enum ESortType {
-  desc = -1, // 降序
-  asc = 1, // 升序
-  hot = 2 // 最热
+// 喜欢类型
+export enum ELikeType {
+  Comment = 1, // 评论
+  Page = 2, // 页面
 }
 
 // 喜欢类型

@@ -242,7 +242,7 @@ export class ArticleTagComponent implements OnInit {
 
   // 确认批量删除
   public doDelTags() {
-    this.httpService.delete(this.apiPath, { tags: this.selectedTags })
+    this.httpService.delete(this.apiPath, { tag_ids: this.selectedTags })
     .then(_ => {
       this.delModal.hide();
       this.refreshTags();

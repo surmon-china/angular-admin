@@ -9,25 +9,25 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SaThemePreloaderService {
 
-  private static _loaders: Array<Promise<any>> = [];
+  private static loaders: Array<Promise<any>> = [];
 
   public static registerLoader(method: Promise<any>): void {
-    SaThemePreloaderService._loaders.push(method);
+    SaThemePreloaderService.loaders.push(method);
   }
 
   public static clear(): void {
-    SaThemePreloaderService._loaders = [];
+    SaThemePreloaderService.loaders = [];
   }
 
   public static load(): Promise<any> {
     return new Promise((resolve, reject) => {
-      SaThemePreloaderService._executeAll(resolve);
+      SaThemePreloaderService.executeAll(resolve);
     });
   }
 
-  private static _executeAll(done: Function): void {
+  private static executeAll(done: Function): void {
     setTimeout(() => {
-      Promise.all(SaThemePreloaderService._loaders)
+      Promise.all(SaThemePreloaderService.loaders)
       .then(values => {
         done.call(null, values);
       }).catch(error => {

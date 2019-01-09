@@ -4,9 +4,8 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Component, ViewEncapsulation } from '@angular/core';
 import { GlobalState } from 'app/global.state';
 import { AppState } from 'app/app.service';
 import { TOKEN } from '@app/constants/auth';
@@ -25,9 +24,11 @@ export class SaPageTopComponent {
   public isMenuCollapsed: TCollapsedState = false;
   public isProfileCollapsed: TCollapsedState = false;
 
-  constructor(private router: Router,
-              private state: GlobalState,
-              private appState: AppState) {
+  constructor(
+    private router: Router,
+    private state: GlobalState,
+    private appState: AppState
+  ) {
     this.state.subscribe('menu.isCollapsed', isCollapsed => {
       this.isMenuCollapsed = isCollapsed;
     });

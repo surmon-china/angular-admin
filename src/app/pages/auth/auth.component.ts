@@ -29,7 +29,6 @@ export class AuthComponent implements AfterViewChecked {
   public slogans = [
     'Done is better than perfect.',
     '远离颠倒梦想，究竟涅槃',
-    // 'དཀར་གསལ་ཟླ་བ་ཤར་བྱུང་།, ཤར་ཕྱོགས་རི་བོའི་རྩེ་ནས།',
     '应无所住，而生其心'
   ];
   public slogan: string = this.slogans[Math.floor(Math.random() * (this.slogans.length))];
@@ -52,8 +51,7 @@ export class AuthComponent implements AfterViewChecked {
   }
 
   onSubmit() {
-    this.httpService
-    .post(this.loginApiPath, { password: Base64.encode(this.password) })
+    this.httpService.post(this.loginApiPath, { password: Base64.encode(this.password) })
     .then(auth => {
       if (auth.result.access_token) {
         localStorage.setItem(TOKEN, auth.result.access_token);

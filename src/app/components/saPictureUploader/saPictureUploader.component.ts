@@ -177,7 +177,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   }
 
   // 根据 url 读取一张图片
-  protected changePictureFromURL(url: string): void {
+  public changePictureFromURL(url: string): void {
     const image = new Image();
     image.onload = _ => {
       this.emitPicture(url);
@@ -190,7 +190,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   }
 
   // 根据 base64 读取一张图片
-  protected changePictureFromDataURL(file: File): void {
+  public changePictureFromDataURL(file: File): void {
     const reader = new FileReader();
     reader.addEventListener('load', (event: Event) => {
       this.picture = (event.target as any).result;

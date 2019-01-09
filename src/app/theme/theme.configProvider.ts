@@ -4,10 +4,9 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import * as lodash from 'lodash';
 import { Injectable } from '@angular/core';
 import { ColorHelper } from './theme.constants';
-
-import * as _ from 'lodash';
 
 @Injectable()
 export class SaThemeConfigProvider {
@@ -85,10 +84,10 @@ export class SaThemeConfigProvider {
   }
 
   changeTheme (theme) {
-    _.merge(this.get().theme, theme);
+    lodash.merge(this.get().theme, theme);
   }
 
   changeColors (colors) {
-    _.merge(this.get().colors, colors);
+    lodash.merge(this.get().colors, colors);
   }
 }

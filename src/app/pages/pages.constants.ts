@@ -41,27 +41,3 @@ export interface IResponsePaginationData<T> {
   data: T[];
   pagination?: IPagination;
 }
-
-// 发布状态
-export enum EPublishState {
-  all = 'all',
-  draft = 0, // 草稿
-  published = 1, // 已发布
-  recycle = -1 // 回收站
-}
-
-// 公开状态
-export enum EPublicState {
-  all = 'all',
-  password = 0, // 需要密码
-  public = 1, // 公开状态
-  secret = -1 // 私密
-}
-
-// 转载状态
-export enum EOriginState {
-  all = 'all',
-  original = 0, // 原创
-  reprint = 1, // 转载
-  hybrid = 2 // 混合
-}

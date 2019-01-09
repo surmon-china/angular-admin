@@ -11,7 +11,8 @@
         name="article-title"
         class="form-control form-control-lg" 
         [formControl]="formTitle"
-        (change)="handleTitleChange($event)"/>
+        (change)="handleTitleChange($event)"
+      />
     </div>
   </div>
   <div class="form-group row" [ngClass]="controlStateClass(formKeywords, 'has-warning')">
@@ -25,7 +26,8 @@
         name="article-keywords"
         id="article-keywords"
         [formControl]="formKeywords"
-        (change)="handleKeywordsChange($event)">
+        (change)="handleKeywordsChange($event)"
+      />
     </div>
   </div>
   <div class="form-group row" [ngClass]="controlStateClass(formDescription, 'has-warning')">
@@ -40,8 +42,8 @@
         title="文章描述"
         placeholder="文章描述"
         [formControl]="formDescription"
-        (change)="handleDescriptionChange($event)">
-      </textarea>
+        (change)="handleDescriptionChange($event)"
+      ></textarea>
     </div>
   </div>
   <div class="form-group row" [ngClass]="{ 'has-success': tag.length && editForm.touched }">
@@ -59,7 +61,8 @@
             [ngClass]="tag.selected ? 'btn-primary' : 'btn-default'"
             (click)="tag.selected = !tag.selected;handleTagChange()"
             [title]="tag.description || tag.name"
-            [disabled]="fetching.tag">
+            [disabled]="fetching.tag"
+          >
             <span>{{ tag.name }}</span>
           </button>
         </div>
@@ -80,8 +83,8 @@
         class="form-control article-content" 
         title="文章内容"
         [formControl]="formContent"
-        (change)="handleContentChange($event)">
-      </sa-markdown-editor>
+        (change)="handleContentChange($event)"
+      ></sa-markdown-editor>
     </div>
   </div>
 </form>

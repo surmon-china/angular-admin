@@ -34,9 +34,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
       </div>
     </footer>
     <sa-back-top position="200"></sa-back-top>
-    `
+  `
 })
 export class PagesComponent {
-
   constructor() {}
 }

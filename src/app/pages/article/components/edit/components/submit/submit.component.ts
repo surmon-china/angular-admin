@@ -5,7 +5,7 @@
  */
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { EOriginState, EPublicState, EPublishState } from '@app/pages/pages.constants';
+import { EOriginState, EPublicState, EPublishState } from '@app/constants/state';
 
 @Component({
   selector: 'box-article-edit-submit',

@@ -1,8 +1,10 @@
 <div class="row">
   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="row pie-charts">
-      <sa-card *ngFor="let item of defaultStatistics" 
-               class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12">
+      <sa-card
+        *ngFor="let item of defaultStatistics" 
+        class="pie-chart-item-container col-xlg-3 col-lg-3 col-md-6 col-sm-12 col-xs-12"
+      >
         <div class="pie-chart-item">
           <div class="description">
             <h4>{{ item.description }}</h4>
@@ -15,9 +17,11 @@
   </div>
 </div>
 <div class="row">
-  <sa-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-           title="最近收到评论" 
-           baCardClass="medium-card">
+  <sa-card
+    class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+    title="最近收到评论" 
+    baCardClass="medium-card"
+  >
     <div class="vertical-scroll">
       <table class="table table-no-borders table-hover">
         <thead>
@@ -39,9 +43,11 @@
       </table>
     </div>
   </sa-card>
-  <sa-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-           title="最近收到留言" 
-           baCardClass="medium-card">
+  <sa-card
+    class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+    title="最近收到留言" 
+    baCardClass="medium-card"
+  >
     <div class="vertical-scroll">
       <table class="table table-no-borders table-hover">
         <thead>
@@ -65,9 +71,11 @@
   </sa-card>
 </div>
 <div class="row">
-  <sa-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-           title="最近发布文章" 
-           baCardClass="medium-card">
+  <sa-card
+    class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+    title="最近发布文章" 
+    baCardClass="medium-card"
+  >
     <div class="vertical-scroll">
       <table class="table table-no-borders table-hover">
         <thead>
@@ -90,7 +98,8 @@
   <sa-card 
     class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" 
     title="嵌套的统计数据"
-    baCardClass="medium-card with-scroll">
+    baCardClass="medium-card with-scroll"
+  >
     <iframe src="https://www.google.com/adsense/new/u/0/pub-4710915636313788/home" class="adsense-iframe"></iframe>
   </sa-card>
 </div>

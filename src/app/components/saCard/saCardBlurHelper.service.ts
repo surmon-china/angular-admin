@@ -6,13 +6,30 @@
 
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { BgMetrics } from './bgMetrics';
+import { BgMetrics } from './saCard.interface';
 
 @Injectable()
 export class SaCardBlurHelperService {
 
   private image: HTMLImageElement;
   private imageLoadSubject: Subject<void>;
+
+  private genBgImage(): void {
+    this.image = new Image();
+    const computedStyle = getComputedStyle(document.body.querySelector('main'), ':before');
+    this.image.src = computedStyle.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2');
+  }
+
+  private genImageLoadSubject(): void {
+    this.imageLoadSubject = new Subject<void>();
+    this.image.onerror = _ => {
+      this.imageLoadSubject.complete();
+    };
+    this.image.onload = () => {
+      this.imageLoadSubject.next(null);
+      this.imageLoadSubject.complete();
+    };
+  }
 
   public init() {
     this.genBgImage();
@@ -41,22 +58,5 @@ export class SaCardBlurHelperService {
       finalHeight = (elemW * imgRatio);
     }
     return { width: finalWidth, height: finalHeight, positionX: (elemW - finalWidth) / 2, positionY: (elemH - finalHeight) / 2};
-  }
-
-  private genBgImage(): void {
-    this.image = new Image();
-    const computedStyle = getComputedStyle(document.body.querySelector('main'), ':before');
-    this.image.src = computedStyle.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2');
-  }
-
-  private genImageLoadSubject(): void {
-    this.imageLoadSubject = new Subject<void>();
-    this.image.onerror = _ => {
-      this.imageLoadSubject.complete();
-    };
-    this.image.onload = () => {
-      this.imageLoadSubject.next(null);
-      this.imageLoadSubject.complete();
-    };
   }
 }

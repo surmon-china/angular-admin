@@ -4,12 +4,11 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core';
-
 import * as API_PATH from '@app/constants/api';
-import { SaHttpRequesterService } from '@app/services';
-import { TApiPath, IFetching } from '@app/pages/pages.constants';
+import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core';
 import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@/app/pages/article/article.service';
+import { TApiPath, IFetching } from '@app/pages/pages.constants';
+import { SaHttpRequesterService } from '@app/services';
 
 @Component({
   selector: 'box-article-edit-category',

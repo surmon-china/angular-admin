@@ -7,38 +7,38 @@
             <button
               type="button"
               class="btn btn-default active"
-              [ngClass]="{ 'active': isState(PublishState.all)}"
-              (click)="switchState(PublishState.all)"
+              [ngClass]="{ 'active': isState(PublishState.All)}"
+              (click)="switchState(PublishState.All)"
             >
               <span>全部</span>
-              <span *ngIf="isState(PublishState.all)">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(PublishState.All)">&nbsp;({{ currentListTotal }})</span>
             </button>
             <button
               type="button"
               class="btn btn-default"
-              [ngClass]="{ 'active': isState(PublishState.published) }"
-              (click)="switchState(PublishState.published)"
+              [ngClass]="{ 'active': isState(PublishState.Published) }"
+              (click)="switchState(PublishState.Published)"
             >
               <span>已发布</span>
-              <span *ngIf="isState(PublishState.published)">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(PublishState.Published)">&nbsp;({{ currentListTotal }})</span>
             </button>
             <button
               type="button"
               class="btn btn-default"
-              [ngClass]="{ 'active': isState(PublishState.draft) }"
-              (click)="switchState(PublishState.draft)"
+              [ngClass]="{ 'active': isState(PublishState.Draft) }"
+              (click)="switchState(PublishState.Draft)"
             >
               <span>草稿</span>
-              <span *ngIf="isState(PublishState.draft)">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(PublishState.Draft)">&nbsp;({{ currentListTotal }})</span>
             </button>
             <button
               type="button"
               class="btn btn-default"
-              [ngClass]="{ 'active': isState(PublishState.recycle) }"
-              (click)="switchState(PublishState.recycle)"
+              [ngClass]="{ 'active': isState(PublishState.Recycle) }"
+              (click)="switchState(PublishState.Recycle)"
             >
               <span>回收站</span>
-              <span *ngIf="isState(PublishState.recycle)">&nbsp;({{ currentListTotal }})</span>
+              <span *ngIf="isState(PublishState.Recycle)">&nbsp;({{ currentListTotal }})</span>
             </button>
           </div>
           <span>&nbsp;&nbsp;</span>
@@ -92,7 +92,7 @@
               [formControl]="keyword" 
               class="form-control with-default-addon" 
               placeholder="文章标题、描述"
-            >
+            />
             <span class="input-group-btn">
               <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
             </span>
@@ -126,11 +126,11 @@
             </ng-template>
           </select>
           <span>&nbsp;&nbsp;</span>
-          <select class="form-control c-select" [(ngModel)]="getParams.public" (ngModelChange)="getArticles()">
-            <option [value]="PublicState.all" default>所有类型</option>
-            <option [value]="PublicState.public">公开</option>
-            <option [value]="PublicState.password">密码</option>
-            <option [value]="PublicState.secret">私密</option>
+          <select class="form-control c-select" [(ngModel)]="getParams.Public" (ngModelChange)="getArticles()">
+            <option [value]="PublicState.All" default>所有类型</option>
+            <option [value]="PublicState.Public">公开</option>
+            <option [value]="PublicState.Password">密码</option>
+            <option [value]="PublicState.Secret">私密</option>
           </select>
           <span>&nbsp;&nbsp;</span>
           <select
@@ -138,9 +138,9 @@
             [(ngModel)]="getParams.origin"
             (ngModelChange)="getArticles()"
           >
-            <option [value]="OriginState.all" default>所有来源</option>
-            <option [value]="OriginState.original">原创</option>
-            <option [value]="OriginState.reprint">转载</option>
+            <option [value]="OriginState.All" default>所有来源</option>
+            <option [value]="OriginState.Original">原创</option>
+            <option [value]="OriginState.Reprint">转载</option>
             <option [value]="OriginState.hybrid">混合</option>
           </select>
         </div>
@@ -196,13 +196,13 @@
                           <strong>{{ article.title }}</strong>
                         </a>
                         <span>&nbsp;&nbsp;</span>
-                        <i class="ion-md-done-all text-success" *ngIf="article.state === PublishState.published"></i>
+                        <i class="ion-md-done-all text-success" *ngIf="article.state === PublishState.Published"></i>
                         <span>&nbsp;</span>
-                        <i class="ion-md-create text-warning" *ngIf="article.state === PublishState.draft"></i>
+                        <i class="ion-md-create text-warning" *ngIf="article.state === PublishState.Draft"></i>
                         <span>&nbsp;</span>
-                        <i class="ion-md-trash text-danger" *ngIf="article.state === PublishState.recycle"></i>
+                        <i class="ion-md-trash text-danger" *ngIf="article.state === PublishState.Recycle"></i>
                         <span>&nbsp;</span>
-                        <i class="ion-md-lock text-danger" *ngIf="article.public !== PublicState.public"></i>
+                        <i class="ion-md-lock text-danger" *ngIf="article.Public !== PublicState.Public"></i>
                       </h4>
                       <small class="description">
                         <span *ngIf="article.description">{{ article.description | truncate : 128 }}</span>
@@ -251,18 +251,18 @@
                   </td>
                   <td>{{ article.create_at | dataToLocale }}</td>
                   <td>
-                    <span [ngSwitch]="article.public">
-                      <span *ngSwitchCase="PublicState.password">密码</span>
-                      <span *ngSwitchCase="PublicState.public">公开</span>
+                    <span [ngSwitch]="article.Public">
+                      <span *ngSwitchCase="PublicState.Password">密码</span>
+                      <span *ngSwitchCase="PublicState.Public">公开</span>
                     </span>
-                    <span *ngIf="article.public === PublicState.secret">私密</span>
+                    <span *ngIf="article.Public === PublicState.Secret">私密</span>
                   </td>
                   <td>
                     <span [ngSwitch]="article.state">
-                      <span *ngSwitchCase="PublishState.draft">草稿</span>
-                      <span *ngSwitchCase="PublishState.published">已发布</span>
+                      <span *ngSwitchCase="PublishState.Draft">草稿</span>
+                      <span *ngSwitchCase="PublishState.Published">已发布</span>
                     </span>
-                    <span *ngIf="article.state === PublishState.recycle">回收站</span>
+                    <span *ngIf="article.state === PublishState.Recycle">回收站</span>
                   </td>
                   <td>
                     <div class="button-wrapper">
@@ -271,31 +271,31 @@
                         <span>编辑文章</span>
                       </a>
                     </div>
-                    <div class="button-wrapper" *ngIf="article.state === PublishState.draft">
+                    <div class="button-wrapper" *ngIf="article.state === PublishState.Draft">
                       <button class="btn btn-warning btn-sm btn-with-icon" (click)="moveToPublished([article._id])">
                         <i class="ion-md-done-all"></i>
                         <span>快速发布</span>
                       </button>
                     </div>
-                    <div class="button-wrapper" *ngIf="article.state === PublishState.recycle">
+                    <div class="button-wrapper" *ngIf="article.state === PublishState.Recycle">
                       <button class="btn btn-warning btn-sm btn-with-icon" (click)="moveToDraft([article._id])">
                         <i class="ion-md-checkmark-circle-outline"></i>
                         <span>恢复文章</span>
                       </button>
                     </div>
-                    <div class="button-wrapper" *ngIf="article.state === PublishState.published">
+                    <div class="button-wrapper" *ngIf="article.state === PublishState.Published">
                       <button class="btn btn-warning btn-sm btn-with-icon" (click)="moveToDraft([article._id])">
                         <i class="ion-md-checkmark-circle-outline"></i>
                         <span>移到草稿</span>
                       </button>
                     </div>
-                    <div class="button-wrapper" *ngIf="article.state !== PublishState.recycle">
+                    <div class="button-wrapper" *ngIf="article.state !== PublishState.Recycle">
                       <button class="btn btn-danger btn-sm btn-with-icon" (click)="moveToRecycle([article._id])">
                         <i class="ion-md-pint"></i>
                         <span>移回收站</span>
                       </button>
                     </div>
-                    <div class="button-wrapper" *ngIf="article.state === PublishState.recycle">
+                    <div class="button-wrapper" *ngIf="article.state === PublishState.Recycle">
                       <button class="btn btn-danger btn-sm btn-with-icon" (click)="delArticleModal(article._id)">
                         <i class="ion-md-trash"></i>
                         <span>彻底删除</span>
@@ -331,8 +331,8 @@
               [maxSize]="7"
               [boundaryLinks]="true"
               [rotate]="false"
-              (pageChanged)="handlePageChanged($event)">
-            </pagination>
+              (pageChanged)="handlePageChanged($event)"
+            ></pagination>
           </div>
         </div>
       </div>

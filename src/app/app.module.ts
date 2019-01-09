@@ -13,7 +13,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-
 import { SaModule } from '@app/sa.module';
 import { ENV_PROVIDERS } from '@app/environment';
 import { AppComponent } from '@app/app.component';
@@ -68,7 +67,7 @@ export class AppModule {
     }
     console.log('HMR store', JSON.stringify(store, null, 2));
     // set state
-    this.appState._state = store.state;
+    this.appState.state = store.state;
     // set input values
     if ('restoreInputValues' in store) {
       const restoreInputValues = store.restoreInputValues;
@@ -82,8 +81,7 @@ export class AppModule {
   hmrOnDestroy(store: IStore) {
     const cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement);
     // save state
-    const state = this.appState._state;
-    store.state = state;
+    store.state = this.appState.state;
     // recreate root elements
     store.disposeOldHosts = createNewHosts(cmpLocation);
     // save input values

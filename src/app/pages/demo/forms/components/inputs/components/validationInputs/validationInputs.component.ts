@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   template: require('./validationInputs.html'),
 })
 export class ValidationInputsComponent {
+
   public checkboxModel = [{
     name: 'Checkbox with success',
     state: false,

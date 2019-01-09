@@ -1,27 +1,33 @@
-<form name="addCatrgory" 
-      class="category-edit-form" 
-      [formGroup]="editForm" 
-      (ngSubmit)="submitEditForm()">
+<form
+  name="addCatrgory" 
+  class="category-edit-form" 
+  [formGroup]="editForm" 
+  (ngSubmit)="submitEditForm()"
+>
   <div class="form-group" [ngClass]="controlStateClass(name)">
     <label for="category-name">
       <h5>名称</h5>
     </label>
-    <input type="text" 
-           class="form-control" 
-           id="category-name" 
-           placeholder="分类名称" 
-           [formControl]="name">
+    <input
+      type="text" 
+      class="form-control" 
+      id="category-name" 
+      placeholder="分类名称" 
+      [formControl]="name"
+    >
     <span class="help-block sub-little-text">这将是它在站点上显示的名字</span>
   </div>
   <div class="form-group" [ngClass]="controlStateClass(slug)">
     <label for="category-slug">
       <h5>别名</h5>
     </label>
-    <input type="text" 
-           class="form-control" 
-           id="category-slug" 
-           placeholder="分类别名" 
-           [formControl]="slug">
+    <input
+      type="text" 
+      class="form-control" 
+      id="category-slug" 
+      placeholder="分类别名" 
+      [formControl]="slug"
+    >
     <span class="help-block sub-little-text">“别名”是在URL中使用的别称，建议小写，字母、数字、连字符（-）</span>
   </div>
   <div class="form-group" [ngClass]="controlStateClass(pid)">
@@ -31,9 +37,11 @@
     <select class="form-control c-select" id="category-parent" [formControl]="pid">
       <option [ngValue]="null">无</option>
       <ng-template [ngIf]="categories && categories.length">
-        <option *ngFor="let cate of categories" 
-                [ngValue]="cate._id" 
-                [disabled]="isDisableCateSelect(cate)">
+        <option
+          *ngFor="let cate of categories" 
+          [ngValue]="cate._id" 
+          [disabled]="isDisableCateSelect(cate)"
+        >
           <span *ngIf="cate.level">└</span>
           <span>{{ ''.padEnd(cate.level, '─') }}</span>
           <span>&nbsp;</span>
@@ -47,13 +55,15 @@
     <label for="category-description">
       <h5>描述</h5>
     </label>
-    <textarea name="category-description"
-              id="category-description"
-              class="form-control category-description"
-              cols="30"
-              rows="20"
-              placeholder="分类描述"
-              [formControl]="description">
+    <textarea
+      name="category-description"
+      id="category-description"
+      class="form-control category-description"
+      cols="30"
+      rows="20"
+      placeholder="分类描述"
+      [formControl]="description"
+    >
     </textarea>
     <span class="help-block sub-little-text">该分类的描述</span>
   </div>
@@ -63,25 +73,31 @@
     </label>
     <div class="category-extend" *ngFor="let extend of extends.value; let i = index">
       <div class="extend-key">
-        <input type="text" 
-               id="category-extend"
-               class="form-control"
-               placeholder="key" 
-               [(ngModel)]="extend.name"
-               [ngModelOptions]="{ standalone: true }">
+        <input
+          type="text" 
+          id="category-extend"
+          class="form-control"
+          placeholder="key" 
+          [(ngModel)]="extend.name"
+          [ngModelOptions]="{ standalone: true }"
+        >
       </div>
       <div class="extend-value">
-        <input type="text" 
-               id="category-extend-value"
-               class="form-control"
-               placeholder="value" 
-               [(ngModel)]="extend.value"
-               [ngModelOptions]="{ standalone: true }">
+        <input
+          type="text" 
+          id="category-extend-value"
+          class="form-control"
+          placeholder="value" 
+          [(ngModel)]="extend.value"
+          [ngModelOptions]="{ standalone: true }"
+        >
       </div>
       <div class="extend-del">
-        <button class="btn btn-warning" 
-                (click)="delExtendItem(i)"
-                [disabled]="extends.value.length < 2">
+        <button
+          class="btn btn-warning" 
+          (click)="delExtendItem(i)"
+          [disabled]="extends.value.length < 2"
+        >
           <i class="ion-md-trash"></i>
         </button>
       </div>
@@ -95,9 +111,11 @@
   <hr>
   <div class="row">
     <div class="col-sm-12">
-      <button type="submit" 
-          class="btn btn-success btn-with-icon" 
-          [disabled]="!editForm.valid || fetching.post">
+      <button
+        type="submit" 
+        class="btn btn-success btn-with-icon" 
+        [disabled]="!editForm.valid || fetching.post"
+      >
         <i class="ion-md-done-all"></i>
         <span *ngIf="fetching.post">分类{{ category ? '修改' : '添加' }}中</span>
         <span *ngIf="!fetching.post">{{ category ? '修改' : '添加' }}分类目录</span>

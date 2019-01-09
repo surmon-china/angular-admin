@@ -17,9 +17,8 @@ export class AppState {
 
   // 状态机
   private stateChange = new Subject();
-  state$ = this.stateChange.asObservable();
-
-  _state: IinternalState = {
+  private state$ = this.stateChange.asObservable();
+  private _state: IinternalState = {
     adminInfo: {
       name: '管理员',
       slogan: '博客管理后台',
@@ -30,7 +29,7 @@ export class AppState {
   constructor() {}
 
   get state() {
-    return this.state = this.clone(this.state);
+    return this.clone(this._state);
   }
 
   set state(value) {
@@ -44,7 +43,7 @@ export class AppState {
 
   set(prop: string, value: any) {
     this.stateChange.next(value);
-    return this.state[prop] = value;
+    return this._state[prop] = value;
   }
 
   private clone(object: IinternalState) {

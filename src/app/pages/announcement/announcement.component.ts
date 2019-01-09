@@ -11,8 +11,9 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
-import { TApiPath, TSelectedIds, TSelectedAll, EPublishState, IResponsePaginationData, IFetching } from '@app/pages/pages.constants';
+import { TApiPath, TSelectedIds, TSelectedAll, IResponsePaginationData, IFetching } from '@app/pages/pages.constants';
 import { mergeFormControlsToInstance, handleBatchSelectChange, handleItemSelectChange, formControlStateClass } from '@/app/pages/pages.service';
+import { EPublishState } from '@app/constants/state';
 
 // 公告
 interface IAnnouncement {
@@ -29,7 +30,7 @@ type TResponseAnnouncement = IResponsePaginationData<IAnnouncement>;
 
 const DEFAULT_EDIT_FORM = {
   content: '',
-  state: EPublishState.published
+  state: EPublishState.Published
 };
 
 const DEFAULT_SEARCH_FORM = {
@@ -62,7 +63,7 @@ export class AnnouncementComponent implements OnInit {
   public activeAnnouncement: IAnnouncement = null;
   public announcementsSelectAll: TSelectedAll = false;
   public selectedAnnouncements: TSelectedIds = [];
-  public publishState: EPublishState = EPublishState.all;
+  public publishState: EPublishState = EPublishState.All;
   public fetching: IFetching = { get: false };
   public announcements: TResponseAnnouncement = {
     data: [],
@@ -210,7 +211,7 @@ export class AnnouncementComponent implements OnInit {
     }
 
     // 非全部数据
-    if (this.publishState !== EPublishState.all) {
+    if (this.publishState !== EPublishState.All) {
       params.state = this.publishState;
     }
 

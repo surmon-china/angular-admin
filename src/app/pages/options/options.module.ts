@@ -6,9 +6,8 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SaModule } from '@/app/sa.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { SaModule } from '@/app/sa.module';
 import { OptionsComponent } from './options.component';
 import { routing } from './options.routing';
 
