@@ -11,8 +11,8 @@
             <h5>公告状态</h5>
           </label>
           <select class="form-control c-select" id="announcement-type" [formControl]="state">
-            <option [value]="PublishState.Published">已发布</option>
-            <option [value]="PublishState.Draft">草稿</option>
+            <option [ngValue]="PublishState.Published">已发布</option>
+            <option [ngValue]="PublishState.Draft">草稿</option>
           </select>
         </div>
         <div  class="form-group" [ngClass]="controlStateClass(content)">
@@ -125,7 +125,7 @@
               placeholder="公告内容"
               [formControl]="keyword"
               class="form-control with-default-addon"
-            >
+            />
             <span class="input-group-btn">
               <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
             </span>
