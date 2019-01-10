@@ -9,9 +9,9 @@
         [(ngModel)]="origin"
         (change)="originChange.emit($event.target.value)"
       >
-        <option [value]="OriginState.Original">原创</option>
-        <option [value]="OriginState.Reprint">转载</option>
-        <option [value]="OriginState.hybrid">混合</option>
+        <option [ngValue]="OriginState.Original">原创</option>
+        <option [ngValue]="OriginState.Reprint">转载</option>
+        <option [ngValue]="OriginState.hybrid">混合</option>
       </select>
     </div>
   </div>
@@ -25,9 +25,9 @@
         [(ngModel)]="state"
         (change)="stateChange.emit($event.target.value)"
       >
-        <option [value]="PublishState.Published">直接发布</option>
-        <option [value]="PublishState.Draft">存为草稿</option>
-        <option [value]="PublishState.Recycle">已删除</option>
+        <option [ngValue]="PublishState.Published">直接发布</option>
+        <option [ngValue]="PublishState.Draft">存为草稿</option>
+        <option [ngValue]="PublishState.Recycle">已删除</option>
       </select>
     </div>
   </div>
@@ -41,9 +41,9 @@
         [(ngModel)]="ppublic"
         (change)="ppublicChange.emit($event.target.value)"
       >
-        <option [value]="PublicState.Public">公开</option>
-        <option [value]="PublicState.Secret">私密</option>
-        <option [value]="PublicState.Password">密码访问</option>
+        <option [ngValue]="PublicState.Public">公开</option>
+        <option [ngValue]="PublicState.Secret">私密</option>
+        <option [ngValue]="PublicState.Password">密码访问</option>
       </select>
     </div>
   </div>

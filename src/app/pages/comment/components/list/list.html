@@ -125,9 +125,9 @@
         <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
         <div class="pull-right form-inline">
           <select class="form-control c-select" [(ngModel)]="getParams.sort" (ngModelChange)="getComments()">
-            <option [value]="SortType.Desc" default>最新评论</option>
-            <option [value]="SortType.Asc">最早评论</option>
-            <option [value]="SortType.Hot">最热评论</option>
+            <option [ngValue]="SortType.Desc" default>最新评论</option>
+            <option [ngValue]="SortType.Asc">最早评论</option>
+            <option [ngValue]="SortType.Hot">最热评论</option>
           </select>
         </div>
       </div>

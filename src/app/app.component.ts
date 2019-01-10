@@ -12,7 +12,6 @@ import { GlobalState } from '@app/global.state';
 import { layoutPaths } from '@app/theme/theme.constants';
 import { SaThemeConfig } from '@app/theme/theme.config';
 import { AppState } from '@app/app.service';
-import { NO_PERMISSION } from '@/app/constants/http';
 import { checkTokenIsOk } from '@app/discriminators/token';
 import { isIndexPage, isAuthPage, isDashboardPage } from '@app/discriminators/url';
 import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
@@ -43,6 +42,20 @@ export class AppComponent implements AfterViewInit, OnInit {
   private isOptionInited = false;
   private isMenuCollapsed: TMenuCollapsedState = false;
 
+  // 通知配置
+  private notificationsOptions = {
+    position: ['top', 'right'],
+    timeOut: 300,
+    lastOnBottom: true,
+    clickToClose: true,
+    maxLength: 0,
+    maxStack: 5,
+    showProgressBar: true,
+    pauseOnHover: true,
+    preventDuplicates: false,
+    preventLastDuplicates: false
+  };
+
   constructor(
     private state: GlobalState,
     private appState: AppState,
@@ -66,38 +79,20 @@ export class AppComponent implements AfterViewInit, OnInit {
 
     // 路由拦截器
     this.router.events.subscribe(event => {
-
       const url: string = this.router.url;
-
-      // 如果是发生登录事件，则拉取初始化信息
-      if (
-        isDashboardPage(url) &&
-        (event as any).navigationTrigger &&
-        (event as any).navigationTrigger === 'imperative'
-      ) {
-        this.initAppOptions();
-      }
-
       // 如果发生 非首页或登陆页 的跳转事件，则执行 Token 全面检查
       if (!isIndexPage(url) && !isAuthPage(url) && !checkTokenIsOk()) {
+        console.warn('页面跳转时检查出无效 Token');
         this.remiveTokenToLogin();
       }
     });
   }
 
-  // 通知配置
-  public notificationsOptions = {
-    position: ['top', 'right'],
-    timeOut: 300,
-    lastOnBottom: true,
-    clickToClose: true,
-    maxLength: 0,
-    maxStack: 5,
-    showProgressBar: true,
-    pauseOnHover: true,
-    preventDuplicates: false,
-    preventLastDuplicates: false
-  };
+  private loadImages(): void {
+    SaThemePreloaderService.registerLoader(
+      this.imageLoader.load(layoutPaths.images.root + 'background.jpg')
+    );
+  }
 
   // 删除 Token 并跳转到登陆页
   public remiveTokenToLogin(): void {
@@ -109,45 +104,26 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   // 初始化时拉取全局设置
-  public initAppOptions(): void {
-    if (this.isOptionInited) {
-      return;
-    }
-    this.isOptionInited = true;
-    this.httpService
-      .get(API_PATH.ADMIN_INFO)
-      .then(({ result: adminInfo }) => {
-        if (Object.keys(adminInfo).length) {
-          this.appState.set('adminInfo', adminInfo);
-        }
-      })
-      .catch(error => {
-        if (error.status === NO_PERMISSION) {
-          this.router.navigate(['/auth']);
-        }
-      });
+  public initAppOptions(): Promise<void> {
+    return this.httpService.get(API_PATH.ADMIN_INFO).then(({ result: adminInfo }) => {
+      if (Object.keys(adminInfo).length) {
+        this.appState.set('adminInfo', adminInfo);
+      }
+    });
   }
 
   // 初始化根据服务端验证 Token 有效性
   public checkTokenValidity(): void  {
     this.httpService.post(API_PATH.CHECK_TOKEN)
-    .then(({ result: tokenIsValidity }) => {
-      console.log('远程 Token 验证结果：', tokenIsValidity);
-      // 通过验证，则初始化 APP
-      tokenIsValidity
-        ? this.initAppOptions()
-        : this.remiveTokenToLogin();
-    })
-    .catch(error => {
-      console.warn('Token 被验证是无效的，跳登陆页', error);
-      this.remiveTokenToLogin();
-    });
-  }
-
-  private loadImages(): void {
-    SaThemePreloaderService.registerLoader(
-      this.imageLoader.load(layoutPaths.images.root + 'background.jpg')
-    );
+      .then(_ => {
+        // 通过验证，则初始化 APP
+        console.log('远程 Token 验证成功');
+        this.initAppOptions();
+      })
+      .catch(error => {
+        console.warn('Token 被验证是无效的，跳登陆页', error);
+        this.remiveTokenToLogin();
+      });
   }
 
   // 程序初始化，关闭加载状态
@@ -159,6 +135,8 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   // 初始化时重置路由
   ngOnInit() {
+    // 初始化时拉取信息
+    this.initAppOptions();
     // 程序初始化时检查本地 Token
     checkTokenIsOk()
       ? this.checkTokenValidity()

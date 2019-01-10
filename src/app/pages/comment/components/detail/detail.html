@@ -33,8 +33,8 @@
           <label for="comment-is-top" class="col-sm-1 form-control-label text-right">是否置顶</label>
           <div class="col-sm-2">
             <select class="form-control c-select" id="comment-is-top" [formControl]="is_top">
-              <option [value]="false">不置顶</option>
-              <option [value]="true">置顶</option>
+              <option [ngValue]="false">不置顶</option>
+              <option [ngValue]="true">置顶</option>
             </select>
           </div>
         </div>
@@ -42,10 +42,10 @@
           <label for="comment-state" class="col-sm-1 form-control-label text-right">状态</label>
           <div class="col-sm-2">
             <select class="form-control c-select" id="comment-state" [formControl]="state">
-              <option [value]="CommentState.spam">垃圾评论</option>
-              <option [value]="CommentState.deleted">已删除</option>
-              <option [value]="CommentState.auditing">待审核</option>
-              <option [value]="CommentState.Published">审核通过</option>
+              <option [ngValue]="CommentState.spam">垃圾评论</option>
+              <option [ngValue]="CommentState.deleted">已删除</option>
+              <option [ngValue]="CommentState.auditing">待审核</option>
+              <option [ngValue]="CommentState.Published">审核通过</option>
             </select>
           </div>
         </div>

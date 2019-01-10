@@ -127,10 +127,10 @@
           </select>
           <span>&nbsp;&nbsp;</span>
           <select class="form-control c-select" [(ngModel)]="getParams.Public" (ngModelChange)="getArticles()">
-            <option [value]="PublicState.All" default>所有类型</option>
-            <option [value]="PublicState.Public">公开</option>
-            <option [value]="PublicState.Password">密码</option>
-            <option [value]="PublicState.Secret">私密</option>
+            <option [ngValue]="PublicState.All" default>所有类型</option>
+            <option [ngValue]="PublicState.Public">公开</option>
+            <option [ngValue]="PublicState.Password">密码</option>
+            <option [ngValue]="PublicState.Secret">私密</option>
           </select>
           <span>&nbsp;&nbsp;</span>
           <select
@@ -138,10 +138,10 @@
             [(ngModel)]="getParams.origin"
             (ngModelChange)="getArticles()"
           >
-            <option [value]="OriginState.All" default>所有来源</option>
-            <option [value]="OriginState.Original">原创</option>
-            <option [value]="OriginState.Reprint">转载</option>
-            <option [value]="OriginState.hybrid">混合</option>
+            <option [ngValue]="OriginState.All" default>所有来源</option>
+            <option [ngValue]="OriginState.Original">原创</option>
+            <option [ngValue]="OriginState.Reprint">转载</option>
+            <option [ngValue]="OriginState.hybrid">混合</option>
           </select>
         </div>
       </div>
