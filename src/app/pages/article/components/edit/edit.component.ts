@@ -56,6 +56,7 @@ export class ArticleEditComponent implements OnInit {
   // 提交文章
   public submitArticle(): void {
     if ((this.editFormMain as any).editForm.invalid) {
+      window.scrollTo(0, 0);
       return;
     }
     this.fetching.post = true;

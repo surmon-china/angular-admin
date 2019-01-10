@@ -14,7 +14,7 @@ import { IGetParams } from '@app/pages/pages.constants';
 import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
 import { buildLevelCategories, TResponsePaginationTag, TResponsePaginationArticle, TResponsePaginationCategory } from '@/app/pages/article/article.service';
 import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
-import { EPublishState, EPublicState, EOriginState } from '@app/constants/state';
+import { EPublishState, EPublicState, EOriginState, ESortType } from '@app/constants/state';
 
 const DEFAULT_SEARCH_FORM = {
   keyword: ''
@@ -23,6 +23,7 @@ const DEFAULT_SEARCH_FORM = {
 const DEFAULT_GET_PARAMS = {
   tag: 'all',
   category: 'all',
+  sort: ESortType.Desc,
   state: EPublishState.All,
   public: EPublicState.All,
   origin: EOriginState.All
@@ -36,6 +37,7 @@ const DEFAULT_GET_PARAMS = {
 })
 export class ArticleListComponent implements OnInit {
 
+  SortType = ESortType;
   OriginState = EOriginState;
   PublicState = EPublicState;
   PublishState = EPublishState;
@@ -187,7 +189,7 @@ export class ArticleListComponent implements OnInit {
   public getTags(): void {
     this.fetching.tag = true;
     this.httpService
-      .get<TResponsePaginationTag>(this.tagApiPath)
+      .get<TResponsePaginationTag>(this.tagApiPath, { per_page: 666 })
       .then(tags => {
         this.tags = tags.result;
         this.fetching.tag = false;
@@ -201,7 +203,7 @@ export class ArticleListComponent implements OnInit {
   public getCategories(): void {
     this.fetching.category = true;
     this.httpService
-      .get<TResponsePaginationCategory>(this.categoryApiPath)
+      .get<TResponsePaginationCategory>(this.categoryApiPath, { per_page: 666 })
       .then(categories => {
         this.fetching.category = false;
         this.categories = categories.result;
@@ -225,23 +227,23 @@ export class ArticleListComponent implements OnInit {
 
   // 移至回收站
   public moveToRecycle(articleIds?: TSelectedIds) {
-    const articles = articleIds || this.selectedArticles;
+    const article_ids = articleIds || this.selectedArticles;
     const state = EPublishState.Recycle;
-    this.patchArticles({ articles, state });
+    this.patchArticles({ article_ids, state });
   }
 
   // 恢复文章（移至草稿）
   public moveToDraft(articleIds?: TSelectedIds) {
-    const articles = articleIds || this.selectedArticles;
+    const article_ids = articleIds || this.selectedArticles;
     const state = EPublishState.Draft;
-    this.patchArticles({ articles, state });
+    this.patchArticles({ article_ids, state });
   }
 
   // 快速发布（移至已发布）
   public moveToPublished(articleIds?: TSelectedIds) {
-    const articles = articleIds || this.selectedArticles;
+    const article_ids = articleIds || this.selectedArticles;
     const state = EPublishState.Published;
-    this.patchArticles({ articles, state });
+    this.patchArticles({ article_ids, state });
   }
 
   // 彻底删除文章（批量删除）

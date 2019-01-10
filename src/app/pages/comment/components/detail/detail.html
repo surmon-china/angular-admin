@@ -42,9 +42,9 @@
           <label for="comment-state" class="col-sm-1 form-control-label text-right">状态</label>
           <div class="col-sm-2">
             <select class="form-control c-select" id="comment-state" [formControl]="state">
-              <option [ngValue]="CommentState.spam">垃圾评论</option>
-              <option [ngValue]="CommentState.deleted">已删除</option>
-              <option [ngValue]="CommentState.auditing">待审核</option>
+              <option [ngValue]="CommentState.Spam">垃圾评论</option>
+              <option [ngValue]="CommentState.Deleted">已删除</option>
+              <option [ngValue]="CommentState.Auditing">待审核</option>
               <option [ngValue]="CommentState.Published">审核通过</option>
             </select>
           </div>
@@ -58,7 +58,7 @@
               class="form-control" 
               placeholder="用户名" 
               [formControl]="user_name"
-            >
+            />
           </div>
         </div>
         <div  class="form-group row" [ngClass]="controlStateClass(user_email)">
@@ -70,7 +70,7 @@
               class="form-control" 
               placeholder="用户邮箱" 
               [formControl]="user_email"
-            >
+            />
           </div>
         </div>
         <div  class="form-group row" [ngClass]="controlStateClass(user_site)">
@@ -82,7 +82,7 @@
               class="form-control" 
               placeholder="用户的个人网址" 
               [formControl]="user_site"
-            >
+            />
           </div>
         </div>
         <div class="form-group row">

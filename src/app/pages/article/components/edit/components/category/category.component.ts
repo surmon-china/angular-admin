@@ -54,7 +54,7 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
   public getCategories() {
     this.fetching.get = true;
     this.httpService
-    .get<TResponsePaginationCategory>(this.apiPath)
+    .get<TResponsePaginationCategory>(this.apiPath, { per_page: 666 })
     .then(categories => {
       this.fetching.get = false;
       this.originalCategories = categories.result.data;

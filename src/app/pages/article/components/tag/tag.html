@@ -16,7 +16,7 @@
             class="form-control"
             placeholder="标签名称" 
             [formControl]="name"
-          >
+          />
           <span class="help-block sub-little-text">这将是它在站点上显示的名字</span>
         </div>
         <div  class="form-group" [ngClass]="controlStateClass(slug)">
@@ -29,7 +29,7 @@
             class="form-control" 
             placeholder="标签名称" 
             [formControl]="slug"
-          >
+          />
           <span class="help-block sub-little-text">“别名”是在URL中使用的别称，建议小写，字母、数字、连字符（-）</span>
         </div>
         <div  class="form-group" [ngClass]="controlStateClass(description)">
@@ -43,8 +43,8 @@
             cols="30"
             rows="20"
             placeholder="标签描述"
-            [formControl]="description">
-          </textarea>
+            [formControl]="description"
+          ></textarea>
           <span class="help-block sub-little-text">该标签的描述</span>
         </div>
         <div class="form-group" [ngClass]="controlStateClass(extends)">
@@ -75,7 +75,7 @@
                 class="btn btn-warning" 
                 (click)="delExtendItem(i)"
                 [disabled]="extends.value.length < 2"
-              />
+              >
                 <i class="ion-md-trash"></i>
               </button>
             </div>
@@ -129,7 +129,7 @@
                 type="button" 
                 class="btn btn-default btn-with-icon dropdown-toggle"
                 dropdownToggle
-              />
+              >
                 <i class="ion-md-list"></i>
                 <span>批量操作</span>
               </button>

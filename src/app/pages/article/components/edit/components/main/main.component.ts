@@ -6,7 +6,7 @@
 
 import * as API_PATH from '@app/constants/api';
 import { Component, EventEmitter, ViewEncapsulation, Input, Output, OnInit, OnChanges } from '@angular/core';
-import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, AbstractControl, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
 import { ITag, TResponsePaginationTag } from '@/app/pages/article/article.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
@@ -120,7 +120,7 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   public getTags() {
     this.fetching.tag = true;
     this.httpService
-    .get<TResponsePaginationTag>(this.tagApiPath, { per_page: 1000 })
+    .get<TResponsePaginationTag>(this.tagApiPath, { per_page: 666 })
     .then(tags => {
       this.fetching.tag = false;
       this.tags = tags.result.data;

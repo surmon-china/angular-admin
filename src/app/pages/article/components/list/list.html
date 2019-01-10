@@ -57,7 +57,7 @@
               (click)="resetGetParams()"
             >
               <i class="ion-md-trash"></i>
-              <span>清空搜索条件</span>
+              <span>Reset</span>
             </button>
             <div class="btn-group" dropdown [isDisabled]="!selectedArticles.length">
               <button
@@ -100,12 +100,6 @@
         </form>
         <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
         <div class="pull-right form-inline">
-          <select class="form-control c-select" disabled *ngIf="false">
-            <option default>创建时间</option>
-            <option>浏览次数</option>
-            <option>评论条数</option>
-          </select>
-          <span>&nbsp;&nbsp;</span>
           <select class="form-control c-select" [(ngModel)]="getParams.category" (ngModelChange)="getArticles()">
             <option default value="all">所有分类</option>
             <ng-template [ngIf]="categories && categories.data.length">
@@ -126,7 +120,13 @@
             </ng-template>
           </select>
           <span>&nbsp;&nbsp;</span>
-          <select class="form-control c-select" [(ngModel)]="getParams.Public" (ngModelChange)="getArticles()">
+          <select class="form-control c-select" [(ngModel)]="getParams.sort" (ngModelChange)="getArticles()">
+            <option [ngValue]="SortType.Desc" default>最新发布</option>
+            <option [ngValue]="SortType.Asc">最早发布</option>
+            <option [ngValue]="SortType.Hot">文章热度</option>
+          </select>
+          <span>&nbsp;&nbsp;</span>
+          <select class="form-control c-select" [(ngModel)]="getParams.public" (ngModelChange)="getArticles()">
             <option [ngValue]="PublicState.All" default>所有类型</option>
             <option [ngValue]="PublicState.Public">公开</option>
             <option [ngValue]="PublicState.Password">密码</option>
@@ -141,7 +141,7 @@
             <option [ngValue]="OriginState.All" default>所有来源</option>
             <option [ngValue]="OriginState.Original">原创</option>
             <option [ngValue]="OriginState.Reprint">转载</option>
-            <option [ngValue]="OriginState.hybrid">混合</option>
+            <option [ngValue]="OriginState.Hybrid">混合</option>
           </select>
         </div>
       </div>
@@ -202,7 +202,7 @@
                         <span>&nbsp;</span>
                         <i class="ion-md-trash text-danger" *ngIf="article.state === PublishState.Recycle"></i>
                         <span>&nbsp;</span>
-                        <i class="ion-md-lock text-danger" *ngIf="article.Public !== PublicState.Public"></i>
+                        <i class="ion-md-lock text-danger" *ngIf="article.public !== PublicState.Public"></i>
                       </h4>
                       <small class="description">
                         <span *ngIf="article.description">{{ article.description | truncate : 128 }}</span>
@@ -251,11 +251,11 @@
                   </td>
                   <td>{{ article.create_at | dataToLocale }}</td>
                   <td>
-                    <span [ngSwitch]="article.Public">
+                    <span [ngSwitch]="article.public">
                       <span *ngSwitchCase="PublicState.Password">密码</span>
                       <span *ngSwitchCase="PublicState.Public">公开</span>
                     </span>
-                    <span *ngIf="article.Public === PublicState.Secret">私密</span>
+                    <span *ngIf="article.public === PublicState.Secret">私密</span>
                   </td>
                   <td>
                     <span [ngSwitch]="article.state">

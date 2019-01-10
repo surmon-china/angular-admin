@@ -12,8 +12,8 @@ import { Component, AfterViewInit, ViewChild, HostListener, Input, ElementRef } 
   template: `
     <i
       #baBackTop
-      class="back-top sa-back-top ion-md-arrow-up"
-      title="Back to Top"
+      title="返回顶部"
+      class="back-cover-top sa-back-top ion-md-arrow-up"
       [ngStyle]="{ display: isShow ? 'block' : 'none' }"
     ></i>
   `
@@ -29,7 +29,9 @@ export class SaBackTopComponent implements AfterViewInit {
   @ViewChild('baBackTop') private selector: ElementRef;
 
   ngAfterViewInit () {
-    this.onWindowScroll();
+    setTimeout(() => {
+      this.onWindowScroll();
+    });
   }
 
   @HostListener('click')

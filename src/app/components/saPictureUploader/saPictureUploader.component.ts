@@ -44,7 +44,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   @Output() handleUploadCompleted: EventEmitter<any> = new EventEmitter();
 
   // 初始化
-  public upToken: string = '';
+  public up_token: string = '';
   public tokenOk: boolean = false;
   public picture: TPictureUrl = '';
   public uploadInProgress: boolean = false;
@@ -65,9 +65,9 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   // 获取上传 token
   public getUpToken(): void {
     this.httpService.get(API_PATH.UP_TOKEN).then((res: any) => {
-      if (res && res.result && res.result.upToken) {
+      if (res && res.result && res.result.up_token) {
         this.tokenOk = true;
-        this.upToken = res.result.upToken;
+        this.up_token = res.result.up_token;
       }
     }).catch(_ => {
       this.tokenOk = false;
@@ -128,7 +128,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
       const upOptions = { useCdnDomain: true };
 
       // 开始上传
-      const observable = qiniu.upload(upFile, keyName, this.upToken, putExtra, upOptions);
+      const observable = qiniu.upload(upFile, keyName, this.up_token, putExtra, upOptions);
 
       this.uploadInProgress = true;
 
