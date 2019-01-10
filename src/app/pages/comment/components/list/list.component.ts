@@ -15,8 +15,8 @@ import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/page
 import { browserParse, osParse } from '@app/pages/comment/comment.ua.service';
 import { IGetParams } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
-import { IComment, TCommentId, TCommentPostId, ECommentState, ECommentPostType, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
 import { ESortType } from '@app/constants/state';
+import { IComment, TCommentId, TCommentPostId, ECommentState, ECommentPostType, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
 
 const DEFAULT_GET_PARAMS = {
   sort: ESortType.Desc,
@@ -31,11 +31,10 @@ const DEFAULT_GET_PARAMS = {
 })
 export class CommentListComponent implements OnInit {
 
-  SortType = ESortType;
-  CommentState = ECommentState;
-
   @ViewChild('delModal') public delModal: ModalDirective;
 
+  private SortType = ESortType;
+  private CommentState = ECommentState;
   private apiPath: TApiPath = API_PATH.COMMENT;
 
   // 搜索参数

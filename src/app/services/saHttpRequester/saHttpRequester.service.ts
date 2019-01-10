@@ -10,7 +10,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
 import { checkTokenIsOk } from '@app/discriminators/token';
 import { api as ENV_API } from '@/environments/environment';
-import { NO_PERMISSION } from '@/app/constants/http';
+import { UNAUTHORIZED } from '@/app/constants/http';
 import { isAuthPage } from '@app/discriminators/url';
 import { TOKEN, TOKEN_HEADER } from '@app/constants/auth';
 
@@ -88,7 +88,7 @@ export class SaHttpRequesterService {
     this.notificationsService.error(errorMessage, errorDetail, { timeOut: 1000 });
     console.warn('数据请求失败：', response);
     // 如果是 401，即：登陆失败，则删除 token 并跳转到登陆页
-    if (response.status === NO_PERMISSION) {
+    if (response.status === UNAUTHORIZED) {
       localStorage.removeItem(TOKEN);
       this.router.navigate(['/auth']);
     }

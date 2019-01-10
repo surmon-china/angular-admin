@@ -33,7 +33,6 @@ const DEFAULT_AUTH_FORM = {
 };
 
 const DEFAULT_OPTION_FORM = {
-  _id: null,
   title: '',
   sub_title: '',
   keywords: [],
@@ -55,40 +54,36 @@ const DEFAULT_OPTION_FORM = {
 })
 export class OptionsComponent implements OnInit {
 
-  controlStateClass = formControlStateClass;
-
-  // api
-  private authApiPath: TApiPath = API_PATH.AUTH;
+  private controlStateClass = formControlStateClass;
+  private authApiPath: TApiPath = API_PATH.ADMIN_INFO;
   private optionApiPath: TApiPath = API_PATH.OPTION;
-
-  public fetching: IFetching = {
+  private fetching: IFetching = {
     auth: false,
     option: false
   };
 
   // authForm
-  public authForm: FormGroup;
-  public name: AbstractControl;
-  public slogan: AbstractControl;
-  public gravatar: AbstractControl;
-  public password: AbstractControl;
-  public new_password: AbstractControl;
-  public rel_new_password: AbstractControl;
+  private authForm: FormGroup;
+  private name: AbstractControl;
+  private slogan: AbstractControl;
+  private gravatar: AbstractControl;
+  private password: AbstractControl;
+  private new_password: AbstractControl;
+  private rel_new_password: AbstractControl;
 
   // optionForm
-  public optionForm: FormGroup;
-  public _id: AbstractControl;
-  public title: AbstractControl;
-  public sub_title: AbstractControl;
-  public keywords: AbstractControl;
-  public description: AbstractControl;
-  public site_url: AbstractControl;
-  public site_email: AbstractControl;
-  public site_icp: AbstractControl;
-  public seo_ping_sites: AbstractControl;
-  public blacklist_ips: AbstractControl;
-  public blacklist_mails: AbstractControl;
-  public blacklist_keywords: AbstractControl;
+  private optionForm: FormGroup;
+  private title: AbstractControl;
+  private sub_title: AbstractControl;
+  private keywords: AbstractControl;
+  private description: AbstractControl;
+  private site_url: AbstractControl;
+  private site_email: AbstractControl;
+  private site_icp: AbstractControl;
+  private seo_ping_sites: AbstractControl;
+  private blacklist_ips: AbstractControl;
+  private blacklist_mails: AbstractControl;
+  private blacklist_keywords: AbstractControl;
 
   constructor(private router: Router,
               private fb: FormBuilder,
@@ -107,7 +102,6 @@ export class OptionsComponent implements OnInit {
 
     // optionForm
     this.optionForm = this.fb.group({
-      _id: [DEFAULT_OPTION_FORM._id],
       title: [DEFAULT_OPTION_FORM.title, Validators.compose([Validators.required])],
       sub_title: [DEFAULT_OPTION_FORM.sub_title, Validators.compose([Validators.required])],
       keywords: [DEFAULT_OPTION_FORM.keywords, Validators.compose([Validators.required])],

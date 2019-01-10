@@ -9,7 +9,6 @@
     'sa-sidebar-item-expanded': menuItem.expanded
   }"
 >
-
   <a
     *ngIf="!menuItem.children && !menuItem.url" 
     (mouseenter)="onHoverItem($event, item)" 
@@ -19,7 +18,6 @@
     <i *ngIf="menuItem.icon" class="{{ menuItem.icon }}"></i>
     <span>{{ menuItem.title }}</span>
   </a>
-
   <a
     *ngIf="!menuItem.children && menuItem.url" 
     (mouseenter)="onHoverItem($event, item)" 
@@ -30,7 +28,6 @@
     <i *ngIf="menuItem.icon" class="{{ menuItem.icon }}"></i>
     <span>{{ menuItem.title }}</span>
   </a>
-
   <a
     href
     class="al-sidebar-list-link"
@@ -42,7 +39,6 @@
     <span>{{ menuItem.title }}</span>
     <b class="ion-ios-arrow-up" [ngClass]="{'ion-ios-arrow-down': menuItem.expanded}"></b>
   </a>
-
   <ul
     class="al-sidebar-sublist"  
     *ngIf="menuItem.children" 

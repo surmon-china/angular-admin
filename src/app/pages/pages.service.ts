@@ -50,5 +50,5 @@ export const handleItemSelectChange = (options: ISelectChangeOptions): IItemSele
 
 // 表单验证
 export const formControlStateClass = (control: AbstractControl, errClassName?: string): string => {
-  return control.touched ? (control.valid ? 'has-success' : (errClassName || 'has-error')) : '';
+  return (control.touched || control.root.touched) ? (control.valid ? 'has-success' : (errClassName || 'has-error')) : '';
 };

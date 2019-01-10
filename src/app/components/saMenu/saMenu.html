@@ -10,17 +10,17 @@
   </div>
   <div class="al-sidebar-menu">
     <ul id="al-sidebar-list" class="al-sidebar-list">
-        <sa-menu-item
-          [menuItem]="item"
-          (itemHover)="hoverItem($event)"
-          (toggleSubMenu)="toggleSubMenu($event)"
-          *ngFor="let item of menuItems">
-        </sa-menu-item>
-      </ul>
-      <div
-        class="sidebar-hover-elem" 
-        [ngClass]="{'show-hover-elem': showHoverElem }"
-        [ngStyle]="{top: hoverElemTop + 'px', height: hoverElemHeight + 'px'}">
-      </div>
+      <sa-menu-item
+        [menuItem]="item"
+        (itemHover)="hoverItem($event)"
+        (toggleSubMenu)="toggleSubMenu($event)"
+        *ngFor="let item of menuItems">
+      </sa-menu-item>
+    </ul>
+    <div
+      class="sidebar-hover-elem" 
+      [ngClass]="{'show-hover-elem': showHoverElem }"
+      [ngStyle]="{top: hoverElemTop + 'px', height: hoverElemHeight + 'px'}">
+    </div>
   </div>
 </aside>

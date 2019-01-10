@@ -17,9 +17,9 @@ export class SaContentTopComponent {
   public activePageTitle = '';
 
   constructor(private state: GlobalState) {
-    this.state.subscribe('menu.activeLink', (activeLink) => {
+    this.state.subscribe('menu.activeLink', activeLink => {
       if (activeLink) {
-        this.activePageTitle = activeLink.title;
+        this.activePageTitle = activeLink.title || '黑页';
       }
     });
   }

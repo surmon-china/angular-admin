@@ -82,7 +82,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       const url: string = this.router.url;
       // 如果发生 非首页或登陆页 的跳转事件，则执行 Token 全面检查
       if (!isIndexPage(url) && !isAuthPage(url) && !checkTokenIsOk()) {
-        console.warn('页面跳转时检查出无效 Token');
+        // console.warn('页面跳转时检查出无效 Token');
         this.remiveTokenToLogin();
       }
     });

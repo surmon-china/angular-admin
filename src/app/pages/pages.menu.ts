@@ -185,7 +185,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Github',
-            url: 'https://github.com/surmon-china',
+            url: 'https://github.com/surmon-china/angular-admin',
             icon: 'ion-logo-github',
             target: '_blank'
           }

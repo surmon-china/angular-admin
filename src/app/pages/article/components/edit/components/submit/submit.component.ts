@@ -14,9 +14,9 @@ import { EOriginState, EPublicState, EPublishState } from '@app/constants/state'
 
 export class ArticleEditSubmitComponent {
 
-  OriginState = EOriginState;
-  PublicState = EPublicState;
-  PublishState = EPublishState;
+  private OriginState = EOriginState;
+  private PublicState = EPublicState;
+  private PublishState = EPublishState;
 
   @Input() isEdit;
   @Input() state;
@@ -28,6 +28,7 @@ export class ArticleEditSubmitComponent {
   @Output() ppublicChange: EventEmitter<any> = new EventEmitter();
   @Output() passwordChange: EventEmitter<any> = new EventEmitter();
   @Output() submitArticle = new EventEmitter();
+
 
   constructor() {}
 }
