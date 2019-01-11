@@ -25,7 +25,7 @@
 </div>
 <div class="table-responsive">
   <div class="category-list">
-    <sa-loading-spider [show]="fetching.get"></sa-loading-spider>
+    <sa-loading-spider [show]="fetching"></sa-loading-spider>
     <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
       <thead class="thead-inverse">
         <tr>
@@ -47,7 +47,7 @@
       <tbody>
         <tr *ngIf="!categories.data.length;else dataList">
           <td colspan="7">
-            <p class="text-muted text-center category-err-msg">{{ fetching.get ? '数据请求中...' : '暂无数据' }}<p>
+            <p class="text-muted text-center category-err-msg">{{ fetching ? '数据请求中...' : '暂无数据' }}<p>
           </td>
         </tr>
         <ng-template #dataList>

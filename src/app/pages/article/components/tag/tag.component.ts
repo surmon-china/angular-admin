@@ -13,6 +13,7 @@ import { SaHttpRequesterService, IRequestParams } from '@app/services';
 import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
 import { ITag, TResponsePaginationTag } from '@/app/pages/article/article.service';
 import {
+  humanizedLoading,
   mergeFormControlsToInstance,
   handleBatchSelectChange,
   handleItemSelectChange,
@@ -30,6 +31,11 @@ const DEFAULT_SEARCH_FORM = {
   keyword: ''
 };
 
+enum ELoading {
+  GetList,
+  Post
+}
+
 @Component({
   selector: 'page-article-tag',
   encapsulation: ViewEncapsulation.None,
@@ -38,6 +44,7 @@ const DEFAULT_SEARCH_FORM = {
 })
 export class ArticleTagComponent implements OnInit {
 
+  Loading = ELoading;
   controlStateClass = formControlStateClass;
 
   @ViewChild('delModal') delModal: ModalDirective;
@@ -64,10 +71,7 @@ export class ArticleTagComponent implements OnInit {
     data: [],
     pagination: null
   };
-  public fetching: IFetching = {
-    get: false,
-    post: false
-  };
+  public fetching: IFetching = {};
 
   // 构造函数
   constructor(private fb: FormBuilder, private httpService: SaHttpRequesterService) {
@@ -181,75 +185,71 @@ export class ArticleTagComponent implements OnInit {
     }
 
     // 请求
-    this.fetching.get = true;
-
-    return this.httpService
-      .get<TResponsePaginationTag>(this.apiPath, params)
-      .then(tags => {
-        this.tags = tags.result;
-        this.selectedTags = [];
-        this.tagsSelectAll = false;
-        this.fetching.get = false;
-      })
-      .catch(_ => {
-        this.fetching.get = false;
-      });
+    return humanizedLoading(
+      this.fetching,
+      ELoading.GetList,
+      this.httpService
+        .get<TResponsePaginationTag>(this.apiPath, params)
+        .then(tags => {
+          this.tags = tags.result;
+          this.selectedTags = [];
+          this.tagsSelectAll = false;
+        })
+    );
   }
 
   // 添加标签
   public addTag(tag: ITag) {
-    this.fetching.post = true;
-    this.httpService.post(this.apiPath, tag)
-      .then(_ => {
-        this.fetching.post = false;
+    return humanizedLoading(
+      this.fetching,
+      ELoading.Post,
+      this.httpService.post(this.apiPath, tag).then(_ => {
         this.resetEditForm();
         this.resetSearchForm();
         this.getTags();
       })
-      .catch(_ => {
-        this.fetching.post = false;
-      });
+    );
   }
 
   // 修改标签提交
   public doPutTag(tag: ITag) {
-    this.fetching.post = true;
     const newTag = Object.assign({}, this.activeTag, tag);
-    this.httpService.put(`${this.apiPath}/${newTag._id}`, newTag)
-    .then(_ => {
-      this.refreshTags();
-      this.resetEditForm();
-      this.activeTag = null;
-      this.fetching.post = false;
-    })
-    .catch(_ => {
-      this.fetching.post = false;
-    });
+    return humanizedLoading(
+      this.fetching,
+      ELoading.Post,
+      this.httpService
+        .put(`${this.apiPath}/${newTag._id}`, newTag)
+        .then(_ => {
+          this.refreshTags();
+          this.resetEditForm();
+          this.activeTag = null;
+        })
+    );
   }
 
   // 确认删除标签
   public doDelTag() {
     this.httpService.delete(`${this.apiPath}/${this.activeTag._id}`)
-    .then(_ => {
-      this.delModal.hide();
-      this.activeTag = null;
-      this.refreshTags();
-    })
-    .catch(_ => {
-      this.delModal.hide();
-    });
+      .then(_ => {
+        this.delModal.hide();
+        this.activeTag = null;
+        this.refreshTags();
+      })
+      .catch(_ => {
+        this.delModal.hide();
+      });
   }
 
   // 确认批量删除
   public doDelTags() {
     this.httpService.delete(this.apiPath, { tag_ids: this.selectedTags })
-    .then(_ => {
-      this.delModal.hide();
-      this.refreshTags();
-    })
-    .catch(_ => {
-      this.delModal.hide();
-    });
+      .then(_ => {
+        this.delModal.hide();
+        this.refreshTags();
+      })
+      .catch(_ => {
+        this.delModal.hide();
+      });
   }
 
   ngOnInit() {

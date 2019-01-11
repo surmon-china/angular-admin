@@ -10,9 +10,9 @@ import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { SaHttpRequesterService } from '@app/services';
+import { humanizedLoading, mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
+import { SaHttpRequesterService } from '@app/services';
 
 interface IAuth {
   name: string;
@@ -46,6 +46,15 @@ const DEFAULT_OPTION_FORM = {
   blacklist_keywords: []
 };
 
+enum ELoading {
+  Auth,
+  Option,
+  MusicCache,
+  BilibiliCache,
+  GithubCache,
+  SitemapCache,
+}
+
 @Component({
   selector: 'page-options',
   encapsulation: ViewEncapsulation.Emulated,
@@ -54,12 +63,17 @@ const DEFAULT_OPTION_FORM = {
 })
 export class OptionsComponent implements OnInit {
 
+  private Loading = ELoading;
   private controlStateClass = formControlStateClass;
   private authApiPath: TApiPath = API_PATH.ADMIN_INFO;
   private optionApiPath: TApiPath = API_PATH.OPTION;
   private fetching: IFetching = {
-    auth: false,
-    option: false
+    [ELoading.Auth]: false,
+    [ELoading.Option]: false,
+    [ELoading.MusicCache]: false,
+    [ELoading.BilibiliCache]: false,
+    [ELoading.GithubCache]: false,
+    [ELoading.SitemapCache]: false,
   };
 
   // authForm
@@ -85,9 +99,11 @@ export class OptionsComponent implements OnInit {
   private blacklist_mails: AbstractControl;
   private blacklist_keywords: AbstractControl;
 
-  constructor(private router: Router,
-              private fb: FormBuilder,
-              private httpService: SaHttpRequesterService) {
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private httpService: SaHttpRequesterService,
+  ) {
 
     // authForm
     this.authForm = this.fb.group({
@@ -183,61 +199,108 @@ export class OptionsComponent implements OnInit {
   }
 
   // 解析返回的权限表单数据
-  public handleAuthChange = userAuthPromise => {
+  public handleAuthChange(userAuthPromise) {
     userAuthPromise.then(({ result: { name, slogan, gravatar }}) => {
       if (this.authForm.value.rel_new_password) {
         // tslint:disable-next-line:no-console
         console.info('密码更新成功，正跳转至登陆页');
         setTimeout(() => this.router.navigate(['/auth']), 960);
       } else {
-        this.fetching.auth = false;
         this.authForm.reset(Object.assign({}, DEFAULT_AUTH_FORM, { name, slogan, gravatar }));
       }
-    })
-    .catch(_ => {
-      this.fetching.auth = false;
     });
   }
 
   // 解析返回的设置表单数据
-  public handleOptionChange = (optionPromise: Promise<any>) => {
-    return optionPromise
-      .then(({ result: options }) => {
-        const format = value => value.toString().replace(/,/g, '\n');
-        options.seo_ping_sites = format(options.ping_sites);
-        options.blacklist_ips = format(options.blacklist.ips);
-        options.blacklist_mails = format(options.blacklist.mails);
-        options.blacklist_keywords = format(options.blacklist.keywords);
-        this.optionForm.reset(options);
-        this.fetching.option = false;
-      })
-      .catch(_ => {
-        this.fetching.option = false;
-      });
+  public handleOptionChange(optionPromise: Promise<any>) {
+    return optionPromise.then(({ result: options }) => {
+      const format = value => value.toString().replace(/,/g, '\n');
+      options.seo_ping_sites = format(options.ping_sites);
+      options.blacklist_ips = format(options.blacklist.ips);
+      options.blacklist_mails = format(options.blacklist.mails);
+      options.blacklist_keywords = format(options.blacklist.keywords);
+      this.optionForm.reset(options);
+    });
   }
 
   // 获取用户
   public getUserAuth() {
-    this.fetching.auth = true;
-    this.handleAuthChange(this.httpService.get(this.authApiPath));
+    this.handleAuthChange(
+      humanizedLoading(
+        this.fetching,
+        ELoading.Auth,
+        this.httpService.get(this.authApiPath)
+      )
+    );
   }
 
   // 更新用户
   public putAuth(auth: IAuth) {
-    this.fetching.auth = true;
-    this.handleAuthChange(this.httpService.put(this.authApiPath, auth));
+    this.handleAuthChange(
+      humanizedLoading(
+        this.fetching,
+        ELoading.Auth,
+        this.httpService.put(this.authApiPath, auth)
+      )
+    );
   }
 
   // 获取配置
   public getOptions() {
-    this.fetching.option = true;
-    this.handleOptionChange(this.httpService.get(this.optionApiPath));
+    this.handleOptionChange(
+      humanizedLoading(
+        this.fetching,
+        ELoading.Option,
+        this.httpService.get(this.optionApiPath)
+      )
+    );
   }
 
   // 更新配置
   public putOptions(options: any) {
-    this.fetching.option = true;
-    this.handleOptionChange(this.httpService.put(this.optionApiPath, options));
+    this.handleOptionChange(
+      humanizedLoading(
+        this.fetching,
+        ELoading.Option,
+        this.httpService.put(this.optionApiPath, options)
+      )
+    );
+  }
+
+  // 更新音乐缓存
+  public updateMusicCache() {
+    return humanizedLoading(
+      this.fetching,
+      ELoading.MusicCache,
+      this.httpService.patch(API_PATH.MUSIC_LIST_CACHE),
+    );
+  }
+
+  // 更新 Bilibili 缓存
+  public updateBilibiliCache() {
+    return humanizedLoading(
+      this.fetching,
+      ELoading.BilibiliCache,
+      this.httpService.patch(API_PATH.BILIBILI_LIST_CACHE),
+    );
+  }
+
+  // 更新 Github 缓存
+  public updateGithubCache() {
+    return humanizedLoading(
+      this.fetching,
+      ELoading.GithubCache,
+      this.httpService.patch(API_PATH.GITHUB),
+    );
+  }
+
+  // 更新网站地图缓存
+  public updateSitemapCache() {
+    return humanizedLoading(
+      this.fetching,
+      ELoading.SitemapCache,
+      this.httpService.patch(API_PATH.SITEMAP),
+    );
   }
 
   ngOnInit() {

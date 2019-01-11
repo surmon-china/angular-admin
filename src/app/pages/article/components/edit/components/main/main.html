@@ -61,14 +61,18 @@
             [ngClass]="tag.selected ? 'btn-primary' : 'btn-default'"
             (click)="tag.selected = !tag.selected;handleTagChange()"
             [title]="tag.description || tag.name"
-            [disabled]="fetching.tag"
+            [disabled]="fetching[Loading.Tag]"
           >
             <span>{{ tag.name }}</span>
           </button>
         </div>
         <hr>
         <div class="clearfix">
-          <button class="btn btn-sm btn-default btn-with-icon" (click)="getTags()">
+          <button
+            class="btn btn-sm btn-default btn-with-icon"
+            [disabled]="fetching[Loading.Tag]"
+            (click)="getTags()"
+          >
             <i class="ion-md-refresh"></i>
             <span>更新标签列表</span>
           </button>

@@ -13,7 +13,7 @@ import { IArticle } from '@/app/pages/article/article.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
 import { browserParse, osParse } from '@app/pages/comment/comment.ua.service';
-import { mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
+import { humanizedLoading, mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
 import { IComment, TCommentId, ECommentState, ECommentPostType, ECommentParentType, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
 
 const DEFAULT_COMMENT: IComment = {
@@ -32,6 +32,8 @@ const DEFAULT_COMMENT: IComment = {
   extends: []
 };
 
+enum ELoading { GetDetail, Update, GetList, GetArticle }
+
 @Component({
   selector: 'page-comment-detail',
   encapsulation: ViewEncapsulation.None,
@@ -40,10 +42,10 @@ const DEFAULT_COMMENT: IComment = {
 })
 export class CommentDetailComponent implements OnInit {
 
-  CommentState = ECommentState;
-  CommentPostType = ECommentPostType;
-  controlStateClass = formControlStateClass;
-
+  private Loading = ELoading;
+  private CommentState = ECommentState;
+  private CommentPostType = ECommentPostType;
+  private controlStateClass = formControlStateClass;
   private apiPath: TApiPath = API_PATH.COMMENT;
 
   public osParse = osParse;
@@ -54,12 +56,7 @@ export class CommentDetailComponent implements OnInit {
   public comments: TResponsePaginationComment = null;
   public article: IArticle = null;
   public comment: IComment = lodash.cloneDeep(DEFAULT_COMMENT);
-  public fetching: IFetching = {
-    get: false,
-    put: false,
-    comments: false,
-    article: false
-  };
+  public fetching: IFetching = {};
 
   // form
   public editForm: FormGroup;
@@ -119,21 +116,20 @@ export class CommentDetailComponent implements OnInit {
 
   // 获取评论信息
   public getCommentDetail() {
-    this.fetching.get = true;
-    this.httpService
-      .get<IComment>(`${this.apiPath}/${this.comment_id}`)
-      .then(comment => {
-        this.fetching.get = false;
-        this.comment = comment.result;
-        this.updateEditForm(this.comment);
-        if (this.comment.post_id !== ECommentPostType.Guestbook) {
-          this.getCommentArticleDetail();
-        }
-        this.getComments({ post_id: this.comment.post_id, per_page: 1000 });
-      })
-      .catch(_ => {
-        this.fetching.get = false;
-      });
+    humanizedLoading(
+      this.fetching,
+      ELoading.GetDetail,
+      this.httpService
+        .get<IComment>(`${this.apiPath}/${this.comment_id}`)
+        .then(comment => {
+          this.comment = comment.result;
+          this.updateEditForm(this.comment);
+          if (this.comment.post_id !== ECommentPostType.Guestbook) {
+            this.getCommentArticleDetail();
+          }
+          this.getComments({ post_id: this.comment.post_id, per_page: 1000 });
+        })
+    );
   }
 
   // 提交修改评论
@@ -157,43 +153,41 @@ export class CommentDetailComponent implements OnInit {
       extends: comment.extends.filter(extend => extend && extend.name && extend.value)
     });
 
-    this.fetching.put = true;
-    this.httpService.put(`${this.apiPath}/${putComment._id}`, putComment)
-    .then(newComment => {
-      this.comment = newComment.result;
-      this.fetching.put = false;
-    })
-    .catch(_ => {
-      this.fetching.put = false;
-    });
+    humanizedLoading(
+      this.fetching,
+      ELoading.Update,
+      this.httpService
+        .put(`${this.apiPath}/${putComment._id}`, putComment)
+        .then(newComment => {
+          this.comment = newComment.result;
+        })
+    );
   }
 
   // 获取评论列表
   public getComments(params: IRequestParams) {
-    this.fetching.comments = true;
-    this.httpService
-      .get<TResponsePaginationComment>(this.apiPath, params)
-      .then(comments => {
-        this.comments = comments.result;
-        this.fetching.comments = false;
-      })
-      .catch(_ => {
-        this.fetching.comments = false;
-      });
+    humanizedLoading(
+      this.fetching,
+      ELoading.GetList,
+      this.httpService
+        .get<TResponsePaginationComment>(this.apiPath, params)
+        .then(comments => {
+          this.comments = comments.result;
+        })
+    );
   }
 
   // 获取文章详情
   public getCommentArticleDetail() {
-    this.fetching.article = true;
-    this.httpService
-      .get<IArticle>(`/article/${this.comment.post_id}`)
-      .then(article => {
-        this.article = article.result;
-        this.fetching.article = false;
-      })
-      .catch(_ => {
-        this.fetching.article = false;
-      });
+    humanizedLoading(
+      this.fetching,
+      ELoading.GetArticle,
+      this.httpService
+        .get<IArticle>(`/article/${this.comment.post_id}`)
+        .then(article => {
+          this.article = article.result;
+        })
+    );
   }
 
   // 初始化

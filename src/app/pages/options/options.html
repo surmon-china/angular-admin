@@ -146,7 +146,7 @@
               <button
                 type="submit" 
                 class="btn btn-default btn-with-icon"
-                [disabled]="!optionForm.valid || fetching.option"
+                [disabled]="!optionForm.valid || fetching[Loading.Option]"
               >
                 <i class="ion-md-done-all"></i>
                 <span>保存修改</span>
@@ -244,7 +244,7 @@
               <button
                 type="submit" 
                 class="btn btn-default  btn-with-icon"
-                [disabled]="!authForm.valid || fetching.auth"
+                [disabled]="!authForm.valid || fetching[Loading.Auth]"
               >
                 <i class="ion-md-done-all"></i>
                 <span>保存修改</span>
@@ -252,6 +252,59 @@
             </div>
           </div>
         </form>
+      </div>
+    </sa-card>
+    <sa-card title="更新数据" baCardClass="with-scroll">
+      <div class="row">
+        <div class="col-sm-12">
+          <button
+            class="btn btn-default btn-with-icon"
+            [disabled]="fetching[Loading.GithubCache]"
+            (click)="updateGithubCache()"
+          >
+            <i class="ion-md-refresh"></i>
+            <span>更新 Github 缓存{{ fetching[Loading.GithubCache] ? '...' : '' }}</span>
+          </button>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-12">
+          <button
+            class="btn btn-default btn-with-icon"
+            [disabled]="fetching[Loading.MusicCache]"
+            (click)="updateMusicCache()"
+          >
+            <i class="ion-md-refresh"></i>
+            <span>更新音乐缓存{{ fetching[Loading.MusicCache] ? '...' : '' }}</span>
+          </button>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-12">
+          <button
+            class="btn btn-default btn-with-icon"
+            [disabled]="fetching[Loading.BilibiliCache]"
+            (click)="updateBilibiliCache()"
+          >
+            <i class="ion-md-refresh"></i>
+            <span>更新 Bilibili 缓存{{ fetching[Loading.BilibiliCache] ? '...' : '' }}</span>
+          </button>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-12">
+          <button
+            class="btn btn-default btn-with-icon"
+            [disabled]="fetching[Loading.SitemapCache]"
+            (click)="updateSitemapCache()"
+          >
+            <i class="ion-md-refresh"></i>
+            <span>更新网站地图缓存{{ fetching[Loading.SitemapCache] ? '...' : '' }}</span>
+          </button>
+        </div>
       </div>
     </sa-card>
   </div>

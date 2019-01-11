@@ -10,13 +10,15 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
 import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
 import { browserParse, osParse } from '@app/pages/comment/comment.ua.service';
 import { IGetParams } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
 import { ESortType } from '@app/constants/state';
+import { humanizedLoading, handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
 import { IComment, TCommentId, TCommentPostId, ECommentState, ECommentPostType, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
+
+enum ELoading { Get, PatchState }
 
 const DEFAULT_GET_PARAMS = {
   sort: ESortType.Desc,
@@ -33,6 +35,7 @@ export class CommentListComponent implements OnInit {
 
   @ViewChild('delModal') public delModal: ModalDirective;
 
+  private Loading = ELoading;
   private SortType = ESortType;
   private CommentState = ECommentState;
   private apiPath: TApiPath = API_PATH.COMMENT;
@@ -51,10 +54,7 @@ export class CommentListComponent implements OnInit {
     data: [],
     pagination: null
   };
-  public fetching: IFetching = {
-    get: false,
-    put: false
-  };
+  public fetching: IFetching = {};
 
   // 其他数据
   public todoDelCommentId: TCommentId = null;
@@ -181,35 +181,32 @@ export class CommentListComponent implements OnInit {
       params.post_id = this.post_id;
     }
 
-    this.fetching.get = true;
-
     // 请求评论
-    this.httpService.get<TResponsePaginationComment>(this.apiPath, params)
+    humanizedLoading(
+      this.fetching,
+      ELoading.Get,
+      this.httpService
+      .get<TResponsePaginationComment>(this.apiPath, params)
       .then(comments => {
         this.comments = comments.result;
         this.commentsSelectAll = false;
         this.selectedComments = [];
         this.selectedPostIds = [];
-        this.fetching.get = false;
       })
-      .catch(_ => {
-        this.fetching.get = false;
-      });
+    );
   }
 
   // 更新评论状态
   public updateCommentsState(state: ECommentState, comment: IComment) {
     const comment_ids = comment ? [comment._id] : this.selectedComments;
     const post_ids = (comment ? [comment.post_id] : lodash.uniq(this.selectedPostIds)).filter(id => id);
-    this.fetching.put = true;
-    this.httpService.patch(this.apiPath, { comment_ids, post_ids, state })
-      .then(_ => {
-        this.refreshComments();
-        this.fetching.put = false;
-      })
-      .catch(_ => {
-        this.fetching.put = false;
-      });
+    humanizedLoading(
+      this.fetching,
+      ELoading.PatchState,
+      this.httpService
+        .patch(this.apiPath, { comment_ids, post_ids, state })
+        .then(this.refreshComments)
+    );
   }
 
   // 彻底删除评论
@@ -220,8 +217,8 @@ export class CommentListComponent implements OnInit {
 
     const post_ids = (
       delSingleComment && todoDelComment
-      ? [todoDelComment.post_id]
-      :  lodash.uniq(this.selectedPostIds)
+        ? [todoDelComment.post_id]
+        : lodash.uniq(this.selectedPostIds)
     ).filter(id => id);
 
     this.httpService.delete(this.apiPath, { comment_ids, post_ids })

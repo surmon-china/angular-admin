@@ -13,7 +13,7 @@ import { layoutPaths } from '@app/theme/theme.constants';
 import { SaThemeConfig } from '@app/theme/theme.config';
 import { AppState } from '@app/app.service';
 import { checkTokenIsOk } from '@app/discriminators/token';
-import { isIndexPage, isAuthPage, isDashboardPage } from '@app/discriminators/url';
+import { isIndexPage, isAuthPage } from '@app/discriminators/url';
 import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
 import { TOKEN } from '@app/constants/auth';
 

@@ -8,9 +8,10 @@ import * as API_PATH from '@app/constants/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { IArticle, TArticleId } from '@/app/pages/article/article.service';
-import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { SaHttpRequesterService } from '@app/services';
 import { EPublishState, EPublicState, EOriginState } from '@app/constants/state';
+import { TApiPath, IFetching } from '@app/pages/pages.constants';
+import { humanizedLoading } from '@/app/pages/pages.service';
+import { SaHttpRequesterService } from '@app/services';
 
 const DEFAULT_ARTICLE = {
   title: '',
@@ -27,6 +28,11 @@ const DEFAULT_ARTICLE = {
   extends: []
 };
 
+enum ELoading {
+  Get,
+  Post
+}
+
 @Component({
   selector: 'page-article-edit',
   template: require('./edit.html')
@@ -36,16 +42,14 @@ export class ArticleEditComponent implements OnInit {
 
   @ViewChild('editForm') editFormMain: ElementRef;
 
+  private Loading = ELoading;
   private apiPath: TApiPath = API_PATH.ARTICLE;
   private isSubmited: boolean = false;
 
   // 文章内容
   public article_id: TArticleId = null;
   public article: IArticle = DEFAULT_ARTICLE;
-  public fetching: IFetching = {
-    get: false,
-    post: false
-  };
+  public fetching: IFetching = {};
 
   constructor(
     public elem: ElementRef,
@@ -61,37 +65,34 @@ export class ArticleEditComponent implements OnInit {
       window.scrollTo(0, 0);
       return;
     }
-    this.fetching.post = true;
     const isSubmitNewPost = !this.article._id;
-    const request = this.article._id
-      ? this.httpService.put(`${this.apiPath}/${this.article._id}`, this.article)
-      : this.httpService.post(this.apiPath, this.article);
-    request
-      .then(article => {
-        this.fetching.post = false;
+    humanizedLoading(
+      this.fetching,
+      ELoading.Post,
+      (isSubmitNewPost
+        ? this.httpService.post(this.apiPath, this.article)
+        : this.httpService.put(`${this.apiPath}/${this.article._id}`, this.article)
+      ).then(article => {
         if (isSubmitNewPost) {
           this.router.navigate([`/article/edit/${article.result._id}`]);
         } else {
           this.article = article.result;
         }
       })
-      .catch(_ => {
-        this.fetching.post = false;
-      });
+    );
   }
 
   // 获取文章信息
   public getArticle(article_id: string) {
-    this.fetching.get = true;
-    this.httpService
-      .get<IArticle>(`${this.apiPath}/${article_id}`)
-      .then(article => {
-        this.fetching.get = false;
-        this.article = article.result;
-      })
-      .catch(_ => {
-        this.fetching.get = false;
-      });
+    humanizedLoading(
+      this.fetching,
+      ELoading.Get,
+      this.httpService
+        .get<IArticle>(`${this.apiPath}/${article_id}`)
+        .then(article => {
+          this.article = article.result;
+        })
+    );
   }
 
   // 初始化
