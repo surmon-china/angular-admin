@@ -1,5 +1,5 @@
 <form class="form-horizontal article-editor-main-form" name="articleForm" [formGroup]="editForm">
-  <div class="form-group row" [ngClass]="controlStateClass(formTitle)">
+  <div class="form-group row" [ngClass]="controlStateClass(formTitle, null, isSubmited)">
     <label for="article-title" class="col-sm-1 form-control-label text-right">文章标题</label>
     <div class="col-sm-5">
       <input
@@ -15,22 +15,22 @@
       />
     </div>
   </div>
-  <div class="form-group row" [ngClass]="controlStateClass(formKeywords, 'has-warning')">
+  <div class="form-group row" [ngClass]="controlStateClass(formKeywords, 'has-warning', isSubmited)">
     <label for="article-keywords" class="col-sm-1 form-control-label text-right">文章关键词</label>
     <div class="col-sm-5">
       <input
         type="text"
+        id="article-keywords"
+        name="article-keywords"
         class="form-control form-control-lg" 
         title="多个关键词以 ' , ' 隔开" 
         placeholder="多个关键词以 ' , ' 隔开" 
-        name="article-keywords"
-        id="article-keywords"
         [formControl]="formKeywords"
         (change)="handleKeywordsChange($event)"
       />
     </div>
   </div>
-  <div class="form-group row" [ngClass]="controlStateClass(formDescription, 'has-warning')">
+  <div class="form-group row" [ngClass]="controlStateClass(formDescription, 'has-warning', isSubmited)">
     <label for="article-description" class="col-sm-1 form-control-label text-right">文章描述</label>
     <div class="col-sm-10">
       <textarea
@@ -76,11 +76,11 @@
       </div>
     </div>
   </div>
-  <div class="form-group row" [ngClass]="controlStateClass(formContent, 'has-danger')">
+  <div class="form-group row" [ngClass]="controlStateClass(formContent, 'has-error', isSubmited)">
     <label for="articleContent" class="col-sm-1 form-control-label text-right">文章内容</label>
     <div class="col-sm-10">
-      <sa-markdown-editor 
-        class="form-control article-content" 
+      <sa-markdown-editor
+        class="form-control article-content"
         title="文章内容"
         [formControl]="formContent"
         (change)="handleContentChange($event)"

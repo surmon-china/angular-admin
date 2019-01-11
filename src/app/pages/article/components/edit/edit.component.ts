@@ -37,6 +37,7 @@ export class ArticleEditComponent implements OnInit {
   @ViewChild('editForm') editFormMain: ElementRef;
 
   private apiPath: TApiPath = API_PATH.ARTICLE;
+  private isSubmited: boolean = false;
 
   // 文章内容
   public article_id: TArticleId = null;
@@ -56,6 +57,7 @@ export class ArticleEditComponent implements OnInit {
   // 提交文章
   public submitArticle(): void {
     if ((this.editFormMain as any).editForm.invalid) {
+      this.isSubmited = true;
       window.scrollTo(0, 0);
       return;
     }
