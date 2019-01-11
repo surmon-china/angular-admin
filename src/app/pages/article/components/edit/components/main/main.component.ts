@@ -11,6 +11,11 @@ import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/p
 import { ITag, TResponsePaginationTag } from '@/app/pages/article/article.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
+import { humanizedLoading } from '@/app/pages/pages.service';
+
+enum ELoading {
+  Tag
+}
 
 @Component({
   selector: 'box-article-edit-main',
@@ -20,6 +25,7 @@ import { SaHttpRequesterService } from '@app/services';
 })
 export class ArticleEditMainComponent implements OnInit, OnChanges {
 
+  private Loading = ELoading;
   private tagApiPath: TApiPath = API_PATH.TAG;
   private controlStateClass = formControlStateClass;
 
@@ -43,7 +49,7 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   public formDescription: AbstractControl;
 
   public tags: ITag[] = [];
-  public fetching: IFetching = { tag: false };
+  public fetching: IFetching = {};
 
   constructor(private fb: FormBuilder, private httpService: SaHttpRequesterService) {
     this.editForm = this.fb.group({
@@ -118,16 +124,15 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
 
   // 获取所有标签
   public getTags() {
-    this.fetching.tag = true;
-    this.httpService
-    .get<TResponsePaginationTag>(this.tagApiPath, { per_page: 666 })
-    .then(tags => {
-      this.fetching.tag = false;
-      this.tags = tags.result.data;
-      this.resetTagsCheck();
-    })
-    .catch(_ => {
-      this.fetching.tag = false;
-    });
+    return humanizedLoading(
+      this.fetching,
+      ELoading.Tag,
+      this.httpService
+        .get<TResponsePaginationTag>(this.tagApiPath, { per_page: 666 })
+        .then(tags => {
+          this.tags = tags.result.data;
+          this.resetTagsCheck();
+        })
+    );
   }
 }

@@ -133,7 +133,7 @@
       </div>
       <div class="table-responsive">
         <div class="comment-list">
-          <sa-loading-spider [show]="fetching.get"></sa-loading-spider>
+          <sa-loading-spider [show]="fetching[Loading.Get]"></sa-loading-spider>
           <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
             <thead class="thead-inverse">
               <tr>
@@ -161,7 +161,7 @@
               <tr *ngIf="!comments.data.length;else dataList">
                 <td colspan="11">
                   <p class="text-muted text-center comment-err-msg" *ngIf="!comments.data.length">
-                    <span>{{ fetching.get ? '数据请求中...' : '暂无数据' }}</span>
+                    <span>{{ fetching[Loading.Get] ? '数据请求中...' : '暂无数据' }}</span>
                   <p>
                 </td>
               </tr>

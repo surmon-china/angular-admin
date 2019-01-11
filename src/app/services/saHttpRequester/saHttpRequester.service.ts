@@ -1,6 +1,6 @@
 /**
- * @file API service
- * @module app/api-service
+ * @file http service
+ * @module app/http-service
  * @author Surmon <https://github.com/surmon-china>
  */
 

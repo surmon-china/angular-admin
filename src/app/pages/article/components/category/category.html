@@ -3,7 +3,7 @@
     <sa-card title="添加分类" baCardClass="with-scroll">
       <box-category-add
         #editCategoryForm
-        [fetching]="fetching"
+        [fetching]="fetching[Loading.Post]"
         [category]="todoEditCategory"
         [categories]="categories.data"
         (resetForm)="resetEditForm()"
@@ -14,7 +14,7 @@
   <div class="col-md-8 col-xs-12">
     <sa-card title="分类管理" baCardClass="with-scroll">
       <box-category-list
-        [fetching]="fetching"
+        [fetching]="fetching[Loading.Get]"
         [categories]="categories"
         (refreshList)="getCategories()"
         (editCategoryRequest)="editCategory($event)"

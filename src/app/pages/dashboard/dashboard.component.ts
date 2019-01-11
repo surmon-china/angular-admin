@@ -8,6 +8,7 @@ import * as API_PATH from '@app/constants/api';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { SaHttpRequesterService } from '@app/services';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
+import { humanizedLoading } from '@/app/pages/pages.service';
 import { IComment, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
 import { IArticle, TResponsePaginationArticle } from '@/app/pages/article/article.service';
 
@@ -35,6 +36,13 @@ const DEFAULT_STATISTICS_DATA = [
   }
 ];
 
+enum ELoading {
+  Statistics,
+  Articles,
+  Comments,
+  Guestbooks,
+}
+
 @Component({
   selector: 'page-dashboard',
   encapsulation: ViewEncapsulation.None,
@@ -43,6 +51,7 @@ const DEFAULT_STATISTICS_DATA = [
 })
 export class DashboardComponent  implements OnInit {
 
+  private Loading = ELoading;
   private statisticApiPath: TApiPath = API_PATH.STATISTIC;
   private articleApiPath: TApiPath = API_PATH.ARTICLE;
   private commentApiPath: TApiPath = API_PATH.COMMENT;
@@ -52,51 +61,40 @@ export class DashboardComponent  implements OnInit {
   public articles: IArticle[] = [];
   public comments: IComment[] = [];
   public guestbooks: IComment[] = [];
-  public fetching: IFetching = {
-    statistics: false,
-    articles: false,
-    comments: false,
-    guestbooks: false
-  };
+  public fetching: IFetching = {};
 
   constructor(private httpService: SaHttpRequesterService) {}
 
   getStatisticsData() {
-    this.fetching.statistics = true;
-    return this.httpService.get<IStatistics>(this.statisticApiPath)
-      .then(statistics => {
+    return humanizedLoading(
+      this.fetching,
+      ELoading.Statistics,
+      this.httpService.get<IStatistics>(this.statisticApiPath).then(statistics => {
         this.statistics = statistics.result;
-        this.fetching.statistics = false;
       })
-      .catch(_ => {
-        this.fetching.statistics = false;
-      });
+    );
   }
 
   getArticlesData() {
-    this.fetching.articles = true;
-    return this.httpService.get<TResponsePaginationArticle>(this.articleApiPath)
-      .then(articles => {
+    return humanizedLoading(
+      this.fetching,
+      ELoading.Articles,
+      this.httpService.get<TResponsePaginationArticle>(this.articleApiPath).then(articles => {
         this.articles = articles.result.data;
-        this.fetching.articles = false;
       })
-      .catch(_ => {
-        this.fetching.articles = false;
-      });
+    );
   }
 
   getCommentsData(guestbook?: boolean) {
     const type = guestbook ? 'guestbooks' : 'comments';
     const params = guestbook ? { post_id: 0 } : {};
-    this.fetching[type] = true;
-    return this.httpService.get<TResponsePaginationComment>(this.commentApiPath, params)
-      .then(comments => {
+    return humanizedLoading(
+      this.fetching,
+      guestbook ? ELoading.Guestbooks : ELoading.Comments,
+      this.httpService.get<TResponsePaginationComment>(this.commentApiPath, params).then(comments => {
         this[type] = comments.result.data;
-        this.fetching[type] = false;
       })
-      .catch(_ => {
-        this.fetching[type] = false;
-      });
+    );
   }
 
   ngOnInit() {

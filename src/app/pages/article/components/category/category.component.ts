@@ -11,6 +11,12 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@/app/pages/article/article.service';
 import { TApiPath, IFetching, TSelectedIds } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
+import { humanizedLoading } from '@/app/pages/pages.service';
+
+enum ELoading {
+  Get,
+  Post
+}
 
 @Component({
   selector: 'page-article-category',
@@ -21,15 +27,13 @@ export class ArticleCategoryComponent implements OnInit {
   @ViewChild('delModal') delModal: ModalDirective;
   @ViewChild('editCategoryForm') editCategoryForm;
 
+  private Loading = ELoading;
   private apiPath: TApiPath = API_PATH.CATEGORY;
 
   public categories: TResponsePaginationCategory = {
     data: []
   };
-  public fetching: IFetching = {
-    get: false,
-    post: false
-  };
+  public fetching: IFetching = {};
   public todoDelCategory: ICategory;
   public todoEditCategory: ICategory;
   public todoDelCategories: TSelectedIds;
@@ -71,43 +75,44 @@ export class ArticleCategoryComponent implements OnInit {
   }
 
   // 添加或更新的相应处理
-  public handlePostRequest(request: Promise<any>) {
-    request.then(_ => {
-      this.getCategories();
-      this.resetEditForm();
-      this.fetching.post = false;
-    }).catch(_ => {
-      this.fetching.post = false;
-    });
+  public handlePostDone() {
+    this.getCategories();
+    this.resetEditForm();
   }
 
   // 获取分类
   public getCategories() {
-    this.fetching.get = true;
-    this.httpService.get<TResponsePaginationCategory>(this.apiPath, { per_page: 100 })
-    .then(categories => {
-      this.categories = categories.result;
-      this.fetching.get = false;
-      this.categories.data = buildLevelCategories(this.categories.data);
-    })
-    .catch(_ => {
-      this.fetching.get = false;
-    });
+    humanizedLoading(
+      this.fetching,
+      ELoading.Get,
+      this.httpService
+        .get<TResponsePaginationCategory>(this.apiPath, { per_page: 100 })
+        .then(categories => {
+          this.categories = categories.result;
+          this.categories.data = buildLevelCategories(this.categories.data);
+        })
+    );
   }
 
   // 添加分类
   public addCategory(category: ICategory) {
-    this.fetching.post = true;
-    const request = this.httpService.post(this.apiPath, category);
-    this.handlePostRequest(request);
+    humanizedLoading(
+      this.fetching,
+      ELoading.Post,
+      this.httpService.post(this.apiPath, category).then(this.handlePostDone)
+    );
   }
 
   // 修改分类
   public doEditCategory(category: ICategory) {
-    this.fetching.post = true;
     const newCategory = Object.assign(this.todoEditCategory, category);
-    const request = this.httpService.put(`${ this.apiPath }/${ newCategory._id }`, newCategory);
-    this.handlePostRequest(request);
+    humanizedLoading(
+      this.fetching,
+      ELoading.Post,
+      this.httpService
+        .put(`${ this.apiPath }/${ newCategory._id }`, newCategory)
+        .then(this.handlePostDone)
+    );
   }
 
   // 删除分类

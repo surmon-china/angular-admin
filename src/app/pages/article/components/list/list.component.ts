@@ -11,7 +11,7 @@ import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SaHttpRequesterService } from '@app/services';
 import { IGetParams } from '@app/pages/pages.constants';
-import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
+import { humanizedLoading, handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
 import { buildLevelCategories, TResponsePaginationTag, TResponsePaginationArticle, TResponsePaginationCategory } from '@/app/pages/article/article.service';
 import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
 import { EPublishState, EPublicState, EOriginState, ESortType } from '@app/constants/state';
@@ -29,6 +29,13 @@ const DEFAULT_GET_PARAMS = {
   origin: EOriginState.All
 };
 
+enum ELoading {
+  GetList,
+  PatchState,
+  GetTagList,
+  GetCategoryList
+}
+
 @Component({
   selector: 'page-article-list',
   encapsulation: ViewEncapsulation.None,
@@ -37,6 +44,7 @@ const DEFAULT_GET_PARAMS = {
 })
 export class ArticleListComponent implements OnInit {
 
+  Loading = ELoading;
   SortType = ESortType;
   OriginState = EOriginState;
   PublicState = EPublicState;
@@ -64,12 +72,7 @@ export class ArticleListComponent implements OnInit {
     data: [],
     pagination: null
   };
-  public fetching: IFetching = {
-    put: false,
-    tag: false,
-    article: false,
-    category: false
-  };
+  public fetching: IFetching = {};
 
   // 其他数据
   public todoDelArticleId: string = null;
@@ -170,59 +173,55 @@ export class ArticleListComponent implements OnInit {
       }
     });
 
-    this.fetching.article = true;
-
-    this.httpService
-      .get<TResponsePaginationArticle>(this.articleApiPath, params)
-      .then(articles => {
-        this.articles = articles.result;
-        this.articlesSelectAll = false;
-        this.selectedArticles = [];
-        this.fetching.article = false;
-      })
-      .catch(_ => {
-        this.fetching.article = false;
-      });
+    humanizedLoading(
+      this.fetching,
+      ELoading.GetList,
+      this.httpService
+        .get<TResponsePaginationArticle>(this.articleApiPath, params)
+        .then(articles => {
+          this.articles = articles.result;
+          this.articlesSelectAll = false;
+          this.selectedArticles = [];
+        })
+    );
   }
 
   // 获取标签列表
   public getTags(): void {
-    this.fetching.tag = true;
-    this.httpService
-      .get<TResponsePaginationTag>(this.tagApiPath, { per_page: 666 })
-      .then(tags => {
-        this.tags = tags.result;
-        this.fetching.tag = false;
-      })
-      .catch(_ => {
-        this.fetching.tag = false;
-      });
+    humanizedLoading(
+      this.fetching,
+      ELoading.GetTagList,
+      this.httpService
+        .get<TResponsePaginationTag>(this.tagApiPath, { per_page: 666 })
+        .then(tags => {
+          this.tags = tags.result;
+        })
+    );
   }
 
   // 获取分类列表
   public getCategories(): void {
-    this.fetching.category = true;
-    this.httpService
-      .get<TResponsePaginationCategory>(this.categoryApiPath, { per_page: 666 })
-      .then(categories => {
-        this.fetching.category = false;
-        this.categories = categories.result;
-        this.categories.data = buildLevelCategories(this.categories.data);
-      })
-      .catch(_ => {
-        this.fetching.category = false;
-      });
+    humanizedLoading(
+      this.fetching,
+      ELoading.GetCategoryList,
+      this.httpService
+        .get<TResponsePaginationCategory>(this.categoryApiPath, { per_page: 666 })
+        .then(categories => {
+          this.categories = categories.result;
+          this.categories.data = buildLevelCategories(this.categories.data);
+        })
+    );
   }
 
   // 对于所有修改进行相应统一处理
   public patchArticles(data: Object): void {
-      this.fetching.put = true;
+    humanizedLoading(
+      this.fetching,
+      ELoading.PatchState,
       this.httpService.patch(this.articleApiPath, data).then(_ => {
-        this.fetching.put = false;
         this.refreshArticles();
-      }).catch(_ => {
-        this.fetching.put = false;
-      });
+      })
+    );
   }
 
   // 移至回收站

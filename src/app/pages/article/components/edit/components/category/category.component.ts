@@ -9,6 +9,11 @@ import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnInit, OnCh
 import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@/app/pages/article/article.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
+import { humanizedLoading } from '@/app/pages/pages.service';
+
+enum ELoading {
+  Get
+}
 
 @Component({
   selector: 'box-article-edit-category',
@@ -22,11 +27,12 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
   @Input() category;
   @Output() categoryChange: EventEmitter<any> = new EventEmitter();
 
+  private Loading = ELoading;
   private apiPath: TApiPath = API_PATH.CATEGORY;
 
   public categories: ICategory[] = [];
   public originalCategories: ICategory[] = [];
-  public fetching: IFetching = { get: false };
+  public fetching: IFetching = {};
 
   constructor(private httpService: SaHttpRequesterService) {}
 
@@ -52,16 +58,15 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
 
   // 获取所有分类
   public getCategories() {
-    this.fetching.get = true;
-    this.httpService
-    .get<TResponsePaginationCategory>(this.apiPath, { per_page: 666 })
-    .then(categories => {
-      this.fetching.get = false;
-      this.originalCategories = categories.result.data;
-      this.buildLevelCategories();
-    })
-    .catch(_ => {
-      this.fetching.get = false;
-    });
+    return humanizedLoading(
+      this.fetching,
+      ELoading.Get,
+      this.httpService
+        .get<TResponsePaginationCategory>(this.apiPath, { per_page: 666 })
+        .then(categories => {
+          this.originalCategories = categories.result.data;
+          this.buildLevelCategories();
+        })
+    );
   }
 }

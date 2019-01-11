@@ -12,8 +12,14 @@ import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
 import { TApiPath, TSelectedIds, TSelectedAll, IResponsePaginationData, IFetching } from '@app/pages/pages.constants';
-import { mergeFormControlsToInstance, handleBatchSelectChange, handleItemSelectChange, formControlStateClass } from '@/app/pages/pages.service';
 import { EPublishState } from '@app/constants/state';
+import {
+  humanizedLoading,
+  mergeFormControlsToInstance,
+  handleBatchSelectChange,
+  handleItemSelectChange,
+  formControlStateClass
+} from '@/app/pages/pages.service';
 
 // 公告
 interface IAnnouncement {
@@ -27,6 +33,7 @@ interface IAnnouncement {
 }
 
 type TResponseAnnouncement = IResponsePaginationData<IAnnouncement>;
+enum ELoading { List }
 
 const DEFAULT_EDIT_FORM = {
   content: '',
@@ -45,12 +52,12 @@ const DEFAULT_SEARCH_FORM = {
 })
 export class AnnouncementComponent implements OnInit {
 
-  PublishState = EPublishState;
-  controlStateClass = formControlStateClass;
+  private Loading = ELoading;
+  private PublishState = EPublishState;
+  private controlStateClass = formControlStateClass;
+  private apiPath: TApiPath = API_PATH.ANNOUNCEMENT;
 
   @ViewChild('delModal') delModal: ModalDirective;
-
-  private apiPath: TApiPath = API_PATH.ANNOUNCEMENT;
 
   // 表单
   public editForm: FormGroup;
@@ -64,7 +71,7 @@ export class AnnouncementComponent implements OnInit {
   public announcementsSelectAll: TSelectedAll = false;
   public selectedAnnouncements: TSelectedIds = [];
   public publishState: EPublishState = EPublishState.All;
-  public fetching: IFetching = { get: false };
+  public fetching: IFetching = {};
   public announcements: TResponseAnnouncement = {
     data: [],
     pagination: null
@@ -215,18 +222,15 @@ export class AnnouncementComponent implements OnInit {
       params.state = this.publishState;
     }
 
-    this.fetching.get = true;
-
-    return this.httpService.get<TResponseAnnouncement>(this.apiPath, params)
-      .then(announcements => {
+    return humanizedLoading(
+      this.fetching,
+      ELoading.List,
+      this.httpService.get<TResponseAnnouncement>(this.apiPath, params).then(announcements => {
         this.announcements = announcements.result;
         this.selectedAnnouncements = [];
         this.announcementsSelectAll = false;
-        this.fetching.get = false;
       })
-      .catch(_ => {
-        this.fetching.get = false;
-      });
+    );
   }
 
   // 添加公告

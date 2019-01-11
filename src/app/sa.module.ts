@@ -49,7 +49,10 @@ const SA_PIPES = [
   Pipes.TruncatePipe
 ];
 
+
 const SA_SERVICES = [
+  // 史上未解之谜
+  // Services.SaHttpLoadingService,
   Services.SaHttpRequesterService,
   Services.SaImageLoaderService,
   Services.SaThemeSpinnerService,
