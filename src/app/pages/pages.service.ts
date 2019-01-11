@@ -49,6 +49,12 @@ export const handleItemSelectChange = (options: ISelectChangeOptions): IItemSele
 };
 
 // 表单验证
-export const formControlStateClass = (control: AbstractControl, errClassName?: string): string => {
-  return (control.touched || control.root.touched) ? (control.valid ? 'has-success' : (errClassName || 'has-error')) : '';
+export const formControlStateClass = (control: AbstractControl, errClassName?: string, isSubmited?: boolean): string => {
+    if (control.touched || control.root.touched || control.dirty || control.root.dirty || isSubmited) {
+      if (control.valid) {
+        return 'has-success';
+      } else {
+        return errClassName || 'has-error';
+      }
+    }
 };

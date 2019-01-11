@@ -3,6 +3,7 @@
     <sa-card title="撰写文章" baCardClass="with-scroll">
       <box-article-edit-main
         #editForm
+        [isSubmited]="isSubmited"
         [(tag)]="article.tag"
         [(title)]="article.title"
         [(content)]="article.content"

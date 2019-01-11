@@ -5,8 +5,8 @@
  */
 
 import * as API_PATH from '@app/constants/api';
+import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Component, EventEmitter, ViewEncapsulation, Input, Output, OnInit, OnChanges } from '@angular/core';
-import { FormGroup, AbstractControl, FormBuilder, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
 import { ITag, TResponsePaginationTag } from '@/app/pages/article/article.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
@@ -20,8 +20,10 @@ import { SaHttpRequesterService } from '@app/services';
 })
 export class ArticleEditMainComponent implements OnInit, OnChanges {
 
-  controlStateClass = formControlStateClass;
+  private tagApiPath: TApiPath = API_PATH.TAG;
+  private controlStateClass = formControlStateClass;
 
+  @Input() isSubmited;
   @Input() tag;
   @Input() title;
   @Input() content;
@@ -32,8 +34,6 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   @Output() contentChange: EventEmitter<any> = new EventEmitter();
   @Output() keywordsChange: EventEmitter<any> = new EventEmitter();
   @Output() descriptionChange: EventEmitter<any> = new EventEmitter();
-
-  private tagApiPath: TApiPath = API_PATH.TAG;
 
   // form
   public editForm: FormGroup;
@@ -98,7 +98,7 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
 
   // 文章内容格式化
   public handleContentChange(event) {
-    if (event.content !== undefined) {
+    if (event.content != null) {
       this.contentChange.emit(event.content);
     }
   }
