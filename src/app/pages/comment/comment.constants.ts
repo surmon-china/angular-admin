@@ -25,18 +25,6 @@ export enum ECommentParentType {
   Self = 0, // 自身一级评论
 }
 
-// 喜欢类型
-export enum ELikeType {
-  Comment = 1, // 评论
-  Page = 2, // 页面
-}
-
-// 喜欢类型
-export enum ELikeType {
-  comment = 1,
-  page = 2
-}
-
 // 单个评论
 export interface IComment {
   ip?: number;
