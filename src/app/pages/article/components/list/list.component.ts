@@ -218,9 +218,9 @@ export class ArticleListComponent implements OnInit {
     humanizedLoading(
       this.fetching,
       ELoading.PatchState,
-      this.httpService.patch(this.articleApiPath, data).then(_ => {
-        this.refreshArticles();
-      })
+      this.httpService
+        .patch(this.articleApiPath, data)
+        .then(_ => this.refreshArticles())
     );
   }
 

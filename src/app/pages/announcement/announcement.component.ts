@@ -225,11 +225,13 @@ export class AnnouncementComponent implements OnInit {
     return humanizedLoading(
       this.fetching,
       ELoading.List,
-      this.httpService.get<TResponseAnnouncement>(this.apiPath, params).then(announcements => {
-        this.announcements = announcements.result;
-        this.selectedAnnouncements = [];
-        this.announcementsSelectAll = false;
-      })
+      this.httpService
+        .get<TResponseAnnouncement>(this.apiPath, params)
+        .then(announcements => {
+          this.announcements = announcements.result;
+          this.selectedAnnouncements = [];
+          this.announcementsSelectAll = false;
+        })
     );
   }
 

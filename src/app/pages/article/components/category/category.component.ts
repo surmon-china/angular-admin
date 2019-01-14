@@ -99,7 +99,9 @@ export class ArticleCategoryComponent implements OnInit {
     humanizedLoading(
       this.fetching,
       ELoading.Post,
-      this.httpService.post(this.apiPath, category).then(this.handlePostDone)
+      this.httpService
+        .post(this.apiPath, category)
+        .then(_ => this.handlePostDone())
     );
   }
 
@@ -111,7 +113,7 @@ export class ArticleCategoryComponent implements OnInit {
       ELoading.Post,
       this.httpService
         .put(`${ this.apiPath }/${ newCategory._id }`, newCategory)
-        .then(this.handlePostDone)
+        .then(_ => this.handlePostDone())
     );
   }
 

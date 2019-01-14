@@ -69,9 +69,11 @@ export class DashboardComponent  implements OnInit {
     return humanizedLoading(
       this.fetching,
       ELoading.Statistics,
-      this.httpService.get<IStatistics>(this.statisticApiPath).then(statistics => {
-        this.statistics = statistics.result;
-      })
+      this.httpService
+        .get<IStatistics>(this.statisticApiPath)
+        .then(statistics => {
+          this.statistics = statistics.result;
+        })
     );
   }
 
@@ -79,9 +81,11 @@ export class DashboardComponent  implements OnInit {
     return humanizedLoading(
       this.fetching,
       ELoading.Articles,
-      this.httpService.get<TResponsePaginationArticle>(this.articleApiPath).then(articles => {
-        this.articles = articles.result.data;
-      })
+      this.httpService
+        .get<TResponsePaginationArticle>(this.articleApiPath)
+        .then(articles => {
+          this.articles = articles.result.data;
+        })
     );
   }
 
@@ -91,9 +95,11 @@ export class DashboardComponent  implements OnInit {
     return humanizedLoading(
       this.fetching,
       guestbook ? ELoading.Guestbooks : ELoading.Comments,
-      this.httpService.get<TResponsePaginationComment>(this.commentApiPath, params).then(comments => {
-        this[type] = comments.result.data;
-      })
+      this.httpService
+        .get<TResponsePaginationComment>(this.commentApiPath, params)
+        .then(comments => {
+          this[type] = comments.result.data;
+        })
     );
   }
 
