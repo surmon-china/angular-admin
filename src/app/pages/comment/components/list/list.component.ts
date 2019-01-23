@@ -205,7 +205,7 @@ export class CommentListComponent implements OnInit {
       ELoading.PatchState,
       this.httpService
         .patch(this.apiPath, { comment_ids, post_ids, state })
-        .then(this.refreshComments)
+        .then(() => this.refreshComments())
     );
   }
 
