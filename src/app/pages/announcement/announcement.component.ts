@@ -48,7 +48,7 @@ const DEFAULT_SEARCH_FORM = {
   selector: 'page-announcement',
   encapsulation: ViewEncapsulation.None,
   styles: [require('./announcement.scss')],
-  template: require('./announcement.html')
+  template: require('./announcement.component.html')
 })
 export class AnnouncementComponent implements OnInit {
 
