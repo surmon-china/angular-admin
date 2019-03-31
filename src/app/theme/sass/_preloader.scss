@@ -54,32 +54,32 @@
   z-index: 1003;
   background: $sidebar-sublist;
 
-  &:before,
-  &:after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url(#{$images-root}background.jpg);
-    background-repeat: repeat;
-    opacity: 0.08;
-    transition: transform .1s;
-  }
+  // &:before,
+  // &:after {
+  //   content: '';
+  //   display: block;
+  //   width: 100%;
+  //   height: 100%;
+  //   position: absolute;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   background: url(#{$images-root}background.jpg);
+  //   background-repeat: repeat;
+  //   opacity: 0.08;
+  //   transition: transform .1s;
+  // }
 
-  &:before {
-    top: 0;
-    animation: bg-img-before 23s linear infinite;
-  }
+  // &:before {
+  //   top: 0;
+  //   animation: bg-img-before 23s linear infinite;
+  // }
 
-  &:after {
-    top: 100%;
-    transform: scale(1, -1);
-    animation: bg-img-after 23s linear infinite;
-  }
+  // &:after {
+  //   top: 100%;
+  //   transform: scale(1, -1);
+  //   animation: bg-img-after 23s linear infinite;
+  // }
 
   & > div {
     display: block;

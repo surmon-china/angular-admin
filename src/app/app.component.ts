@@ -68,7 +68,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   ) {
 
     // 初始化加载图片
-    this.loadImages();
+    // this.loadImages();
 
     // 订阅菜单折叠事件
     this.state.subscribe('menu.isCollapsed', (isCollapsed: TMenuCollapsedState): void => {
