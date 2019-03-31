@@ -120,8 +120,7 @@ export class SaHttpRequesterService {
 
   // 请求包装器
   private handleRequest<T>(request): Promise<IResponseData<T>> {
-    return request
-      .toPromise()
+    return request.toPromise()
       .then(this.handleResponseSuccess.bind(this))
       .catch(this.handleReponseError.bind(this));
   }
@@ -129,8 +128,8 @@ export class SaHttpRequesterService {
   get<T>(url: TRequestUrlPath, getParams?: IRequestParams): Promise<IResponseData<T>> {
     let params: HttpParams = new HttpParams();
     if (getParams) {
-      Object.keys(getParams).forEach(k => {
-        params = params.set(k, String(getParams[k]));
+      Object.keys(getParams).forEach(key => {
+        params = params.set(key, String(getParams[key]));
       });
     }
     this.checkRequestCondition();

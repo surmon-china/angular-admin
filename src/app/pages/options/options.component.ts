@@ -208,7 +208,7 @@ export class OptionsComponent implements OnInit {
       } else {
         this.authForm.reset(Object.assign({}, DEFAULT_AUTH_FORM, { name, slogan, gravatar }));
       }
-    });
+    }).catch(error => {});
   }
 
   // 解析返回的设置表单数据
@@ -220,7 +220,7 @@ export class OptionsComponent implements OnInit {
       options.blacklist_mails = format(options.blacklist.mails);
       options.blacklist_keywords = format(options.blacklist.keywords);
       this.optionForm.reset(options);
-    });
+    }).catch(error => {});
   }
 
   // 获取用户
