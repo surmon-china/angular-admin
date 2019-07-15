@@ -5,7 +5,6 @@
  */
 
 import { Directive, ElementRef, HostListener, HostBinding } from '@angular/core';
-import { SaThemeConfigProvider } from 'app/theme';
 import { SaCardBlurHelperService } from './saCardBlurHelper.service';
 import { BgMetrics } from './saCard.interface';
 
@@ -21,7 +20,6 @@ export class SaCardBlurDirective {
 
   constructor(
     private el: ElementRef,
-    private saConfig: SaThemeConfigProvider,
     private saCardBlurHelper: SaCardBlurHelperService
   ) {
     if (this.getEnabledState()) {
@@ -65,6 +63,6 @@ export class SaCardBlurDirective {
   }
 
   private getEnabledState() {
-    return this.saConfig.get().theme.name === 'blur';
+    return true;
   }
 }

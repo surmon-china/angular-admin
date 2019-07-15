@@ -11,6 +11,6 @@ export const environment = {
 
 export const api = {
   API_ROOT: '/api',
-  STATIC_URL: 'https://static.surmon.me'
+  STATIC_URL: 'https://static.surmon.me',
 };
 

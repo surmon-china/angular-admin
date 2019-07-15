@@ -1,6 +1,5 @@
 /**
  * @file App discriminators url 目标判定器
- * @module app/discriminators/url
  * @author Surmon <https://github.com/surmon-china>
  */
 

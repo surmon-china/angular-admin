@@ -45,8 +45,8 @@ interface IStore {
     PagesModule,
     RoutingModule,
     HttpClientModule,
-    SimpleNotificationsModule.forRoot(),
     LoadingBarHttpClientModule,
+    SimpleNotificationsModule.forRoot(),
     SaModule.forRoot()
   ],
   providers: [

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ASSETS_IMAGE } from '@app/constants/url';
 import { IconsService } from './icons.service';
-import { layoutPaths } from 'app/theme';
 import 'style-loader!./icons.scss';
 
 @Component({
@@ -14,7 +14,7 @@ export class IconsComponent implements OnInit {
   constructor(private iconsService: IconsService) {}
 
   public getIconPath(input: string): string {
-    return layoutPaths.images.root + 'theme/icon/kameleon/' + input + '.svg';
+    return ASSETS_IMAGE + 'theme/icon/kameleon/' + input + '.svg';
   }
 
   ngOnInit() {

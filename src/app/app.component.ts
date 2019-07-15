@@ -9,26 +9,21 @@ import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
 import { GlobalState } from '@app/global.state';
-import { layoutPaths } from '@app/theme/theme.constants';
-import { SaThemeConfig } from '@app/theme/theme.config';
 import { AppState } from '@app/app.service';
 import { checkTokenIsOk } from '@app/discriminators/token';
 import { isIndexPage, isAuthPage } from '@app/discriminators/url';
 import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
 import { TOKEN } from '@app/constants/auth';
+import { ASSETS_IMAGE } from '@app/constants/url';
 
 type TMenuCollapsedState = boolean;
 
 @Component({
   selector: 'app-admin',
   encapsulation: ViewEncapsulation.None,
-  styles: [
-    require('normalize.css'),
-    require('./theme/initial.scss'),
-    require('./app.scss')
-  ],
+  styles: [require('./styles/app.scss')],
   template: `
-    <main [ngClass]="isMenuCollapsed ? 'menu-collapsed': ''" saThemeRun>
+    <main [ngClass]="isMenuCollapsed ? 'menu-collapsed': ''">
       <ngx-loading-bar color="#017170" height="4px" diameter="20px"></ngx-loading-bar>
       <simple-notifications [options]="notificationsOptions"></simple-notifications>
       <div class="additional-bg"></div>
@@ -60,7 +55,6 @@ export class AppComponent implements AfterViewInit, OnInit {
     private state: GlobalState,
     private appState: AppState,
     private router: Router,
-    private config: SaThemeConfig,
     private spinner: SaThemeSpinnerService,
     private imageLoader: SaImageLoaderService,
     private httpService: SaHttpRequesterService,
@@ -90,7 +84,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   private loadImages(): void {
     SaThemePreloaderService.registerLoader(
-      this.imageLoader.load(layoutPaths.images.root + 'background.jpg')
+      this.imageLoader.load(ASSETS_IMAGE + 'background.jpg')
     );
   }
 

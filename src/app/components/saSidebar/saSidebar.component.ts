@@ -6,7 +6,6 @@
 
 import { Component, ElementRef, HostListener, ViewEncapsulation, OnInit, AfterViewInit } from '@angular/core';
 import { GlobalState } from 'app/global.state';
-import { layoutSizes } from 'app/theme';
 import { MENU } from 'app/app.menu';
 import * as lodash from 'lodash';
 
@@ -67,6 +66,6 @@ export class SaSidebarComponent implements OnInit, AfterViewInit {
   }
 
   private shouldMenuCollapse(): boolean {
-    return window.innerWidth <= layoutSizes.resWidthCollapseSidebar;
+    return window.innerWidth <= 1200;
   }
 }

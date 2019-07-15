@@ -10,8 +10,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { SaThemeConfig } from './theme/theme.config';
-import { SaThemeConfigProvider } from './theme/theme.configProvider';
 import { SaCardBlurDirective } from './components/saCard/saCardBlur.directive';
 
 import * as Pipes from './pipes';
@@ -39,12 +37,10 @@ const SA_COMPONENTS = [
 const SA_DIRECTIVES = [
   SaCardBlurDirective,
   Directives.SaScrollPositionDirective,
-  Directives.SaThemeRunDirective
 ];
 
 const SA_PIPES = [
   Pipes.SaAppPicturePipe,
-  Pipes.SaProfilePicturePipe,
   Pipes.DataToLocalePipe,
   Pipes.TruncatePipe
 ];
@@ -85,14 +81,12 @@ const SA_VALIDATORS = [
 })
 export class SaModule {
   static forRoot(): ModuleWithProviders {
-    return <ModuleWithProviders> {
+    return {
       ngModule: SaModule,
       providers: [
-        SaThemeConfigProvider,
-        SaThemeConfig,
         ...SA_VALIDATORS,
         ...SA_SERVICES
       ]
-    };
+    } as ModuleWithProviders;
   }
 }

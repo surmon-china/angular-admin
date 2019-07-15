@@ -61,6 +61,7 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "hmrWarning": false,
           "options": {
             "browserTarget": "angular-admin:build"
           },
