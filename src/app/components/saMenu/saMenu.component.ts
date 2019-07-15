@@ -14,8 +14,8 @@ import { SaMenuService } from './saMenu.service';
 @Component({
   selector: 'sa-menu',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./saMenu.scss')],
-  template: require('./saMenu.html'),
+  styleUrls: ['./saMenu.scss'],
+  templateUrl: './saMenu.component.html',
   providers: [SaMenuService]
 })
 export class SaMenuComponent implements OnInit, OnDestroy {

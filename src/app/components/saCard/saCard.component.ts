@@ -8,11 +8,11 @@ import { Component, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
   selector: 'sa-card',
-  styles: [require('./saCard.scss')],
-  template: require('./saCard.html'),
+  templateUrl: './saCard.html',
+  styleUrls: ['./saCard.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SaCardComponent {
-  @Input() title: String;
-  @Input() baCardClass: String;
+  @Input() title: string;
+  @Input() baCardClass: string;
 }

@@ -13,15 +13,15 @@ import * as lodash from 'lodash';
 @Component({
   selector: 'sa-sidebar',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./saSidebar.scss')],
-  template: require('./saSidebar.html')
+  styleUrls: ['./saSidebar.scss'],
+  templateUrl: './saSidebar.html'
 })
 export class SaSidebarComponent implements OnInit, AfterViewInit {
 
   public routes = lodash.cloneDeep(MENU);
   public menuHeight: number;
-  public isMenuCollapsed: boolean = false;
-  public isMenuShouldCollapsed: boolean = false;
+  public isMenuCollapsed = false;
+  public isMenuShouldCollapsed = false;
 
   constructor(private elementRef: ElementRef, private state: GlobalState) {
     this.state.subscribe('menu.isCollapsed', (isCollapsed: boolean) => {

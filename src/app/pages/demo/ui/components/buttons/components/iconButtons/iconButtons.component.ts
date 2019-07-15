@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'box-icon-buttons',
-  template: require('./iconButtons.html'),
+  templateUrl: './iconButtons.html',
 })
 export class IconButtonsComponent {
 

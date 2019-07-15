@@ -16,9 +16,6 @@
     <sa-card title="分类目录" baCardClass="with-scroll">
       <box-article-edit-category [(category)]="article.category"></box-article-edit-category>
     </sa-card>
-    <sa-card title="自定义扩展" baCardClass="with-scroll">
-      <box-article-edit-extend [(extends)]="article.extends"></box-article-edit-extend>
-    </sa-card>
     <sa-card title="发布选项" baCardClass="with-scroll">
       <box-article-edit-submit 
         [isEdit]="!!article._id"
@@ -28,6 +25,9 @@
         [(password)]="article.password"
         (submitArticle)="submitArticle()">
       </box-article-edit-submit>
+    </sa-card>
+    <sa-card title="自定义扩展" baCardClass="with-scroll">
+      <box-article-edit-extend [(extends)]="article.extends"></box-article-edit-extend>
     </sa-card>
     <sa-card title="缩略图" baCardClass="with-scroll">
       <sa-picture-uploader [(ngModel)]="article.thumb"></sa-picture-uploader>

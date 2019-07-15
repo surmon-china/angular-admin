@@ -22,7 +22,7 @@ export class AppState {
     adminInfo: {
       name: '管理员',
       slogan: '博客管理后台',
-      gravatar: 'assets/img/app/profile/Admin.jpg'
+      gravatar: 'assets/images/app/profile/Admin.jpg'
     }
   };
 

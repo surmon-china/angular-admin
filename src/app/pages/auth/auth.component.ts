@@ -15,12 +15,12 @@ import { TOKEN } from '@app/constants/auth';
 @Component({
   selector: 'page-auth',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./auth.scss')],
-  template: require('./auth.html')
+  styleUrls: ['./auth.scss'],
+  templateUrl: './auth.html'
 })
 export class AuthComponent implements AfterViewChecked {
 
-  @ViewChild('pwdInput') input: ElementRef;
+  @ViewChild('pwdInput', { static: false }) input: ElementRef;
 
   private password: string = '';
   private editMode: boolean = false;

@@ -9,8 +9,6 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { SaHttpRequesterService } from '@app/services';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { humanizedLoading } from '@/app/pages/pages.service';
-import { IComment, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
-import { IArticle, TResponsePaginationArticle } from '@/app/pages/article/article.service';
 
 interface IStatistics {
   [key: string]: number;
@@ -46,21 +44,17 @@ enum ELoading {
 @Component({
   selector: 'page-dashboard',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./dashboard.scss')],
-  template: require('./dashboard.html')
+  styleUrls: ['./dashboard.scss'],
+  templateUrl: './dashboard.html'
 })
-export class DashboardComponent  implements OnInit {
+export class DashboardComponent implements OnInit {
 
   private Loading = ELoading;
   private statisticApiPath: TApiPath = API_PATH.STATISTIC;
-  private articleApiPath: TApiPath = API_PATH.ARTICLE;
-  private commentApiPath: TApiPath = API_PATH.COMMENT;
+  private analyticsApiPath: TApiPath = API_PATH.COMMENT;
 
   public defaultStatistics = DEFAULT_STATISTICS_DATA;
   public statistics: IStatistics = {};
-  public articles: IArticle[] = [];
-  public comments: IComment[] = [];
-  public guestbooks: IComment[] = [];
   public fetching: IFetching = {};
 
   constructor(private httpService: SaHttpRequesterService) {}
@@ -77,36 +71,132 @@ export class DashboardComponent  implements OnInit {
     );
   }
 
-  getArticlesData() {
-    return humanizedLoading(
-      this.fetching,
-      ELoading.Articles,
-      this.httpService
-        .get<TResponsePaginationArticle>(this.articleApiPath)
-        .then(articles => {
-          this.articles = articles.result.data;
-        })
-    );
+  getGaToken(): Promise<string> {
+    return Promise.resolve('token');
   }
 
-  getCommentsData(guestbook?: boolean) {
-    const type = guestbook ? 'guestbooks' : 'comments';
-    const params = guestbook ? { post_id: 0 } : {};
-    return humanizedLoading(
-      this.fetching,
-      guestbook ? ELoading.Guestbooks : ELoading.Comments,
-      this.httpService
-        .get<TResponsePaginationComment>(this.commentApiPath, params)
-        .then(comments => {
-          this[type] = comments.result.data;
-        })
-    );
+  instanceGa(token: string) {
+    const gapi = (window as any).gapi;
+    gapi.analytics.ready(() => {
+
+      gapi.analytics.auth.authorize({
+        container: 'auth-button',
+        clientid: '984332218909-j1ool2q13e32865ttu1es9ih9i7s2e5e.apps.googleusercontent.com',
+        // serverAuth: {
+        //   access_token: '{{ ACCESS_TOKEN_FROM_SERVICE_ACCOUNT }}'
+        // }
+      });
+
+      const viewSelector = new gapi.analytics.ViewSelector({
+        container: 'view-selector'
+      });
+
+      const timeline = new gapi.analytics.googleCharts.DataChart({
+        reportType: 'ga',
+        query: {
+          dimensions: 'ga:hour',
+          'metrics': 'ga:sessions',
+          'start-date': 'today',
+          'end-date': 'today',
+        },
+        chart: {
+          type: 'LINE',
+          container: 'timeline',
+          options: {
+            width: '100%',
+            chartArea: {
+              left: '25',
+              right: '25',
+            }
+          },
+        }
+      });
+
+      const getPieChart = (dimensions: string, container: string, title: string) => {
+        return new gapi.analytics.googleCharts.DataChart({
+          query: {
+            dimensions,
+            metrics: 'ga:sessions',
+            'start-date': 'today',
+            'end-date': 'today',
+            'max-results': 10,
+            sort: '-ga:sessions',
+          },
+          chart: {
+            container,
+            type: 'PIE',
+            options: {
+              title,
+              width: '100%',
+              pieHole: 4 / 9,
+              chartArea: {
+                left: '25'
+              },
+              // backgroundColor: {
+              //   fillOpacity: 0
+              // },
+              // titleTextStyle: {
+              //   color: '#fff',
+              // },
+              // pieSliceTextStyle: {
+              //   color: '#fff',
+              // },
+              // legend: {
+              //   textStyle: {
+              //     color: '#fff',
+              //   }
+              // },
+            },
+          },
+        });
+      };
+
+      const countryChart = getPieChart('ga:country', 'pie-country', '国家地区');
+      const cityChart = getPieChart('ga:city', 'pie-city', '城市');
+      const browserChart = getPieChart('ga:browser', 'pie-browser', '浏览器');
+
+      gapi.analytics.auth.on('success', () => {
+        viewSelector.execute();
+        console.log('viewSelector.execute();');
+      });
+
+      viewSelector.on('change', ids => {
+        const newIds = {
+          query: {
+            ids: ids
+          }
+        };
+        timeline.set(newIds).execute();
+        countryChart.set(newIds).execute();
+        cityChart.set(newIds).execute();
+        browserChart.set(newIds).execute();
+        console.log('browserChart.execute();');
+      });
+
+      // 日期选择器更新后，就 set
+      // timeline.set({ query: { end-date: ' } }).execute();
+      console.log('不 reay 啦', gapi.analytics);
+    });
+  }
+
+  initGaScript() {
+    (function(w, d, s, g, js, fjs) {
+      g = w.gapi || (w.gapi = {}); g.analytics = {q: [], ready: function(cb) {this.q.push(cb); }};
+      js = d.createElement(s); fjs = d.getElementsByTagName(s)[0];
+      js.src = 'https://apis.google.com/js/platform.js';
+      fjs.parentNode.insertBefore(js, fjs); js.onload = function() {g.load('analytics'); };
+    }(window as any, document, 'script'));
+  }
+
+  async initGAClient() {
+    if (!(window as any).gapi) {
+      this.initGaScript();
+    }
+    this.getGaToken().then(this.instanceGa);
   }
 
   ngOnInit() {
+    this.initGAClient();
     this.getStatisticsData();
-    this.getArticlesData();
-    this.getCommentsData();
-    this.getCommentsData(true);
   }
 }

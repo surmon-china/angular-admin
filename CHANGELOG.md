@@ -1,6 +1,13 @@
 
 ## CHANGELOG
 
+### v3.2.0
+
+- 升级 Angular
+- 完善仪表盘，增加 GA 统计业务
+- 修复热替换 HMR
+- 移除 theme，替换为 style
+
 ### v3.1.0
 
 - 升级

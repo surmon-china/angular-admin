@@ -93,7 +93,7 @@ marked.setOptions({
 
 @Component({
   selector: 'sa-markdown-editor',
-  template: require('./markdownEditor.html'),
+  templateUrl: './markdownEditor.html',
   styles: [
     require('./markdownEditor.scss'),
     require('highlight.js/styles/ocean.css'),
@@ -123,7 +123,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   public timer = null;
   public modelConfirm: boolean = false;
 
-  @ViewChild('bakModal') bakModal: ModalDirective;
+  @ViewChild('bakModal', { static: false }) bakModal: ModalDirective;
 
   // 传入配置
   @Input() config: Object;

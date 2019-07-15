@@ -8,7 +8,7 @@
         <div class="pie-chart-item">
           <div class="description">
             <h4>{{ item.description }}</h4>
-            <p class="description-stats">{{ statistics[item.type] }}</p>
+            <p class="description-stats">{{ statistics[item.type] || '-' }}</p>
           </div>
           <i class="chart-icon {{ item.icon }}"></i>
         </div>
@@ -17,89 +17,22 @@
   </div>
 </div>
 <div class="row">
-  <sa-card
-    title="最近收到评论" 
-    baCardClass="medium-card"
-    class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-  >
-    <div class="vertical-scroll">
-      <table class="table table-no-borders table-hover">
-        <thead>
-        <tr class="black-muted-bg">
-          <th class="browser-icons">ID</th>
-          <th class="browser-icons">POST_ID</th>
-          <th>Content</th>
-          <th class="align-right">发布时间</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of comments" class="no-top-border">
-          <td ngClass="nowrap">{{ item.id }}</td>
-          <td ngClass="nowrap">{{ item.post_id }}</td>
-          <td ngClass="align-left">{{ item.content | truncate: 20 }}</td>
-          <td class="align-right">{{ item.create_at | dataToLocale }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </sa-card>
-  <sa-card
-    title="最近收到留言" 
-    baCardClass="medium-card"
-    class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-  >
-    <div class="vertical-scroll">
-      <table class="table table-no-borders table-hover">
-        <thead>
-        <tr class="black-muted-bg">
-          <th class="browser-icons">ID</th>
-          <th class="browser-icons">POST_ID</th>
-          <th>Content</th>
-          <th class="align-right">发布时间</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of guestbooks" class="no-top-border">
-          <td ngClass="nowrap">{{ item.id }}</td>
-          <td ngClass="nowrap">{{ item.post_id }}</td>
-          <td ngClass="align-left">{{ item.content | truncate: 20 }}</td>
-          <td class="align-right">{{ item.create_at | dataToLocale }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </sa-card>
-</div>
-<div class="row">
-  <sa-card
-    title="最近发布文章" 
-    baCardClass="medium-card"
-    class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
-  >
-    <div class="vertical-scroll">
-      <table class="table table-no-borders table-hover">
-        <thead>
-        <tr class="black-muted-bg">
-          <th class="browser-icons">ID</th>
-          <th>Title</th>
-          <th class="align-right"> 发布时间</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of articles" class="no-top-border">
-          <td ngClass="nowrap">{{ item.id }}</td>
-          <td ngClass="align-left">{{ item.title | truncate: 20 }}</td>
-          <td class="align-right">{{ item.create_at | dataToLocale }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </sa-card>
   <sa-card 
-    title="统计数据"
-    baCardClass="medium-card with-scroll"
-    class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12"
+    title="GA 今日统计"
+    baCardClass="ga-card with-scroll"
+    class="col-xlg-12 col-xl-12 col-lg-12 col-sm-12 col-xs-12"
   >
-    <iframe src="https://www.google.com/adsense/new/u/0/pub-4710915636313788/home" class="adsense-iframe"></iframe>
+    <div class="toolbar">
+      <div id="auth-button" class="auth"></div>
+      <div id="view-selector" class="selector"></div>
+    </div>
+    <hr>
+    <div class="pie-charts">
+      <div id="pie-country" class="chart"></div>
+      <div id="pie-city" class="chart"></div>
+      <div id="pie-browser" class="chart"></div>
+    </div>
+    <hr>
+    <div id="timeline" class="timeline"></div>
   </sa-card>
 </div>

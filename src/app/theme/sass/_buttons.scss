@@ -17,10 +17,6 @@ $hover: 24;
   }
 }
 
-.btn:hover {
-  // transform: scale(1.2);
-}
-
 @mixin styleButton($color, $borderColor) {
   background: $color;
   border-color: $borderColor;
@@ -47,7 +43,7 @@ $hover: 24;
   &.disabled.active,
   &[disabled].active,
   fieldset[disabled] &.active {
-    @include styleButton($color, $borderColor + $hover/2);
+    @include styleButton($color, $borderColor);
     &:hover {
       transform: none;
     }
@@ -63,7 +59,7 @@ $hover: 24;
 }
 
 @mixin openDropdownButton($color, $dark-color) {
-  @include styleButton($color, $color - $hover);
+  @include styleButton($color, $hover);
   background-color: $dark-color;
   border-color: $dark-color;
 }
@@ -83,28 +79,28 @@ $hover: 24;
 
 .open > .btn.dropdown-toggle {
   &.btn.btn-default {
-    @include openDropdownButton($sidebar, $sidebar-border)
-    @include buttonDropdownMenu($sidebar)
+    @include openDropdownButton($sidebar, $sidebar-border);
+    @include buttonDropdownMenu($sidebar);
   }
   &.btn.btn-primary {
-    @include openDropdownButton($primary, $primary-dark)
-    @include buttonDropdownMenu($primary)
+    @include openDropdownButton($primary, $primary-dark);
+    @include buttonDropdownMenu($primary);
   }
   &.btn-success {
-    @include openDropdownButton($success, $success-dark)
-    @include buttonDropdownMenu($success)
+    @include openDropdownButton($success, $success-dark);
+    @include buttonDropdownMenu($success);
   }
   &.btn-info {
-    @include openDropdownButton($info, $info-dark)
-    @include buttonDropdownMenu($info)
+    @include openDropdownButton($info, $info-dark);
+    @include buttonDropdownMenu($info);
   }
   &.btn-warning {
-    @include openDropdownButton($warning, $warning-dark)
-    @include buttonDropdownMenu($warning)
+    @include openDropdownButton($warning, $warning-dark);
+    @include buttonDropdownMenu($warning);
   }
   &.btn-danger {
-    @include openDropdownButton($danger, $danger-dark)
-    @include buttonDropdownMenu($danger)
+    @include openDropdownButton($danger, $danger-dark);
+    @include buttonDropdownMenu($danger);
   }
 }
 
@@ -182,9 +178,9 @@ button.btn.btn-inverse {
 }
 
 @mixin buttonGroupColor($color) {
-  border-color: $color - $hover/2;
+  border-color: $color;
   &:hover {
-    border-color: $color - $hover;
+    border-color: $color;
   }
 }
 

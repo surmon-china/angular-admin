@@ -20,8 +20,8 @@ enum ELoading {
 @Component({
   selector: 'box-article-edit-main',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./main.scss')],
-  template: require('./main.html')
+  styleUrls: ['./main.scss'],
+  templateUrl: './main.html'
 })
 export class ArticleEditMainComponent implements OnInit, OnChanges {
 

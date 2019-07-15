@@ -21,8 +21,8 @@ const DEFAULT_FORM = {
 @Component({
   selector: 'box-category-add',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./add.scss')],
-  template: require('./add.html')
+  styleUrls: ['./add.scss'],
+  templateUrl: './add.html'
 })
 export class ArticleCategoryAddComponent implements OnChanges {
 

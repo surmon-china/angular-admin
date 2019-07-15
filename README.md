@@ -125,10 +125,14 @@ If you only need to demonstrate the project locally, you need to comment the rel
 npm install
 
 # 开发 
-npm run start
+npm run dev
+
+# 测试
+npm run test
+npm run e2e
 
 # 构建
-npm run build:prod
+npm run build
 ```
 
 

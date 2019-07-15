@@ -8,8 +8,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'box-article-edit-extend',
-  template: require('./extend.html'),
-  styles: [require('./extend.scss')]
+  templateUrl: './extend.html',
+  styleUrls: ['./extend.scss']
 })
 
 export class ArticleEditExtendComponent {

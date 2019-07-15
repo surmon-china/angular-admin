@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'box-validation-inputs',
-  template: require('./validationInputs.html'),
+  templateUrl: './validationInputs.html',
 })
 export class ValidationInputsComponent {
 

@@ -4,11 +4,11 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Component, AfterViewInit, ViewChild, HostListener, Input, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, HostListener, Input } from '@angular/core';
 
 @Component({
   selector: 'sa-back-top',
-  styles: [require('./saBackTop.scss')],
+  styleUrls: ['./saBackTop.scss'],
   template: `
     <i
       #baBackTop
@@ -26,9 +26,7 @@ export class SaBackTopComponent implements AfterViewInit {
   @Input() showSpeed = 500;
   @Input() moveSpeed = 1000;
 
-  @ViewChild('baBackTop') private selector: ElementRef;
-
-  ngAfterViewInit () {
+  ngAfterViewInit() {
     setTimeout(() => {
       this.onWindowScroll();
     });
@@ -42,7 +40,6 @@ export class SaBackTopComponent implements AfterViewInit {
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
-    const el = this.selector.nativeElement;
     this.isShow = window.scrollY > this.position;
   }
 }

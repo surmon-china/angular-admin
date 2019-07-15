@@ -39,8 +39,8 @@ enum ELoading {
 @Component({
   selector: 'page-article-list',
   encapsulation: ViewEncapsulation.None,
-  template: require('./list.html'),
-  styles: [require('./list.scss')]
+  templateUrl: './list.html',
+  styleUrls: ['./list.scss']
 })
 export class ArticleListComponent implements OnInit {
 
@@ -50,7 +50,7 @@ export class ArticleListComponent implements OnInit {
   PublicState = EPublicState;
   PublishState = EPublishState;
 
-  @ViewChild('delModal') delModal: ModalDirective;
+  @ViewChild('delModal', { static: false }) delModal: ModalDirective;
 
   private tagApiPath: TApiPath = API_PATH.TAG;
   private articleApiPath: TApiPath = API_PATH.ARTICLE;

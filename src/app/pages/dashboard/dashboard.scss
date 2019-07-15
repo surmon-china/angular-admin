@@ -1,4 +1,4 @@
-@import '~app/theme/sass/conf/conf';
+@import '~app/theme/sass/base/init';
 
 .pie-charts {
   color: $content-text;
@@ -90,14 +90,57 @@
   }
 }
 
-.medium-card {
-  
-  .card-body {
-    overflow-y: auto;
+.ga-card {
+  min-height: 400px;
+
+  .toolbar {
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    margin-bottom: 1rem;
+
+    .auth {
+      width: auto;
+      padding: 0 1rem;
+      margin-right: 1rem;
+      background: #f7991c;
+      color: #fff;
+    }
+
+    .selector {
+      flex-grow: 1;
+      display: flex;
+
+      table {
+        margin-right: 1rem;
+
+        tr {
+          td {
+            &:last-child * {
+              display: block;
+              text-align: left;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pie-charts {
+    display: flex;
+    justify-content: space-between;
+    min-height: 200px;
+
+    .chart {
+      width: 32%;
+    }
+  }
+
+  .timeline {
+    min-height: 200px;
   }
 }
 
-.adsense-iframe {
-  width: 100%;
-  height: 100%;
+.shr-a-shr-fb {
+  z-index: 9999999;
 }

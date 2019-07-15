@@ -35,12 +35,12 @@ enum ELoading {
 
 @Component({
   selector: 'page-article-edit',
-  template: require('./edit.html')
+  templateUrl: './edit.html'
 })
 
 export class ArticleEditComponent implements OnInit {
 
-  @ViewChild('editForm') editFormMain: ElementRef;
+  @ViewChild('editForm', { static: false }) editFormMain: ElementRef;
 
   private Loading = ELoading;
   private apiPath: TApiPath = API_PATH.ARTICLE;

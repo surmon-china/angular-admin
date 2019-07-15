@@ -28,12 +28,12 @@ const DEFAULT_GET_PARAMS = {
 @Component({
   selector: 'page-comment-list',
   encapsulation: ViewEncapsulation.None,
-  template: require('./list.html'),
-  styles: [require('./list.scss')]
+  templateUrl: './list.html',
+  styleUrls: ['./list.scss']
 })
 export class CommentListComponent implements OnInit {
 
-  @ViewChild('delModal') public delModal: ModalDirective;
+  @ViewChild('delModal', { static: false }) public delModal: ModalDirective;
 
   private Loading = ELoading;
   private SortType = ESortType;

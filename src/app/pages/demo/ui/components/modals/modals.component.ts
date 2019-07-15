@@ -3,11 +3,12 @@ import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
   selector: 'page-modals',
-  styles: [require('./modals.scss')],
-  template: require('./modals.html')
+  styleUrls: ['./modals.scss'],
+  templateUrl: './modals.html'
 })
 export class ModalsComponent {
-  @ViewChild('childModal') childModal: ModalDirective;
+
+  @ViewChild('childModal', { static: false }) childModal: ModalDirective;
 
   showChildModal(): void {
     this.childModal.show();

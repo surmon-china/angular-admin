@@ -1,12 +1,12 @@
 /**
  * @file 生产环境配置
- * @module env/production
  * @author Surmon <https://github.com/surmon-china>
  */
 
 export const environment = {
   production: true,
   development: false,
+  hmr: false,
 };
 
 export const api = {

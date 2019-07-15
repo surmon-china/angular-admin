@@ -17,8 +17,8 @@ type TPictureUrl = string;
 
 @Component({
   selector: 'sa-picture-uploader',
-  styles: [require('./saPictureUploader.scss')],
-  template: require('./saPictureUploader.html'),
+  styleUrls: ['./saPictureUploader.scss'],
+  templateUrl: './saPictureUploader.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => SaPictureUploaderComponent),
@@ -28,15 +28,15 @@ type TPictureUrl = string;
 export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor {
 
   // 上传进度
-  private uploadProgress: string = '0';
+  private uploadProgress = '0';
 
   // 元素域
-  @ViewChild('fileUpload') protected fileUpload: ElementRef;
+  @ViewChild('fileUpload', { static: false }) protected fileUpload: ElementRef;
 
   // 输入
-  @Input() canDelete: boolean = true;
-  @Input() uploadSizeLimit: number = 3000000;
-  @Input() defaultPicture: TPictureUrl = 'assets/img/theme/no-photo.png';
+  @Input() canDelete = true;
+  @Input() uploadSizeLimit = 3000000;
+  @Input() defaultPicture: TPictureUrl = 'assets/images/theme/no-photo.png';
 
   // 输出事件
   @Output() handleUpload: EventEmitter<any> = new EventEmitter();
@@ -44,10 +44,10 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   @Output() handleUploadCompleted: EventEmitter<any> = new EventEmitter();
 
   // 初始化
-  public up_token: string = '';
-  public tokenOk: boolean = false;
+  public up_token = '';
+  public tokenOk = false;
   public picture: TPictureUrl = '';
-  public uploadInProgress: boolean = false;
+  public uploadInProgress = false;
   public onModelChange: Function = () => {};
   public onModelTouched: Function = () => {};
 
@@ -99,7 +99,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
     if (file.size <= 1000) {
       const reader = new FileReader();
       reader.onload = event => {
-        const imgBase64 = (<any>event).target.result;
+        const imgBase64 = (event as any).target.result;
         this.emitPicture(imgBase64);
       };
       reader.readAsDataURL(file);

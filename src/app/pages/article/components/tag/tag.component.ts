@@ -39,15 +39,15 @@ enum ELoading {
 @Component({
   selector: 'page-article-tag',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./tag.scss')],
-  template: require('./tag.html')
+  styleUrls: ['./tag.scss'],
+  templateUrl: './tag.html'
 })
 export class ArticleTagComponent implements OnInit {
 
   Loading = ELoading;
   controlStateClass = formControlStateClass;
 
-  @ViewChild('delModal') delModal: ModalDirective;
+  @ViewChild('delModal', { static: false }) delModal: ModalDirective;
 
   private apiPath: TApiPath = API_PATH.TAG;
 

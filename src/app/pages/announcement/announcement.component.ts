@@ -47,8 +47,8 @@ const DEFAULT_SEARCH_FORM = {
 @Component({
   selector: 'page-announcement',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./announcement.scss')],
-  template: require('./announcement.component.html')
+  styleUrls: ['./announcement.scss'],
+  templateUrl: './announcement.component.html'
 })
 export class AnnouncementComponent implements OnInit {
 
@@ -57,7 +57,7 @@ export class AnnouncementComponent implements OnInit {
   private controlStateClass = formControlStateClass;
   private apiPath: TApiPath = API_PATH.ANNOUNCEMENT;
 
-  @ViewChild('delModal') delModal: ModalDirective;
+  @ViewChild('delModal', { static: false }) delModal: ModalDirective;
 
   // 表单
   public editForm: FormGroup;

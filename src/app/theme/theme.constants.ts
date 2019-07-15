@@ -4,7 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-export const IMAGES_ROOT = 'assets/img/';
+export const IMAGES_ROOT = 'assets/images/';
 
 export const layoutSizes = {
   resWidthCollapseSidebar: 1200,
@@ -15,8 +15,8 @@ export const layoutPaths = {
   images: {
     root: IMAGES_ROOT,
     profile: IMAGES_ROOT + 'app/profile/',
-    amMap: 'assets/img/theme/vendor/ammap/',
-    amChart: 'assets/img/theme/vendor/amcharts/dist/amcharts/images/'
+    amMap: 'assets/images/theme/vendor/ammap/',
+    amChart: 'assets/images/theme/vendor/amcharts/dist/amcharts/images/'
   }
 };
 

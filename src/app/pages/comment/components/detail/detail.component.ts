@@ -37,8 +37,8 @@ enum ELoading { GetDetail, Update, GetList, GetArticle }
 @Component({
   selector: 'page-comment-detail',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./detail.scss')],
-  template: require('./detail.html')
+  styleUrls: ['./detail.scss'],
+  templateUrl: './detail.html'
 })
 export class CommentDetailComponent implements OnInit {
 

@@ -137,7 +137,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Aliyun ECS',
-            url: 'https://s.click.taobao.com/LLXJJKw',
+            url: 'https://s.click.taobao.com/L0VDd9w',
             icon: 'ion-md-cloud',
             order: 700,
             target: '_blank'

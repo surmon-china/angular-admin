@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'box-inline-form',
-  styles: [require('./inlineForm.scss')],
-  template: require('./inlineForm.html'),
+  styleUrls: ['./inlineForm.scss'],
+  templateUrl: './inlineForm.html',
 })
 export class InlineFormComponent {
 

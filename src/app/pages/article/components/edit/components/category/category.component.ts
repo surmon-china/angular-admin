@@ -18,8 +18,8 @@ enum ELoading {
 @Component({
   selector: 'box-article-edit-category',
   encapsulation: ViewEncapsulation.None,
-  template: require('./category.html'),
-  styles: [require('./category.scss')]
+  templateUrl: './category.html',
+  styleUrls: ['./category.scss']
 })
 
 export class ArticleEditCategoryComponent implements OnInit, OnChanges {

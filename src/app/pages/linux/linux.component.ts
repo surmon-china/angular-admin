@@ -9,7 +9,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 @Component({
   selector: 'page-linux',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./linux.scss')],
-  template: require('./linux.html'),
+  styleUrls: ['./linux.scss'],
+  templateUrl: './linux.html',
 })
 export class LinuxComponent {}

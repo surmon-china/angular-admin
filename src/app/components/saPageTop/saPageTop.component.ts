@@ -14,8 +14,8 @@ type TCollapsedState = boolean;
 
 @Component({
   selector: 'sa-page-top',
-  styles: [require('./saPageTop.scss')],
-  template: require('./saPageTop.html'),
+  styleUrls: ['./saPageTop.scss'],
+  templateUrl: './saPageTop.html',
   encapsulation: ViewEncapsulation.None
 })
 export class SaPageTopComponent {

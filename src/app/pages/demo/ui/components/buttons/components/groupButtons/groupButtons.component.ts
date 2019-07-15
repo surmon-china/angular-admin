@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'box-group-buttons',
-  template: require('./groupButtons.html'),
+  templateUrl: './groupButtons.html',
 })
 export class GroupButtonsComponent {
 

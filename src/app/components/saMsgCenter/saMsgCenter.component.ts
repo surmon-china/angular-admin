@@ -10,8 +10,8 @@ import { SaMsgCenterService } from './saMsgCenter.service';
 @Component({
   selector: 'sa-msg-center',
   providers: [SaMsgCenterService],
-  styles: [require('./saMsgCenter.scss')],
-  template: require('./saMsgCenter.html')
+  styleUrls: ['./saMsgCenter.scss'],
+  templateUrl: './saMsgCenter.html'
 })
 export class SaMsgCenterComponent {
 

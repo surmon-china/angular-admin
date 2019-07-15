@@ -20,12 +20,12 @@ enum ELoading {
 
 @Component({
   selector: 'page-article-category',
-  template: require('./category.html'),
+  templateUrl: './category.html',
 })
 export class ArticleCategoryComponent implements OnInit {
 
-  @ViewChild('delModal') delModal: ModalDirective;
-  @ViewChild('editCategoryForm') editCategoryForm;
+  @ViewChild('delModal', { static: false }) delModal: ModalDirective;
+  @ViewChild('editCategoryForm', { static: false }) editCategoryForm;
 
   private Loading = ELoading;
   private apiPath: TApiPath = API_PATH.CATEGORY;

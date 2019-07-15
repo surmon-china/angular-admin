@@ -9,7 +9,7 @@ import { ControlValueAccessor, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'sa-multi-checkbox[ngModel]',
-  template: require('./saMultiCheckbox.html'),
+  templateUrl: './saMultiCheckbox.html',
 })
 export class SaMultiCheckboxComponent implements ControlValueAccessor {
 

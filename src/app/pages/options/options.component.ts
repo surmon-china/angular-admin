@@ -9,7 +9,7 @@ import * as API_PATH from '@app/constants/api';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, AbstractControl, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { humanizedLoading, mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
@@ -58,8 +58,8 @@ enum ELoading {
 @Component({
   selector: 'page-options',
   encapsulation: ViewEncapsulation.Emulated,
-  styles: [require('./options.scss')],
-  template: require('./options.html')
+  styleUrls: ['./options.scss'],
+  templateUrl: './options.html'
 })
 export class OptionsComponent implements OnInit {
 
@@ -111,8 +111,14 @@ export class OptionsComponent implements OnInit {
       slogan: [DEFAULT_AUTH_FORM.slogan, Validators.compose([Validators.required])],
       gravatar: [DEFAULT_AUTH_FORM.gravatar],
       password: [DEFAULT_AUTH_FORM.password],
-      new_password: [DEFAULT_AUTH_FORM.new_password],
-      rel_new_password: [DEFAULT_AUTH_FORM.rel_new_password],
+      new_password: [
+        DEFAULT_AUTH_FORM.new_password,
+        Validators.compose([this.vaildatePassword.bind(this)]),
+      ],
+      rel_new_password: [
+        DEFAULT_AUTH_FORM.rel_new_password,
+        Validators.compose([this.vaildatePassword.bind(this)])
+      ],
     });
     mergeFormControlsToInstance(this, this.authForm);
 
@@ -136,33 +142,51 @@ export class OptionsComponent implements OnInit {
     mergeFormControlsToInstance(this, this.optionForm);
   }
 
+  // 验证重复输入密码
+  private vaildatePassword(control: AbstractControl): ValidationErrors {
+    if (
+      (this.new_password && this.new_password.value) !==
+      (this.rel_new_password && this.rel_new_password.value)
+    ) {
+      return { custom: '新密码不匹配' };
+    }
+    const target = control === this.new_password
+      ? this.rel_new_password
+      : this.new_password;
+    // 当重复密码不匹配时，两者都异常，但对时，两个都要正常
+    if (target && !control.invalid && target.invalid) {
+      target.updateValueAndValidity();
+    }
+    return null;
+  }
+
   // 长数据处理器
-  public formatLongString(value: string): string {
+  private formatLongString(value: string): string {
     return value.replace(/\s+/g, ' ').replace(/\s/g, '\n');
   }
 
   // ping 地址解析处理
-  public handlePingSitesChange(event) {
+  private handlePingSitesChange(event) {
     this.seo_ping_sites.setValue(this.formatLongString(event.target.value));
   }
 
   // 黑名单 ip 解析处理
-  public handleCommentBlacklistIpsChange(event) {
+  private handleCommentBlacklistIpsChange(event) {
     this.blacklist_ips.setValue(this.formatLongString(event.target.value));
   }
 
   // 黑名单邮箱解析处理
-  public handleCommentBlacklistMailsChange(event) {
+  private handleCommentBlacklistMailsChange(event) {
     this.blacklist_mails.setValue(this.formatLongString(event.target.value));
   }
 
   // 黑名单关键词解析处理
-  public handleCommentBlacklistKeywordsChange(event) {
+  private handleCommentBlacklistKeywordsChange(event) {
     this.blacklist_keywords.setValue(this.formatLongString(event.target.value));
   }
 
   // 关键词计息处理
-  public handleKeywordsChange(event) {
+  private handleKeywordsChange(event) {
     const newWords = event.target.value.replace(/\s/g, '').split(',');
     this.keywords.setValue(newWords);
   }
@@ -178,6 +202,8 @@ export class OptionsComponent implements OnInit {
       const isPassword = key.includes('password');
       authFormData[key] = isPassword ? Base64.encode(value) : value;
     });
+    Reflect.deleteProperty(authFormData, 'rel_new_password');
+    console.log('authFormData', authFormData);
     this.putAuth(authFormData);
   }
 

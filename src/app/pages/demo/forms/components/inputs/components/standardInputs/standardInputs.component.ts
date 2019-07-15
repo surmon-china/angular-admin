@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'box-standard-inputs',
-  template: require('./standardInputs.html'),
+  templateUrl: './standardInputs.html',
 })
 export class StandardInputsComponent {
 

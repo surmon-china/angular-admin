@@ -3,7 +3,7 @@ import { BasicTablesService } from '../../basicTables.service';
 
 @Component({
   selector: 'box-bordered-table',
-  template: require('./borderedTable.html'),
+  templateUrl: './borderedTable.html',
 })
 export class BorderedTableComponent {
 

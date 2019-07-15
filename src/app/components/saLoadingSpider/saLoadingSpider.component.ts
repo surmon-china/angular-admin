@@ -4,14 +4,14 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Component, AfterViewInit, ViewChild, ViewEncapsulation, Input, ElementRef } from '@angular/core';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
   selector: 'sa-loading-spider',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./saLoadingSpider.scss')],
+  styleUrls: ['./saLoadingSpider.scss'],
   template: `
-  <div #loadingSpider class="sa-loading-spider" [ngClass]="className">
+  <div class="sa-loading-spider" [ngClass]="className">
     <div class="loader-mask"></div>
     <div class="loader-inner line-scale-pulse-out-rapid">
       <div></div>
@@ -23,18 +23,12 @@ import { Component, AfterViewInit, ViewChild, ViewEncapsulation, Input, ElementR
   </div>
   `
 })
-export class SaLoadingSpiderComponent implements AfterViewInit {
+export class SaLoadingSpiderComponent {
 
   @Input() type = 400;
   @Input() show = false;
 
-  @ViewChild('loadingSpider') private loadingSpider: ElementRef;
-
   get className() {
     return this.show ? 'flex' : 'none';
-  }
-
-  ngAfterViewInit () {
-    // console.log('加载动画就行了', this.loadingSpider);
   }
 }

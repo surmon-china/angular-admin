@@ -9,8 +9,8 @@ import { GlobalState } from 'app/global.state';
 
 @Component({
   selector: 'sa-content-top',
-  styles: [require('./saContentTop.scss')],
-  template: require('./saContentTop.html'),
+  styleUrls: ['./saContentTop.scss'],
+  templateUrl: './saContentTop.html',
 })
 export class SaContentTopComponent {
 
