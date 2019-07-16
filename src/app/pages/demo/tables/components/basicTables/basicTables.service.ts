@@ -540,7 +540,7 @@ export class BasicTablesService {
 
   metricsTableData = [
     {
-      image: 'app/browsers/chrome.svg',
+      image: 'browsers/chrome.svg',
       browser: 'Google Chrome',
       visits: '10,392',
       isVisitsUp: true,
@@ -550,7 +550,7 @@ export class BasicTablesService {
       isPercentUp: true
     },
     {
-      image: 'app/browsers/firefox.svg',
+      image: 'browsers/firefox.svg',
       browser: 'Mozilla Firefox',
       visits: '7,873',
       isVisitsUp: true,
@@ -560,7 +560,7 @@ export class BasicTablesService {
       isPercentUp: true
     },
     {
-      image: 'app/browsers/ie.svg',
+      image: 'browsers/ie.svg',
       browser: 'Internet Explorer',
       visits: '5,890',
       isVisitsUp: false,
@@ -570,7 +570,7 @@ export class BasicTablesService {
       isPercentUp: false
     },
     {
-      image: 'app/browsers/safari.svg',
+      image: 'browsers/safari.svg',
       browser: 'Safari',
       visits: '4,001',
       isVisitsUp: false,
@@ -580,7 +580,7 @@ export class BasicTablesService {
       isPercentUp: true
     },
     {
-      image: 'app/browsers/opera.svg',
+      image: 'browsers/opera.svg',
       browser: 'Opera',
       visits: '1,833',
       isVisitsUp: true,

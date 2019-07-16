@@ -9,7 +9,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 @Component({
   selector: 'page-inputs',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './inputs.html',
+  templateUrl: './inputs.component.html',
 })
 export class InputsComponent {
 

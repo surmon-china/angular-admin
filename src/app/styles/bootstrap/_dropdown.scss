@@ -28,6 +28,10 @@
           color: white!important;
           background-color: $sidebar!important;
         }
+
+        > .icon {
+          margin-right: 10px;
+        }
       }
 
       &:hover {

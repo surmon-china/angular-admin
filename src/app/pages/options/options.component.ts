@@ -40,7 +40,6 @@ const DEFAULT_OPTION_FORM = {
   site_url: '',
   site_email: '',
   site_icp: '',
-  seo_ping_sites: [],
   blacklist_ips: [],
   blacklist_mails: [],
   blacklist_keywords: []
@@ -58,8 +57,8 @@ enum ELoading {
 @Component({
   selector: 'page-options',
   encapsulation: ViewEncapsulation.Emulated,
-  styleUrls: ['./options.scss'],
-  templateUrl: './options.html'
+  styleUrls: ['./options.component.scss'],
+  templateUrl: './options.component.html'
 })
 export class OptionsComponent implements OnInit {
 
@@ -94,7 +93,6 @@ export class OptionsComponent implements OnInit {
   private site_url: AbstractControl;
   private site_email: AbstractControl;
   private site_icp: AbstractControl;
-  private seo_ping_sites: AbstractControl;
   private blacklist_ips: AbstractControl;
   private blacklist_mails: AbstractControl;
   private blacklist_keywords: AbstractControl;
@@ -134,7 +132,6 @@ export class OptionsComponent implements OnInit {
         Validators.compose([Validators.pattern('([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+')])
       ],
       site_icp: [DEFAULT_OPTION_FORM.site_icp],
-      seo_ping_sites: [DEFAULT_OPTION_FORM.seo_ping_sites],
       blacklist_ips: [DEFAULT_OPTION_FORM.blacklist_ips],
       blacklist_mails: [DEFAULT_OPTION_FORM.blacklist_mails],
       blacklist_keywords: [DEFAULT_OPTION_FORM.blacklist_keywords]
@@ -163,11 +160,6 @@ export class OptionsComponent implements OnInit {
   // 长数据处理器
   private formatLongString(value: string): string {
     return value.replace(/\s+/g, ' ').replace(/\s/g, '\n');
-  }
-
-  // ping 地址解析处理
-  private handlePingSitesChange(event) {
-    this.seo_ping_sites.setValue(this.formatLongString(event.target.value));
   }
 
   // 黑名单 ip 解析处理
@@ -203,7 +195,6 @@ export class OptionsComponent implements OnInit {
       authFormData[key] = isPassword ? Base64.encode(value) : value;
     });
     Reflect.deleteProperty(authFormData, 'rel_new_password');
-    console.log('authFormData', authFormData);
     this.putAuth(authFormData);
   }
 
@@ -214,7 +205,6 @@ export class OptionsComponent implements OnInit {
     }
     const format = value => String(value).split('\n').filter(t => !!t);
     const formValue = Object.assign({
-      ping_sites: format(this.seo_ping_sites.value),
       blacklist: {
         ips: format(this.blacklist_ips.value),
         mails: format(this.blacklist_mails.value),
@@ -241,7 +231,6 @@ export class OptionsComponent implements OnInit {
   public handleOptionChange(optionPromise: Promise<any>) {
     return optionPromise.then(({ result: options }) => {
       const format = value => value.toString().replace(/,/g, '\n');
-      options.seo_ping_sites = format(options.ping_sites);
       options.blacklist_ips = format(options.blacklist.ips);
       options.blacklist_mails = format(options.blacklist.mails);
       options.blacklist_keywords = format(options.blacklist.keywords);

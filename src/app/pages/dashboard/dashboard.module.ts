@@ -7,16 +7,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SaModule } from '@/app/sa.module';
+import { SaBaseModule } from '@/app/sa-base.module';
 import { DashboardComponent } from './dashboard.component';
-import { routing } from './dashboard.routing';
+import { RoutingModule } from './dashboard.routing';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    SaModule,
-    routing
+    SaBaseModule,
+    RoutingModule
   ],
   declarations: [
     DashboardComponent

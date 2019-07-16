@@ -159,25 +159,6 @@
   }
 }
 
-.blur {
-  .nav.nav-tabs {
-    background-color: rgba(0, 0, 0, 0.2);
-    a {
-      color: $default-text;
-      &:hover {
-        color: $default-text;
-      }
-    }
-    & > li > a:hover {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
-    & > li.active > a {
-      color: $default-text;
-      background-color: rgba(0, 0, 0, 0.25);
-    }
-  }
-}
-
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
   background-color: transparent;
 }

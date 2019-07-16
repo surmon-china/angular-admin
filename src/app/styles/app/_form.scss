@@ -53,6 +53,7 @@
   box-shadow: none;
   font-size: .9rem;
   transition: background-color .2s;
+
   &:focus {
     color: $content-text;
     box-shadow: none;
@@ -96,6 +97,13 @@ textarea.form-control {
 
   button[type="submit"] {
     margin-left: 12px;
+  }
+
+  .input-group-append {
+    
+    button[type="submit"] {
+      margin-left: 0;
+    }
   }
 }
 
@@ -198,7 +206,6 @@ textarea.form-control {
   }
 }
 
-
 .nowrap {
   white-space: nowrap;
 }
@@ -210,7 +217,6 @@ textarea.form-control {
 }
 
 label.custom-radio {
-  @padding-right: 0;
   padding-left: 0;
   margin-bottom: 0;
   & > input {
@@ -387,7 +393,7 @@ label.custom-input-danger {
     padding-right: 42.5px;
   }
   label ~ .form-control-feedback {
-    top: 19px;
+    top: 22px;
     font-size: 18px;
   }
 }
@@ -451,10 +457,6 @@ label.custom-input-danger {
 
 .checkbox-demo-row {
   margin-bottom: 12px;
-}
-
-.dropdown-menu {
-  // border-radius: 5px;
 }
 
 .dropdown button.btn.btn-default.dropdown-toggle {
@@ -593,10 +595,6 @@ label.custom-input-danger {
     > .btn, > .btn-group {
       margin-left: 0;
     }
-  }
-
-  > .btn {
-    // line-height: 1.56;
   }
 }
 

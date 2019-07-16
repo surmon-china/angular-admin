@@ -35,7 +35,7 @@ enum ELoading {
 
 @Component({
   selector: 'page-article-edit',
-  templateUrl: './edit.html'
+  templateUrl: './edit.component.html'
 })
 
 export class ArticleEditComponent implements OnInit {

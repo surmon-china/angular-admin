@@ -12,8 +12,8 @@ import { ICategory } from '@/app/pages/article/article.service';
 @Component({
   selector: 'box-category-list',
   encapsulation: ViewEncapsulation.Emulated,
-  templateUrl: './list.html',
-  styleUrls: ['./list.scss']
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss']
 })
 
 export class ArticleCategoryListComponent {

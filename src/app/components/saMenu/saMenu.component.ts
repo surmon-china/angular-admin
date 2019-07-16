@@ -4,7 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 import { Router, Routes, NavigationEnd } from '@angular/router';
 import { Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { GlobalState } from 'app/global.state';
@@ -14,7 +14,7 @@ import { SaMenuService } from './saMenu.service';
 @Component({
   selector: 'sa-menu',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./saMenu.scss'],
+  styleUrls: ['./saMenu.component.scss'],
   templateUrl: './saMenu.component.html',
   providers: [SaMenuService]
 })

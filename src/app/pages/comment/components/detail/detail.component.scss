@@ -1,0 +1,14 @@
+.comment-form {
+
+  .form-control {
+
+    &.comemnt-content {
+      padding: 0;
+    }
+  }
+
+  .comment-extend {
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+}

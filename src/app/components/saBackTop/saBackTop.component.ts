@@ -8,7 +8,7 @@ import { Component, AfterViewInit, HostListener, Input } from '@angular/core';
 
 @Component({
   selector: 'sa-back-top',
-  styleUrls: ['./saBackTop.scss'],
+  styleUrls: ['./saBackTop.component.scss'],
   template: `
     <i
       #baBackTop

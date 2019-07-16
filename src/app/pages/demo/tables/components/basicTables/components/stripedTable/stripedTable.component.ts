@@ -3,7 +3,7 @@ import { BasicTablesService } from '../../basicTables.service';
 
 @Component({
   selector: 'box-striped-table',
-  templateUrl: './stripedTable.html'
+  templateUrl: './stripedTable.component.html'
 })
 export class StripedTableComponent {
 

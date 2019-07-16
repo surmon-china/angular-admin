@@ -3,7 +3,7 @@ import { BasicTablesService } from '../../basicTables.service';
 
 @Component({
   selector: 'box-hover-table',
-  templateUrl: './hoverTable.html'
+  templateUrl: './hoverTable.component.html'
 })
 export class HoverTableComponent {
 

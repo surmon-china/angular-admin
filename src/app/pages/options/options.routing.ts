@@ -11,4 +11,4 @@ const routes: Routes = [
   { path: '', component: OptionsComponent }
 ];
 
-export const routing = RouterModule.forChild(routes);
+export const RoutingModule = RouterModule.forChild(routes);

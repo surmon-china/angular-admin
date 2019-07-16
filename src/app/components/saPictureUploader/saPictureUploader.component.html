@@ -1,0 +1,28 @@
+<div class="picture-uploader">
+  <div class="picture-group" [ngClass]="{ uploading: uploadInProgress }">
+    <div class="picture-wrapper" id="pictureWrapper" (click)="bringFileSelector()">
+      <img [src]="picture" *ngIf="picture">
+      <img [src]="defaultPicture" *ngIf="!picture && defaultPicture">
+      <div class="loading" *ngIf="uploadInProgress">
+        <div class="spinner">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+        <p class="load-progress">{{ _uploadProgress }}%</p>
+      </div>
+    </div>
+    <i class="ion-md-close-circle-outline" *ngIf="picture && canDelete" (click)="removePicture()"></i>
+    <a href class="change-picture" (click)="bringFileSelector()">点击上传图片</a>
+    <input #fileUpload type="file" hidden="true" id="uploadFile" (change)="onFiles()">
+    <button id="uploadFileBtn" style="display: none"></button>
+  </div>
+  <div class="picture-url">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="图片地址"
+      [(ngModel)]="picture"
+      (ngModelChange)="inputImageUrlChange($event)"
+    >
+  </div>
+</div>

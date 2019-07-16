@@ -8,8 +8,8 @@ import { Component, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
   selector: 'sa-card',
-  templateUrl: './saCard.html',
-  styleUrls: ['./saCard.scss'],
+  templateUrl: './saCard.component.html',
+  styleUrls: ['./saCard.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SaCardComponent {

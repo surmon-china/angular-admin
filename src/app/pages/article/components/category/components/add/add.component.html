@@ -1,0 +1,128 @@
+<form
+  name="addCatrgory" 
+  class="category-edit-form" 
+  [formGroup]="editForm" 
+  (ngSubmit)="submitEditForm()"
+>
+  <div class="form-group" [ngClass]="controlStateClass(name)">
+    <label for="category-name">
+      <h5>名称</h5>
+    </label>
+    <input
+      type="text" 
+      class="form-control" 
+      id="category-name" 
+      placeholder="分类名称" 
+      [formControl]="name"
+    >
+    <span class="help-block sub-little-text">这将是它在站点上显示的名字</span>
+  </div>
+  <div class="form-group" [ngClass]="controlStateClass(slug)">
+    <label for="category-slug">
+      <h5>别名</h5>
+    </label>
+    <input
+      type="text" 
+      class="form-control" 
+      id="category-slug" 
+      placeholder="分类别名" 
+      [formControl]="slug"
+    >
+    <span class="help-block sub-little-text">“别名”是在URL中使用的别称，建议小写，字母、数字、连字符（-）</span>
+  </div>
+  <div class="form-group" [ngClass]="controlStateClass(pid)">
+    <label for="category-parent">
+      <h5>父分类</h5>
+    </label>
+    <select class="form-control c-select" id="category-parent" [formControl]="pid">
+      <option [ngValue]="null">无</option>
+      <ng-template [ngIf]="categories && categories.length">
+        <option
+          *ngFor="let cate of categories" 
+          [ngValue]="cate._id" 
+          [disabled]="isDisableCateSelect(cate)"
+        >
+          <span *ngIf="cate.level">└</span>
+          <span>{{ ''.padEnd(cate.level, '─') }}</span>
+          <span>&nbsp;</span>
+          <span>{{ cate.name }}</span>
+        </option>
+      </ng-template>
+    </select>
+    <span class="help-block sub-little-text">可以选择父级分类</span>
+  </div>
+  <div class="form-group" [ngClass]="controlStateClass(description)">
+    <label for="category-description">
+      <h5>描述</h5>
+    </label>
+    <textarea
+      name="category-description"
+      id="category-description"
+      class="form-control category-description"
+      cols="30"
+      rows="20"
+      placeholder="分类描述"
+      [formControl]="description"
+    >
+    </textarea>
+    <span class="help-block sub-little-text">该分类的描述</span>
+  </div>
+  <div  class="form-group"[ngClass]="controlStateClass(extends)">
+    <label for="category-extend">
+      <h5>自定义扩展</h5>
+    </label>
+    <div class="category-extend" *ngFor="let extend of extends.value; let i = index">
+      <div class="input-group">
+        <input
+          type="text" 
+          id="category-extend"
+          class="form-control"
+          placeholder="key" 
+          [(ngModel)]="extend.name"
+          [ngModelOptions]="{ standalone: true }"
+        >
+        <input
+          type="text" 
+          id="category-extend-value"
+          class="form-control"
+          placeholder="value" 
+          [(ngModel)]="extend.value"
+          [ngModelOptions]="{ standalone: true }"
+        >
+        <div class="input-group-append">
+          <button
+            class="btn btn-default" 
+            (click)="delExtendItem(i)"
+            [disabled]="extends.value.length < 2"
+          >
+            <i class="ion-md-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <a [href]="" class="btn btn-default btn-sm btn-block btn-with-icon" (click)="addExtendItem()">
+      <i class="ion-md-add"></i>
+      <span>增加扩展</span>
+    </a>
+    <span class="help-block sub-little-text">可以为当前标签扩展自定义扩展属性</span>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-sm-12">
+      <button
+        type="submit" 
+        class="btn btn-success btn-with-icon" 
+        [disabled]="!editForm.valid || fetching"
+      >
+        <i class="ion-md-done-all"></i>
+        <span *ngIf="fetching">分类{{ category ? '修改' : '添加' }}中</span>
+        <span *ngIf="!fetching">{{ category ? '修改' : '添加' }}分类目录</span>
+      </button>
+      <span>&nbsp;&nbsp;</span>
+      <button class="btn btn-default btn-with-icon" (click)="resetEditForm(true)">
+        <i class="ion-md-refresh"></i>
+        <span>重置</span>
+      </button>
+    </div>
+  </div>
+</form>

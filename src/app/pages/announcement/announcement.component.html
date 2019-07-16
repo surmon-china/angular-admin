@@ -94,8 +94,8 @@
               class="btn btn-default btn-with-icon"
               (click)="resetSearchForm()"
             >
-              <i class="ion-md-trash"></i>
-              <span>清空关键词</span>
+              <i class="ion-md-remove-circle-outline"></i>
+              <span>重置参数</span>
             </button>
             <div class="btn-group" dropdown [isDisabled]="!selectedAnnouncements.length">
               <button
@@ -108,7 +108,10 @@
               </button>
               <ul class="dropdown-menu" *dropdownMenu>
                 <li class="dropdown-item">
-                  <a [href]="" (click)="openBatchDelModal()">批量删除</a>
+                  <a [href]="" (click)="openBatchDelModal()">
+                    <i class="ion-md-trash icon"></i>
+                    <span>批量删除</span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -126,7 +129,7 @@
               [formControl]="keyword"
               class="form-control with-default-addon"
             />
-            <span class="input-group-btn">
+            <span class="input-group-append">
               <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
             </span>
           </div>
@@ -186,14 +189,20 @@
                       <div class="btn-group" role="group">
                         <button
                           type="button"
-                          class="btn btn-sm btn-warning"
+                          class="btn btn-sm btn-warning btn-with-icon"
                           (click)="editAnnouncement(announcement)"
-                        >编辑公告</button>
+                        >
+                          <i class="ion-md-create"></i>
+                          <span>编辑</span>
+                        </button>
                         <button
                           type="button"
-                          class="btn btn-sm btn-danger"
+                          class="btn btn-sm btn-danger btn-with-icon"
                           (click)="openDelModal(announcement)"
-                        >删除公告</button>
+                        >
+                          <i class="ion-md-trash"></i>
+                          <span>删除</span>
+                        </button>
                       </div>
                     </div>
                   </td>
@@ -235,14 +244,17 @@
         </div>
         <div class="modal-body">
           <div class="message">
-            <span class="icon text-warning">
+            <span class="icon text-danger">
               <i class="ion-md-information-circle-outline"></i>
             </span>
             <span>确定要删除{{ activeAnnouncement ? '这条' : '选中' }}公告吗？</span>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary confirm-btn" (click)="(activeAnnouncement ? doDelAnnouncement() : doDelAnnouncements())">确认删除</button>
+          <button
+            class="btn btn-danger confirm-btn"
+            (click)="(activeAnnouncement ? doDelAnnouncement() : doDelAnnouncements())"
+          >确认删除</button>
           <span>&nbsp;&nbsp;</span>
           <button class="btn btn-default confirm-btn" (click)="canceldDelModal()">取消</button>
         </div>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'box-contextual-table',
-  templateUrl: './contextualTable.html',
+  templateUrl: './contextualTable.component.html',
 })
 export class ContextualTableComponent {
 

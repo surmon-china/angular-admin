@@ -11,4 +11,4 @@ const routes: Routes = [
   { path: '', data: { name: 'auth' }, component: AuthComponent }
 ];
 
-export const routing = RouterModule.forChild(routes);
+export const RoutingModule = RouterModule.forChild(routes);

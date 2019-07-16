@@ -7,22 +7,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
-import { SaModule } from '@/app/sa.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { SaBaseModule } from '@/app/sa-base.module';
 
-import { routing } from './announcement.routing';
+import { RoutingModule } from './announcement.routing';
 import { AnnouncementComponent } from './announcement.component';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
+    SaBaseModule,
+    RoutingModule,
     PaginationModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
-    FormsModule,
-    SaModule,
-    routing
   ],
   providers: [],
   declarations: [

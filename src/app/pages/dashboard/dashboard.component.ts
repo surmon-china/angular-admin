@@ -44,8 +44,8 @@ enum ELoading {
 @Component({
   selector: 'page-dashboard',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./dashboard.scss'],
-  templateUrl: './dashboard.html'
+  styleUrls: ['./dashboard.component.scss'],
+  templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
 
@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit {
         reportType: 'ga',
         query: {
           dimensions: 'ga:hour',
-          'metrics': 'ga:sessions',
+          metrics: 'ga:sessions',
           'start-date': 'today',
           'end-date': 'today',
         },
@@ -163,7 +163,7 @@ export class DashboardComponent implements OnInit {
       viewSelector.on('change', ids => {
         const newIds = {
           query: {
-            ids: ids
+            ids
           }
         };
         timeline.set(newIds).execute();
@@ -180,10 +180,12 @@ export class DashboardComponent implements OnInit {
   }
 
   initGaScript() {
+    // tslint:disable-next-line:only-arrow-functions
     (function(w, d, s, g, js, fjs) {
-      g = w.gapi || (w.gapi = {}); g.analytics = {q: [], ready: function(cb) {this.q.push(cb); }};
+      g = w.gapi || (w.gapi = {}); g.analytics = {q: [], ready(cb) {this.q.push(cb); }};
       js = d.createElement(s); fjs = d.getElementsByTagName(s)[0];
       js.src = 'https://apis.google.com/js/platform.js';
+      // tslint:disable-next-line:only-arrow-functions
       fjs.parentNode.insertBefore(js, fjs); js.onload = function() {g.load('analytics'); };
     }(window as any, document, 'script'));
   }

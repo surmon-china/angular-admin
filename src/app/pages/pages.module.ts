@@ -7,12 +7,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { routing } from './pages.routing';
-import { SaModule } from '../sa.module';
 import { PagesComponent } from './pages.component';
+import { RoutingModule } from './pages.routing';
+import { SaBaseModule } from '../sa-base.module';
 
 @NgModule({
-  imports: [CommonModule, SaModule, routing],
+  imports: [CommonModule, RoutingModule, SaBaseModule],
   declarations: [PagesComponent]
 })
 export class PagesModule {}

@@ -1,7 +1,7 @@
 <aside class="al-sidebar" (mouseleave)="hoverElemTop=outOfArea" sidebarResize>
   <div class="al-sidebar-list-item user" [hidden]="sidebarCollapsed">
     <a [routerLink]="['/options']" class="al-sidebar-user">
-      <img src="{{ appState.state.adminInfo.gravatar }}" class="al-sidebar-user-gravatar">
+      <img [src]="appState.state.adminInfo.gravatar" class="al-sidebar-user-gravatar">
       <div class="al-sidebar-user-profile">
         <p class="al-sidebar-user-name">{{ appState.state.adminInfo.name }}</p>
         <small class="al-sidebar-user-slogan text-muted">{{ appState.state.adminInfo.slogan }}</small>
@@ -14,7 +14,8 @@
         [menuItem]="item"
         (itemHover)="hoverItem($event)"
         (toggleSubMenu)="toggleSubMenu($event)"
-        *ngFor="let item of menuItems">
+        *ngFor="let item of menuItems"
+      >
       </sa-menu-item>
     </ul>
     <div

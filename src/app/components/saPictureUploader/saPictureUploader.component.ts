@@ -14,11 +14,12 @@ import { SaHttpRequesterService } from '@app/services';
 import 'rxjs/add/operator/toPromise';
 
 type TPictureUrl = string;
+type TEventFunc = (...args: any) => any;
 
 @Component({
   selector: 'sa-picture-uploader',
-  styleUrls: ['./saPictureUploader.scss'],
-  templateUrl: './saPictureUploader.html',
+  styleUrls: ['./saPictureUploader.component.scss'],
+  templateUrl: './saPictureUploader.component.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => SaPictureUploaderComponent),
@@ -36,7 +37,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   // 输入
   @Input() canDelete = true;
   @Input() uploadSizeLimit = 3000000;
-  @Input() defaultPicture: TPictureUrl = 'assets/images/theme/no-photo.png';
+  @Input() defaultPicture: TPictureUrl = 'assets/images/profile/no-photo.png';
 
   // 输出事件
   @Output() handleUpload: EventEmitter<any> = new EventEmitter();
@@ -44,12 +45,12 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   @Output() handleUploadCompleted: EventEmitter<any> = new EventEmitter();
 
   // 初始化
-  public up_token = '';
+  public upToken = '';
   public tokenOk = false;
   public picture: TPictureUrl = '';
   public uploadInProgress = false;
-  public onModelChange: Function = () => {};
-  public onModelTouched: Function = () => {};
+  public onModelChange: TEventFunc = () => {};
+  public onModelTouched: TEventFunc = () => {};
 
   // 构造函数
   constructor(
@@ -67,7 +68,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
     this.httpService.get(API_PATH.UP_TOKEN).then((res: any) => {
       if (res && res.result && res.result.up_token) {
         this.tokenOk = true;
-        this.up_token = res.result.up_token;
+        this.upToken = res.result.up_token;
       }
     }).catch(_ => {
       this.tokenOk = false;
@@ -128,7 +129,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
       const upOptions = { useCdnDomain: true };
 
       // 开始上传
-      const observable = qiniu.upload(upFile, keyName, this.up_token, putExtra, upOptions);
+      const observable = qiniu.upload(upFile, keyName, this.upToken, putExtra, upOptions);
 
       this.uploadInProgress = true;
 
@@ -148,10 +149,10 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
         },
         complete: res => {
           console.warn('上传完成', res);
-          const picture_url = `${ENV_API.STATIC_URL}/${res.key}`;
+          const pictureUrl = `${ENV_API.STATIC_URL}/${res.key}`;
           this.uploadInProgress = false;
-          this.handleUploadCompleted.emit(picture_url);
-          this.changePictureFromURL(picture_url);
+          this.handleUploadCompleted.emit(pictureUrl);
+          this.changePictureFromURL(pictureUrl);
           this.notificationsService.success('上传成功', '图片上传成功', { timeOut: 850 });
         }
       });
@@ -223,12 +224,12 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   }
 
   // 注册事件
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: TEventFunc): void {
     this.onModelChange = fn;
   }
 
   // 注册事件
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: TEventFunc): void {
     this.onModelTouched = fn;
   }
 }

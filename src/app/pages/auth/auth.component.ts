@@ -15,21 +15,15 @@ import { TOKEN } from '@app/constants/auth';
 @Component({
   selector: 'page-auth',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./auth.scss'],
-  templateUrl: './auth.html'
+  styleUrls: ['./auth.component.scss'],
+  templateUrl: './auth.component.html'
 })
 export class AuthComponent implements AfterViewChecked {
 
   @ViewChild('pwdInput', { static: false }) input: ElementRef;
 
-  private password: string = '';
-  private editMode: boolean = false;
-  private slogans = [
-    'Done is better than perfect.',
-    '远离颠倒梦想，究竟涅槃',
-    '应无所住，而生其心'
-  ];
-  private slogan: string = this.slogans[Math.floor(Math.random() * (this.slogans.length))];
+  private password = '';
+  private editMode = false;
 
   constructor(
     private router: Router,

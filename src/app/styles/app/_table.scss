@@ -1,4 +1,5 @@
 .table {
+  color: $content-text;
   margin-bottom: 0px;
 
   & > thead {
@@ -161,7 +162,7 @@ input.search-input {
 }
 
 .vertical-scroll {
-  max-height: 214px;
+  max-height: 310px;
 }
 
 .status-button {

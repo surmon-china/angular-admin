@@ -3,8 +3,8 @@ import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angu
 @Component({
   selector: 'sa-menu-item',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./saMenuItem.scss'],
-  templateUrl: './saMenuItem.html'
+  styleUrls: ['./saMenuItem.component.scss'],
+  templateUrl: './saMenuItem.component.html'
 })
 export class SaMenuItemComponent {
 

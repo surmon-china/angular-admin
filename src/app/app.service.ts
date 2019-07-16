@@ -4,8 +4,8 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Injectable, EventEmitter } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 // 普通对象模型
 export interface IinternalState {
@@ -15,18 +15,14 @@ export interface IinternalState {
 @Injectable()
 export class AppState {
 
-  // 状态机
   private stateChange = new Subject();
-  private state$ = this.stateChange.asObservable();
   private _state: IinternalState = {
     adminInfo: {
       name: '管理员',
       slogan: '博客管理后台',
-      gravatar: 'assets/images/app/profile/Admin.jpg'
+      gravatar: 'assets/images/profile/logo.png'
     }
   };
-
-  constructor() {}
 
   get state() {
     return this.clone(this._state);

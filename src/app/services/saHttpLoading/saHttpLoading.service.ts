@@ -7,7 +7,7 @@
 import { Injectable } from '@angular/core';
 
 function replaceMethod(replacer) {
-  return function (target, propertyKey, descriptor) {
+  return (target, propertyKey, descriptor) => {
     descriptor.value = replacer(descriptor.value);
     return descriptor;
   };
@@ -66,7 +66,7 @@ export class SaHttpLoadingService {
 
   handle(name: string) {
     const loadings = this;
-    return replaceMethod((origin) => function (...args) {
+    return replaceMethod((origin) => function(...args) {
       const promise = origin.apply(this, args);
       return loadings.promise(name, promise);
     });

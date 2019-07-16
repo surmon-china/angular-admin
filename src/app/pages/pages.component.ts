@@ -23,14 +23,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
       <div class="al-footer-right">Created with <i class="ion-md-heart"></i></div>
       <div class="al-footer-main clearfix">
         <div class="al-copy">&copy; <a href="https://surmon.me">NodePress</a> 2019</div>
-        <ul class="al-share clearfix" *ngIf="false">
-          <li><i class="socicon socicon-facebook"></i></li>
-          <li><i class="socicon socicon-twitter"></i></li>
-          <li><i class="socicon socicon-google"></i></li>
-          <li>
-            <a href="https://github.com/surmon-china" target="_blank"><i class="socicon socicon-github"></i></a>
-          </li>
-        </ul>
       </div>
     </footer>
     <sa-back-top position="200"></sa-back-top>

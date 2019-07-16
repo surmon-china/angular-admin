@@ -7,17 +7,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SaModule } from '@/app/sa.module';
+import { SaBaseModule } from '@/app/sa-base.module';
 import { OptionsComponent } from './options.component';
-import { routing } from './options.routing';
+import { RoutingModule } from './options.routing';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SaModule,
-    routing
+    SaBaseModule,
+    RoutingModule
   ],
   providers: [],
   declarations: [

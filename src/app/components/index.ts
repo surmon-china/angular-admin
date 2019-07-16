@@ -1,5 +1,4 @@
 export * from './saPageTop';
-export * from './saMsgCenter';
 export * from './saSidebar';
 export * from './saMenu/components/saMenuItem';
 export * from './saMenu';

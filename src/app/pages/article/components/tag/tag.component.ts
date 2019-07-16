@@ -6,7 +6,7 @@
 
 import * as lodash from 'lodash';
 import * as API_PATH from '@app/constants/api';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
@@ -39,8 +39,8 @@ enum ELoading {
 @Component({
   selector: 'page-article-tag',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./tag.scss'],
-  templateUrl: './tag.html'
+  styleUrls: ['./tag.component.scss'],
+  templateUrl: './tag.component.html'
 })
 export class ArticleTagComponent implements OnInit {
 

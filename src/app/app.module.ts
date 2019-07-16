@@ -12,19 +12,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-import { SaModule } from '@app/sa.module';
-import { AppComponent } from '@app/app.component';
 import { PagesModule } from '@app/pages/pages.module';
-import { GlobalState } from '@app/global.state';
+import { SaBaseModule } from '@/app/sa-base.module';
+import { AppComponent } from '@app/app.component';
 import { RoutingModule } from '@app/app.routing';
+import { GlobalState } from '@app/global.state';
 import { AppState, IinternalState } from '@app/app.service';
 
-const APP_PROVIDERS = [
-  AppState,
-  GlobalState
-];
-
-interface IStore {
+export interface IAppStore {
   state: IinternalState;
   restoreInputValues: () => void;
   disposeOldHosts: () => void;
@@ -33,9 +28,7 @@ interface IStore {
 // App 入口模块
 @NgModule({
   bootstrap: [AppComponent],
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -47,10 +40,11 @@ interface IStore {
     HttpClientModule,
     LoadingBarHttpClientModule,
     SimpleNotificationsModule.forRoot(),
-    SaModule.forRoot()
+    SaBaseModule.forRoot(),
   ],
   providers: [
-    APP_PROVIDERS,
+    AppState,
+    GlobalState
   ]
 })
 export class AppModule {}

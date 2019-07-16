@@ -1,0 +1,372 @@
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <sa-card title="评论列表" baCardClass="with-scroll table-panel">
+      <div class="contnet-top-tools">
+        <div class="pull-left">
+          <div class="btn-group">
+            <button class="btn btn-success" *ngIf="isGuestbook(post_id);else postListTitle">
+              <strong>留言板评论列表</strong>
+            </button>
+            <ng-template #postListTitle>
+              <button class="btn btn-info">
+                <strong>{{ post_id ? ('文章 ' + post_id + ' ') : '全部' }}评论列表</strong>
+              </button>
+            </ng-template>
+            <button
+              type="button"
+              class="btn btn-default active"
+              [ngClass]="{ 'active': isState(CommentState.All)}"
+              (click)="switchState(CommentState.All)"
+            >
+              <span>全部</span>
+              <span *ngIf="isState(CommentState.All)">&nbsp;({{ currentListTotal }})</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(CommentState.Published) }"
+              (click)="switchState(CommentState.Published)"
+            >
+              <span>已发布</span>
+              <span *ngIf="isState(CommentState.Published)">&nbsp;({{ currentListTotal }})</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(CommentState.Auditing) }"
+              (click)="switchState(CommentState.Auditing)"
+            >
+              <span>待审核</span>
+              <span *ngIf="isState(CommentState.Auditing)">&nbsp;({{ currentListTotal }})</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(CommentState.Deleted) }"
+              (click)="switchState(CommentState.Deleted)"
+            >
+              <span>回收站</span>
+              <span *ngIf="isState(CommentState.Deleted)">&nbsp;({{ currentListTotal }})</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(CommentState.Spam) }"
+              (click)="switchState(CommentState.Spam)"
+            >
+              <span>垃圾评论</span>
+              <span *ngIf="isState(CommentState.Spam)">&nbsp;({{ currentListTotal }})</span>
+            </button>
+          </div>
+          <span>&nbsp;&nbsp;</span>
+          <div class="btn-group">
+            <button
+              type="button" 
+              class="btn btn-default btn-with-icon"
+              (click)="refreshComments()"
+            >
+              <i class="ion-md-refresh"></i>
+              <span>刷新</span>
+            </button>
+            <button
+              type="button" 
+              class="btn btn-default btn-with-icon"
+              (click)="resetGetParams()"
+            >
+              <i class="ion-md-remove-circle-outline"></i>
+              <span>重置参数</span>
+            </button>
+            <div class="btn-group" dropdown [isDisabled]="!selectedComments.length">
+              <button
+                type="button" 
+                class="btn btn-default btn-with-icon dropdown-toggle"
+                dropdownToggle
+              >
+                <i class="ion-md-list"></i>
+                <span>批量操作</span>
+              </button>
+              <ul class="dropdown-menu" *dropdownMenu>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="updateCommentsState(CommentState.Published)">
+                    <i class="ion-md-checkmark icon"></i>
+                    <span>审核通过</span>
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="updateCommentsState(CommentState.Auditing)">
+                    <i class="ion-md-undo icon"></i>
+                    <span>移至待审核</span>
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="updateCommentsState(CommentState.Deleted)">
+                    <i class="ion-md-pint icon"></i>
+                    <span>移至回收站</span>
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="updateCommentsState(CommentState.Spam)">
+                    <i class="ion-md-nuclear icon"></i>
+                    <span>标为垃圾评论</span>
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="delCommentModal()">
+                    <i class="ion-md-trash icon"></i>
+                    <span>彻底删除</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <form
+          class="pull-right form-inline comment-search-form"
+          [formGroup]="searchForm" 
+          (ngSubmit)="searchComments()"
+        >
+          <div class="input-group">
+            <input
+              type="text"
+              [formControl]="keyword" 
+              class="form-control with-default-addon" 
+              placeholder="评论内容、作者信息"
+            />
+            <span class="input-group-append">
+              <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
+            </span>
+          </div>
+        </form>
+        <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
+        <div class="pull-right form-inline">
+          <select class="form-control c-select" [(ngModel)]="getParams.sort" (ngModelChange)="getComments()">
+            <option [ngValue]="SortType.Desc" default>最新</option>
+            <option [ngValue]="SortType.Asc">最早</option>
+            <option [ngValue]="SortType.Hot">最热门</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <div class="comment-list">
+          <sa-loading-spider [show]="fetching[Loading.Get]"></sa-loading-spider>
+          <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
+            <thead class="thead-inverse">
+              <tr>
+                <th>
+                  <sa-checkbox [(ngModel)]="commentsSelectAll" (ngModelChange)="batchSelectChange($event)">
+                    <span sa-checkbox-label>
+                      <span>&nbsp;</span>
+                      <strong>ID</strong>
+                    </span>
+                  </sa-checkbox>
+                </th>
+                <th>PID</th>
+                <th>POST_ID</th>
+                <th width="23%">评论内容</th>
+                <th>个人信息</th>
+                <th>终端</th>
+                <th>点赞</th>
+                <th>置顶</th>
+                <th>日期</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!comments.data.length;else dataList">
+                <td colspan="11">
+                  <p class="text-muted text-center comment-err-msg" *ngIf="!comments.data.length">
+                    <span>{{ fetching[Loading.Get] ? '数据请求中...' : '暂无数据' }}</span>
+                  <p>
+                </td>
+              </tr>
+              <ng-template #dataList>
+                <tr *ngFor="let comment of comments.data" class="comment-item">
+                  <td class="batch-checkbox">
+                    <sa-checkbox [(ngModel)]="comment.selected" (ngModelChange)="itemSelectChange()">
+                      <span sa-checkbox-label>
+                        <span>&nbsp;</span>
+                        <strong>{{ comment.id }}</strong>
+                      </span>
+                    </sa-checkbox>
+                  </td>
+                  <td>
+                    <a *ngIf="comment.pid;else noLinkPid" [routerLink]="['/comment/detail/', comment.pid]">{{ comment.pid }}</a>
+                    <ng-template #noLinkPid><span>{{ comment.pid }}</span></ng-template>
+                  </td>
+                  <td>
+                    <a [routerLink]="['/comment/post/', comment.post_id]">{{ comment.post_id }}</a>
+                  </td>
+                  <td class="comment-content">
+                    <span class="content">
+                      <span *ngIf="comment.content;else emptyComment">{{ comment.content | truncate : 160 }}</span>
+                      <ng-template #emptyComment><span class="text-muted">暂无内容</span></ng-template>
+                    </span>
+                  </td>
+                  <td class="comment-user">
+                    <div class="name"><strong>名字：</strong>{{ comment.author.name }}</div>
+                    <div class="email">
+                      <strong>邮箱：</strong>
+                      <a [href]="'mailto:' + comment.author.email" target="_blank">{{ comment.author.email }}</a>
+                    </div>
+                    <div class="site">
+                      <strong>网址：</strong>
+                      <a [href]="comment.author.site" target="_blank">{{ comment.author.site || '无' }}</a>
+                    </div>
+                  </td>
+                  <td class="comment-tag">
+                    <div>
+                      <strong>IP：</strong>
+                      <span *ngIf="comment.ip;else unknowip">{{ comment.ip }}</span>
+                      <ng-template #unknowip><span class="text-muted">未知</span></ng-template>
+                    </div>
+                    <div>
+                      <strong>地理位置：</strong>
+                      <span *ngIf="comment.ip_location;else unknowIpLocation">{{ comment.ip_location.country + ' - ' + comment.ip_location.city }}</span>
+                      <ng-template #unknowIpLocation><span class="text-muted">未知</span></ng-template>
+                    </div>
+                    <div>
+                      <strong>浏览器：</strong>
+                      <span [innerHTML]="browserParser(comment.agent)"></span>
+                    </div>
+                    <div>
+                      <strong>系统：</strong>
+                      <span [innerHTML]="osParser(comment.agent)"></span>
+                    </div>
+                  </td>
+                  <td>
+                    <span>{{ comment.likes }}</span>
+                  </td>
+                  <td>{{ comment.is_top ? '是' : '否' }}</td>
+                  <td>{{ comment.create_at | dataToLocale }}</td>
+                  <td>
+                    <i class="ion-md-checkmark text-success" *ngIf="comment.state === CommentState.Published"></i>
+                    <i class="ion-md-create text-warning" *ngIf="comment.state === CommentState.Auditing"></i>
+                    <i class="ion-md-trash text-danger" *ngIf="comment.state === CommentState.Deleted"></i>
+                    <i class="ion-md-nuclear text-danger" *ngIf="comment.state === CommentState.Spam"></i>
+                    <span>&nbsp;</span>
+                    <span [ngSwitch]="comment.state">
+                      <span *ngSwitchCase="CommentState.Auditing">待审核</span>
+                      <span *ngSwitchCase="CommentState.Published">已发布</span>
+                    </span>
+                    <span *ngIf="comment.state === CommentState.Deleted">已删除</span>
+                    <span *ngIf="comment.state === CommentState.Spam">垃圾评论</span>
+                  </td>
+                  <td>
+                    <div class="button-wrapper">
+                      <a
+                        class="btn btn-default btn-sm btn-with-icon"
+                        [routerLink]="['/comment/detail/', comment._id]"
+                      >
+                        <i class="ion-md-create"></i>
+                        <span>评论详情</span>
+                      </a>
+                    </div>
+                    <div class="button-wrapper" *ngIf="comment.state === CommentState.Auditing">
+                      <button
+                        class="btn btn-success btn-sm btn-with-icon"
+                        (click)="updateCommentsState(CommentState.Published, comment)"
+                      >
+                        <i class="ion-md-checkmark"></i>
+                        <span>审核通过</span>
+                      </button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="comment.state === CommentState.Deleted || comment.state === CommentState.Spam">
+                      <button
+                        class="btn btn-success btn-sm btn-with-icon"
+                        (click)="updateCommentsState(CommentState.Auditing, comment)"
+                      >
+                        <i class="ion-md-checkmark"></i>
+                        <span>恢复评论</span>
+                      </button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="comment.state === CommentState.Published">
+                      <button
+                        class="btn btn-danger btn-sm btn-with-icon"
+                        (click)="updateCommentsState(CommentState.Spam, comment)"
+                      >
+                        <i class="ion-md-nuclear"></i>
+                        <span>标为垃圾</span>
+                      </button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="comment.state !== CommentState.Deleted">
+                      <button
+                        class="btn btn-danger btn-sm btn-with-icon"
+                        (click)="updateCommentsState(CommentState.Deleted, comment)"
+                      >
+                        <i class="ion-md-pint"></i>
+                        <span>移回收站</span>
+                      </button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="comment.state === CommentState.Deleted">
+                      <button class="btn btn-danger btn-sm btn-with-icon" (click)="delCommentModal(comment._id)">
+                        <i class="ion-md-trash"></i>
+                        <span>彻底删除</span>
+                      </button>
+                    </div>
+                     <div class="button-wrapper">
+                      <a
+                        class="btn btn-info btn-sm btn-with-icon"
+                        target="_blank"
+                        [href]="isGuestbook(comment.post_id)
+                          ? 'https://surmon.me/guestbook'
+                          : ('https://surmon.me/article/' + comment.post_id)"
+                      >
+                        <i class="ion-md-share-alt"></i>
+                        <span>宿主页面</span>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+           <br>
+          <div class="text-center" *ngIf="comments.pagination">
+            <pagination
+              class="pagination-xs"
+              firstText="首页"
+              lastText="末页"
+              nextText="下一页"
+              previousText="上一页"
+              pageBtnClass="btn-primary"
+              [totalItems]="comments.pagination.total"
+              [itemsPerPage]="comments.pagination.per_page"
+              [(ngModel)]="comments.pagination.current_page"
+              [maxSize]="7"
+              [boundaryLinks]="true"
+              [rotate]="false"
+              (pageChanged)="pageChanged($event)"
+            ></pagination>
+          </div>
+        </div>
+      </div>
+    </sa-card>
+    <!-- 删除确认弹窗 -->
+    <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" aria-label="Close" (click)="cancelCommentModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">确认操作</h4>
+          </div>
+          <div class="modal-body">
+            <div class="message">
+              <span class="icon text-danger">
+                <i class="ion-md-information-circle-outline"></i>
+              </span>
+              <span>确定要删除{{ todoDelCommentId ? '这篇' : '选中' }}评论吗？本操作不可逆</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-danger confirm-btn" (click)="delComments()">确认删除</button>
+            <span>&nbsp;</span>
+            <button class="btn btn-default confirm-btn" (click)="cancelCommentModal()">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,10 +7,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
-
-import { SaModule } from '@/app/sa.module';
-import { routing } from './article.routing';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { SaBaseModule } from '@app/sa-base.module';
+import { RoutingModule } from './article.routing';
 
 import { ArticleComponent } from './article.component';
 
@@ -32,11 +33,11 @@ import { ArticleEditCategoryComponent } from './components/edit/components/categ
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SaModule,
+    SaBaseModule,
+    RoutingModule,
     PaginationModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
-    routing
   ],
   declarations: [
     ArticleComponent,

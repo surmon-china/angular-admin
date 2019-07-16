@@ -6,7 +6,7 @@
 
 import * as lodash from 'lodash';
 import * as API_PATH from '@app/constants/api';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@/app/pages/article/article.service';
 import { TApiPath, IFetching, TSelectedIds } from '@app/pages/pages.constants';
@@ -20,7 +20,7 @@ enum ELoading {
 
 @Component({
   selector: 'page-article-category',
-  templateUrl: './category.html',
+  templateUrl: './category.component.html',
 })
 export class ArticleCategoryComponent implements OnInit {
 

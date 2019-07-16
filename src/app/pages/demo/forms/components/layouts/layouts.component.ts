@@ -10,11 +10,11 @@ import { Component, ViewEncapsulation } from '@angular/core';
   selector: 'page-layouts',
   encapsulation: ViewEncapsulation.None,
   styles: [],
-  templateUrl: './layouts.html',
+  templateUrl: './layouts.component.html',
 })
 export class LayoutsComponent {
 
-  public picture = 'assets/images/theme/no-photo.png';
+  public picture = 'assets/images/profile/no-photo.png';
 
   constructor() {}
 }

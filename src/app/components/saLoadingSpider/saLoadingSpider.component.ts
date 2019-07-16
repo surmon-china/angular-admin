@@ -9,7 +9,7 @@ import { Component, ViewEncapsulation, Input } from '@angular/core';
 @Component({
   selector: 'sa-loading-spider',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./saLoadingSpider.scss'],
+  styleUrls: ['./saLoadingSpider.component.scss'],
   template: `
   <div class="sa-loading-spider" [ngClass]="className">
     <div class="loader-mask"></div>

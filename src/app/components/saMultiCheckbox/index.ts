@@ -1,1 +1,1 @@
-export * from './saMultiCheckbox.component'
+export * from './saMultiCheckbox.component';

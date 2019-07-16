@@ -190,88 +190,6 @@ h5 {
     border-left: 4px solid $warning-bg;
     margin-left: 13px;
   }
-
-  ul.blur, ol.blur {
-    padding-left: 13px;
-    margin-bottom: 19px;
-    list-style: none;
-    padding-top: 1px;
-    li {
-      margin-top: 5px;
-      font-size: 14px;
-      ul, ol {
-        padding-left: 20px;
-        margin-bottom: 0;
-        list-style: none;
-      }
-    }
-  }
-
-  ul.blur {
-    li {
-      &:before {
-        content: "• ";
-        color: $warning-bg;
-        width: 10px;
-        display: inline-block;
-      }
-    }
-  }
-
-  ol.blur {
-    counter-reset: section;
-    li {
-      color: $warning-bg;
-      padding-left: 0;
-      line-height: 14px;
-      position: relative;
-      span {
-        color: $content-text;
-        display: block;
-      }
-      ol {
-        padding-left: 0;
-        margin-left: 12px;
-      }
-      &:before {
-        content: counters(section, ".") ".";
-        counter-increment: section;
-        width: 19px;
-        position: absolute;
-        left: 0;
-        top: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-    & > li {
-      span {
-        padding-left: 14px;
-      }
-    }
-    ol {
-      counter-reset: section;
-      & > li {
-        &:before {
-          width: 30px;
-        }
-        span {
-          padding-left: 27px
-        }
-      }
-      ol {
-        & > li {
-          &:before {
-            width: 40px;
-          }
-          span {
-            padding-left: 40px;
-          }
-        }
-      }
-    }
-  }
 }
 
 .columns-section {
@@ -434,7 +352,7 @@ a.learn-more {
 
 .card.banner-column-panel {
   padding: 0;
-  margin-bottom: 90px;
+  margin-bottom: 60px;
 
   .card-body {
     padding: 0;

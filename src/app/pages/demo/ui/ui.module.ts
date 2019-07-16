@@ -1,10 +1,18 @@
+/**
+ * @file UI Demo 页面
+ * @module app/page/ui/module
+ * @author Surmon <https://github.com/surmon-china>
+ */
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SaModule } from '@/app/sa.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { SaBaseModule } from '@/app/sa-base.module';
+import { RoutingModule } from './ui.routing';
 
-import { routing } from './ui.routing';
-import { PaginationModule, BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 import { UiComponent } from './ui.component';
 import { ButtonsComponent } from './components/buttons/buttons.component';
 import { GridComponent } from './components/grid/grid.component';
@@ -26,11 +34,11 @@ import { IconsService } from './components/icons/icons.service';
   imports: [
     CommonModule,
     FormsModule,
-    SaModule,
+    SaBaseModule,
+    RoutingModule,
     PaginationModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
-    routing
   ],
   declarations: [
     ButtonsComponent,

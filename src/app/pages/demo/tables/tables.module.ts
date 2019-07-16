@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SaModule } from '@/app/sa.module';
+import { SaBaseModule } from '@/app/sa-base.module';
 
-import { routing } from './tables.routing';
+import { RoutingModule } from './tables.routing';
 import { TablesComponent } from './tables.component';
 import { BasicTablesComponent } from './components/basicTables/basicTables.component';
 import { ResponsiveTableComponent } from './components/basicTables/components/responsiveTable';
@@ -20,8 +20,8 @@ import { BasicTablesService } from './components/basicTables/basicTables.service
   imports: [
     CommonModule,
     FormsModule,
-    SaModule,
-    routing
+    SaBaseModule,
+    RoutingModule
   ],
   declarations: [
     TablesComponent,

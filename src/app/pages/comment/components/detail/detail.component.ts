@@ -12,9 +12,16 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 import { IArticle } from '@/app/pages/article/article.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
-import { browserParse, osParse } from '@app/pages/comment/comment.ua.service';
+import { browserParser, osParser } from '@/app/transforms/ua';
 import { humanizedLoading, mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
-import { IComment, TCommentId, ECommentState, ECommentPostType, ECommentParentType, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
+import {
+  IComment,
+  TCommentId,
+  ECommentState,
+  ECommentPostType,
+  ECommentParentType,
+  TResponsePaginationComment
+} from '@app/pages/comment/comment.constants';
 
 const DEFAULT_COMMENT: IComment = {
   pid: ECommentParentType.Self,
@@ -37,8 +44,8 @@ enum ELoading { GetDetail, Update, GetList, GetArticle }
 @Component({
   selector: 'page-comment-detail',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./detail.scss'],
-  templateUrl: './detail.html'
+  styleUrls: ['./detail.component.scss'],
+  templateUrl: './detail.component.html'
 })
 export class CommentDetailComponent implements OnInit {
 
@@ -48,8 +55,8 @@ export class CommentDetailComponent implements OnInit {
   private controlStateClass = formControlStateClass;
   private apiPath: TApiPath = API_PATH.COMMENT;
 
-  public osParse = osParse;
-  public browserParse = browserParse;
+  public osParser = osParser;
+  public browserParser = browserParser;
 
   // 评论内容
   public comment_id: TCommentId = null;

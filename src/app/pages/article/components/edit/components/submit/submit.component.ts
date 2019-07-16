@@ -9,7 +9,7 @@ import { EOriginState, EPublicState, EPublishState } from '@app/constants/state'
 
 @Component({
   selector: 'box-article-edit-submit',
-  templateUrl: './submit.html'
+  templateUrl: './submit.component.html'
 })
 
 export class ArticleEditSubmitComponent {

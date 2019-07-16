@@ -6,17 +6,24 @@
 
 import * as lodash from 'lodash';
 import * as API_PATH from '@app/constants/api';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ActivatedRoute } from '@angular/router';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
-import { browserParse, osParse } from '@app/pages/comment/comment.ua.service';
+import { browserParser, osParser } from '@/app/transforms/ua';
 import { IGetParams } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
 import { ESortType } from '@app/constants/state';
 import { humanizedLoading, handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
-import { IComment, TCommentId, TCommentPostId, ECommentState, ECommentPostType, TResponsePaginationComment } from '@app/pages/comment/comment.constants';
+import {
+  IComment,
+  TCommentId,
+  TCommentPostId,
+  ECommentState,
+  ECommentPostType,
+  TResponsePaginationComment
+} from '@app/pages/comment/comment.constants';
 
 enum ELoading { Get, PatchState }
 
@@ -28,8 +35,8 @@ const DEFAULT_GET_PARAMS = {
 @Component({
   selector: 'page-comment-list',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './list.html',
-  styleUrls: ['./list.scss']
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss']
 })
 export class CommentListComponent implements OnInit {
 
@@ -41,8 +48,8 @@ export class CommentListComponent implements OnInit {
   private apiPath: TApiPath = API_PATH.COMMENT;
 
   // 搜索参数
-  public osParse = osParse;
-  public browserParse = browserParse;
+  public osParser = osParser;
+  public browserParser = browserParser;
 
   public searchForm: FormGroup;
   public keyword: AbstractControl;

@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-md-4 col-xs-12">
+    <sa-card title="添加分类" baCardClass="with-scroll">
+      <box-category-add
+        #editCategoryForm
+        [fetching]="fetching[Loading.Post]"
+        [category]="todoEditCategory"
+        [categories]="categories.data"
+        (resetForm)="resetEditForm()"
+        (submitForm)="todoEditCategory ? doEditCategory($event) : addCategory($event)">
+      </box-category-add>
+    </sa-card>
+  </div>
+  <div class="col-md-8 col-xs-12">
+    <sa-card title="分类管理" baCardClass="with-scroll">
+      <box-category-list
+        [fetching]="fetching[Loading.Get]"
+        [categories]="categories"
+        (refreshList)="getCategories()"
+        (editCategoryRequest)="editCategory($event)"
+        (delCategoryRequest)="delCategory($event)"
+        (delCategoriesRequest)="delCategories($event)">
+      </box-category-list>
+    </sa-card>
+  </div>
+  <!-- 删除确认弹窗 -->
+  <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="canceldDelCategory()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">确认操作</h4>
+        </div>
+        <div class="modal-body">
+          <div class="message">
+            <span class="icon text-danger">
+              <i class="ion-md-information-circle-outline"></i>
+            </span>
+            <span *ngIf="todoDelCategory">确定要删除 "{{ todoDelCategory.name }}" 分类吗？</span>
+            <span *ngIf="!todoDelCategory">确定要删除选中分类吗？</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-danger confirm-btn"
+            (click)="(todoDelCategory ? doDelCategory() : doDelCategories())"
+          >
+            确认删除
+          </button>
+          <span>&nbsp;</span>
+          <button class="btn btn-default confirm-btn" (click)="canceldDelCategory()">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

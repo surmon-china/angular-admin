@@ -7,11 +7,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule as AngularFormsModule } from '@angular/forms';
-import { SaModule } from '@/app/sa.module';
+import { SaBaseModule } from '@/app/sa-base.module';
 
-import { routing } from './forms.routing';
+import { RoutingModule } from './forms.routing';
 
-import { RatingModule } from 'ngx-bootstrap';
 import { FormsComponent } from './forms.component';
 import { InputsComponent } from './components/inputs';
 import { LayoutsComponent } from './components/layouts';
@@ -20,7 +19,6 @@ import { StandardInputsComponent } from './components/inputs/components/standard
 import { ValidationInputsComponent } from './components/inputs/components/validationInputs';
 import { GroupInputsComponent } from './components/inputs/components/groupInputs';
 import { CheckboxInputsComponent } from './components/inputs/components/checkboxInputs';
-import { RatingComponent } from './components/inputs/components/ratinginputs';
 import { SelectInputsComponent } from './components/inputs/components/selectInputs';
 
 import { InlineFormComponent } from './components/layouts/components/inlineForm';
@@ -33,9 +31,8 @@ import { WithoutLabelsFormComponent } from './components/layouts/components/with
   imports: [
     CommonModule,
     AngularFormsModule,
-    SaModule,
-    RatingModule.forRoot(),
-    routing
+    SaBaseModule,
+    RoutingModule
   ],
   declarations: [
     LayoutsComponent,
@@ -45,7 +42,6 @@ import { WithoutLabelsFormComponent } from './components/layouts/components/with
     ValidationInputsComponent,
     GroupInputsComponent,
     CheckboxInputsComponent,
-    RatingComponent,
     SelectInputsComponent,
     InlineFormComponent,
     BlockFormComponent,

@@ -12,8 +12,8 @@ import * as lodash from 'lodash';
 @Component({
   selector: 'sa-sidebar',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./saSidebar.scss'],
-  templateUrl: './saSidebar.html'
+  styleUrls: ['./saSidebar.component.scss'],
+  templateUrl: './saSidebar.component.html'
 })
 export class SaSidebarComponent implements OnInit, AfterViewInit {
 

@@ -3,7 +3,7 @@ import { BasicTablesService } from '../../basicTables.service';
 
 @Component({
   selector: 'box-condensed-table',
-  templateUrl: './condensedTable.html'
+  templateUrl: './condensedTable.component.html'
 })
 export class CondensedTableComponent {
 

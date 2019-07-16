@@ -22,6 +22,14 @@ export class SaMenuService {
     menuItems.forEach(item => {
       this.selectItem(item);
 
+      const itemPath = item.route.paths.join('/').slice(1);
+      const pathname = window.location.pathname;
+      const okPath =  pathname.includes(itemPath);
+
+      if (okPath && !item.url) {
+        item.selected = true;
+      }
+
       if (item.selected) {
         this.currentMenuItem = item;
       }

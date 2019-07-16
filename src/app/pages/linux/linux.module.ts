@@ -6,15 +6,15 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SaModule } from '@/app/sa.module';
-import { routing } from './linux.routing';
+import { SaBaseModule } from '@/app/sa-base.module';
+import { RoutingModule } from './linux.routing';
 import { LinuxComponent } from './linux.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    SaModule,
-    routing
+    SaBaseModule,
+    RoutingModule
   ],
   declarations: [
     LinuxComponent

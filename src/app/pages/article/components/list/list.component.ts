@@ -6,15 +6,20 @@
 
 import * as lodash from 'lodash';
 import * as API_PATH from '@app/constants/api';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SaHttpRequesterService } from '@app/services';
-import { IGetParams } from '@app/pages/pages.constants';
 import { humanizedLoading, handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
-import { buildLevelCategories, TResponsePaginationTag, TResponsePaginationArticle, TResponsePaginationCategory } from '@/app/pages/article/article.service';
-import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
 import { EPublishState, EPublicState, EOriginState, ESortType } from '@app/constants/state';
+import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
+import { IGetParams } from '@app/pages/pages.constants';
+import {
+  buildLevelCategories,
+  TResponsePaginationTag,
+  TResponsePaginationArticle,
+  TResponsePaginationCategory
+} from '@/app/pages/article/article.service';
 
 const DEFAULT_SEARCH_FORM = {
   keyword: ''
@@ -39,8 +44,8 @@ enum ELoading {
 @Component({
   selector: 'page-article-list',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './list.html',
-  styleUrls: ['./list.scss']
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss']
 })
 export class ArticleListComponent implements OnInit {
 
@@ -214,7 +219,7 @@ export class ArticleListComponent implements OnInit {
   }
 
   // 对于所有修改进行相应统一处理
-  public patchArticles(data: Object): void {
+  public patchArticles(data: object): void {
     humanizedLoading(
       this.fetching,
       ELoading.PatchState,

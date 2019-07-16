@@ -1,0 +1,293 @@
+<div class="row">
+  <div class="col-md-4 col-xs-12">
+    <sa-card title="添加标签" baCardClass="with-scroll">
+      <form
+        class="tag-form"
+        [formGroup]="editForm" 
+        (ngSubmit)="handleSubmitTag(editForm.value)"
+      >
+        <div class="form-group" [ngClass]="controlStateClass(name)">
+          <label for="tag-name">
+            <h5>标签名称</h5>
+          </label>
+          <input
+            type="text" 
+            id="tag-name"
+            class="form-control"
+            placeholder="标签名称" 
+            [formControl]="name"
+          />
+          <span class="help-block sub-little-text">这将是它在站点上显示的名字</span>
+        </div>
+        <div  class="form-group" [ngClass]="controlStateClass(slug)">
+          <label for="tag-slug">
+            <h5>别名</h5>
+          </label>
+          <input
+            type="text" 
+            id="tag-slug" 
+            class="form-control" 
+            placeholder="标签名称" 
+            [formControl]="slug"
+          />
+          <span class="help-block sub-little-text">“别名” 是在URL中使用的别称，建议小写，字母、数字、连字符（-）</span>
+        </div>
+        <div  class="form-group" [ngClass]="controlStateClass(description)">
+          <label for="tag-description">
+            <h5>描述</h5>
+          </label>
+          <textarea
+            name="tagDescription"
+            id="tag-description"
+            class="form-control tag-description"
+            cols="30"
+            rows="20"
+            placeholder="标签描述"
+            [formControl]="description"
+          >
+          </textarea>
+          <span class="help-block sub-little-text">该标签的描述</span>
+        </div>
+        <div class="form-group" [ngClass]="controlStateClass(extends)">
+          <label for="tag_extends">
+            <h5>自定义扩展</h5>
+          </label>
+          <div class="tag-extend" *ngFor="let extend of extends.value; let i = index">
+            <div class="input-group">
+              <input
+                type="text" 
+                class="form-control"
+                placeholder="key" 
+                [(ngModel)]="extend.name"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <input
+                type="text" 
+                class="form-control"
+                placeholder="value" 
+                [(ngModel)]="extend.value"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-default" 
+                  (click)="delExtendItem(i)"
+                  [disabled]="extends.value.length < 2"
+                >
+                  <i class="ion-md-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <a [href]="" class="btn btn-default btn-sm btn-block btn-with-icon" (click)="addExtendItem()">
+            <i class="ion-md-add"></i>
+            <span>增加扩展</span>
+          </a>
+          <span class="help-block sub-little-text">可以为当前标签扩展自定义扩展属性</span>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-success btn-with-icon" [disabled]="!editForm.valid">
+              <i class="ion-md-done-all"></i>
+              <span>{{ activeTag ? '修改' : '添加' }}标签</span>
+            </button>
+            <span>&nbsp;&nbsp;</span>
+            <button class="btn btn-default btn-with-icon" (click)="resetEditForm()">
+              <i class="ion-md-refresh"></i>
+              <span>重置</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </sa-card>
+  </div>
+  <div class="col-md-8 col-xs-12">
+    <sa-card title="标签管理" baCardClass="with-scroll">
+      <div class="contnet-top-tools">
+        <div class="pull-left">
+          <div class="btn-group" role="group">
+            <button
+              type="button" 
+              class="btn btn-default btn-with-icon"
+              (click)="refreshTags()"
+            >
+              <i class="ion-md-refresh"></i>
+              <span>刷新</span>
+            </button>
+            <button
+              type="button" 
+              class="btn btn-default btn-with-icon"
+              (click)="resetSearchForm()"
+            >
+              <i class="ion-md-remove-circle-outline"></i>
+              <span>重置参数</span>
+            </button>
+            <div class="btn-group" dropdown [isDisabled]="!selectedTags.length">
+              <button
+                type="button"
+                class="btn btn-default btn-with-icon dropdown-toggle"
+                dropdownToggle
+              >
+                <i class="ion-md-list"></i>
+                <span>批量操作</span>
+              </button>
+              <ul class="dropdown-menu" *dropdownMenu>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="delTagsModal()">
+                    <i class="ion-md-trash icon"></i>
+                    <span>删除选中</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <form
+          class="pull-right form-inline navbar-form tag-search-form"
+          [formGroup]="searchForm" 
+          (ngSubmit)="searchTags()"
+        >
+          <div class="input-group">
+            <input
+              type="text" 
+              placeholder="搜索相关标签"
+              class="form-control with-default-addon"
+              [formControl]="keyword"
+            />
+            <span class="input-group-append">
+              <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
+            </span>
+          </div>
+        </form>
+      </div>
+      <div class="table-responsive">
+        <div class="tag-list">
+            <sa-loading-spider [show]="fetching[Loading.GetList]"></sa-loading-spider>
+            <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
+            <thead class="thead-inverse">
+              <tr>
+                <th class="batch-checkbox">
+                  <sa-checkbox [(ngModel)]="tagsSelectAll" (ngModelChange)="batchSelectChange($event)">
+                    <span sa-checkbox-label>
+                      <span>&nbsp;</span>
+                      <strong>ID</strong>
+                    </span>
+                  </sa-checkbox>
+                </th>
+                <th>名称</th>
+                <th>别名</th>
+                <th>描述</th>
+                <th>文章</th>
+                <th width="30%" class="text-center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!tags.data.length;else dataList">
+                <td colspan="6">
+                  <p class="text-muted text-center tag-err-msg">
+                    <span>{{ fetching[Loading.GetList] ? '数据请求中...' : '暂无数据' }}</span>
+                  <p>
+                </td>
+              </tr>
+              <ng-template #dataList>
+                <tr *ngFor="let tag of tags.data">
+                  <td class="batch-checkbox">
+                    <sa-checkbox [(ngModel)]="tag.selected" (ngModelChange)="itemSelectChange()">
+                      <span sa-checkbox-label>
+                        <span>&nbsp;</span>
+                        <strong>{{ tag.id }}</strong>
+                      </span>
+                    </sa-checkbox>
+                  </td>
+                  <td>{{ tag.name }}</td>
+                  <td>
+                    <div class="tag-slug">{{ tag.slug }}</div>
+                  </td>
+                  <td>
+                    <div class="tag-description" [title]="tag.description">{{ tag.description }}</div>
+                  </td>
+                  <td>{{ tag.count || 0 }}</td>
+                  <td>
+                    <div class="text-center">
+                      <div class="btn-group">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-warning btn-with-icon"
+                          (click)="putTag(tag)"
+                        >
+                          <i class="ion-md-create"></i>
+                          <span>编辑</span>
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-danger btn-with-icon"
+                          (click)="delTagModal(tag)"
+                        >
+                          <i class="ion-md-trash"></i>
+                          <span>删除</span>
+                        </button>
+                        <a
+                          class="btn btn-sm btn-info btn-with-icon"
+                          href="//surmon.me/tag/{{ tag.slug }}"
+                          target="_blank"
+                        >
+                          <i class="ion-md-share-alt"></i>
+                          <span>查看</span>
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+          <br>
+          <div class="text-center" *ngIf="tags.pagination">
+            <pagination
+              class="pagination-xs"
+              firstText="首页"
+              lastText="末页"
+              nextText="下一页"
+              previousText="上一页"
+              pageBtnClass="btn-primary"
+              [totalItems]="tags.pagination.total"
+              [itemsPerPage]="tags.pagination.per_page"
+              [(ngModel)]="tags.pagination.current_page"
+              [maxSize]="7"
+              [boundaryLinks]="true"
+              [rotate]="false"
+              (pageChanged)="handlePageChanged($event)">
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </sa-card>
+  </div>
+  <!-- 删除确认弹窗 -->
+  <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-label="Close" (click)="canceldDelTagModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">确认操作</h4>
+        </div>
+        <div class="modal-body">
+          <div class="message">
+            <span class="icon text-danger">
+              <i class="ion-md-information-circle-outline"></i>
+            </span>
+            <span>确定要删除{{ activeTag ? '这个' : '选中' }}标签吗？</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger confirm-btn" (click)="(activeTag ? doDelTag() : doDelTags())">确认删除</button>
+          <span>&nbsp;</span>
+          <button class="btn btn-default confirm-btn" (click)="canceldDelTagModal()">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,383 @@
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <sa-card title="文章列表" baCardClass="with-scroll table-panel">
+      <div class="contnet-top-tools">
+        <div class="pull-left">
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-default active"
+              [ngClass]="{ 'active': isState(PublishState.All)}"
+              (click)="switchState(PublishState.All)"
+            >
+              <span>全部</span>
+              <span *ngIf="isState(PublishState.All)">&nbsp;({{ currentListTotal }})</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(PublishState.Published) }"
+              (click)="switchState(PublishState.Published)"
+            >
+              <span>已发布</span>
+              <span *ngIf="isState(PublishState.Published)">&nbsp;({{ currentListTotal }})</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(PublishState.Draft) }"
+              (click)="switchState(PublishState.Draft)"
+            >
+              <span>草稿</span>
+              <span *ngIf="isState(PublishState.Draft)">&nbsp;({{ currentListTotal }})</span>
+            </button>
+            <button
+              type="button"
+              class="btn btn-default"
+              [ngClass]="{ 'active': isState(PublishState.Recycle) }"
+              (click)="switchState(PublishState.Recycle)"
+            >
+              <span>回收站</span>
+              <span *ngIf="isState(PublishState.Recycle)">&nbsp;({{ currentListTotal }})</span>
+            </button>
+          </div>
+          <span>&nbsp;&nbsp;</span>
+          <div class="btn-group">
+            <button
+              type="button" 
+              class="btn btn-default btn-with-icon"
+              (click)="refreshArticles()"
+            >
+              <i class="ion-md-refresh"></i>
+              <span>刷新</span>
+            </button>
+            <button
+              type="button" 
+              class="btn btn-default btn-with-icon"
+              (click)="resetGetParams()"
+            >
+              <i class="ion-md-remove-circle-outline"></i>
+              <span>重置</span>
+            </button>
+            <div class="btn-group" dropdown [isDisabled]="!selectedArticles.length">
+              <button
+                type="button" 
+                class="btn btn-default btn-with-icon dropdown-toggle"
+                dropdownToggle
+              >
+                <i class="ion-md-list"></i>
+                <span>批量操作</span>
+              </button>
+              <ul class="dropdown-menu" *dropdownMenu>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="moveToPublished()">
+                    <i class="ion-md-done-all icon"></i>
+                    <span>快速发布</span>
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="moveToDraft()">
+                    <i class="ion-md-checkmark-circle-outline icon"></i>
+                    <span>移至草稿</span>
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="moveToRecycle()">
+                    <i class="ion-md-pint icon"></i>
+                    <span>移至回收站</span>
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a [href]="" (click)="delArticleModal()">
+                    <i class="ion-md-trash icon"></i>
+                    <span>彻底删除</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <form class="pull-right form-inline article-get-form" [formGroup]="searchForm" (ngSubmit)="searchArticles()">
+          <div class="input-group">
+            <input
+              type="text"
+              [formControl]="keyword" 
+              class="form-control with-default-addon" 
+              placeholder="文章标题、描述"
+            />
+            <span class="input-group-append">
+              <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
+            </span>
+          </div>
+        </form>
+        <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
+        <div class="pull-right form-inline">
+          <select class="form-control c-select" [(ngModel)]="getParams.category" (ngModelChange)="getArticles()">
+            <option default value="all">所有分类</option>
+            <ng-template [ngIf]="categories && categories.data.length">
+              <option *ngFor="let category of categories.data" [ngValue]="category._id">
+                <span *ngIf="category.level">└</span>
+                <strong>{{ ''.padEnd(category.level, '─') }}</strong>
+                <span>{{ category.name }}</span>
+              </option>
+            </ng-template>
+          </select>
+          <span>&nbsp;&nbsp;</span>
+          <select class="form-control c-select" [(ngModel)]="getParams.tag" (ngModelChange)="getArticles()">
+            <option default value="all">所有标签</option>
+            <ng-template [ngIf]="tags && tags.data.length">
+              <option *ngFor="let tag of tags.data" [ngValue]="tag._id">
+                <span>{{ tag.name }}</span>
+              </option>
+            </ng-template>
+          </select>
+          <span>&nbsp;&nbsp;</span>
+          <select class="form-control c-select" [(ngModel)]="getParams.sort" (ngModelChange)="getArticles()">
+            <option [ngValue]="SortType.Desc" default>最新发布</option>
+            <option [ngValue]="SortType.Asc">最早发布</option>
+            <option [ngValue]="SortType.Hot">文章热度</option>
+          </select>
+          <span>&nbsp;&nbsp;</span>
+          <select class="form-control c-select" [(ngModel)]="getParams.public" (ngModelChange)="getArticles()">
+            <option [ngValue]="PublicState.All" default>所有类型</option>
+            <option [ngValue]="PublicState.Public">公开</option>
+            <option [ngValue]="PublicState.Password">密码</option>
+            <option [ngValue]="PublicState.Secret">私密</option>
+          </select>
+          <span>&nbsp;&nbsp;</span>
+          <select
+            class="form-control c-select" 
+            [(ngModel)]="getParams.origin"
+            (ngModelChange)="getArticles()"
+          >
+            <option [ngValue]="OriginState.All" default>所有来源</option>
+            <option [ngValue]="OriginState.Original">原创</option>
+            <option [ngValue]="OriginState.Reprint">转载</option>
+            <option [ngValue]="OriginState.Hybrid">混合</option>
+          </select>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <div class="article-list">
+          <sa-loading-spider [show]="fetching[Loading.GetList]"></sa-loading-spider>
+          <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
+            <thead class="thead-inverse">
+              <tr>
+                <th>
+                  <sa-checkbox [(ngModel)]="articlesSelectAll" (ngModelChange)="batchSelectChange($event)">
+                    <span sa-checkbox-label>
+                      <span>&nbsp;</span>
+                      <strong>ID</strong>
+                    </span>
+                  </sa-checkbox>
+                </th>
+                <th width="30%">文章</th>
+                <th>分类目录</th>
+                <th width="150">标签</th>
+                <th>评论</th>
+                <th>喜欢</th>
+                <th>日期</th>
+                <th>公开</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!articles.data.length;else dataList">
+                <td colspan="10">
+                  <p class="text-muted text-center category-err-msg">{{ fetching[Loading.GetList] ? '数据请求中...' : '暂无数据' }}<p>
+                </td>
+              </tr>
+              <ng-template #dataList>
+                <tr *ngFor="let article of articles.data" class="article-item">
+                  <td class="batch-checkbox">
+                    <sa-checkbox [(ngModel)]="article.selected" (ngModelChange)="itemSelectChange()">
+                      <span sa-checkbox-label>
+                        <span>&nbsp;</span>
+                        <strong>{{ article.id }}</strong>
+                      </span>
+                    </sa-checkbox>
+                  </td>
+                  <td class="article-content">
+                    <div class="content-box">
+                      <div
+                        class="content-bg"
+                        [ngStyle]="{ 
+                          'background-image': 'url(' + (article.thumb || '/assets/images/profile/mobile-thumb-carrousel.jpg') +')' 
+                        }"
+                      >
+                      </div>
+                      <h4 class="title">
+                        <a [href]="'//surmon.me/article/' + article.id" target="_blank">
+                          <strong>{{ article.title }}</strong>
+                        </a>
+                        <span>&nbsp;&nbsp;</span>
+                        <i class="ion-md-done-all text-success" *ngIf="article.state === PublishState.Published"></i>
+                        <span>&nbsp;</span>
+                        <i class="ion-md-create text-warning" *ngIf="article.state === PublishState.Draft"></i>
+                        <span>&nbsp;</span>
+                        <i class="ion-md-trash text-danger" *ngIf="article.state === PublishState.Recycle"></i>
+                        <span>&nbsp;</span>
+                        <i class="ion-md-lock text-danger" *ngIf="article.public !== PublicState.Public"></i>
+                      </h4>
+                      <small class="description">
+                        <span *ngIf="article.description">{{ article.description | truncate : 128 }}</span>
+                        <span *ngIf="!article.description && article.content">{{ article.content | truncate : 128 }}</span>
+                        <span *ngIf="!article.description && !article.content" class="text-muted">暂无内容</span>
+                      </small>
+                    </div>
+                  </td>
+                  <td class="article-category">
+                    <ul class="list-unstyled category-list">
+                      <li *ngFor="let category of article.category">
+                        <i class="ion-md-folder"></i>
+                        <span>&nbsp;</span>
+                        <span>{{ category.name }}</span>
+                      </li>
+                      <li *ngIf="!article.category.length" class="text-muted">
+                        <i class="ion-md-folder"></i>
+                        <span>&nbsp;</span>
+                        <span>暂无分类</span>
+                      </li>
+                    </ul>
+                  </td>
+                  <td class="article-tag">
+                    <ul class="list-unstyled tag-list">
+                      <li *ngFor="let tag of article.tag">
+                        <i class="ion-md-pricetags"></i>
+                        <span>&nbsp;</span>
+                        <span>{{ tag.name }}</span>
+                      </li>
+                      <li *ngIf="!article.tag.length" class="text-muted">
+                        <i class="ion-md-pricetags"></i>
+                        <span>&nbsp;</span>
+                        <span>暂无标签</span>
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+                    <span *ngIf="article.meta.comments">
+                      <a [routerLink]="['/comment/post/', article.id]">{{ article.meta.comments }}条评论</a>
+                    </span>
+                    <span class="text-muted" *ngIf="!article.meta.comments">暂无评论</span>
+                  </td>
+                  <td>
+                    <span *ngIf="article.meta.likes">{{ article.meta.likes }}人喜欢</span>
+                    <span class="text-muted" *ngIf="!article.meta.likes">无人问津</span>
+                  </td>
+                  <td>{{ article.create_at | dataToLocale }}</td>
+                  <td>
+                    <span [ngSwitch]="article.public">
+                      <span *ngSwitchCase="PublicState.Password">密码</span>
+                      <span *ngSwitchCase="PublicState.Public">公开</span>
+                    </span>
+                    <span *ngIf="article.public === PublicState.Secret">私密</span>
+                  </td>
+                  <td>
+                    <span [ngSwitch]="article.state">
+                      <span *ngSwitchCase="PublishState.Draft">草稿</span>
+                      <span *ngSwitchCase="PublishState.Published">已发布</span>
+                    </span>
+                    <span *ngIf="article.state === PublishState.Recycle">回收站</span>
+                  </td>
+                  <td>
+                    <div class="button-wrapper">
+                      <a class="btn btn-default btn-sm btn-with-icon" [routerLink]="['/article/edit/', article._id]">
+                        <i class="ion-md-create"></i>
+                        <span>编辑文章</span>
+                      </a>
+                    </div>
+                    <div class="button-wrapper" *ngIf="article.state === PublishState.Draft">
+                      <button class="btn btn-success btn-sm btn-with-icon" (click)="moveToPublished([article._id])">
+                        <i class="ion-md-done-all"></i>
+                        <span>快速发布</span>
+                      </button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="article.state === PublishState.Recycle">
+                      <button class="btn btn-warning btn-sm btn-with-icon" (click)="moveToDraft([article._id])">
+                        <i class="ion-md-checkmark-circle-outline"></i>
+                        <span>恢复文章</span>
+                      </button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="article.state === PublishState.Published">
+                      <button class="btn btn-warning btn-sm btn-with-icon" (click)="moveToDraft([article._id])">
+                        <i class="ion-md-checkmark-circle-outline"></i>
+                        <span>移至草稿</span>
+                      </button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="article.state !== PublishState.Recycle">
+                      <button class="btn btn-danger btn-sm btn-with-icon" (click)="moveToRecycle([article._id])">
+                        <i class="ion-md-pint"></i>
+                        <span>移回收站</span>
+                      </button>
+                    </div>
+                    <div class="button-wrapper" *ngIf="article.state === PublishState.Recycle">
+                      <button class="btn btn-danger btn-sm btn-with-icon" (click)="delArticleModal(article._id)">
+                        <i class="ion-md-trash"></i>
+                        <span>彻底删除</span>
+                      </button>
+                    </div>
+                    <div class="button-wrapper">
+                      <a
+                        class="btn btn-info btn-sm btn-with-icon"
+                        [href]="'//surmon.me/article/' + article.id"
+                        target="_blank"
+                      >
+                        <i class="ion-md-share-alt"></i>
+                        <span>新窗查看</span>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+           <br>
+          <div class="text-center" *ngIf="articles.pagination">
+            <pagination
+              class="pagination-xs"
+              firstText="首页"
+              lastText="末页"
+              nextText="下一页"
+              previousText="上一页"
+              pageBtnClass="btn-primary"
+              [totalItems]="articles.pagination.total"
+              [itemsPerPage]="articles.pagination.per_page"
+              [(ngModel)]="articles.pagination.current_page"
+              [maxSize]="7"
+              [boundaryLinks]="true"
+              [rotate]="false"
+              (pageChanged)="handlePageChanged($event)"
+            ></pagination>
+          </div>
+        </div>
+      </div>
+    </sa-card>
+    <!-- 删除确认弹窗 -->
+    <div bsModal #delModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" aria-label="Close" (click)="cancelArticleModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">确认操作</h4>
+          </div>
+          <div class="modal-body">
+            <div class="message">
+              <span class="icon text-danger">
+                <i class="ion-md-information-circle-outline"></i>
+              </span>
+              <span>确定要删除{{ todoDelArticle ? '这篇' : '选中' }}文章吗？本操作不可逆</span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-danger confirm-btn" (click)="delArticles()">确认删除</button>
+            <span>&nbsp;</span>
+            <button class="btn btn-default confirm-btn" (click)="cancelArticleModal()">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

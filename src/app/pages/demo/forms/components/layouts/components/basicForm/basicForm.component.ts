@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'box-basic-form',
-  templateUrl: './basicForm.html',
+  templateUrl: './basicForm.component.html',
 })
 export class BasicFormComponent {
 

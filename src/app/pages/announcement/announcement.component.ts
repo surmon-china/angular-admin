@@ -7,7 +7,7 @@
 import marked from 'marked';
 import * as lodash from 'lodash';
 import * as API_PATH from '@app/constants/api';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
@@ -47,7 +47,7 @@ const DEFAULT_SEARCH_FORM = {
 @Component({
   selector: 'page-announcement',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./announcement.scss'],
+  styleUrls: ['./announcement.component.scss'],
   templateUrl: './announcement.component.html'
 })
 export class AnnouncementComponent implements OnInit {

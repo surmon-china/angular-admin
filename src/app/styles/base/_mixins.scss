@@ -39,7 +39,7 @@
 }
 
 @mixin bg-nr($relativeUrl) {
-  background: url($images-root + $relativeUrl) no-repeat 0 0;
+  background: url($images-root + 'icons/' +$relativeUrl) no-repeat 0 0;
 }
 @mixin bg($relativeUrl) {
   background: url($images-root + $relativeUrl);
@@ -80,8 +80,6 @@
   .pie-chart-item,
   .panel-heading>.dropdown .dropdown-toggle,
   .panel-title,
-  ol.blur span,
-  ul.blur,
   .popular-app-cost,
   .popular-app-info,
   .panel-title>.small,

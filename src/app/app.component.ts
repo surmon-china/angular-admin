@@ -8,11 +8,11 @@ import * as API_PATH from '@app/constants/api';
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
+import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
 import { GlobalState } from '@app/global.state';
 import { AppState } from '@app/app.service';
 import { checkTokenIsOk } from '@app/discriminators/token';
 import { isIndexPage, isAuthPage } from '@app/discriminators/url';
-import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
 import { TOKEN } from '@app/constants/auth';
 import { ASSETS_IMAGE } from '@app/constants/url';
 
@@ -34,7 +34,6 @@ type TMenuCollapsedState = boolean;
 })
 export class AppComponent implements AfterViewInit, OnInit {
 
-  private isOptionInited = false;
   private isMenuCollapsed: TMenuCollapsedState = false;
 
   // 通知配置
@@ -84,7 +83,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   private loadImages(): void {
     SaThemePreloaderService.registerLoader(
-      this.imageLoader.load(ASSETS_IMAGE + 'background.jpg')
+      this.imageLoader.load(ASSETS_IMAGE + 'profile/background.jpg')
     );
   }
 
@@ -99,11 +98,12 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   // 初始化时拉取全局设置
   public initAppOptions(): Promise<void> {
-    return this.httpService.get(API_PATH.ADMIN_INFO).then(({ result: adminInfo }) => {
-      if (Object.keys(adminInfo).length) {
-        this.appState.set('adminInfo', adminInfo);
-      }
-    });
+    return this.httpService.get(API_PATH.ADMIN_INFO)
+      .then(({ result: adminInfo }) => {
+        if (Object.keys(adminInfo).length) {
+          this.appState.set('adminInfo', adminInfo);
+        }
+      });
   }
 
   // 初始化根据服务端验证 Token 有效性
@@ -111,7 +111,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.httpService.post(API_PATH.CHECK_TOKEN)
       .then(_ => {
         // 通过验证，则初始化 APP
-        console.log('远程 Token 验证成功');
+        console.log('远程 Token 验证成功，正常工作');
         this.initAppOptions();
       })
       .catch(error => {
@@ -129,8 +129,6 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   // 初始化时重置路由
   ngOnInit() {
-    // 初始化时拉取信息
-    this.initAppOptions();
     // 程序初始化时检查本地 Token
     checkTokenIsOk()
       ? this.checkTokenValidity()

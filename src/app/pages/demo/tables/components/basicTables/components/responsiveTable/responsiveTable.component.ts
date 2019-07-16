@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'box-responsive-table',
-  templateUrl: './responsiveTable.html',
+  templateUrl: './responsiveTable.component.html',
 })
 export class ResponsiveTableComponent {
 

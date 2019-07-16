@@ -5,12 +5,11 @@
  */
 
 import marked from 'marked';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-
-import * as KEYCODE from '@app/constants/keycode';
-import { isPostArticlePage, isAnnouncementPage } from '@app/discriminators/url';
 import { AfterViewInit, ViewChild, Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
+import { isPostArticlePage, isAnnouncementPage } from '@app/discriminators/url';
+import * as KEYCODE from '@app/constants/keycode';
 
 const hljs = require('highlight.js');
 const CodeMirror = require('codemirror');
@@ -93,9 +92,9 @@ marked.setOptions({
 
 @Component({
   selector: 'sa-markdown-editor',
-  templateUrl: './markdownEditor.html',
+  templateUrl: './markdownEditor.component.html',
   styles: [
-    require('./markdownEditor.scss'),
+    require('./markdownEditor.component.scss'),
     require('highlight.js/styles/ocean.css'),
     require('codemirror/lib/codemirror.css'),
     require('codemirror/theme/base16-dark.css'),
@@ -126,15 +125,16 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   @ViewChild('bakModal', { static: false }) bakModal: ModalDirective;
 
   // 传入配置
-  @Input() config: Object;
+  @Input() config: object;
 
   // 派发事件
   @Output() ready: EventEmitter<any> = new EventEmitter();
+  // tslint:disable-next-line:no-output-native
   @Output() change: EventEmitter<any> = new EventEmitter();
 
   // ...
-  onModelChange: Function = () => {};
-  onModelTouched: Function = () => {};
+  onModelChange: any = () => {};
+  onModelTouched: any = () => {};
 
   constructor(private elementRef: ElementRef) {}
 
@@ -185,7 +185,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
       gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
       // 回车键自动补全上一步格式
       extraKeys: {
-        'Enter': 'newlineAndIndentContinueMarkdownList'
+        Enter: 'newlineAndIndentContinueMarkdownList'
       }
     }, this.config));
 
@@ -368,7 +368,9 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
     if (!stat.type || !stat.type.split) { return {}; }
     const types = stat.type.split(' ');
     const ret = {};
+    // tslint:disable-next-line:one-variable-per-declaration
     let data, text;
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < types.length; i++) {
       data = types[i];
       if (data === 'strong') {
@@ -515,12 +517,12 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   }
 
   // 注册事件
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: any): void {
     this.onModelChange = fn;
   }
 
   // 注册事件
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: any): void {
     this.onModelTouched = fn;
   }
 }

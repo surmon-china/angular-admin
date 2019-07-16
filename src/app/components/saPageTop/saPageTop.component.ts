@@ -14,15 +14,14 @@ type TCollapsedState = boolean;
 
 @Component({
   selector: 'sa-page-top',
-  styleUrls: ['./saPageTop.scss'],
-  templateUrl: './saPageTop.html',
+  styleUrls: ['./saPageTop.component.scss'],
+  templateUrl: './saPageTop.component.html',
   encapsulation: ViewEncapsulation.None
 })
 export class SaPageTopComponent {
 
   public isScrolled: TCollapsedState = false;
   public isMenuCollapsed: TCollapsedState = false;
-  public isProfileCollapsed: TCollapsedState = false;
 
   constructor(
     private router: Router,
@@ -43,11 +42,6 @@ export class SaPageTopComponent {
   public toggleMenu() {
     this.isMenuCollapsed = !this.isMenuCollapsed;
     this.state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
-    return false;
-  }
-
-  public toggleProfileMenu() {
-    this.isProfileCollapsed = !this.isProfileCollapsed;
     return false;
   }
 

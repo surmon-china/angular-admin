@@ -2,7 +2,7 @@ import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'box-dropdown-buttons',
-  templateUrl: './dropdownButtons.html'
+  templateUrl: './dropdownButtons.component.html'
 })
 
 export class DropdownButtonsComponent {
