@@ -19,7 +19,7 @@ import {
   handleBatchSelectChange,
   handleItemSelectChange,
   formControlStateClass
-} from '@/app/pages/pages.service';
+} from '@app/pages/pages.service';
 
 // 公告
 interface IAnnouncement {

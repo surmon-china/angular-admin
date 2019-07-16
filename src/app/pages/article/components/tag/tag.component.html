@@ -229,7 +229,7 @@
                         </button>
                         <a
                           class="btn btn-sm btn-info btn-with-icon"
-                          href="//surmon.me/tag/{{ tag.slug }}"
+                          [href]="getTagPath(tag.slug)"
                           target="_blank"
                         >
                           <i class="ion-md-share-alt"></i>

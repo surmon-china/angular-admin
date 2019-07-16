@@ -7,7 +7,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SaBaseModule } from '@/app/sa-base.module';
+import { SaBaseModule } from '@app/sa-base.module';
 import { DashboardComponent } from './dashboard.component';
 import { RoutingModule } from './dashboard.routing';
 

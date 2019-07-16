@@ -10,8 +10,8 @@ import { Component, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/co
 import { NotificationsService } from 'angular2-notifications';
 import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
 import { GlobalState } from '@app/global.state';
-import { AppState } from '@app/app.service';
-import { checkTokenIsOk } from '@app/discriminators/token';
+import { AppState, EAppStoreKeys } from '@app/app.service';
+import { isValidToken } from '@app/discriminators/token';
 import { isIndexPage, isAuthPage } from '@app/discriminators/url';
 import { TOKEN } from '@app/constants/auth';
 import { ASSETS_IMAGE } from '@app/constants/url';
@@ -74,7 +74,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.router.events.subscribe(event => {
       const url: string = this.router.url;
       // 如果发生 非首页或登陆页 的跳转事件，则执行 Token 全面检查
-      if (!isIndexPage(url) && !isAuthPage(url) && !checkTokenIsOk()) {
+      if (!isIndexPage(url) && !isAuthPage(url) && !isValidToken()) {
         // console.warn('页面跳转时检查出无效 Token');
         this.remiveTokenToLogin();
       }
@@ -101,7 +101,7 @@ export class AppComponent implements AfterViewInit, OnInit {
     return this.httpService.get(API_PATH.ADMIN_INFO)
       .then(({ result: adminInfo }) => {
         if (Object.keys(adminInfo).length) {
-          this.appState.set('adminInfo', adminInfo);
+          this.appState.set(EAppStoreKeys.AdminInfo, adminInfo);
         }
       });
   }
@@ -130,7 +130,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   // 初始化时重置路由
   ngOnInit() {
     // 程序初始化时检查本地 Token
-    checkTokenIsOk()
+    isValidToken()
       ? this.checkTokenValidity()
       : this.remiveTokenToLogin();
   }

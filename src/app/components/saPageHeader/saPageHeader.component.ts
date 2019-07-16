@@ -1,6 +1,6 @@
 /**
  * @file 顶部条
- * @module app/component/page-top
+ * @module app/component/page-header
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -9,16 +9,19 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { GlobalState } from 'app/global.state';
 import { AppState } from 'app/app.service';
 import { TOKEN } from '@app/constants/auth';
+import { APP_TITLE } from '@/config';
 
 type TCollapsedState = boolean;
 
 @Component({
-  selector: 'sa-page-top',
-  styleUrls: ['./saPageTop.component.scss'],
-  templateUrl: './saPageTop.component.html',
+  selector: 'sa-page-header',
+  styleUrls: ['./saPageHeader.component.scss'],
+  templateUrl: './saPageHeader.component.html',
   encapsulation: ViewEncapsulation.None
 })
-export class SaPageTopComponent {
+export class SaPageHeaderComponent {
+
+  private APP_TITLE = APP_TITLE;
 
   public isScrolled: TCollapsedState = false;
   public isMenuCollapsed: TCollapsedState = false;

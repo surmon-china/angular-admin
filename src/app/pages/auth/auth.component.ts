@@ -9,7 +9,7 @@ import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { Component, ViewChild, ElementRef, ViewEncapsulation, AfterViewChecked } from '@angular/core';
 import { SaHttpRequesterService } from '@app/services';
-import { AppState } from 'app/app.service';
+import { AppState, EAppStoreKeys } from '@app/app.service';
 import { TOKEN } from '@app/constants/auth';
 
 @Component({
@@ -63,7 +63,7 @@ export class AuthComponent implements AfterViewChecked {
   fetchAdminInfo() {
     return this.httpService.get(API_PATH.ADMIN_INFO).then(({ result: adminInfo }) => {
       if (Object.keys(adminInfo).length) {
-        this.appState.set('adminInfo', adminInfo);
+        this.appState.set(EAppStoreKeys.AdminInfo, adminInfo);
       }
     });
   }

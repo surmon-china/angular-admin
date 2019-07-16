@@ -7,7 +7,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SaBaseModule } from '@/app/sa-base.module';
+import { SaBaseModule } from '@app/sa-base.module';
 import { OptionsComponent } from './options.component';
 import { RoutingModule } from './options.routing';
 

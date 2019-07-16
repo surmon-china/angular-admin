@@ -9,16 +9,17 @@ import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { getTagPath } from '@app/transforms/link';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
 import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
-import { ITag, TResponsePaginationTag } from '@/app/pages/article/article.service';
+import { ITag, TResponsePaginationTag } from '@app/pages/article/article.service';
 import {
   humanizedLoading,
   mergeFormControlsToInstance,
   handleBatchSelectChange,
   handleItemSelectChange,
   formControlStateClass
-} from '@/app/pages/pages.service';
+} from '@app/pages/pages.service';
 
 const DEFAULT_EDIT_FORM = {
   name: '',
@@ -50,6 +51,7 @@ export class ArticleTagComponent implements OnInit {
   @ViewChild('delModal', { static: false }) delModal: ModalDirective;
 
   private apiPath: TApiPath = API_PATH.TAG;
+  private getTagPath = getTagPath;
 
   public editForm: FormGroup;
   public searchForm: FormGroup;

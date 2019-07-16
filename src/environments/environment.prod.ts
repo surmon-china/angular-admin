@@ -3,13 +3,12 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
+import { PRODCTION_API } from '@/config';
+
+export const api = PRODCTION_API;
 export const environment = {
   production: true,
   development: false,
   hmr: false,
 };
 
-export const api = {
-  API_ROOT: 'https://api.surmon.me',
-  STATIC_URL: 'https://static.surmon.me'
-};

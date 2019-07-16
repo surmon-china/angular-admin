@@ -6,7 +6,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SaBaseModule } from '@/app/sa-base.module';
+import { SaBaseModule } from '@app/sa-base.module';
 import { RoutingModule } from './linux.routing';
 import { LinuxComponent } from './linux.component';
 

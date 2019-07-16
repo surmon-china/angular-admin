@@ -15,7 +15,7 @@ const hljs = require('highlight.js');
 const CodeMirror = require('codemirror');
 const { store } = require('./libs/store.js');
 
-enum TPreviewMode {
+enum EPreviewMode {
   none = 0,
   half = 1,
   full = 2
@@ -115,7 +115,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   markedHtml = '';
   editorElem: HTMLElement;
 
-  previewMode: TPreviewMode = TPreviewMode.none;
+  previewMode: EPreviewMode = EPreviewMode.none;
   fullscreen = false;
 
   // 计时器
@@ -202,7 +202,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
           content: this.content
         });
         this.onModelChange(this.content);
-        if (this.previewMode !== TPreviewMode.none) {
+        if (this.previewMode !== EPreviewMode.none) {
           this.parseMarked();
           // console.log('应该是发现了本地数据的变化');
         }
@@ -297,7 +297,10 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
 
   // 保存为markdown
   saveAsMarkdown() {
-    this.saveFile(this.content, 'untitled.md');
+    const now = new Date();
+    const data = now.toLocaleDateString();
+    const time = now.toLocaleTimeString();
+    this.saveFile(this.content, `${data + time}.md`);
   }
 
   // 按键listen

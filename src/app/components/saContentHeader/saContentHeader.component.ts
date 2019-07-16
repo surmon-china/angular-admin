@@ -1,6 +1,6 @@
 /**
  * @file 内容区顶部标题
- * @module app/component/content-top
+ * @module app/component/content-header
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -8,11 +8,11 @@ import { Component } from '@angular/core';
 import { GlobalState } from 'app/global.state';
 
 @Component({
-  selector: 'sa-content-top',
-  styleUrls: ['./saContentTop.component.scss'],
-  templateUrl: './saContentTop.component.html',
+  selector: 'sa-content-header',
+  styleUrls: ['./saContentHeader.component.scss'],
+  templateUrl: './saContentHeader.component.html',
 })
-export class SaContentTopComponent {
+export class SaContentHeaderComponent {
 
   public activePageTitle = '';
 

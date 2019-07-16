@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { SaBaseModule } from '@/app/sa-base.module';
+import { SaBaseModule } from '@app/sa-base.module';
 import { RoutingModule } from './ui.routing';
 
 import { UiComponent } from './ui.component';

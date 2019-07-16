@@ -255,7 +255,7 @@
                   <td>
                     <div class="button-wrapper">
                       <a
-                        class="btn btn-default btn-sm btn-with-icon"
+                        class="btn btn-primary btn-sm btn-with-icon"
                         [routerLink]="['/comment/detail/', comment._id]"
                       >
                         <i class="ion-md-create"></i>
@@ -273,7 +273,7 @@
                     </div>
                     <div class="button-wrapper" *ngIf="comment.state === CommentState.Deleted || comment.state === CommentState.Spam">
                       <button
-                        class="btn btn-success btn-sm btn-with-icon"
+                        class="btn btn-warning btn-sm btn-with-icon"
                         (click)="updateCommentsState(CommentState.Auditing, comment)"
                       >
                         <i class="ion-md-checkmark"></i>
@@ -308,9 +308,7 @@
                       <a
                         class="btn btn-info btn-sm btn-with-icon"
                         target="_blank"
-                        [href]="isGuestbook(comment.post_id)
-                          ? 'https://surmon.me/guestbook'
-                          : ('https://surmon.me/article/' + comment.post_id)"
+                        [href]="isGuestbook(comment.post_id) ? getGuestbookPath() : getArticlePath(comment.post_id)"
                       >
                         <i class="ion-md-share-alt"></i>
                         <span>宿主页面</span>

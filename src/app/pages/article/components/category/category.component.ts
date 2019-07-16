@@ -8,10 +8,10 @@ import * as lodash from 'lodash';
 import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@/app/pages/article/article.service';
+import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@app/pages/article/article.service';
 import { TApiPath, IFetching, TSelectedIds } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
-import { humanizedLoading } from '@/app/pages/pages.service';
+import { humanizedLoading } from '@app/pages/pages.service';
 
 enum ELoading {
   Get,

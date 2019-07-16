@@ -1,7 +1,7 @@
 
 @import '~app/styles/base/init';
 
-.page-top {
+.page-header {
   background-color: $sidebar;
   position: fixed;
   z-index: 999;
@@ -95,7 +95,7 @@ a.collapse-menu-link {
 }
 
 @media screen and (max-width: $resXS) {
-  .page-top {
+  .page-header {
     padding: 0 20px;
   }
 }

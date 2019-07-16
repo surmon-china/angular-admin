@@ -8,7 +8,9 @@ import * as API_PATH from '@app/constants/api';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { SaHttpRequesterService } from '@app/services';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { humanizedLoading } from '@/app/pages/pages.service';
+import { humanizedLoading } from '@app/pages/pages.service';
+
+const { loadScript } = require('./ga.embed.lib.loader.js');
 
 interface IStatistics {
   [key: string]: number;
@@ -35,10 +37,7 @@ const DEFAULT_STATISTICS_DATA = [
 ];
 
 enum ELoading {
-  Statistics,
-  Articles,
-  Comments,
-  Guestbooks,
+  Statistics
 }
 
 @Component({
@@ -49,11 +48,12 @@ enum ELoading {
 })
 export class DashboardComponent implements OnInit {
 
-  private Loading = ELoading;
   private statisticApiPath: TApiPath = API_PATH.STATISTIC;
-  private analyticsApiPath: TApiPath = API_PATH.COMMENT;
+  private googleTokenApiPath: TApiPath = API_PATH.GOOGLE_TOKEN;
 
   public defaultStatistics = DEFAULT_STATISTICS_DATA;
+  public googleToken: string = null;
+  public isGaReady: boolean = false;
   public statistics: IStatistics = {};
   public fetching: IFetching = {};
 
@@ -72,24 +72,27 @@ export class DashboardComponent implements OnInit {
   }
 
   getGaToken(): Promise<string> {
-    return Promise.resolve('token');
+    return this.httpService
+      .get<object>(this.googleTokenApiPath)
+      .then(({ result: credentials }) => {
+        return (credentials as any).access_token as string;
+      });
   }
 
-  instanceGa(token: string) {
+  instanceGa(access_token: string) {
+    const self = this;
     const gapi = (window as any).gapi;
     gapi.analytics.ready(() => {
 
+      // 服务端授权立即生效，无需事件处理
       gapi.analytics.auth.authorize({
-        container: 'auth-button',
-        clientid: '984332218909-j1ool2q13e32865ttu1es9ih9i7s2e5e.apps.googleusercontent.com',
-        // serverAuth: {
-        //   access_token: '{{ ACCESS_TOKEN_FROM_SERVICE_ACCOUNT }}'
-        // }
+        serverAuth: { access_token }
       });
 
       const viewSelector = new gapi.analytics.ViewSelector({
         container: 'view-selector'
       });
+      viewSelector.execute();
 
       const timeline = new gapi.analytics.googleCharts.DataChart({
         reportType: 'ga',
@@ -132,20 +135,20 @@ export class DashboardComponent implements OnInit {
               chartArea: {
                 left: '25'
               },
-              // backgroundColor: {
-              //   fillOpacity: 0
-              // },
-              // titleTextStyle: {
-              //   color: '#fff',
-              // },
-              // pieSliceTextStyle: {
-              //   color: '#fff',
-              // },
-              // legend: {
-              //   textStyle: {
-              //     color: '#fff',
-              //   }
-              // },
+              backgroundColor: {
+                fillOpacity: 0
+              },
+              titleTextStyle: {
+                color: '#fff',
+              },
+              pieSliceTextStyle: {
+                color: '#fff',
+              },
+              legend: {
+                textStyle: {
+                  color: '#fff',
+                }
+              },
             },
           },
         });
@@ -155,46 +158,24 @@ export class DashboardComponent implements OnInit {
       const cityChart = getPieChart('ga:city', 'pie-city', '城市');
       const browserChart = getPieChart('ga:browser', 'pie-browser', '浏览器');
 
-      gapi.analytics.auth.on('success', () => {
-        viewSelector.execute();
-        console.log('viewSelector.execute();');
-      });
-
       viewSelector.on('change', ids => {
         const newIds = {
-          query: {
-            ids
-          }
+          query: { ids }
         };
+        self.isGaReady = true;
         timeline.set(newIds).execute();
         countryChart.set(newIds).execute();
         cityChart.set(newIds).execute();
         browserChart.set(newIds).execute();
-        console.log('browserChart.execute();');
       });
-
-      // 日期选择器更新后，就 set
-      // timeline.set({ query: { end-date: ' } }).execute();
-      console.log('不 reay 啦', gapi.analytics);
     });
-  }
-
-  initGaScript() {
-    // tslint:disable-next-line:only-arrow-functions
-    (function(w, d, s, g, js, fjs) {
-      g = w.gapi || (w.gapi = {}); g.analytics = {q: [], ready(cb) {this.q.push(cb); }};
-      js = d.createElement(s); fjs = d.getElementsByTagName(s)[0];
-      js.src = 'https://apis.google.com/js/platform.js';
-      // tslint:disable-next-line:only-arrow-functions
-      fjs.parentNode.insertBefore(js, fjs); js.onload = function() {g.load('analytics'); };
-    }(window as any, document, 'script'));
   }
 
   async initGAClient() {
     if (!(window as any).gapi) {
-      this.initGaScript();
+      loadScript();
     }
-    this.getGaToken().then(this.instanceGa);
+    this.getGaToken().then(this.instanceGa.bind(this));
   }
 
   ngOnInit() {

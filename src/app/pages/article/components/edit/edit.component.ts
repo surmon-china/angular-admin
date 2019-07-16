@@ -7,10 +7,10 @@
 import * as API_PATH from '@app/constants/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { IArticle, TArticleId } from '@/app/pages/article/article.service';
+import { IArticle, TArticleId } from '@app/pages/article/article.service';
 import { EPublishState, EPublicState, EOriginState } from '@app/constants/state';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { humanizedLoading } from '@/app/pages/pages.service';
+import { humanizedLoading } from '@app/pages/pages.service';
 import { SaHttpRequesterService } from '@app/services';
 
 const DEFAULT_ARTICLE = {

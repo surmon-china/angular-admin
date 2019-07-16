@@ -10,9 +10,10 @@ import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
-import { humanizedLoading, mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
+import { humanizedLoading, mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
+import { AppState, EAppStoreKeys } from '@app/app.service';
 
 interface IAuth {
   name: string;
@@ -99,6 +100,7 @@ export class OptionsComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private appState: AppState,
     private fb: FormBuilder,
     private httpService: SaHttpRequesterService,
   ) {
@@ -216,13 +218,14 @@ export class OptionsComponent implements OnInit {
 
   // 解析返回的权限表单数据
   public handleAuthChange(userAuthPromise) {
-    userAuthPromise.then(({ result: { name, slogan, gravatar }}) => {
+    userAuthPromise.then(({ result: adminInfo}) => {
       if (this.authForm.value.rel_new_password) {
         // tslint:disable-next-line:no-console
         console.info('密码更新成功，正跳转至登陆页');
         setTimeout(() => this.router.navigate(['/auth']), 960);
       } else {
-        this.authForm.reset(Object.assign({}, DEFAULT_AUTH_FORM, { name, slogan, gravatar }));
+        this.appState.set(EAppStoreKeys.AdminInfo, adminInfo);
+        this.authForm.reset(Object.assign({}, DEFAULT_AUTH_FORM, adminInfo));
       }
     }).catch(error => {});
   }

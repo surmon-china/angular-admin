@@ -1,9 +1,9 @@
 @import '~app/styles/base/init';
 
-.pie-charts {
+.statistics {
   color: $content-text;
 
-  .pie-chart-item-container {
+  .statistics-item-container {
     position: relative;
     padding: 0 15px;
     float: left;
@@ -18,26 +18,7 @@
     }
   }
 
-  @media screen and (min-width: 1325px) {
-    .pie-chart-item-container {
-      width: 25%;
-      flex: 0 0 25%
-    }
-  }
-  @media screen and (min-width: 700px) and (max-width: 1325px)  {
-    .pie-chart-item-container {
-      width: 50%;
-      flex: 0 0 50%
-    }
-  }
-  @media screen and (max-width: 700px)  {
-    .pie-chart-item-container {
-      width: 100%;
-      flex: 0 0 100%
-    }
-  }
-
-  .pie-chart-item {
+  .statistics-item {
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -53,26 +34,13 @@
       
       .description-stats {
         padding-top: .5em;
-        font-size: 24px;
+        font-size: 1.8rem;
       }
     }
 
-    .chart-icon {
+    .icon {
       font-size: 4em;
     }
-  }
-  @media screen and
-  (min-width: 1325px) and (max-width: 1650px),
-  (min-width: 700px) and (max-width: 830px) {
-    .chart-icon {
-      display: none;
-    }
-  }
-  .angular {
-    margin-top: 100px;
-  }
-  .angular .chart {
-    margin-top: 0;
   }
 }
 
@@ -93,51 +61,50 @@
 .ga-card {
   min-height: 400px;
 
-  .toolbar {
-    height: 30px;
-    line-height: 30px;
-    display: flex;
-    margin-bottom: 1rem;
+  .ga-box {
+    position: relative;
 
-    .auth {
-      width: auto;
-      padding: 0 1rem;
-      margin-right: 1rem;
-      background: #f7991c;
-      color: #fff;
-    }
-
-    .selector {
-      flex-grow: 1;
+    .toolbar {
+      height: 30px;
+      line-height: 30px;
       display: flex;
-
-      table {
-        margin-right: 1rem;
-
-        tr {
-          td {
-            &:last-child * {
-              display: block;
-              text-align: left;
+      margin-bottom: 1rem;
+  
+      .switch {
+      }
+  
+      .selector {
+        flex-grow: 1;
+        display: flex;
+  
+        table {
+          margin-right: 1rem;
+  
+          tr {
+            td {
+              &:last-child * {
+                display: block;
+                text-align: left;
+              }
             }
           }
         }
       }
     }
-  }
-
-  .pie-charts {
-    display: flex;
-    justify-content: space-between;
-    min-height: 200px;
-
-    .chart {
-      width: 32%;
+  
+    .pie-charts {
+      display: flex;
+      justify-content: space-between;
+      min-height: 200px;
+  
+      .chart {
+        width: 32%;
+      }
     }
-  }
-
-  .timeline {
-    min-height: 200px;
+  
+    .timeline {
+      min-height: 200px;
+    }
   }
 }
 

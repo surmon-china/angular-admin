@@ -99,7 +99,7 @@
                   </button>
                   <a
                     class="btn btn-sm btn-info btn-with-icon"
-                    href="//surmon.me/category/{{ category.slug }}"
+                    [href]="getCategoryPath(category.slug)"
                     target="_blank"
                   >
                     <i class="ion-md-share-alt"></i>

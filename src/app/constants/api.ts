@@ -1,6 +1,5 @@
 /**
  * @file App constants/api
- * @module app/constants/api
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -16,6 +15,7 @@ export const COMMENT = '/comment';
 export const TAG = '/tag';
 export const UP_TOKEN = '/expansion/uptoken';
 export const STATISTIC = '/expansion/statistic';
+export const GOOGLE_TOKEN = '/expansion/google-token';
 export const MUSIC_LIST_CACHE = '/music/list';
 export const BILIBILI_LIST_CACHE = '/bilibili/list';
 export const GITHUB = '/expansion/github';

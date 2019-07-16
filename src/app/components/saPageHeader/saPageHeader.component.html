@@ -1,11 +1,11 @@
 <div
   baScrollPosition
   maxHeight="50"
-  class="page-top clearfix"
+  class="page-header clearfix"
   (scrollChange)="scrolledChanged($event)"
   [ngClass]="{scrolled: isScrolled}"
 >
-  <a routerLink="/dashboard" class="al-logo clearfix">Surmon.me</a>
+  <a routerLink="/dashboard" class="al-logo clearfix">{{ APP_TITLE }}</a>
   <a href (click)="toggleMenu()" class="collapse-menu-link ion-md-menu"></a>
   <div class="user-profile clearfix">
     <div class="dropdown al-user-profile" dropdown>
@@ -13,7 +13,7 @@
         <img [src]="appState.state.adminInfo.gravatar">
       </a>
       <ul
-        class="dropdown-menu top-dropdown-menu profile-dropdown"
+        class="dropdown-menu profile-dropdown"
         role="menu"
         *dropdownMenu
       >

@@ -13,14 +13,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { PagesModule } from '@app/pages/pages.module';
-import { SaBaseModule } from '@/app/sa-base.module';
+import { SaBaseModule } from '@app/sa-base.module';
 import { AppComponent } from '@app/app.component';
 import { RoutingModule } from '@app/app.routing';
 import { GlobalState } from '@app/global.state';
-import { AppState, IinternalState } from '@app/app.service';
+import { AppState, TInternalState } from '@app/app.service';
 
 export interface IAppStore {
-  state: IinternalState;
+  state: TInternalState;
   restoreInputValues: () => void;
   disposeOldHosts: () => void;
 }

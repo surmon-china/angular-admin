@@ -10,16 +10,17 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { SaHttpRequesterService } from '@app/services';
-import { humanizedLoading, handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
+import { humanizedLoading, handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.service';
 import { EPublishState, EPublicState, EOriginState, ESortType } from '@app/constants/state';
 import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
 import { IGetParams } from '@app/pages/pages.constants';
+import { getArticlePath } from '@app/transforms/link';
 import {
   buildLevelCategories,
   TResponsePaginationTag,
   TResponsePaginationArticle,
   TResponsePaginationCategory
-} from '@/app/pages/article/article.service';
+} from '@app/pages/article/article.service';
 
 const DEFAULT_SEARCH_FORM = {
   keyword: ''
@@ -56,6 +57,8 @@ export class ArticleListComponent implements OnInit {
   PublishState = EPublishState;
 
   @ViewChild('delModal', { static: false }) delModal: ModalDirective;
+
+  private getArticlePath = getArticlePath;
 
   private tagApiPath: TApiPath = API_PATH.TAG;
   private articleApiPath: TApiPath = API_PATH.ARTICLE;

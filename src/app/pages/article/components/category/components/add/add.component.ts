@@ -7,8 +7,8 @@
 import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { IFetching, IResponsePaginationData } from '@app/pages/pages.constants';
-import { mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
-import { ICategory } from '@/app/pages/article/article.service';
+import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
+import { ICategory } from '@app/pages/article/article.service';
 
 const DEFAULT_FORM = {
   name: '',

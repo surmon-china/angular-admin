@@ -8,9 +8,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
-import { checkTokenIsOk } from '@app/discriminators/token';
+import { isValidToken } from '@app/discriminators/token';
 import { api as ENV_API } from '@/environments/environment';
-import { UNAUTHORIZED } from '@/app/constants/http';
+import { UNAUTHORIZED } from '@app/constants/http';
 import { isAuthPage } from '@app/discriminators/url';
 import { TOKEN, TOKEN_HEADER } from '@app/constants/auth';
 
@@ -105,7 +105,7 @@ export class SaHttpRequesterService {
     }
 
     // 检查 token，创建一个合理的头
-    if (checkTokenIsOk()) {
+    if (isValidToken()) {
       this.token = localStorage.getItem(TOKEN);
       this.headers = this.headers.set(TOKEN_HEADER, `Bearer ${this.token}`);
     } else {

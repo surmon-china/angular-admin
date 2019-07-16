@@ -8,10 +8,10 @@ import * as API_PATH from '@app/constants/api';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Component, EventEmitter, ViewEncapsulation, Input, Output, OnInit, OnChanges } from '@angular/core';
 import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
-import { ITag, TResponsePaginationTag } from '@/app/pages/article/article.service';
+import { ITag, TResponsePaginationTag } from '@app/pages/article/article.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
-import { humanizedLoading } from '@/app/pages/pages.service';
+import { humanizedLoading } from '@app/pages/pages.service';
 
 enum ELoading {
   Tag

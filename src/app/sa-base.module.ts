@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-// ngx-bootstrap
+// ngx-bootstrap modules
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
@@ -24,10 +24,10 @@ const SA_COMPONENTS = [
   Components.SaSidebarComponent,
   Components.SaBackTopComponent,
   Components.SaCheckboxComponent,
-  Components.SaContentTopComponent,
+  Components.SaContentHeaderComponent,
   Components.SaMenuItemComponent,
   Components.SaMenuComponent,
-  Components.SaPageTopComponent,
+  Components.SaPageHeaderComponent,
   Components.SaMultiCheckboxComponent,
   Components.SaPictureUploaderComponent,
   Components.SaMarkdownEditorComponent,
@@ -39,7 +39,7 @@ const SA_DIRECTIVES = [
 ];
 
 const SA_PIPES = [
-  Pipes.SaAppPicturePipe,
+  Pipes.AppPicturePipe,
   Pipes.DataToLocalePipe,
   Pipes.TruncatePipe
 ];

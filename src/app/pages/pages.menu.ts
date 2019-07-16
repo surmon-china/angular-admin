@@ -1,8 +1,9 @@
 /**
  * @file 页面边栏菜单组件
- * @module app/page/menu
  * @author Surmon <https://github.com/surmon-china>
  */
+
+import { BLOG_SITE } from '@/config';
 
 export const PAGES_MENU = [
   {
@@ -37,7 +38,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '文章管理',
-            icon: 'ion-md-create',
+            icon: 'ion-md-albums',
             order: 2,
           }
         },
@@ -64,7 +65,7 @@ export const PAGES_MENU = [
             path: 'post',
             data: {
               menu: {
-                icon: 'ion-md-done-all',
+                icon: 'ion-md-create',
                 title: '发布文章',
               }
             }
@@ -86,7 +87,7 @@ export const PAGES_MENU = [
           menu: {
             title: '评论管理',
             icon: 'ion-md-text',
-            order: 4
+            order: 3
           }
         },
         children: [
@@ -116,7 +117,7 @@ export const PAGES_MENU = [
           menu: {
             title: '全局设置',
             icon: 'ion-md-settings',
-            order: 10,
+            order: 4,
           }
         }
       },
@@ -128,7 +129,7 @@ export const PAGES_MENU = [
             icon: 'ion-logo-tux',
             selected: false,
             expanded: false,
-            order: 9
+            order: 5
           }
         }
       },
@@ -139,7 +140,7 @@ export const PAGES_MENU = [
             title: 'Aliyun ECS',
             url: 'https://s.click.taobao.com/L0VDd9w',
             icon: 'ion-md-cloud',
-            order: 700,
+            order: 6,
             target: '_blank'
           }
         }
@@ -151,7 +152,7 @@ export const PAGES_MENU = [
             title: 'SRE service',
             url: 'https://sre.surmon.me',
             icon: 'ion-md-construct',
-            order: 800,
+            order: 7,
             target: '_blank'
           }
         }
@@ -163,7 +164,7 @@ export const PAGES_MENU = [
             title: 'Google Analytics',
             url: 'https://analytics.google.com',
             icon: 'ion-logo-google',
-            order: 800,
+            order: 8,
             target: '_blank'
           }
         }
@@ -173,10 +174,10 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: 'Blog',
-            url: 'https://surmon.me',
+            url: BLOG_SITE,
             icon: 'ion-md-ribbon',
-            order: 800,
-            target: '_blank'
+            target: '_blank',
+            order: 9
           }
         }
       },
@@ -187,7 +188,8 @@ export const PAGES_MENU = [
             title: 'Github',
             url: 'https://github.com/surmon-china/angular-admin',
             icon: 'ion-logo-github',
-            target: '_blank'
+            target: '_blank',
+            order: 10
           }
         }
       },
@@ -195,7 +197,7 @@ export const PAGES_MENU = [
         path: 'demo',
         data: {
           menu: {
-            title: 'Demo开发',
+            title: 'Demo 开发',
             icon: 'ion-logo-angular',
             selected: false,
             expanded: false,

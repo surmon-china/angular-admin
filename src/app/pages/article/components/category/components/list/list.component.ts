@@ -6,8 +6,9 @@
 
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { IFetching, IResponsePaginationData, TSelectedAll, TSelectedIds } from '@app/pages/pages.constants';
-import { handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
-import { ICategory } from '@/app/pages/article/article.service';
+import { handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.service';
+import { ICategory } from '@app/pages/article/article.service';
+import { getCategoryPath } from '@app/transforms/link';
 
 @Component({
   selector: 'box-category-list',
@@ -24,6 +25,8 @@ export class ArticleCategoryListComponent {
   @Output() delCategoriesRequest = new EventEmitter();
   @Output() editCategoryRequest = new EventEmitter();
   @Output() refreshList = new EventEmitter();
+
+  private getCategoryPath = getCategoryPath;
 
   public categoriesSelectAll: TSelectedAll = false;
   public selectedCategories: TSelectedIds = [];

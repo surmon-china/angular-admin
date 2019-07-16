@@ -11,11 +11,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
-import { browserParser, osParser } from '@/app/transforms/ua';
+import { browserParser, osParser } from '@app/transforms/ua';
+import { getArticlePath, getGuestbookPath } from '@app/transforms/link';
 import { IGetParams } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
 import { ESortType } from '@app/constants/state';
-import { humanizedLoading, handleBatchSelectChange, handleItemSelectChange } from '@/app/pages/pages.service';
+import { humanizedLoading, handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.service';
 import {
   IComment,
   TCommentId,
@@ -45,6 +46,10 @@ export class CommentListComponent implements OnInit {
   private Loading = ELoading;
   private SortType = ESortType;
   private CommentState = ECommentState;
+
+  private getArticlePath = getArticlePath;
+  private getGuestbookPath = getGuestbookPath;
+
   private apiPath: TApiPath = API_PATH.COMMENT;
 
   // 搜索参数

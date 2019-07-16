@@ -9,11 +9,11 @@ import * as API_PATH from '@app/constants/api';
 import { ActivatedRoute } from '@angular/router';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { IArticle } from '@/app/pages/article/article.service';
+import { IArticle } from '@app/pages/article/article.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService, IRequestParams } from '@app/services';
-import { browserParser, osParser } from '@/app/transforms/ua';
-import { humanizedLoading, mergeFormControlsToInstance, formControlStateClass } from '@/app/pages/pages.service';
+import { browserParser, osParser } from '@app/transforms/ua';
+import { humanizedLoading, mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
 import {
   IComment,
   TCommentId,

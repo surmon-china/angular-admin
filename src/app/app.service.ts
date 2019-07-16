@@ -7,16 +7,17 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-// 普通对象模型
-export interface IinternalState {
-  [key: string]: any;
+export enum EAppStoreKeys {
+  AdminInfo = 'adminInfo'
 }
+
+export type TInternalState = Record<EAppStoreKeys, any>;
 
 @Injectable()
 export class AppState {
 
   private stateChange = new Subject();
-  private _state: IinternalState = {
+  private _state: TInternalState = {
     adminInfo: {
       name: '管理员',
       slogan: '博客管理后台',
@@ -42,7 +43,7 @@ export class AppState {
     return this._state[prop] = value;
   }
 
-  private clone(object: IinternalState) {
+  private clone(object: TInternalState) {
     return JSON.parse(JSON.stringify(object));
   }
 }

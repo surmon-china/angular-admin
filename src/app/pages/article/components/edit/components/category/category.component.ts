@@ -6,10 +6,10 @@
 
 import * as API_PATH from '@app/constants/api';
 import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core';
-import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@/app/pages/article/article.service';
+import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@app/pages/article/article.service';
 import { TApiPath, IFetching } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
-import { humanizedLoading } from '@/app/pages/pages.service';
+import { humanizedLoading } from '@app/pages/pages.service';
 
 enum ELoading {
   Get

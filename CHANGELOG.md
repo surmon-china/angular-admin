@@ -7,9 +7,12 @@
 - ~~仪表盘图表组件和 echarts 整合~~
 - ~~各 CRUD 业务的操作项需统一~~
 - ~~各种扩展字段的输入表单可以使用 bootstrap 的 input + button 连体~~
-- GA 接口的完善，view-select 需要一个按钮显示隐藏
-- `//surmon.me` 等信息应该配在 env
-- Markdown 按钮图标化
+- ~~Markdown 按钮图标化~~
+- ~~`//surmon.me` 等信息应该配在 env~~
+- ~~GA 接口的完善，view-select 需要一个按钮显示隐藏~~
+- 截图更新
+- 文档完善
+- 仪表盘 GA 配色调整
 
 ### v3.2.0
 
@@ -19,6 +22,8 @@
 - 移除 theme，替换为 style
 - 移除冗余资源、icon
 - 优化侧边栏菜单激活逻辑
+- 优化 Markdown 模块
+- 新增配置项
 
 ### v3.1.0
 
