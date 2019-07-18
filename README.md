@@ -8,12 +8,12 @@
 
 ## Angular-Admin
 
-[![GitHub stars](https://img.shields.io/github/stars/surmon-china/angular-admin.svg?style=flat-square)](https://github.com/surmon-china/angular-admin/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/surmon-china/angular-admin.svg?style=flat-square)](https://github.com/surmon-china/angular-admin/issues)
-[![GitHub forks](https://img.shields.io/github/forks/surmon-china/angular-admin.svg?style=flat-square)](https://github.com/surmon-china/angular-admin/network)
-[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=flat-square)](https://github.com/surmon-china/angular-admin)
-[![](https://badge.juejin.im/entry/58a5f28eac502e006cbed110/likes.svg?style=flat-square)](https://juejin.im/entry/58a5f28eac502e006cbed110/detail)
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/surmon-china/angular-admin.svg?style=flat-square)](https://twitter.com/intent/tweet?url=https://github.com/surmon-china/angular-admin)
+[![GitHub stars](https://img.shields.io/github/stars/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/issues)
+[![GitHub forks](https://img.shields.io/github/forks/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/network)
+[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin)
+[![](https://badge.juejin.im/entry/58a5f28eac502e006cbed110/likes.svg?style=for-the-badge)](https://juejin.im/entry/58a5f28eac502e006cbed110/detail)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/surmon-china/angular-admin.svg?style=for-the-badge)](https://twitter.com/intent/tweet?url=https://github.com/surmon-china/angular-admin)
 
 **Admin client for [surmon.me](https://github.com/surmon-china/surmon.me) blog. powered by [Angular](https://github.com/angular/angular) and [Bootstrap4](https://github.com/twbs/bootstrap).**
 
