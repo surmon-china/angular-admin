@@ -65,17 +65,30 @@
     position: relative;
 
     .toolbar {
-      height: 30px;
-      line-height: 30px;
+      display: none;
       display: flex;
+      justify-content: center;
       margin-bottom: 1rem;
   
-      .switch {
+      .btn {
+        margin-right: 1rem;
       }
   
       .selector {
         flex-grow: 1;
         display: flex;
+
+        &.hide {
+          opacity: 0;
+          visibility: hidden;
+          transition: visibility opacity .2s;
+        }
+
+        &.show {
+          opacity: 1;
+          visibility: visible;
+          transition: visibility opacity .2s;
+        }
   
         table {
           margin-right: 1rem;
@@ -98,7 +111,13 @@
       min-height: 200px;
   
       .chart {
-        width: 32%;
+        width: calc(100% - (3rem) / 4);
+
+        &.country,
+        &.city,
+        &.browser {
+          margin-right: 1rem;
+        }
       }
     }
   

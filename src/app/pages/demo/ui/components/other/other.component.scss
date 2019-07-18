@@ -1,0 +1,27 @@
+@import '~app/styles/base/init';
+
+.other-page {
+
+  .btn {
+    margin-right: 1rem;
+
+    > .badge {
+      margin-right: 0;
+    }
+  }
+  
+  .progress {
+    margin-bottom: 1rem;
+  }
+
+  .spinners {
+
+    > div {
+      margin-right: 1rem;
+    }
+  }
+
+  .badge {
+    margin-right: 1rem;
+  }
+}

@@ -269,6 +269,14 @@ export const PAGES_MENU = [
                   }
                 }
               },
+              {
+                path: 'other',
+                data: {
+                  menu: {
+                    title: '其他',
+                  }
+                }
+              },
             ]
           },
           {

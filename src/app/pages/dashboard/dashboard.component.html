@@ -25,16 +25,45 @@
     class="col-xlg-12 col-xl-12 col-lg-12 col-sm-12 col-xs-12"
   >
     <div class="ga-box">
-      <sa-loading-spider [show]="!isGaReady"></sa-loading-spider>
+      <sa-loading-spider [show]="isLoadingGa"></sa-loading-spider>
       <div class="toolbar">
-        <div class="switch"></div>
-        <div id="view-selector" class="selector"></div>
+        <a
+          role="button"
+          class="btn btn-sm btn-success"
+          href="https://developers.google.com/analytics/devguides/reporting/embed/v1/"
+          target="_blank"
+        >Doc</a>
+        <a
+          role="button"
+          class="btn btn-sm btn-warning"
+          href="https://developers.google.com/analytics/devguides/reporting/embed/v1/core-methods-reference/"
+          target="_blank"
+        >API</a>
+        <a
+          role="button"
+          class="btn btn-sm btn-info"
+          href="https://ga-dev-tools.appspot.com/embed-api/"
+          target="_blank"
+        >Example</a>
+        <button
+          type="button"
+          class="btn btn-sm btn-default btn-icon"
+          (click)="isShowSelectView = !isShowSelectView"
+        >
+          <i class="ion-md-podium"></i>
+        </button>
+        <div
+          id="view-selector"
+          [class]="'selector ' + (isShowSelectView ? 'show' : 'hide')"
+        >
+        </div>
       </div>
       <hr>
       <div class="pie-charts">
-        <div id="pie-country" class="chart"></div>
-        <div id="pie-city" class="chart"></div>
-        <div id="pie-browser" class="chart"></div>
+        <div id="pie-country" class="chart country"></div>
+        <div id="pie-city" class="chart city"></div>
+        <div id="pie-browser" class="chart browser"></div>
+        <div id="pie-os" class="chart os"></div>
       </div>
       <hr>
       <div id="timeline" class="timeline"></div>

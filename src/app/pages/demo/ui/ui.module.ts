@@ -19,6 +19,7 @@ import { GridComponent } from './components/grid/grid.component';
 import { IconsComponent } from './components/icons/icons.component';
 import { ModalsComponent } from './components/modals/modals.component';
 import { TypographyComponent } from './components/typography/typography.component';
+import { OtherComponent } from './components/other/other.component';
 
 import { FlatButtonsComponent } from './components/buttons/components/flatButtons';
 import { RaisedButtonsComponent } from './components/buttons/components/raisedButtons';
@@ -54,7 +55,8 @@ import { IconsService } from './components/icons/icons.service';
     IconButtonsComponent,
     LargeButtonsComponent,
     DropdownButtonsComponent,
-    GroupButtonsComponent
+    GroupButtonsComponent,
+    OtherComponent
   ],
   providers: [
     IconsService

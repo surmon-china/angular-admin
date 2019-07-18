@@ -12,8 +12,7 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve --proxy-config proxy.conf.json --hmr",
-    "build": "ng build",
-    "build:safe": "ng build --prod --aot=false --build-optimizer=false",
+    "build": "ng build --prod --aot=false --build-optimizer=false",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
