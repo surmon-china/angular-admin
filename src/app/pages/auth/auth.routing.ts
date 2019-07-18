@@ -1,6 +1,6 @@
 /**
  * @file 登陆页面路由
- * @module app/page/auth/toutes
+ * @desc app/page/auth/toutes
  * @author Surmon <https://github.com/surmon-china>
  */
 

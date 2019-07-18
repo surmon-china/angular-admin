@@ -1,6 +1,6 @@
 /**
  * @file 仪表盘页面组件
- * @module app/page/dashboard/component
+ * @desc app/page/dashboard/component
  * @author Surmon <https://github.com/surmon-china>
  */
 

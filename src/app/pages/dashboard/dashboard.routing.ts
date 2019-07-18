@@ -1,6 +1,6 @@
 /**
  * @file 仪表盘页面路由
- * @module app/page/dashboard/routes
+ * @desc app/page/dashboard/routes
  * @author Surmon <https://github.com/surmon-china>
  */
 

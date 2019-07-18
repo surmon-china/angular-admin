@@ -1,6 +1,6 @@
 /**
  * @file 公告管理模块
- * @module app/page/annoucement/module
+ * @desc app/page/annoucement/module
  * @author Surmon <https://github.com/surmon-china>
  */
 

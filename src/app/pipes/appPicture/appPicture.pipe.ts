@@ -1,6 +1,6 @@
 /**
  * @file 获取图片管道符
- * @module app/pipes/app-picture
+ * @desc app/pipes/app-picture
  * @author Surmon <https://github.com/surmon-china>
  */
 

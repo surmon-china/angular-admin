@@ -1,6 +1,6 @@
 /**
  * @file 复选框组件
- * @module app/component/checkbox
+ * @desc app/component/checkbox
  * @author Surmon <https://github.com/surmon-china>
  */
 

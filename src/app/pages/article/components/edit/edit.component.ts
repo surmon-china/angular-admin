@@ -1,6 +1,6 @@
 /**
  * @file 文章编辑页面组件
- * @module app/page/article/component/edit
+ * @desc app/page/article/component/edit
  * @author Surmon <https://github.com/surmon-china>
  */
 

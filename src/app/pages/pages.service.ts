@@ -1,6 +1,6 @@
 /**
  * @file 页面公共扩展
- * @module app/pages/utils
+ * @desc app/pages/utils
  * @author Surmon <https://github.com/surmon-china>
  */
 

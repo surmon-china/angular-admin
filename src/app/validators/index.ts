@@ -1,6 +1,6 @@
 /**
  * @file 验证器
- * @module app/validators
+ * @desc app/validators
  * @author Surmon <https://github.com/surmon-china>
  */
 

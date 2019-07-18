@@ -1,6 +1,6 @@
 /**
  * @file App 全局状态
- * @module global.state
+ * @desc global.state
  * @author Surmon <https://github.com/surmon-china>
  */
 

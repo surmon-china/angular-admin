@@ -1,6 +1,6 @@
 /**
  * @file 内容区顶部标题
- * @module app/component/content-header
+ * @desc app/component/content-header
  * @author Surmon <https://github.com/surmon-china>
  */
 

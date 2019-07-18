@@ -1,6 +1,6 @@
 /**
  * @file 主程序入口文件
- * @module main
+ * @desc main
  * @author Surmon <https://github.com/surmon-china>
  */
 

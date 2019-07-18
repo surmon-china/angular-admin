@@ -1,6 +1,6 @@
 /**
  * @file 菜单组件
- * @module app/component/menu
+ * @desc app/component/menu
  * @author Surmon <https://github.com/surmon-china>
  */
 

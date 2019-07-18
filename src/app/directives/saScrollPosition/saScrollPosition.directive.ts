@@ -1,6 +1,6 @@
 /**
  * @file 监听 Dom 滚动指令
- * @module app/directives/scroll-position
+ * @desc app/directives/scroll-position
  * @author Surmon <https://github.com/surmon-china>
  */
 

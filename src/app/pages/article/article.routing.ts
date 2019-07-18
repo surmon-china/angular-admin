@@ -1,6 +1,6 @@
 /**
  * @file 文章管理页面路由
- * @module app/page/article/routes
+ * @desc app/page/article/routes
  * @author Surmon <https://github.com/surmon-china>
  */
 

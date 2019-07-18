@@ -1,6 +1,6 @@
 /**
  * @file markdown 编辑器组件
- * @module app/component/markdownn-editor
+ * @desc app/component/markdownn-editor
  * @author Surmon <https://github.com/surmon-china>
  */
 

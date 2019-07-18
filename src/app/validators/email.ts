@@ -1,6 +1,6 @@
 /**
  * @file 邮件验证器
- * @module app/validators/email
+ * @desc app/validators/email
  * @author Surmon <https://github.com/surmon-china>
  */
 

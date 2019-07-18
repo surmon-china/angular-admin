@@ -1,6 +1,6 @@
 /**
  * @file 文章编辑页面分类选择组件
- * @module app/page/article/component/category
+ * @desc app/page/article/component/category
  * @author Surmon <https://github.com/surmon-china>
  */
 

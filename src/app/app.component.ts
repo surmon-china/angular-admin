@@ -1,6 +1,6 @@
 /**
  * @file App 顶级入口组件
- * @module app.component
+ * @desc app.component
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -8,7 +8,7 @@ import * as API_PATH from '@app/constants/api';
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, AfterViewInit, OnInit } from '@angular/core';
 import { NotificationsService } from 'angular2-notifications';
-import { SaImageLoaderService, SaThemePreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
+import { SaImageLoaderService, SaAppPreloaderService, SaThemeSpinnerService, SaHttpRequesterService } from '@app/services';
 import { GlobalState } from '@app/global.state';
 import { AppState, EAppStoreKeys } from '@app/app.service';
 import { isValidToken } from '@app/discriminators/token';
@@ -82,7 +82,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   private loadImages(): void {
-    SaThemePreloaderService.registerLoader(
+    SaAppPreloaderService.registerLoader(
       this.imageLoader.load(ASSETS_IMAGE + 'profile/background.jpg')
     );
   }
@@ -122,7 +122,7 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   // 程序初始化，关闭加载状态
   ngAfterViewInit() {
-    SaThemePreloaderService.load().then(_ => {
+    SaAppPreloaderService.load().then(_ => {
       this.spinner.hide();
     });
   }

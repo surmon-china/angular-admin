@@ -1,6 +1,6 @@
 /**
  * @file Demo 表格演示页面
- * @module app/page/demo/component/tables
+ * @desc app/page/demo/component/tables
  * @author Surmon <https://github.com/surmon-china>
  */
 

@@ -1,6 +1,6 @@
 /**
  * @file App constants/auth
- * @module app/constants/auto
+ * @description app/constants/auto
  * @author Surmon <https://github.com/surmon-china>
  */
 

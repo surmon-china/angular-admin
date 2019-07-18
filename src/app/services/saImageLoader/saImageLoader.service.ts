@@ -1,6 +1,6 @@
 /**
  * @file 图片加载服务
- * @module app/services/image-loader
+ * @desc app/services/image-loader
  * @author Surmon <https://github.com/surmon-china>
  */
 

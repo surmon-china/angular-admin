@@ -1,6 +1,6 @@
 /**
  * @file Demo 表单演示路由
- * @module app/page/demo/component/forms/routes
+ * @desc app/page/demo/component/forms/routes
  * @author Surmon <https://github.com/surmon-china>
  */
 

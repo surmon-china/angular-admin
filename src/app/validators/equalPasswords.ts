@@ -1,6 +1,6 @@
 /**
  * @file 密码对比验证器
- * @module app/validators/EqualPasswords
+ * @desc app/validators/EqualPasswords
  * @author Surmon <https://github.com/surmon-china>
  */
 

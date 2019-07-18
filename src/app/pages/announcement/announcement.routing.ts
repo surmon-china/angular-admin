@@ -1,6 +1,6 @@
 /**
  * @file 公告管理路由
- * @module app/page/annoucement/routes
+ * @desc app/page/annoucement/routes
  * @author Surmon <https://github.com/surmon-china>
  */
 

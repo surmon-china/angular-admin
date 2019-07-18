@@ -1,6 +1,6 @@
 /**
  * @file 字节超出隐藏管道符
- * @module app/pipes/truncate
+ * @desc app/pipes/truncate
  * @author Surmon <https://github.com/surmon-china>
  */
 

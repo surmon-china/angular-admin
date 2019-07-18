@@ -1,6 +1,6 @@
 /**
  * @file 文章管理页面模块
- * @module app/page/article/module
+ * @desc app/page/article/module
  * @author Surmon <https://github.com/surmon-china>
  */
 

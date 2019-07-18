@@ -1,6 +1,6 @@
 /**
  * @file polyfill
- * @module polyfill
+ * @desc polyfill
  * @author Surmon <https://github.com/surmon-china>
  */
 

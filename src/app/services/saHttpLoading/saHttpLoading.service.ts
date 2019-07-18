@@ -1,6 +1,6 @@
 /**
  * @file Http loading service
- * @module app/http-loading
+ * @desc app/http-loading
  * @author Surmon <https://github.com/surmon-china>
  */
 

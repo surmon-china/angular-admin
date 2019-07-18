@@ -1,6 +1,6 @@
 /**
  * @file App routes
- * @module app.routes
+ * @desc app.routes
  * @author Surmon <https://github.com/surmon-china>
  */
 

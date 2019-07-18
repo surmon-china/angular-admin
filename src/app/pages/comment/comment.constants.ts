@@ -1,6 +1,6 @@
 /**
  * @file 评论公共扩展
- * @module app/comment/utils
+ * @desc app/comment/utils
  * @author Surmon <https://github.com/surmon-china>
  */
 

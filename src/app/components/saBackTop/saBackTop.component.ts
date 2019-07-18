@@ -1,6 +1,6 @@
 /**
  * @file 返回顶部组件
- * @module app/component/back-top
+ * @desc app/component/back-top
  * @author Surmon <https://github.com/surmon-china>
  */
 

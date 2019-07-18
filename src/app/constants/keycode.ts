@@ -1,6 +1,6 @@
 /**
  * @file App constants/keycode
- * @module app/constants/keycode
+ * @desc app/constants/keycode
  * @author Surmon <https://github.com/surmon-china>
  */
 

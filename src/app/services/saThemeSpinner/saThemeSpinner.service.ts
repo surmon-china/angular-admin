@@ -1,6 +1,6 @@
 /**
  * @file 主题预加载状态服务
- * @module app/services/theme-spinner
+ * @desc app/services/theme-spinner
  * @author Surmon <https://github.com/surmon-china>
  */
 

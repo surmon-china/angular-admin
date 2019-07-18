@@ -1,6 +1,6 @@
 /**
  * @file 卡片组件
- * @module app/component/card
+ * @desc app/component/card
  * @author Surmon <https://github.com/surmon-china>
  */
 

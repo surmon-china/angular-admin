@@ -1,6 +1,6 @@
 /**
  * @file App service
- * @module app.service
+ * @desc app.service
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -21,7 +21,7 @@ export class AppState {
     adminInfo: {
       name: '管理员',
       slogan: '博客管理后台',
-      gravatar: 'assets/images/profile/logo.png'
+      gravatar: 'assets/images/profile/logo-smooth.png'
     }
   };
 

@@ -1,6 +1,6 @@
 /**
  * @file 页面数据的业务类型常量
- * @module app/pages/constants
+ * @desc app/pages/constants
  * @author Surmon <https://github.com/surmon-china>
  */
 

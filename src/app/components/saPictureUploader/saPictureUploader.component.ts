@@ -1,12 +1,12 @@
 /**
  * @file 图片上传组件
- * @module app/component/picture-uploader
+ * @desc app/component/picture-uploader
  * @author Surmon <https://github.com/surmon-china>
  */
 
 import * as qiniu from 'qiniu-js';
 import * as API_PATH from '@app/constants/api';
-import { Component, ViewChild, Input, Output, OnInit, forwardRef, EventEmitter, ElementRef, Renderer } from '@angular/core';
+import { Component, ViewChild, Input, Output, OnInit, forwardRef, EventEmitter, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { api as ENV_API } from '@/environments/environment';
@@ -54,7 +54,6 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
 
   // 构造函数
   constructor(
-    private renderer: Renderer,
     private httpService: SaHttpRequesterService,
     private notificationsService: NotificationsService
   ) {}
@@ -167,13 +166,13 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
     .catch(err => doUpload(file));
   }
 
-  // 点击自定义上传空间元素的时候调用 input 的 click 方法
+  // 点击自定义上传控件元素的时候调用 input 的 click 方法
   public bringFileSelector(): boolean {
     if (this.uploadInProgress) {
       return false;
     }
     this.onModelTouched();
-    this.renderer.invokeElementMethod(this.fileUpload.nativeElement, 'click');
+    this.fileUpload.nativeElement.click();
     return false;
   }
 

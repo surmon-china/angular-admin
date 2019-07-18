@@ -1,6 +1,6 @@
 /**
  * @file Demo 表单演示页面
- * @module app/page/demo/component/forms
+ * @desc app/page/demo/component/forms
  * @author Surmon <https://github.com/surmon-china>
  */
 

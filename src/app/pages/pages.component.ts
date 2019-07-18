@@ -1,6 +1,6 @@
 /**
  * @file 页面组件
- * @module app/componnents-page
+ * @desc app/componnents-page
  * @author Surmon <https://github.com/surmon-china>
  */
 

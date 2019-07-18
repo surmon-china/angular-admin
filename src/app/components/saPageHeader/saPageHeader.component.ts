@@ -1,6 +1,6 @@
 /**
  * @file 顶部条
- * @module app/component/page-header
+ * @desc app/component/page-header
  * @author Surmon <https://github.com/surmon-china>
  */
 

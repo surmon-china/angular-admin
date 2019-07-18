@@ -1,6 +1,6 @@
 /**
  * @file 全局设置页面路由
- * @module app/page/options/routes
+ * @desc app/page/options/routes
  * @author Surmon <https://github.com/surmon-china>
  */
 

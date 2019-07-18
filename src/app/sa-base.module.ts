@@ -1,6 +1,6 @@
 /**
  * @file 全局公共模块
- * @module app/sa.module
+ * @desc app/sa.module
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -51,7 +51,7 @@ const SA_SERVICES = [
   Services.SaHttpRequesterService,
   Services.SaImageLoaderService,
   Services.SaThemeSpinnerService,
-  Services.SaThemePreloaderService,
+  Services.SaAppPreloaderService,
 ];
 
 const SA_VALIDATORS = [

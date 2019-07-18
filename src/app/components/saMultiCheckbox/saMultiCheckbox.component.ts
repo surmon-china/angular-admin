@@ -1,6 +1,6 @@
 /**
  * @file 多选框组件
- * @module app/component/markdownn-editor
+ * @desc app/component/markdownn-editor
  * @author Surmon <https://github.com/surmon-china>
  */
 

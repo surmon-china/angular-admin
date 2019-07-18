@@ -1,6 +1,6 @@
 /**
  * @file 全局设置页面组件
- * @module app/page/options/component
+ * @desc app/page/options/component
  * @author Surmon <https://github.com/surmon-china>
  */
 

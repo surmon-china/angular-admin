@@ -1,6 +1,6 @@
 /**
  * @file 文章编辑页面状态选择及发布组件
- * @module app/page/article/component/submit
+ * @desc app/page/article/component/submit
  * @author Surmon <https://github.com/surmon-china>
  */
 

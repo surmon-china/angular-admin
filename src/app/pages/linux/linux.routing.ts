@@ -1,6 +1,6 @@
 /**
  * @file 服务器管理页面路由
- * @module app/page/linux/routes
+ * @desc app/page/linux/routes
  * @author Surmon <https://github.com/surmon-china>
  */
 

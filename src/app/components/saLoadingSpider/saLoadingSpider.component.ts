@@ -1,6 +1,6 @@
 /**
  * @file 局部记载组件
- * @module app/component/loading-spider
+ * @desc app/component/loading-spider
  * @author Surmon <https://github.com/surmon-china>
  */
 

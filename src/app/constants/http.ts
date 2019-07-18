@@ -1,6 +1,6 @@
 /**
  * @file App constants/api
- * @module app/constants/api
+ * @description app/constants/api
  * @author Surmon <https://github.com/surmon-china>
  */
 

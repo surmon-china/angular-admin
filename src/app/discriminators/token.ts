@@ -1,6 +1,6 @@
 /**
  * @file App discriminators token 有效性判定器
- * @module app/discriminators/token
+ * @desc app/discriminators/token
  * @author Surmon <https://github.com/surmon-china>
  */
 

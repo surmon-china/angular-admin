@@ -1,6 +1,6 @@
 /**
  * @file 时间本地化处理管道符
- * @module app/pipes/date-handle
+ * @desc app/pipes/date-handle
  * @author Surmon <https://github.com/surmon-china>
  */
 

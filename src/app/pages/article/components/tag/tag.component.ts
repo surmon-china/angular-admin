@@ -1,6 +1,6 @@
 /**
  * @file 标签列表页面组件
- * @module app/page/article/component/tag
+ * @desc app/page/article/component/tag
  * @author Surmon <https://github.com/surmon-china>
  */
 

@@ -1,6 +1,6 @@
 /**
  * @file 登陆页面模块
- * @module app/page/auth/module
+ * @desc app/page/auth/module
  * @author Surmon <https://github.com/surmon-china>
  */
 
