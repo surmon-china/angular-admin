@@ -10,16 +10,16 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/issues)
-[![GitHub forks](https://img.shields.io/github/forks/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/network)
-[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin)
-[![](https://badge.juejin.im/entry/58a5f28eac502e006cbed110/likes.svg?style=for-the-badge)](https://juejin.im/entry/58a5f28eac502e006cbed110/detail)
+[![GitHub last commit](https://img.shields.io/github/last-commit/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin)
+[![GitHub license](https://img.shields.io/github/license/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/surmon-china/angular-admin.svg?style=for-the-badge)](https://twitter.com/intent/tweet?url=https://github.com/surmon-china/angular-admin)
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
-**Admin client for [surmon.me](https://github.com/surmon-china/surmon.me) blog. powered by [Angular](https://github.com/angular/angular) and [Bootstrap4](https://github.com/twbs/bootstrap).**
+**Admin client for [surmon.me](https://github.com/surmon-china/surmon.me) blog, powered by [Angular](https://github.com/angular/angular) and [Bootstrap4](https://github.com/twbs/bootstrap).**
 
 The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/).
 
-**适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 管理员后台的前端应用；使用 [Angular](https://github.com/angular/angular) 和 [Bootstrap4](https://github.com/twbs/bootstrap) 进行开发；项目最原始 fork 自 [ng2-admin](https://akveo.github.io/ng2-admin/)。**
+**适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 管理员后台的前端应用，使用 [Angular](https://github.com/angular/angular) 和 [Bootstrap4](https://github.com/twbs/bootstrap) 进行开发，项目原始 fork 自 [ng2-admin](https://akveo.github.io/ng2-admin/)。**
 
 
 #### 其他相关项目：
