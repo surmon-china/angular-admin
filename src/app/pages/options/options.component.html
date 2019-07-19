@@ -34,14 +34,14 @@
           <div class="form-group row" [ngClass]="controlStateClass(keywords)">
             <label for="blog-keywords" class="col-sm-2 form-control-label">关键词</label>
             <div class="col-sm-10">
-              <input
+              <textarea
                 type="text" 
-                class="form-control" 
+                class="form-control blog-array-textarea" 
                 id="blog-keywords" 
-                placeholder="关键词"
+                placeholder="关键词，每行为一个"
                 [formControl]="keywords"
                 (change)="handleKeywordsChange($event)"
-              />
+              ></textarea>
             </div>
           </div>
           <div class="form-group row" [ngClass]="controlStateClass(description)">
@@ -49,7 +49,7 @@
             <div class="col-sm-10">
               <textarea
                 type="text" 
-                class="form-control blog-description" 
+                class="form-control blog-array-textarea" 
                 id="blog-description" 
                 placeholder="描述"
                 [formControl]="description"
@@ -97,7 +97,7 @@
             <div class="col-sm-10">
               <textarea
                 id="blog-blacklist-ips"
-                class="form-control blog-ping-sites"
+                class="form-control blog-array-textarea"
                 placeholder="这些IP来源的评论将被拒绝，用换行分隔多个IP地址。"
                 [formControl]="blacklist_ips"
                 (change)="handleCommentBlacklistIpsChange($event)"
@@ -109,7 +109,7 @@
             <div class="col-sm-10">
               <textarea
                 id="blog-blacklist-mails"
-                class="form-control blog-ping-sites"
+                class="form-control blog-array-textarea"
                 placeholder="这些邮箱来源的评论将被拒绝，用换行分隔多个邮箱地址。"
                 [formControl]="blacklist_mails"
                 (change)="handleCommentBlacklistMailsChange($event)"
@@ -121,7 +121,7 @@
             <div class="col-sm-10">
               <textarea
                 id="blog-blacklist-keywords"
-                class="form-control blog-ping-sites"
+                class="form-control blog-array-textarea"
                 placeholder="包含这些关键字的的评论将被拒绝，用换行分隔多个关键词。"
                 [formControl]="blacklist_keywords"
                 (change)="handleCommentBlacklistKeywordsChange($event)"

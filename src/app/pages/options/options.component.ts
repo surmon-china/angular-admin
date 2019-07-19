@@ -181,7 +181,11 @@ export class OptionsComponent implements OnInit {
 
   // 关键词计息处理
   private handleKeywordsChange(event) {
-    const newWords = event.target.value.replace(/\s/g, '').split(',');
+    const newWords = event.target.value
+      .split('\n')
+      .map(keyword => lodash.trim(keyword))
+      .filter(Boolean)
+      .join('\n');
     this.keywords.setValue(newWords);
   }
 
@@ -206,13 +210,22 @@ export class OptionsComponent implements OnInit {
       return false;
     }
     const format = value => String(value).split('\n').filter(t => !!t);
-    const formValue = Object.assign({
+    const {
+      blacklist_ips,
+      blacklist_keywords,
+      blacklist_mails,
+      keywords,
+      ...other
+    } = this.optionForm.value;
+    const formValue = {
+      ...other,
+      keywords: format(keywords),
       blacklist: {
         ips: format(this.blacklist_ips.value),
         mails: format(this.blacklist_mails.value),
         keywords: format(this.blacklist_keywords.value)
       }
-    }, this.optionForm.value);
+    };
     this.putOptions(formValue);
   }
 
@@ -237,6 +250,7 @@ export class OptionsComponent implements OnInit {
       options.blacklist_ips = format(options.blacklist.ips);
       options.blacklist_mails = format(options.blacklist.mails);
       options.blacklist_keywords = format(options.blacklist.keywords);
+      options.keywords = format(options.keywords);
       this.optionForm.reset(options);
     }).catch(error => {});
   }

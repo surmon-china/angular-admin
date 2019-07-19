@@ -120,7 +120,7 @@ export class DashboardComponent implements OnInit {
         query: {
           dimensions: 'ga:hour',
           metrics: 'ga:sessions',
-          'start-date': 'today',
+          'start-date': 'yesterday',
           'end-date': 'today',
         },
         chart: {
@@ -172,7 +172,7 @@ export class DashboardComponent implements OnInit {
           query: {
             dimensions,
             metrics: 'ga:sessions',
-            'start-date': 'today',
+            'start-date': 'yesterday',
             'end-date': 'today',
             'max-results': 15,
             sort: '-ga:sessions',
