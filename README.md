@@ -2,7 +2,7 @@
   <a href="https://github.com/angular/angular" target="blank">
     <img src="https://angular.io/assets/images/logos/angular/angular.svg" height="90" alt="Angular Logo" />
   </a>
-  <span>💖</span>
+  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
   <a href="https://github.com/surmon-china/nodepress" target="blank">
     <img src="https://raw.githubusercontent.com/surmon-china/angular-admin/master/src/assets/images/profile/logo.png" height="90" alt="nodepress Logo" />
   </a>
@@ -48,7 +48,7 @@ npm install
 # 开发 
 npm run dev
 
-# 语法检测
+# 语法检查
 npm run lint
 
 # 测试
