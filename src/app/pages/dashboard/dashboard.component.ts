@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit {
 
   public defaultStatistics = DEFAULT_STATISTICS_DATA;
   public googleToken: string = null;
-  public isLoadingGa: boolean = true;
+  public isLoadingGa: boolean = false;
   public statistics: IStatistics = {};
   public fetching: IFetching = {};
 
@@ -243,6 +243,7 @@ export class DashboardComponent implements OnInit {
   }
 
   async initGAClient() {
+    this.isLoadingGa = true;
     if (!(window as any).gapi) {
       loadScript();
     }
@@ -250,7 +251,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initGAClient();
+    // TODO: 由于阿里云无法访问到 googleapis 服务，所以生产环境不可用，为了使其可退化，用 localStorage 存一个特殊字段来判断吧
+    if (!localStorage.getItem('DISABLE_GA')) {
+      this.initGAClient();
+    }
     this.getStatisticsData();
   }
 }
