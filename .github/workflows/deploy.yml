@@ -1,0 +1,33 @@
+name: Deploy to server
+on: pull:
+    types: [closed]
+    branches:
+      - master
+
+  deploy:
+    if: github.event.pull_request.merged == true
+    name: Deploy to server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compress dist files
+        run: tar -zcvf dist.tar ./dist/angular-admin
+      - name: test
+        run: pwd
+        run: ls -la
+      - name: Copy file to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          source: dist.tar
+          target: ${{ secrets.WWW_PATH }}/angular-admin/product/
+      - name: Exec deploy script with SSH
+        uses: appleboy/ssh-action@master
+        with:
+          command_timeout: 10m
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            sh ${{ secrets.WWW_PATH }}/angular-admin/.deploy/main.sh

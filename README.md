@@ -30,7 +30,6 @@ The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/). 项目�
 - **RESTful API service:** [nodepress](https://github.com/surmon-china/nodepress) powered by [nestjs](https://github.com/nestjs/nest)
 - **web client for user:** [surmon.me](https://github.com/surmon-china/surmon.me) powered by [Nuxt.js](https://github.com/nuxt/nuxt.js)
 - **native app client:** [surmon.me.native](https://github.com/surmon-china/surmon.me.native) powered by [react-native](https://github.com/facebook/react-native)
-- **SRE service:** [sre.surmon.me](https://github.com/surmon-china/sre.surmon.me)
 
 **更新记录：[CHANGELOG.md](https://github.com/surmon-china/angular-admin/blob/master/CHANGELOG.md#changelog)**
 
@@ -43,7 +42,7 @@ The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/). 项目�
 
 ```bash
 # 安装
-npm install
+npm ci
 
 # 开发 
 npm run dev
