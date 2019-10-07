@@ -5,6 +5,7 @@ on:
     branches:
       - master
 
+jobs:
   deploy:
     if: github.event.pull_request.merged == true
     name: Deploy to server
