@@ -157,13 +157,14 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
       });
     };
 
-    // 压缩
-    qiniu.compressImage(file, {
-      quality: 0.92,
-      noCompressIfLarger: true
-    })
-    .then(data => doUpload(data.dist))
-    .catch(err => doUpload(file));
+    // TODO: 压缩 image/jpeg 的图片会报错
+    doUpload(file);
+    // qiniu.compressImage(file, {
+    //   quality: 0.92,
+    //   noCompressIfLarger: true
+    // })
+    // .then(data => doUpload(data.dist))
+    // .catch(err => doUpload(file));
   }
 
   // 点击自定义上传控件元素的时候调用 input 的 click 方法

@@ -51,6 +51,7 @@ enum ELoading {
   Option,
   MusicCache,
   BilibiliCache,
+  DatabaseBackup,
   GithubCache,
   SitemapCache,
 }
@@ -72,6 +73,7 @@ export class OptionsComponent implements OnInit {
     [ELoading.Option]: false,
     [ELoading.MusicCache]: false,
     [ELoading.BilibiliCache]: false,
+    [ELoading.DatabaseBackup]: false,
     [ELoading.GithubCache]: false,
     [ELoading.SitemapCache]: false,
   };
@@ -296,6 +298,15 @@ export class OptionsComponent implements OnInit {
         ELoading.Option,
         this.httpService.put(this.optionApiPath, options)
       )
+    );
+  }
+
+  // 更新数据库备份
+  public updateDatabaseBackup() {
+    return humanizedLoading(
+      this.fetching,
+      ELoading.DatabaseBackup,
+      this.httpService.patch(API_PATH.DATA_BASE_BACKUP),
     );
   }
 

@@ -122,37 +122,13 @@ export const PAGES_MENU = [
         }
       },
       {
-        path: 'linux',
-        data: {
-          menu: {
-            title: 'Aliyun DMS',
-            icon: 'ion-logo-tux',
-            selected: false,
-            expanded: false,
-            order: 5
-          }
-        }
-      },
-      {
         path: '',
         data: {
           menu: {
             title: 'Aliyun ECS',
-            url: 'https://s.click.taobao.com/L0VDd9w',
+            url: 'https://s.click.taobao.com/vyZYGzv',
             icon: 'ion-md-cloud',
             order: 6,
-            target: '_blank'
-          }
-        }
-      },
-      {
-        path: '',
-        data: {
-          menu: {
-            title: 'SRE service',
-            url: 'https://sre.surmon.me',
-            icon: 'ion-md-construct',
-            order: 7,
             target: '_blank'
           }
         }
