@@ -37,7 +37,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
-          source: dist.tar
+          source: ./product/dist.tar
           target: ${{ secrets.WWW_PATH }}/angular-admin/product/
       - name: Exec deploy script with SSH
         uses: appleboy/ssh-action@master
