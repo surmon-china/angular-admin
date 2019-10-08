@@ -6,6 +6,8 @@
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
+/product
+/product/*
 
 # dependencies
 /node_modules
