@@ -9,13 +9,28 @@ jobs:
   deploy:
     name: Deploy to server
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
     steps:
-      - name: Compress dist files
-        run: tar -zcvf dist.tar ./dist/angular-admin
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
       - name: test
         run: |
           pwd
           ls -la
+      - name: Compress dist files
+        run: tar -zcvf ./product/dist.tar ./dist/angular-admin
       - name: Copy file to server
         uses: appleboy/scp-action@master
         with:
