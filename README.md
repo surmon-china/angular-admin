@@ -8,7 +8,7 @@
   </a>
 </p>
 
-# Angular-Admin
+# Angular Admin
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 [![GitHub stars](https://img.shields.io/github/stars/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/stargazers)
