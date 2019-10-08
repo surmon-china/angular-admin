@@ -30,7 +30,7 @@ jobs:
           pwd
           ls -la
       - name: Compress dist files
-        run: tar -zcvf ./dist.tar.gz ./dist/angular-admin
+        run: tar -zcvf ./dist.tar.gz -C ./dist/angular-admin/
       - name: Copy file to server
         uses: appleboy/scp-action@master
         with:
