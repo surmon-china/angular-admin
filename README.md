@@ -15,7 +15,6 @@
 [![GitHub issues](https://img.shields.io/github/issues/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/issues)
 [![GitHub last commit](https://img.shields.io/github/last-commit/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin)
 [![GitHub license](https://img.shields.io/github/license/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin)
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/surmon-china/angular-admin.svg?style=for-the-badge)](https://twitter.com/intent/tweet?url=https://github.com/surmon-china/angular-admin)
 
 ## Introduction
 
