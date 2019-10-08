@@ -14,8 +14,9 @@ jobs:
       - name: Compress dist files
         run: tar -zcvf dist.tar ./dist/angular-admin
       - name: test
-        run: pwd
-        run: ls -la
+        run: |
+          pwd
+          ls -la
       - name: Copy file to server
         uses: appleboy/scp-action@master
         with:
