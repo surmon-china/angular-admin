@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SHELL_PATH=$(dirname $0)
+WEB_PATH=$(dirname $0)
 cd $WEB_PATH
 cd ..
 
