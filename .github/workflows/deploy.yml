@@ -30,17 +30,16 @@ jobs:
           pwd
           ls -la
       - name: Compress dist files
-        run: tar -zcvf ./product/dist.tar.gz ./dist/angular-admin
+        run: tar -zcvf ./dist.tar.gz ./dist/angular-admin
       - name: Copy file to server
         uses: appleboy/scp-action@master
         with:
           timeout: 3m
           overwrite: true
-          strip_components: 1
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
-          source: ./product/dist.tar.gz
+          source: ./dist.tar.gz
           target: ${{ secrets.WWW_PATH }}/angular-admin/product/
       - name: Exec deploy script with SSH
         uses: appleboy/ssh-action@master
