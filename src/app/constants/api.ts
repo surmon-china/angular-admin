@@ -16,6 +16,7 @@ export const TAG = '/tag';
 export const UP_TOKEN = '/expansion/uptoken';
 export const STATISTIC = '/expansion/statistic';
 export const GOOGLE_TOKEN = '/expansion/google-token';
+export const DATA_BASE_BACKUP = '/expansion/database-backup';
 export const MUSIC_LIST_CACHE = '/music/list';
 export const BILIBILI_LIST_CACHE = '/bilibili/list';
 export const GITHUB = '/expansion/github';

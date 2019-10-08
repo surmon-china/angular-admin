@@ -242,6 +242,20 @@
         </form>
       </div>
     </sa-card>
+    <sa-card title="数据库操作" baCardClass="with-scroll">
+      <div class="row">
+        <div class="col-sm-12">
+          <button
+            class="btn btn-default btn-with-icon"
+            [disabled]="fetching[Loading.DatabaseBackup]"
+            (click)="updateDatabaseBackup()"
+          >
+            <i class="ion-md-cloud-upload"></i>
+            <span>立即更新数据库备份 {{ fetching[Loading.DatabaseBackup] ? '...' : '' }}</span>
+          </button>
+        </div>
+      </div>
+    </sa-card>
     <sa-card title="更新数据" baCardClass="with-scroll">
       <div class="row">
         <div class="col-sm-12">

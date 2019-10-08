@@ -13,6 +13,11 @@
 
 ## CHANGELOG
 
+### v3.2.2
+- Add database action button
+- Update menus
+- Fix qiniu upload token error
+
 ### v3.2.0
 
 - 升级 Angular
