@@ -125,30 +125,6 @@ export const PAGES_MENU = [
         path: '',
         data: {
           menu: {
-            title: 'Aliyun ECS',
-            url: 'https://s.click.taobao.com/vyZYGzv',
-            icon: 'ion-md-cloud',
-            order: 6,
-            target: '_blank'
-          }
-        }
-      },
-      {
-        path: '',
-        data: {
-          menu: {
-            title: 'Google Analytics',
-            url: 'https://analytics.google.com',
-            icon: 'ion-logo-google',
-            order: 8,
-            target: '_blank'
-          }
-        }
-      },
-      {
-        path: '',
-        data: {
-          menu: {
             title: 'Blog',
             url: BLOG_SITE,
             icon: 'ion-md-ribbon',
