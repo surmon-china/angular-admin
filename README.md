@@ -40,19 +40,19 @@ The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/). 项目�
 ## Development Setup
 
 ```bash
-# 安装
+# install dependencies
 npm ci
 
-# 开发 
+# serve with hot reload at localhost:4200 
 npm run dev
 
-# 语法检查
+# lint
 npm run lint
 
-# 测试
+# test
 npm run test
 npm run e2e
 
-# 构建
+# build
 npm run build
 ```
