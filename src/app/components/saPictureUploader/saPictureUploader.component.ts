@@ -173,7 +173,6 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
 
   // 根据 url 读取一张图片
   public changePictureFromURL(url: string): void {
-    console.log('changePictureFromURL', url);
     const image = new Image();
     image.onload = _ => {
       this.emitPicture(url);
