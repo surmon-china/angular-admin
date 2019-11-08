@@ -4,8 +4,9 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import * as qiniu from 'qiniu-js';
+import * as OSS from 'ali-oss';
 import * as API_PATH from '@app/constants/api';
+import { ALIYUN_OSS_REGION, ALIYUN_OSS_BUCKET } from '@/config';
 import { Component, ViewChild, Input, Output, OnInit, forwardRef, EventEmitter, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
@@ -15,6 +16,13 @@ import 'rxjs/add/operator/toPromise';
 
 type TPictureUrl = string;
 type TEventFunc = (...args: any) => any;
+
+export interface IUpToken {
+  AccessKeyId: string;
+  AccessKeySecret: string;
+  SecurityToken: string;
+  Expiration: string;
+}
 
 @Component({
   selector: 'sa-picture-uploader',
@@ -27,9 +35,6 @@ type TEventFunc = (...args: any) => any;
   }]
 })
 export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor {
-
-  // 上传进度
-  private uploadProgress = '0';
 
   // 元素域
   @ViewChild('fileUpload', { static: false }) protected fileUpload: ElementRef;
@@ -45,10 +50,11 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   @Output() handleUploadCompleted: EventEmitter<any> = new EventEmitter();
 
   // 初始化
-  public upToken = '';
   public tokenOk = false;
+  public upToken: IUpToken = null;
   public picture: TPictureUrl = '';
   public uploadInProgress = false;
+  public uploadProgress = 0;
   public onModelChange: TEventFunc = () => {};
   public onModelTouched: TEventFunc = () => {};
 
@@ -64,13 +70,58 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
 
   // 获取上传 token
   public getUpToken(): void {
-    this.httpService.get(API_PATH.UP_TOKEN).then((res: any) => {
-      if (res && res.result && res.result.up_token) {
-        this.tokenOk = true;
-        this.upToken = res.result.up_token;
-      }
-    }).catch(_ => {
-      this.tokenOk = false;
+    this.httpService.get(API_PATH.UP_TOKEN)
+      .then((res: any) => {
+        if (res && res.result) {
+          this.tokenOk = true;
+          this.upToken = res.result;
+        }
+      })
+      .catch(_ => {
+        this.tokenOk = false;
+      });
+  }
+
+  // 文件上传
+  public doUploadPicture(file: File): void {
+
+    // 上传
+    const self = this;
+    const fileKey = `thumbnail/${file.name.replace(/ /ig, '')}`;
+    let client = new OSS({
+      region: ALIYUN_OSS_REGION,
+      bucket: ALIYUN_OSS_BUCKET,
+      accessKeyId: this.upToken.AccessKeyId,
+      accessKeySecret: this.upToken.AccessKeySecret,
+      stsToken: this.upToken.SecurityToken,
+      secure: true,
+    });
+
+    this.notificationsService.info('开始上传', '文件开始上传', { timeOut: 850 });
+    this.uploadInProgress = true;
+    this.uploadProgress = 0;
+
+    client.multipartUpload(fileKey, file, {
+      async progress(progress) {
+        // console.info('上传有一个新进度', progress);
+        self.uploadInProgress = true;
+        self.uploadProgress = progress * 100;
+      }}
+    )
+    .then(result => {
+      console.info('上传完成', result);
+      const pictureUrl = `${ENV_API.STATIC_URL}/${result.name}`;
+      this.handleUploadCompleted.emit(pictureUrl);
+      this.changePictureFromURL(pictureUrl);
+      this.notificationsService.success('上传成功', '图片上传成功', { timeOut: 850 });
+    })
+    .catch(error => {
+      console.warn('上传失败', error);
+      this.notificationsService.error('上传失败', error.message, { timeOut: 850 });
+    })
+    .finally(() => {
+      this.uploadInProgress = false;
+      client = null;
     });
   }
 
@@ -107,64 +158,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
     }
 
     // 判断完成调用 SDK 上传
-    this.qiniuUploadPicture(file);
-  }
-
-  // 文件上传
-  public qiniuUploadPicture(file: File): void {
-
-    // 上传
-    const doUpload = upFile => {
-
-      this.notificationsService.info('开始上传', '文件开始上传', { timeOut: 850 });
-
-      const keyName = `nodepress/image/${upFile.name.replace(/ /ig, '')}`;
-      const putExtra = {
-        params: {},
-        fname: upFile.name,
-        mimeType: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']
-      };
-
-      const upOptions = { useCdnDomain: true };
-
-      // 开始上传
-      const observable = qiniu.upload(upFile, keyName, this.upToken, putExtra, upOptions);
-
-      this.uploadInProgress = true;
-
-      // 监听上传流
-      const subscription = observable.subscribe({
-        next: res => {
-          console.warn('上传有一个新进度', res);
-          this.uploadInProgress = true;
-          if (res.total && res.total.percent) {
-            this.uploadProgress = (res.total.percent || '').toString().slice(0, 5);
-          }
-        },
-        error: err => {
-          console.warn('上传失败', err);
-          this.uploadInProgress = false;
-          this.notificationsService.error('上传失败', err.message, { timeOut: 850 });
-        },
-        complete: res => {
-          console.warn('上传完成', res);
-          const pictureUrl = `${ENV_API.STATIC_URL}/${res.key}`;
-          this.uploadInProgress = false;
-          this.handleUploadCompleted.emit(pictureUrl);
-          this.changePictureFromURL(pictureUrl);
-          this.notificationsService.success('上传成功', '图片上传成功', { timeOut: 850 });
-        }
-      });
-    };
-
-    // TODO: 压缩 image/jpeg 的图片会报错
-    doUpload(file);
-    // qiniu.compressImage(file, {
-    //   quality: 0.92,
-    //   noCompressIfLarger: true
-    // })
-    // .then(data => doUpload(data.dist))
-    // .catch(err => doUpload(file));
+    this.doUploadPicture(file);
   }
 
   // 点击自定义上传控件元素的时候调用 input 的 click 方法
@@ -184,7 +178,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
       this.emitPicture(url);
     };
     image.onerror = _ => {
-      this.notificationsService.error('预览失败', '七牛问题！', { timeOut: 800 });
+      this.notificationsService.error('预览失败', '存储源问题！', { timeOut: 800 });
       this.emitPicture(url);
     };
     image.src = url;

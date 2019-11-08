@@ -13,9 +13,15 @@
 
 ## CHANGELOG
 
+### v3.2.4
+- Upgrade QINIU uploader to Aliyun OSS
+- Upgrade UA transformer
+- Add gravatar for comment page
+- Add Google analytics
+
 ### v3.2.2
-- Add database action button
 - Update menus
+- Add database action button
 - Fix qiniu upload token error
 
 ### v3.2.0

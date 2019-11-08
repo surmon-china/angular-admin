@@ -40,11 +40,20 @@
 
         &.comment-user {
 
+          > .avatar,
           > .name,
           > .email,
           > .site {
             max-width: 200px;
             @include text-truncate();
+          }
+
+          > .avatar {
+            .image {
+              width: 30px;
+              height: 30px;
+              border-radius: 1px;
+            }
           }
         }
       }

@@ -13,6 +13,7 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
 import { browserParser, osParser } from '@app/transforms/ua';
 import { getArticlePath, getGuestbookPath } from '@app/transforms/link';
+import { getGravatar } from '@app/transforms/gravatar';
 import { IGetParams } from '@app/pages/pages.constants';
 import { SaHttpRequesterService } from '@app/services';
 import { ESortType } from '@app/constants/state';
@@ -47,6 +48,7 @@ export class CommentListComponent implements OnInit {
   private SortType = ESortType;
   private CommentState = ECommentState;
 
+  private getGravatar = getGravatar;
   private getArticlePath = getArticlePath;
   private getGuestbookPath = getGuestbookPath;
 

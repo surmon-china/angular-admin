@@ -113,7 +113,7 @@
               <span *ngIf="comment.agent" [innerHTML]="osParser(comment.agent)"></span>
               <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span>浏览器：</span>
-              <span *ngIf="comment.agent;else unknowUa" [innerHTML]="browserParser(comment.agent)"></span>
+              <span *ngIf="comment.agent;else unknowUa">{{ browserParser(comment.agent) }}</span>
               <ng-template #unknowUa>
                 <span class="text-muted">未知设备</span>
               </ng-template>

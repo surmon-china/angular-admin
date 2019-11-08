@@ -204,6 +204,14 @@
                     </span>
                   </td>
                   <td class="comment-user">
+                    <div class="avatar">
+                      <strong>头像：</strong>
+                      <img
+                        class="image"
+                        [src]="getGravatar(comment.author.email)"
+                        [alt]="comment.author.name"
+                      />
+                    </div>
                     <div class="name"><strong>名字：</strong>{{ comment.author.name }}</div>
                     <div class="email">
                       <strong>邮箱：</strong>
@@ -227,11 +235,11 @@
                     </div>
                     <div>
                       <strong>浏览器：</strong>
-                      <span [innerHTML]="browserParser(comment.agent)"></span>
+                      <span>{{ browserParser(comment.agent) }}</span>
                     </div>
                     <div>
                       <strong>系统：</strong>
-                      <span [innerHTML]="osParser(comment.agent)"></span>
+                      <span>{{ osParser(comment.agent) }}</span>
                     </div>
                   </td>
                   <td>
