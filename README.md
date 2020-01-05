@@ -37,7 +37,7 @@ The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/). 项目�
 ![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/dashboard-dark.png)
 
 
-## Development Setup
+## Development setup
 
 ```bash
 # install dependencies
@@ -56,3 +56,13 @@ npm run e2e
 # build
 npm run build
 ```
+
+## Actions setup
+
+**Rule:**
+- `any PR open` -> `CI:Build test`
+- `master PR close & merged` -> `CI:Deploy to server`
+
+**Example:**
+- `local:develop -> remote:develop` -> `CI:Build test`
+- `remote:develop/master -> remote:master -> merged` -> `CI:Deploy to server`
