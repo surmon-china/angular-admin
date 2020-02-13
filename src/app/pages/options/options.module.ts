@@ -24,4 +24,4 @@ import { RoutingModule } from './options.routing';
     OptionsComponent
   ]
 })
-export default class OptionsModule {}
+export class OptionsModule {}

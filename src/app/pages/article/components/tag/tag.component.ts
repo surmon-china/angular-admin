@@ -51,7 +51,7 @@ export class ArticleTagComponent implements OnInit {
   @ViewChild('delModal', { static: false }) delModal: ModalDirective;
 
   private apiPath: TApiPath = API_PATH.TAG;
-  private getTagPath = getTagPath;
+  public getTagPath = getTagPath;
 
   public editForm: FormGroup;
   public searchForm: FormGroup;

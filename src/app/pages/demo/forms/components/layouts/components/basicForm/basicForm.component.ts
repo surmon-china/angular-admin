@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './basicForm.component.html',
 })
 export class BasicFormComponent {
+  public isChecked: boolean;
 
   constructor() {}
 }

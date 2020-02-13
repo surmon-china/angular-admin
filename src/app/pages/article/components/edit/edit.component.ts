@@ -44,7 +44,7 @@ export class ArticleEditComponent implements OnInit {
 
   private Loading = ELoading;
   private apiPath: TApiPath = API_PATH.ARTICLE;
-  private isSubmited: boolean = false;
+  public isSubmited: boolean = false;
 
   // 文章内容
   public article_id: TArticleId = null;

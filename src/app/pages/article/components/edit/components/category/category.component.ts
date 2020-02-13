@@ -27,7 +27,7 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
   @Input() category;
   @Output() categoryChange: EventEmitter<any> = new EventEmitter();
 
-  private Loading = ELoading;
+  public Loading = ELoading;
   private apiPath: TApiPath = API_PATH.CATEGORY;
 
   public categories: ICategory[] = [];

@@ -32,6 +32,8 @@ export interface IArticle {
   tag: ITag[];
   category: ICategory[];
   extends: IDataExtends[];
+  password?: string;
+  thumb?: string;
 }
 
 // 分类数据

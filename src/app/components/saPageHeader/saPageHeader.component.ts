@@ -21,7 +21,7 @@ type TCollapsedState = boolean;
 })
 export class SaPageHeaderComponent {
 
-  private APP_TITLE = APP_TITLE;
+  public APP_TITLE = APP_TITLE;
 
   public isScrolled: TCollapsedState = false;
   public isMenuCollapsed: TCollapsedState = false;
@@ -29,7 +29,7 @@ export class SaPageHeaderComponent {
   constructor(
     private router: Router,
     private state: GlobalState,
-    private appState: AppState
+    readonly appState: AppState
   ) {
     this.state.subscribe('menu.isCollapsed', isCollapsed => {
       this.isMenuCollapsed = isCollapsed;

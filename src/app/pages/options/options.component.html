@@ -5,7 +5,7 @@
         <form
           class="form-horizontal option-form"
           [formGroup]="optionForm" 
-          (ngSubmit)="submitOptionForm(optionForm.value)"
+          (ngSubmit)="submitOptionForm()"
         >
           <div class="form-group row" [ngClass]="controlStateClass(title)">
             <label for="blog-title" class="col-sm-2 form-control-label">站点标题</label>
@@ -151,7 +151,7 @@
         <form
           class="form-horizontal auth-form"
           [formGroup]="authForm" 
-          (ngSubmit)="submitAuthForm(authForm.value)"
+          (ngSubmit)="submitAuthForm()"
         >
           <div class="form-group row" [ngClass]="controlStateClass(gravatar)">
             <label class="col-sm-2 form-control-label">个人头像</label>

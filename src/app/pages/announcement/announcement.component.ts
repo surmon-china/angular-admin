@@ -52,9 +52,9 @@ const DEFAULT_SEARCH_FORM = {
 })
 export class AnnouncementComponent implements OnInit {
 
-  private Loading = ELoading;
-  private PublishState = EPublishState;
-  private controlStateClass = formControlStateClass;
+  public Loading = ELoading;
+  public PublishState = EPublishState;
+  public controlStateClass = formControlStateClass;
   private apiPath: TApiPath = API_PATH.ANNOUNCEMENT;
 
   @ViewChild('delModal', { static: false }) delModal: ModalDirective;

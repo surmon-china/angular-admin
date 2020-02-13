@@ -8,23 +8,23 @@ import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 
 const routes: Routes = [
-  { path: 'auth', loadChildren: './auth/auth.module' },
+  { path: 'auth', loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule) },
   { path: '',
     component: PagesComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', loadChildren: './dashboard/dashboard.module' },
-      { path: 'announcement', loadChildren: './announcement/announcement.module' },
-      { path: 'article', loadChildren: './article/article.module' },
-      { path: 'comment', loadChildren: './comment/comment.module' },
-      { path: 'options', loadChildren: './options/options.module' },
-      { path: 'linux', loadChildren: './linux/linux.module' },
-      { path: 'auth', loadChildren: './auth/auth.module' },
+      { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(mod => mod.DashboardModule) },
+      { path: 'announcement', loadChildren: () => import('./announcement/announcement.module').then(mod => mod.AnnouncementModule) },
+      { path: 'article', loadChildren: () => import('./article/article.module').then(mod => mod.ArticleModule) },
+      { path: 'comment', loadChildren: () => import('./comment/comment.module').then(mod => mod.CommentModule) },
+      { path: 'options', loadChildren: () => import('./options/options.module').then(mod => mod.OptionsModule) },
+      { path: 'linux', loadChildren: () => import('./linux/linux.module').then(mod => mod.LinuxModule) },
+      { path: 'auth', loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule) },
       { path: 'demo',
         children: [
-          { path: 'ui', loadChildren: './demo/ui/ui.module' },
-          { path: 'forms', loadChildren: './demo/forms/forms.module' },
-          { path: 'tables', loadChildren: './demo/tables/tables.module' }
+          { path: 'ui', loadChildren: () => import('./demo/ui/ui.module').then(mod => mod.UiModule) },
+          { path: 'forms', loadChildren: () => import('./demo/forms/forms.module').then(mod => mod.FormsModule) },
+          { path: 'tables', loadChildren: () => import('./demo/tables/tables.module').then(mod => mod.TablesModule) }
         ]
       }
     ]

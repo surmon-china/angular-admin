@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './inlineForm.component.html',
 })
 export class InlineFormComponent {
+  public isRemember: boolean;
 
   constructor() {}
 }

@@ -27,7 +27,7 @@ export class ArticleCategoryComponent implements OnInit {
   @ViewChild('delModal', { static: false }) delModal: ModalDirective;
   @ViewChild('editCategoryForm', { static: false }) editCategoryForm;
 
-  private Loading = ELoading;
+  public Loading = ELoading;
   private apiPath: TApiPath = API_PATH.CATEGORY;
 
   public categories: TResponsePaginationCategory = {

@@ -49,10 +49,10 @@ enum ELoading { GetDetail, Update, GetList, GetArticle }
 })
 export class CommentDetailComponent implements OnInit {
 
-  private Loading = ELoading;
-  private CommentState = ECommentState;
-  private CommentPostType = ECommentPostType;
-  private controlStateClass = formControlStateClass;
+  public Loading = ELoading;
+  public CommentState = ECommentState;
+  public CommentPostType = ECommentPostType;
+  public controlStateClass = formControlStateClass;
   private apiPath: TApiPath = API_PATH.COMMENT;
 
   public osParser = osParser;

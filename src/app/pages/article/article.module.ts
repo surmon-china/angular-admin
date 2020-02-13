@@ -55,4 +55,4 @@ import { ArticleEditCategoryComponent } from './components/edit/components/categ
     ArticleCategoryListComponent
   ]
 })
-export default class ArticleModule {}
+export class ArticleModule {}

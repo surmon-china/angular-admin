@@ -21,7 +21,7 @@ type TMenuCollapsedState = boolean;
 @Component({
   selector: 'app-admin',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./styles/app.scss')],
+  styleUrls: ['./styles/app.scss'],
   template: `
     <main [ngClass]="isMenuCollapsed ? 'menu-collapsed': ''">
       <ngx-loading-bar color="#017170" height="4px" diameter="20px"></ngx-loading-bar>
@@ -34,10 +34,10 @@ type TMenuCollapsedState = boolean;
 })
 export class AppComponent implements AfterViewInit, OnInit {
 
-  private isMenuCollapsed: TMenuCollapsedState = false;
+  public isMenuCollapsed: TMenuCollapsedState = false;
 
   // 通知配置
-  private notificationsOptions = {
+  public notificationsOptions = {
     position: ['top', 'right'],
     timeOut: 300,
     lastOnBottom: true,

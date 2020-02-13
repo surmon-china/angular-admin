@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './horizontalForm.component.html',
 })
 export class HorizontalFormComponent {
+  public isRemember: boolean;
 
   constructor() {}
 }

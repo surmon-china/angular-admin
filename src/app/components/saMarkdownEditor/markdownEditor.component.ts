@@ -93,12 +93,8 @@ marked.setOptions({
 @Component({
   selector: 'sa-markdown-editor',
   templateUrl: './markdownEditor.component.html',
-  styles: [
-    require('./markdownEditor.component.scss'),
-    require('highlight.js/styles/ocean.css'),
-    require('codemirror/lib/codemirror.css'),
-    require('codemirror/theme/base16-dark.css'),
-    require('codemirror/addon/fold/foldgutter.css')
+  styleUrls: [
+    './markdownEditor.component.scss'
   ],
   providers: [{
     provide: NG_VALUE_ACCESSOR,

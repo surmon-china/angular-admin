@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
 
   private statisticApiPath: TApiPath = API_PATH.STATISTIC;
   private googleTokenApiPath: TApiPath = API_PATH.GOOGLE_TOKEN;
-  private isShowSelectView = false;
+  public isShowSelectView = false;
 
   public defaultStatistics = DEFAULT_STATISTICS_DATA;
   public googleToken: string = null;

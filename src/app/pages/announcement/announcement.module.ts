@@ -31,4 +31,4 @@ import { AnnouncementComponent } from './announcement.component';
     AnnouncementComponent
   ]
 })
-export default class AnnouncementModule {}
+export class AnnouncementModule {}

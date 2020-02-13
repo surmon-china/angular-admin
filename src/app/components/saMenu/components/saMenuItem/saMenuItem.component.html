@@ -11,7 +11,7 @@
 >
   <a
     *ngIf="!menuItem.children && !menuItem.url" 
-    (mouseenter)="onHoverItem($event, item)" 
+    (mouseenter)="onHoverItem($event)" 
     [routerLink]="menuItem.route.paths" 
     class="al-sidebar-list-link"
   >
@@ -20,7 +20,7 @@
   </a>
   <a
     *ngIf="!menuItem.children && menuItem.url" 
-    (mouseenter)="onHoverItem($event, item)" 
+    (mouseenter)="onHoverItem($event)" 
     [href]="menuItem.url" 
     [target]="menuItem.target" 
     class="al-sidebar-list-link"
@@ -32,7 +32,7 @@
     href
     class="al-sidebar-list-link"
     *ngIf="menuItem.children" 
-    (mouseenter)="onHoverItem($event, item)" 
+    (mouseenter)="onHoverItem($event)" 
     (click)="onToggleSubMenu($event, menuItem)"
   >
     <i *ngIf="menuItem.icon" class="{{ menuItem.icon }}"></i>
