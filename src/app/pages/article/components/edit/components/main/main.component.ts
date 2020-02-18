@@ -25,9 +25,9 @@ enum ELoading {
 })
 export class ArticleEditMainComponent implements OnInit, OnChanges {
 
-  private Loading = ELoading;
+  public Loading = ELoading;
   private tagApiPath: TApiPath = API_PATH.TAG;
-  private controlStateClass = formControlStateClass;
+  public controlStateClass = formControlStateClass;
 
   @Input() isSubmited;
   @Input() tag;

@@ -30,7 +30,7 @@ export class ArticleCategoryAddComponent implements OnChanges {
 
   @Input() fetching: IFetching;
   @Input() category: ICategory;
-  @Input() categories: IResponsePaginationData<ICategory>;
+  @Input() categories: IResponsePaginationData<ICategory>[];
   @Output() resetForm: EventEmitter<any> = new EventEmitter();
   @Output() submitForm: EventEmitter<any> = new EventEmitter();
 

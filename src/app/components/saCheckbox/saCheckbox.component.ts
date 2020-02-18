@@ -10,6 +10,7 @@ import { ControlValueAccessor, NgModel } from '@angular/forms';
 @Component({
   selector: 'sa-checkbox[ngModel]',
   styleUrls: ['./saCheckbox.component.scss'],
+  providers: [NgModel],
   templateUrl: './saCheckbox.component.html'
 })
 export class SaCheckboxComponent implements ControlValueAccessor {

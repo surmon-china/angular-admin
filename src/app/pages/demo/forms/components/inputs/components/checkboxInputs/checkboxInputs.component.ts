@@ -26,5 +26,7 @@ export class CheckboxInputsComponent {
     baCheckboxClass: 'class'
   };
 
+  public isDisabled: boolean;
+
   constructor() {}
 }

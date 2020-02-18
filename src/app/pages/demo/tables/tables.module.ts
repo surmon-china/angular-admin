@@ -37,4 +37,4 @@ import { BasicTablesService } from './components/basicTables/basicTables.service
     BasicTablesService,
   ]
 })
-export default class TablesModule {}
+export class TablesModule {}

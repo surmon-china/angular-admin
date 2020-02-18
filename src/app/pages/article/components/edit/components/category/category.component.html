@@ -3,7 +3,7 @@
   <p class="text-muted" *ngIf="!categories.length;else dstaList">暂无分类</p>
   <ng-template #dstaList>
     <div [title]="category.name" class="category-item-checkbox" *ngFor="let category of categories">
-      <sa-checkbox [(ngModel)]="category.checked" (ngModelChange)="itemSelectChange($event, category)">
+      <sa-checkbox [(ngModel)]="category.checked" (ngModelChange)="itemSelectChange()">
         <span sa-checkbox-label>
           <span>&nbsp;</span>
           <span *ngIf="category.level">└</span>

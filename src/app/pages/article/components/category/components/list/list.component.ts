@@ -26,7 +26,7 @@ export class ArticleCategoryListComponent {
   @Output() editCategoryRequest = new EventEmitter();
   @Output() refreshList = new EventEmitter();
 
-  private getCategoryPath = getCategoryPath;
+  public getCategoryPath = getCategoryPath;
 
   public categoriesSelectAll: TSelectedAll = false;
   public selectedCategories: TSelectedIds = [];

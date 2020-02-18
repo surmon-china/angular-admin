@@ -64,11 +64,11 @@ enum ELoading {
 })
 export class OptionsComponent implements OnInit {
 
-  private Loading = ELoading;
-  private controlStateClass = formControlStateClass;
+  public Loading = ELoading;
+  public controlStateClass = formControlStateClass;
   private authApiPath: TApiPath = API_PATH.ADMIN_INFO;
   private optionApiPath: TApiPath = API_PATH.OPTION;
-  private fetching: IFetching = {
+  public fetching: IFetching = {
     [ELoading.Auth]: false,
     [ELoading.Option]: false,
     [ELoading.MusicCache]: false,
@@ -79,26 +79,26 @@ export class OptionsComponent implements OnInit {
   };
 
   // authForm
-  private authForm: FormGroup;
-  private name: AbstractControl;
-  private slogan: AbstractControl;
-  private gravatar: AbstractControl;
-  private password: AbstractControl;
-  private new_password: AbstractControl;
-  private rel_new_password: AbstractControl;
+  public authForm: FormGroup;
+  public name: AbstractControl;
+  public slogan: AbstractControl;
+  public gravatar: AbstractControl;
+  public password: AbstractControl;
+  public new_password: AbstractControl;
+  public rel_new_password: AbstractControl;
 
   // optionForm
-  private optionForm: FormGroup;
-  private title: AbstractControl;
-  private sub_title: AbstractControl;
-  private keywords: AbstractControl;
-  private description: AbstractControl;
-  private site_url: AbstractControl;
-  private site_email: AbstractControl;
-  private site_icp: AbstractControl;
-  private blacklist_ips: AbstractControl;
-  private blacklist_mails: AbstractControl;
-  private blacklist_keywords: AbstractControl;
+  public optionForm: FormGroup;
+  public title: AbstractControl;
+  public sub_title: AbstractControl;
+  public keywords: AbstractControl;
+  public description: AbstractControl;
+  public site_url: AbstractControl;
+  public site_email: AbstractControl;
+  public site_icp: AbstractControl;
+  public blacklist_ips: AbstractControl;
+  public blacklist_mails: AbstractControl;
+  public blacklist_keywords: AbstractControl;
 
   constructor(
     private router: Router,
@@ -167,22 +167,22 @@ export class OptionsComponent implements OnInit {
   }
 
   // 黑名单 ip 解析处理
-  private handleCommentBlacklistIpsChange(event) {
+  public handleCommentBlacklistIpsChange(event) {
     this.blacklist_ips.setValue(this.formatLongString(event.target.value));
   }
 
   // 黑名单邮箱解析处理
-  private handleCommentBlacklistMailsChange(event) {
+  public handleCommentBlacklistMailsChange(event) {
     this.blacklist_mails.setValue(this.formatLongString(event.target.value));
   }
 
   // 黑名单关键词解析处理
-  private handleCommentBlacklistKeywordsChange(event) {
+  public handleCommentBlacklistKeywordsChange(event) {
     this.blacklist_keywords.setValue(this.formatLongString(event.target.value));
   }
 
   // 关键词计息处理
-  private handleKeywordsChange(event) {
+  public handleKeywordsChange(event) {
     const newWords = event.target.value
       .split('\n')
       .map(keyword => lodash.trim(keyword))

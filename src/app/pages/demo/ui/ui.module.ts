@@ -62,4 +62,4 @@ import { IconsService } from './components/icons/icons.service';
     IconsService
   ]
 })
-export default class UiModule {}
+export class UiModule {}

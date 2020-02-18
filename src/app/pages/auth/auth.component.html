@@ -17,8 +17,8 @@
         #pwdInput
         *ngIf="editMode"
         [(ngModel)]="password"
-        (keyup.esc)="quitEdit($event)"
-        (keyup.enter)="onEnter($event)"
+        (keyup.esc)="quitEdit()"
+        (keyup.enter)="onEnter()"
         (blur)="quitEdit()"
       />
     </div>

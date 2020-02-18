@@ -22,8 +22,8 @@ export class AuthComponent implements AfterViewChecked {
 
   @ViewChild('pwdInput', { static: false }) input: ElementRef;
 
-  private password = '';
-  private editMode = false;
+  public password = '';
+  public editMode = false;
 
   constructor(
     private router: Router,

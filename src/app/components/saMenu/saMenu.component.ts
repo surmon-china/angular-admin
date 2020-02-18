@@ -37,7 +37,7 @@ export class SaMenuComponent implements OnInit, OnDestroy {
     private router: Router,
     private service: SaMenuService,
     private state: GlobalState,
-    private appState: AppState
+    readonly appState: AppState
   ) {
     this.onRouteChange = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

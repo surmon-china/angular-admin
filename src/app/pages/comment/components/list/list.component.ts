@@ -44,13 +44,13 @@ export class CommentListComponent implements OnInit {
 
   @ViewChild('delModal', { static: false }) public delModal: ModalDirective;
 
-  private Loading = ELoading;
-  private SortType = ESortType;
-  private CommentState = ECommentState;
+  public Loading = ELoading;
+  public SortType = ESortType;
+  public CommentState = ECommentState;
 
-  private getGravatar = getGravatar;
-  private getArticlePath = getArticlePath;
-  private getGuestbookPath = getGuestbookPath;
+  public getGravatar = getGravatar;
+  public getArticlePath = getArticlePath;
+  public getGuestbookPath = getGuestbookPath;
 
   private apiPath: TApiPath = API_PATH.COMMENT;
 
@@ -211,7 +211,7 @@ export class CommentListComponent implements OnInit {
   }
 
   // 更新评论状态
-  public updateCommentsState(state: ECommentState, comment: IComment) {
+  public updateCommentsState(state: ECommentState, comment?: IComment) {
     const comment_ids = comment ? [comment._id] : this.selectedComments;
     const post_ids = (comment ? [comment.post_id] : lodash.uniq(this.selectedPostIds)).filter(id => id);
     humanizedLoading(

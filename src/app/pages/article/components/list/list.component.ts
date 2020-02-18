@@ -58,7 +58,7 @@ export class ArticleListComponent implements OnInit {
 
   @ViewChild('delModal', { static: false }) delModal: ModalDirective;
 
-  private getArticlePath = getArticlePath;
+  public getArticlePath = getArticlePath;
 
   private tagApiPath: TApiPath = API_PATH.TAG;
   private articleApiPath: TApiPath = API_PATH.ARTICLE;
@@ -128,7 +128,7 @@ export class ArticleListComponent implements OnInit {
   }
 
   // 弹窗
-  public delArticleModal(articleId: string) {
+  public delArticleModal(articleId?: string) {
     this.todoDelArticleId = articleId;
     this.delModal.show();
   }
