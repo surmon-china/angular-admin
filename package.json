@@ -12,7 +12,7 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve --proxy-config proxy.conf.json",
-    "build": "ng build",
+    "build": "ng build --prod --configuration production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
