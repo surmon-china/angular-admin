@@ -1,7 +1,6 @@
-@import '~app/styles/base/init';
+@import '~app/styles/init';
 
 .picture-uploader {
-
   > .picture-url {
     margin-top: 1rem;
     overflow: hidden;
@@ -34,7 +33,7 @@
       max-height: 100%;
     }
   
-    i {
+    .remove-icon {
       display: none;
       position: absolute;
       font-size: 35px;
@@ -69,9 +68,9 @@
       line-height: 32px;
       text-align: center;
     }
-    
+
     &:hover {
-      i {
+      .remove-icon {
         display: block;
       }
       .change-picture {

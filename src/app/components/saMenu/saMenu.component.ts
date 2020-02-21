@@ -37,7 +37,7 @@ export class SaMenuComponent implements OnInit, OnDestroy {
     private router: Router,
     private service: SaMenuService,
     private state: GlobalState,
-    private appState: AppState
+    readonly appState: AppState
   ) {
     this.onRouteChange = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -72,7 +72,6 @@ export class SaMenuComponent implements OnInit, OnDestroy {
   }
 
   public toggleSubMenu($event): boolean {
-
     if (this.sidebarCollapsed) {
       this.expandMenu.emit(null);
 
@@ -80,7 +79,6 @@ export class SaMenuComponent implements OnInit, OnDestroy {
         $event.item.expanded = true;
       }
     } else {
-      // todo 缺少切换动画
       $event.item.expanded = !$event.item.expanded;
     }
 

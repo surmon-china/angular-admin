@@ -6,48 +6,39 @@
 
 import { Injectable } from '@angular/core';
 
-function replaceMethod(replacer) {
-  return (target, propertyKey, descriptor) => {
-    descriptor.value = replacer(descriptor.value);
-    return descriptor;
-  };
-}
-
-export type TLoading = boolean;
-export type TLoadingName = string | number;
+export type Loading = boolean;
+export type LoadingName = string | number;
 
 @Injectable()
 export class SaHttpLoadingService {
 
-  private loadings: Map<TLoadingName, boolean> = new Map();
+  private loadings: Map<LoadingName, boolean> = new Map();
 
-  constructor(...names: TLoadingName[]) {
-    names.forEach(name => this.add(name));
-  }
+  constructor() {}
 
-  get names(): IterableIterator<TLoadingName> {
+  get names(): IterableIterator<LoadingName> {
     return this.loadings.keys();
   }
 
-  add(name: TLoadingName): void {
+  add(name: LoadingName): void {
     if (!this.loadings.has(name)) {
       this.loadings.set(name, false);
     }
   }
 
-  start(name: TLoadingName): void {
+  start(name: LoadingName): void {
     this.loadings.set(name, true);
   }
 
-  stop(name: TLoadingName): void {
+  stop(name: LoadingName): void {
     this.loadings.set(name, false);
   }
 
-  isLoading(name: TLoadingName): boolean {
+  isLoading(name: LoadingName): boolean {
     return !!(this.loadings.has(name) && this.loadings.get(name));
   }
 
-  isFinished(name: TLoadingName): boolean {
+  isFinished(name: LoadingName): boolean {
     return !this.isLoading(name);
   }
 
@@ -57,18 +48,9 @@ export class SaHttpLoadingService {
     return values.every(Boolean);
   }
 
-  promise<T>(name: TLoadingName, promise: Promise<T>): Promise<T> {
+  promise<T>(name: LoadingName, promise: Promise<T>): Promise<T> {
     this.start(name);
-    const stopLoading = () => this.stop(name);
-    promise.then(stopLoading, stopLoading);
+    promise.finally(() => this.stop(name));
     return promise;
-  }
-
-  handle(name: string) {
-    const loadings = this;
-    return replaceMethod((origin) => function(...args) {
-      const promise = origin.apply(this, args);
-      return loadings.promise(name, promise);
-    });
   }
 }

@@ -20,4 +20,4 @@ import { LinuxComponent } from './linux.component';
     LinuxComponent
   ]
 })
-export default class LinuxModule {}
+export class LinuxModule {}

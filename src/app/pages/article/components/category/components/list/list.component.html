@@ -1,23 +1,28 @@
 <div class="clearfix">
   <div class="pull-left">
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-default btn-with-icon" (click)="refreshCategories()">
-        <i class="ion-md-refresh"></i>
+      <button
+        type="button"
+        class="btn btn-default btn-with-icon"
+        [disabled]="isFetching"
+        (click)="refreshCategories()"
+      >
+        <ion-icon class="icon" name="refresh"></ion-icon>
         <span>刷新</span>
       </button>
-      <div class="btn-group" dropdown [isDisabled]="!selectedCategories.length">
+      <div class="btn-group" dropdown [isDisabled]="!selectedCategories.length || isFetching">
         <button
           type="button"
           class="btn btn-default  btn-with-icon dropdown-toggle"
           dropdownToggle
         >
-          <i class="ion-md-list"></i>
+          <ion-icon class="icon" name="list"></ion-icon>
           <span>批量操作</span>
         </button>
         <ul class="dropdown-menu" *dropdownMenu>
           <li class="dropdown-item">
             <a [href]="" (click)="delCategories()">
-              <i class="ion-md-trash icon"></i>
+              <ion-icon class="icon" name="trash"></ion-icon>
               <span>删除选中</span>
             </a>
           </li>
@@ -28,12 +33,16 @@
 </div>
 <div class="table-responsive">
   <div class="category-list">
-    <sa-loading-spider [show]="fetching"></sa-loading-spider>
+    <sa-loading-spider [show]="isFetching"></sa-loading-spider>
     <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
       <thead class="thead-inverse">
         <tr>
           <th class="batch-checkbox">
-            <sa-checkbox [(ngModel)]="categoriesSelectAll" (ngModelChange)="batchSelectChange($event)">
+            <sa-checkbox
+              ngDefaultControl
+              [(ngModel)]="categoriesSelectAll"
+              (ngModelChange)="batchSelectChange($event)"
+            >
               <span sa-checkbox-label>
                 <span>&nbsp;</span>
                 <strong>ID</strong>
@@ -50,13 +59,17 @@
       <tbody>
         <tr *ngIf="!categories.data.length;else dataList">
           <td colspan="7">
-            <p class="text-muted text-center category-err-msg">{{ fetching ? '数据请求中...' : '暂无数据' }}<p>
+            <p class="text-muted text-center category-err-msg">{{ isFetching ? '数据请求中...' : '暂无数据' }}<p>
           </td>
         </tr>
         <ng-template #dataList>
           <tr *ngFor="let category of categories.data">
             <td class="batch-checkbox">
-              <sa-checkbox [(ngModel)]="category.selected" (ngModelChange)="itemSelectChange()">
+              <sa-checkbox
+                ngDefaultControl
+                [(ngModel)]="category.selected"
+                (ngModelChange)="itemSelectChange()"
+              >
                 <span sa-checkbox-label>
                   <span>&nbsp;</span>
                   <strong>{{ category.id }}</strong>
@@ -65,7 +78,7 @@
             </td>
             <td>
               <strong *ngIf="category.unrepaired" class="text-warning">
-                <i class="ion-md-alert"></i>
+                <ion-icon class="icon" name="alert"></ion-icon>
                 <span>&nbsp;</span>
               </strong>
               <strong *ngIf="category.level">└</strong>
@@ -86,7 +99,7 @@
                     class="btn btn-sm btn-warning btn-with-icon"
                     (click)="editCategory(category)"
                   >
-                    <i class="ion-md-create"></i>
+                    <ion-icon class="icon" name="create"></ion-icon>
                     <span>编辑</span>
                   </button>
                   <button
@@ -94,7 +107,7 @@
                     class="btn btn-sm btn-danger btn-with-icon"
                     (click)="delCategory(category)"
                   >
-                    <i class="ion-md-trash"></i>
+                    <ion-icon class="icon" name="trash"></ion-icon>
                     <span>删除</span>
                   </button>
                   <a
@@ -102,7 +115,7 @@
                     [href]="getCategoryPath(category.slug)"
                     target="_blank"
                   >
-                    <i class="ion-md-share-alt"></i>
+                    <ion-icon class="icon" name="open"></ion-icon>
                     <span>查看</span>
                   </a>
                 </div>

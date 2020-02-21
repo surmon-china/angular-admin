@@ -151,32 +151,37 @@
         <div  class="form-group row" [ngClass]="controlStateClass(extends)">
           <label for="comment_extends" class="col-sm-1 form-control-label text-right">自定义扩展</label>
           <div class="col-sm-5">
-            <div class="comment-extend" *ngFor="let extend of extends.value; let i = index">
-              <div class="input-group">
-                <input
-                  type="text" 
-                  id="comment-name"
-                  class="form-control"
-                  placeholder="key" 
-                  [(ngModel)]="extend.name"
-                  [ngModelOptions]="{ standalone: true }"
-                />
-                <input
-                  type="text" 
-                  id="comment-name"
-                  class="form-control"
-                  placeholder="value" 
-                  [(ngModel)]="extend.value"
-                  [ngModelOptions]="{ standalone: true }"
-                />
-                <div class="input-group-append">
-                  <button class="btn btn-default" (click)="delExtendItem(i)">
-                    <i class="ion-md-trash"></i>
-                  </button>
-                </div>
+            <div class="input-group" *ngFor="let extend of extends.value; let i = index">
+              <input
+                type="text" 
+                id="comment-name"
+                class="form-control"
+                placeholder="key" 
+                [(ngModel)]="extend.name"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <input
+                type="text" 
+                id="comment-name"
+                class="form-control"
+                placeholder="value" 
+                [(ngModel)]="extend.value"
+                [ngModelOptions]="{ standalone: true }"
+              />
+              <div class="input-group-append">
+                <button class="btn btn-default" (click)="delExtendItem(i)">
+                  <ion-icon class="icon" name="trash"></ion-icon>
+                </button>
               </div>
             </div>
-            <a [href]="" class="btn btn-default btn-sm btn-block" (click)="addExtendItem()">增加扩展</a>
+            <button
+              type="button"
+              class="btn btn-default btn-sm btn-block btn-with-icon"
+              (click)="addExtendItem()"
+            >
+              <ion-icon class="icon" name="add"></ion-icon>
+              <span>增加扩展</span>
+            </button>
             <span class="help-block sub-little-text">可以为当前评论扩展自定义扩展属性</span>
           </div>
         </div>
@@ -184,15 +189,30 @@
         <div class="row">
           <div class="col-sm-1"></div>
           <div class="col-sm-11">
-            <button type="submit" class="btn btn-success" [disabled]="!editForm.valid">提交更改</button>
-            <span>&nbsp;&nbsp;</span>
-            <a [href]="" class="btn btn-info" (click)="getCommentDetail()">刷新评论</a>
-            <span>&nbsp;&nbsp;</span>
+            <button
+              type="submit"
+              class="btn btn-success btn-with-icon action-btn"
+              [disabled]="!editForm.valid || isDisabledAction"
+            >
+              <ion-icon class="icon" name="cloud-upload"></ion-icon>
+              <span>提交更改</span>
+            </button>
+            <button
+              class="btn btn-info btn-with-icon action-btn"
+              [disabled]="isDisabledAction"
+              (click)="getCommentDetail()"
+            >
+              <ion-icon class="icon" name="refresh"></ion-icon>
+              <span>刷新评论</span>
+            </button>
             <a
-              class="btn btn-default"
+              class="btn btn-default btn-with-icon action-btn"
               *ngIf="comment.post_id !== undefined && comment.post_id !== null"
               [routerLink]="['/comment/post/', comment.post_id]"
-            >回到宿主页面评论列表</a>
+            >
+              <ion-icon class="icon" name="arrow-undo"></ion-icon>
+              <span>回到宿主页面评论列表</span>
+            </a>
           </div>
         </div>
       </form>

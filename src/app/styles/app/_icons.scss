@@ -35,5 +35,3 @@
     @include png-icon($images-root + $iconName + '.png', $width, $height);
   }
 }
-
-//@include icon-png-class('arrival-icon', 11, 11);

@@ -1,18 +1,21 @@
-@import '~app/styles/base/init';
+@import '~app/styles/init';
+
+@import '~highlight.js/styles/ocean.css';
+@import '~codemirror/lib/codemirror.css';
+@import '~codemirror/theme/base16-dark.css';
+@import '~codemirror/addon/fold/foldgutter.css';
 
 .markdown-editor {
-
   &.fullscreen {
     position: fixed;
-    width: 100%;
-    height: calc(100% - 45px - 2.8rem);
-    top: $top-height;
-    left: 0;
+    width: calc(100% - #{$sidebar-width});
+    height: calc(100% - #{$header-height} - 2.8rem);
+    top: $header-height;
+    left: $sidebar-width;
     z-index: 999999;
     background-color: rgba(0, 0, 0, 0.95);
 
     .editor-content {
-
       .editor {
         position: absolute;
         top: 0;
@@ -50,8 +53,15 @@
         display: block;
         float: left;
 
-        > i {
-          font-size: 1.5em;
+        &.save,
+        &.fullscreen {
+          display: inline-flex;
+          align-items: center;
+
+          .icon {
+            color: $default;
+            font-size: 1.5em;
+          }
         }
 
         &:hover {
@@ -68,7 +78,6 @@
     width: 100%;
 
     &.preview-full {
-
       .marked {
         left: 0%;
       }
@@ -88,16 +97,18 @@
     .editor {
       width: 100%;
       transition: left 0.1s ease;
+      $min-height: 30rem;
+      $max-height: 48rem;
 
       .CodeMirror {
         height: auto;
-        min-height: 20rem;
-        max-height: 46rem;
+        min-height: $min-height;
+        max-height: $max-height;
       }
       .CodeMirror-scroll {
         height: auto;
-        min-height: 20rem;
-        max-height: 46rem;
+        min-height: $min-height;
+        max-height: $max-height;
       }
       .CodeMirror-code {
         line-height: 1.6em;
@@ -115,7 +126,7 @@
       overflow: auto;
       z-index: 99;
       color: #333;
-      padding: 2em;
+      padding: 2rem;
       background-color: $default;
       transition: left 0.1s ease;
 
@@ -186,7 +197,6 @@
       }
 
       ul, ol {
-
         > li {
           line-height: 1.8em;
           padding: .5em 1em;
@@ -196,7 +206,6 @@
           }
 
           > ul {
-
             &:last-child {
               margin-bottom: 0;
             }

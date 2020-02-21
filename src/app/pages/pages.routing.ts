@@ -8,25 +8,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 
 const routes: Routes = [
-  { path: 'auth', loadChildren: './auth/auth.module' },
+  { path: 'auth', loadChildren: () => import('./auth').then(module => module.AuthModule) },
   { path: '',
     component: PagesComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', loadChildren: './dashboard/dashboard.module' },
-      { path: 'announcement', loadChildren: './announcement/announcement.module' },
-      { path: 'article', loadChildren: './article/article.module' },
-      { path: 'comment', loadChildren: './comment/comment.module' },
-      { path: 'options', loadChildren: './options/options.module' },
-      { path: 'linux', loadChildren: './linux/linux.module' },
-      { path: 'auth', loadChildren: './auth/auth.module' },
-      { path: 'demo',
-        children: [
-          { path: 'ui', loadChildren: './demo/ui/ui.module' },
-          { path: 'forms', loadChildren: './demo/forms/forms.module' },
-          { path: 'tables', loadChildren: './demo/tables/tables.module' }
-        ]
-      }
+      { path: 'dashboard', loadChildren: () => import('./dashboard').then(module => module.DashboardModule) },
+      { path: 'announcement', loadChildren: () => import('./announcement').then(module => module.AnnouncementModule) },
+      { path: 'article', loadChildren: () => import('./article').then(module => module.ArticleModule) },
+      { path: 'comment', loadChildren: () => import('./comment').then(module => module.CommentModule) },
+      { path: 'options', loadChildren: () => import('./options').then(module => module.OptionsModule) },
+      { path: 'linux', loadChildren: () => import('./linux').then(module => module.LinuxModule) },
+      { path: 'auth', loadChildren: () => import('./auth').then(module => module.AuthModule) },
+      { path: 'example', loadChildren: () => import('./example').then(module => module.ExampleModule) }
     ]
   }
 ];

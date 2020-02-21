@@ -4,7 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SaBaseModule } from '@app/sa-base.module';
@@ -20,6 +20,7 @@ import { RoutingModule } from './dashboard.routing';
   ],
   declarations: [
     DashboardComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export default class DashboardModule {}
+export class DashboardModule {}

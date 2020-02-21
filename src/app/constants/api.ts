@@ -6,6 +6,7 @@
 export const AUTH = '/auth';
 export const LOGIN = '/auth/login';
 export const CHECK_TOKEN = '/auth/check';
+export const RENEWAL_TOKEN = '/auth/renewal';
 export const ADMIN_INFO = '/auth/admin';
 export const OPTION = '/option';
 export const ANNOUNCEMENT = '/announcement';
@@ -20,4 +21,4 @@ export const DATA_BASE_BACKUP = '/expansion/database-backup';
 export const MUSIC_LIST_CACHE = '/music/list';
 export const BILIBILI_LIST_CACHE = '/bilibili/list';
 export const GITHUB = '/expansion/github';
-export const SITEMAP = '/sitemap';
+export const SYNDICATION = '/syndication';

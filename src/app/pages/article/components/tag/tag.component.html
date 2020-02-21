@@ -52,49 +52,58 @@
           <label for="tag_extends">
             <h5>自定义扩展</h5>
           </label>
-          <div class="tag-extend" *ngFor="let extend of extends.value; let i = index">
-            <div class="input-group">
-              <input
-                type="text" 
-                class="form-control"
-                placeholder="key" 
-                [(ngModel)]="extend.name"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              <input
-                type="text" 
-                class="form-control"
-                placeholder="value" 
-                [(ngModel)]="extend.value"
-                [ngModelOptions]="{ standalone: true }"
-              />
-              <div class="input-group-append">
-                <button
-                  class="btn btn-default" 
-                  (click)="delExtendItem(i)"
-                  [disabled]="extends.value.length < 2"
-                >
-                  <i class="ion-md-trash"></i>
-                </button>
-              </div>
+          <div class="input-group" *ngFor="let extend of extends.value; let i = index">
+            <input
+              type="text" 
+              class="form-control"
+              placeholder="key" 
+              [(ngModel)]="extend.name"
+              [ngModelOptions]="{ standalone: true }"
+            />
+            <input
+              type="text" 
+              class="form-control"
+              placeholder="value" 
+              [(ngModel)]="extend.value"
+              [ngModelOptions]="{ standalone: true }"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-default" 
+                (click)="delExtendItem(i)"
+                [disabled]="extends.value.length < 2"
+              >
+                <ion-icon class="icon" name="trash"></ion-icon>
+              </button>
             </div>
           </div>
-          <a [href]="" class="btn btn-default btn-sm btn-block btn-with-icon" (click)="addExtendItem()">
-            <i class="ion-md-add"></i>
+          <button
+            type="button"
+            class="btn btn-default btn-sm btn-block btn-with-icon"
+            (click)="addExtendItem()"
+          >
+            <ion-icon class="icon" name="add"></ion-icon>
             <span>增加扩展</span>
-          </a>
+          </button>
           <span class="help-block sub-little-text">可以为当前标签扩展自定义扩展属性</span>
         </div>
         <hr>
         <div class="row">
           <div class="col-md-12">
-            <button type="submit" class="btn btn-success btn-with-icon" [disabled]="!editForm.valid">
-              <i class="ion-md-done-all"></i>
+            <button
+              type="submit"
+              class="btn btn-success btn-with-icon submit-btn"
+              [disabled]="!editForm.valid || isPosting"
+            >
+              <ion-icon class="icon" name="checkmark-done"></ion-icon>
               <span>{{ activeTag ? '修改' : '添加' }}标签</span>
             </button>
-            <span>&nbsp;&nbsp;</span>
-            <button class="btn btn-default btn-with-icon" (click)="resetEditForm()">
-              <i class="ion-md-refresh"></i>
+            <button
+              class="btn btn-default btn-with-icon"
+              [disabled]="isPosting"
+              (click)="resetEditForm()"
+            >
+              <ion-icon class="icon" name="refresh"></ion-icon>
               <span>重置</span>
             </button>
           </div>
@@ -110,17 +119,19 @@
             <button
               type="button" 
               class="btn btn-default btn-with-icon"
+              [disabled]="isGettingList"
               (click)="refreshTags()"
             >
-              <i class="ion-md-refresh"></i>
+              <ion-icon class="icon" name="refresh"></ion-icon>
               <span>刷新</span>
             </button>
             <button
               type="button" 
               class="btn btn-default btn-with-icon"
+              [disabled]="isGettingList"
               (click)="resetSearchForm()"
             >
-              <i class="ion-md-remove-circle-outline"></i>
+              <ion-icon class="icon" name="remove-circle-outline"></ion-icon>
               <span>重置参数</span>
             </button>
             <div class="btn-group" dropdown [isDisabled]="!selectedTags.length">
@@ -129,13 +140,13 @@
                 class="btn btn-default btn-with-icon dropdown-toggle"
                 dropdownToggle
               >
-                <i class="ion-md-list"></i>
+                <ion-icon class="icon" name="list"></ion-icon>
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" *dropdownMenu>
                 <li class="dropdown-item">
                   <a [href]="" (click)="delTagsModal()">
-                    <i class="ion-md-trash icon"></i>
+                    <ion-icon class="icon" name="trash"></ion-icon>
                     <span>删除选中</span>
                   </a>
                 </li>
@@ -156,14 +167,18 @@
               [formControl]="keyword"
             />
             <span class="input-group-append">
-              <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
+              <button
+                class="btn btn-default"
+                type="submit"
+                [disabled]="!searchForm.valid || isGettingList"
+              >搜索</button>
             </span>
           </div>
         </form>
       </div>
       <div class="table-responsive">
         <div class="tag-list">
-            <sa-loading-spider [show]="fetching[Loading.GetList]"></sa-loading-spider>
+            <sa-loading-spider [show]="isGettingList"></sa-loading-spider>
             <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
             <thead class="thead-inverse">
               <tr>
@@ -186,7 +201,7 @@
               <tr *ngIf="!tags.data.length;else dataList">
                 <td colspan="6">
                   <p class="text-muted text-center tag-err-msg">
-                    <span>{{ fetching[Loading.GetList] ? '数据请求中...' : '暂无数据' }}</span>
+                    <span>{{ isGettingList ? '数据请求中...' : '暂无数据' }}</span>
                   <p>
                 </td>
               </tr>
@@ -216,7 +231,7 @@
                           class="btn btn-sm btn-warning btn-with-icon"
                           (click)="putTag(tag)"
                         >
-                          <i class="ion-md-create"></i>
+                          <ion-icon class="icon" name="create"></ion-icon>
                           <span>编辑</span>
                         </button>
                         <button
@@ -224,7 +239,7 @@
                           class="btn btn-sm btn-danger btn-with-icon"
                           (click)="delTagModal(tag)"
                         >
-                          <i class="ion-md-trash"></i>
+                          <ion-icon class="icon" name="trash"></ion-icon>
                           <span>删除</span>
                         </button>
                         <a
@@ -232,7 +247,7 @@
                           [href]="getTagPath(tag.slug)"
                           target="_blank"
                         >
-                          <i class="ion-md-share-alt"></i>
+                          <ion-icon class="icon" name="open"></ion-icon>
                           <span>查看</span>
                         </a>
                       </div>
@@ -277,7 +292,7 @@
         <div class="modal-body">
           <div class="message">
             <span class="icon text-danger">
-              <i class="ion-md-information-circle-outline"></i>
+              <ion-icon class="icon" name="information-circle"></ion-icon>
             </span>
             <span>确定要删除{{ activeTag ? '这个' : '选中' }}标签吗？</span>
           </div>

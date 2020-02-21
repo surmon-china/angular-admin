@@ -7,12 +7,12 @@
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-import { PagesModule } from '@app/pages/pages.module';
+import { PagesModule } from '@app/pages';
 import { SaBaseModule } from '@app/sa-base.module';
 import { AppComponent } from '@app/app.component';
 import { RoutingModule } from '@app/app.routing';
@@ -45,6 +45,7 @@ export interface IAppStore {
   providers: [
     AppState,
     GlobalState
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

@@ -1,19 +1,17 @@
-.tag-form {
+@import '~app/styles/init';
 
+.tag-form {
   .tag-description {
     line-height: 1.8em;
   }
 
-  .tag-extend {
-    overflow: hidden;
-    margin-bottom: 1rem;
+  .submit-btn {
+    margin-right: $gap;
   }
 }
 
 .tag-search-form {
-
   > .input-group {
-
     > .form-control {
       width: 18em;
     }
@@ -33,9 +31,7 @@
   }
 
   tbody {
-
     tr {
-
       td {
         line-height: 5em;
 

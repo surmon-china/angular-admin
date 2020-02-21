@@ -1,13 +1,14 @@
-<div class="{{ baCheckboxClass }}">
-  <label class="checkbox-inline custom-checkbox nowrap">
+<span class="sa-checkbox">
+  <label class="checkbox-inline" [ngClass]="{ disabled: disabled }">
     <input
-      type="checkbox" 
-      [checked]="state"
-      (change)="onChange($event.target.checked)"
-      [disabled]="disabled" 
-      [value]="value"
-    >
-    <span class="{{ baCheckboxLabelClass }}" *ngIf="label">{{ label }}</span>
+      class="checkbox"
+      type="checkbox"
+      [(ngModel)]="value"
+      [disabled]="disabled"
+    />
+    <ion-icon *ngIf="value" class="icon checked" name="checkbox"></ion-icon>
+    <ion-icon *ngIf="!value" class="icon" name="square-outline"></ion-icon>
+    <span class="label" [ngClass]="{ strong: labelStrong }" *ngIf="label">{{ label }}</span>
     <ng-content select="[sa-checkbox-label]"></ng-content>
   </label>
-</div>
+</span>

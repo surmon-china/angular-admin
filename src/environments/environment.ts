@@ -8,6 +8,5 @@ import { DEVELOP_API } from '@/config';
 export const api = DEVELOP_API;
 export const environment = {
   production: false,
-  development: true,
-  hmr: true,
+  development: true
 };

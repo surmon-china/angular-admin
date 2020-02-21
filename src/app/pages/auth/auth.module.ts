@@ -23,4 +23,4 @@ import { AuthComponent } from './auth.component';
     AuthComponent
   ]
 })
-export default class AuthModule {}
+export class AuthModule {}

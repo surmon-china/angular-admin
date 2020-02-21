@@ -1,0 +1,53 @@
+<div class="checkbox-demo-row">
+  <div class="input-demo checkbox-demo row">
+    <div class="col-md-3">
+      <sa-checkbox [(ngModel)]="checkboxModel" label="Surmon"></sa-checkbox>
+    </div>
+    <div class="col-md-3">
+      <sa-checkbox [(ngModel)]="checkboxModel2" [disabled]="true" label="Rose"></sa-checkbox>
+    </div>
+    <div class="col-md-3">
+      <sa-checkbox [(ngModel)]="checkboxModel3" label="Linus"></sa-checkbox>
+    </div>
+    <div class="col-md-3">
+      <sa-checkbox [(ngModel)]="checkboxModel4" label="Tovails"></sa-checkbox>
+    </div>
+  </div>
+  <hr>
+  <div class="input-demo radio-demo row">
+    <div class="col-md-3">
+      <label class="radio-inline custom-radio nowrap">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+        <span>Option 1</span>
+      </label>
+    </div>
+    <div class="col-md-3">
+      <label class="radio-inline custom-radio nowrap">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+        <span>Option 2</span>
+      </label>
+    </div>
+    <div class="col-md-3">
+      <label class="radio-inline custom-radio nowrap">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+        <span>Option3</span>
+      </label>
+    </div>
+    <div class="col-md-3">
+      <label class="radio-inline custom-radio nowrap">
+        <input type="radio" disabled name="inlineRadioOptions" id="inlineRadio3" value="option4">
+        <span>Disabled option3</span>
+      </label>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="custom-control custom-switch">
+  <input type="checkbox" class="custom-control-input" id="customSwitch1">
+  <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+</div>
+<br>
+<div class="custom-control custom-switch">
+  <input type="checkbox" class="custom-control-input" disabled id="customSwitch2">
+  <label class="custom-control-label" for="customSwitch2">Disabled switch element</label>
+</div>

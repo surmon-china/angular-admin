@@ -1,0 +1,17 @@
+@import '~app/styles/init';
+
+a.see-all-icons {
+  float: right;
+}
+
+.icon-list {
+  .icon {
+    text-align: center;
+
+    .icon-ionic {
+      margin: $gap 0;
+      font-size: $font-size-lg;
+      color: $default;
+    }
+  }
+}

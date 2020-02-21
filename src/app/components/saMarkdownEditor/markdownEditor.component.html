@@ -9,7 +9,7 @@
       <li class="image" (click)="drawImage()">图片</li>
       <li class="-h3" (click)="drawH3Title('\n' + '### ')">H3</li>
       <li class="save" (click)="saveAsMarkdown()">
-        <i class="ion-ios-code-download"></i>
+        <ion-icon class="icon" name="code-download-sharp"></ion-icon>
       </li>
     </ul>
     <ul class="right">
@@ -17,16 +17,18 @@
       <li class="preview-both" (click)="previewMode = 1;parseMarked();">Both</li>
       <li class="preview-none" (click)="previewMode = 0">None</li>
       <li class="fullscreen" (click)="fullscreen = !fullscreen">
-        <i *ngIf="fullscreen" class="ion-ios-contract"></i>
-        <i *ngIf="!fullscreen" class="ion-ios-expand"></i>
+        <ion-icon *ngIf="fullscreen" class="icon" name="contract"></ion-icon>
+        <ion-icon *ngIf="!fullscreen" class="icon" name="expand"></ion-icon>
       </li>
     </ul>
   </div>
-  <div class="editor-content"
-       [ngClass]="{ 
-          'preview-full': previewMode === 2, 
-          'preview-both': previewMode === 1
-       }">
+  <div
+    class="editor-content"
+    [ngClass]="{ 
+      'preview-full': previewMode === 2,
+      'preview-both': previewMode === 1
+    }"
+  >
     <div class="editor" (keyup)="keyDownListen($event)">
       <textarea id="editor"></textarea>
     </div>
@@ -44,9 +46,7 @@
         </div>
         <div class="modal-body">
           <div class="message">
-            <span class="icon text-warning">
-              <i class="ion-md-information-circle-outline"></i>
-            </span>
+            <ion-icon class="icon text-warning" name="information-circle"></ion-icon>
             <span>发现本地有不同版本的草稿，是否使用？</span>
           </div>
         </div>

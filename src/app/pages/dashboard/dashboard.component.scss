@@ -1,4 +1,4 @@
-@import '~app/styles/base/init';
+@import '~app/styles/init';
 
 .statistics {
   color: $content-text;
@@ -39,7 +39,7 @@
     }
 
     .icon {
-      font-size: 4em;
+      font-size: 3.8em;
     }
   }
 }

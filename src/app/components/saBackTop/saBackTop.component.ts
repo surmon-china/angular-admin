@@ -10,12 +10,14 @@ import { Component, AfterViewInit, HostListener, Input } from '@angular/core';
   selector: 'sa-back-top',
   styleUrls: ['./saBackTop.component.scss'],
   template: `
-    <i
+    <span
       #baBackTop
       title="返回顶部"
-      class="back-cover-top sa-back-top ion-md-arrow-up"
-      [ngStyle]="{ display: isShow ? 'block' : 'none' }"
-    ></i>
+      class="back-cover-top sa-back-top"
+      [ngStyle]="{ display: isShow ? 'inline-flex' : 'none' }"
+    >
+      <ion-icon class="icon" name="caret-up"></ion-icon>
+    </span>
   `
 })
 export class SaBackTopComponent implements AfterViewInit {

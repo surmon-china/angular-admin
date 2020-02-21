@@ -10,10 +10,10 @@ import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
-import { humanizedLoading, mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
-import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { SaHttpRequesterService } from '@app/services';
+import { SaHttpRequesterService, SaHttpLoadingService, SaRenewalService, SaTokenService } from '@app/services';
 import { AppState, EAppStoreKeys } from '@app/app.service';
+import { TApiPath } from '@app/pages/pages.interface';
+import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.utils';
 
 interface IAuth {
   name: string;
@@ -46,65 +46,60 @@ const DEFAULT_OPTION_FORM = {
   blacklist_keywords: []
 };
 
-enum ELoading {
+enum Loading {
   Auth,
   Option,
   MusicCache,
   BilibiliCache,
   DatabaseBackup,
   GithubCache,
-  SitemapCache,
+  SyndicationCache,
 }
 
 @Component({
   selector: 'page-options',
   encapsulation: ViewEncapsulation.Emulated,
   styleUrls: ['./options.component.scss'],
-  templateUrl: './options.component.html'
+  templateUrl: './options.component.html',
+  providers: [SaHttpLoadingService]
 })
 export class OptionsComponent implements OnInit {
 
-  private Loading = ELoading;
-  private controlStateClass = formControlStateClass;
+  public Loading = Loading;
+  public controlStateClass = formControlStateClass;
   private authApiPath: TApiPath = API_PATH.ADMIN_INFO;
   private optionApiPath: TApiPath = API_PATH.OPTION;
-  private fetching: IFetching = {
-    [ELoading.Auth]: false,
-    [ELoading.Option]: false,
-    [ELoading.MusicCache]: false,
-    [ELoading.BilibiliCache]: false,
-    [ELoading.DatabaseBackup]: false,
-    [ELoading.GithubCache]: false,
-    [ELoading.SitemapCache]: false,
-  };
 
   // authForm
-  private authForm: FormGroup;
-  private name: AbstractControl;
-  private slogan: AbstractControl;
-  private gravatar: AbstractControl;
-  private password: AbstractControl;
-  private new_password: AbstractControl;
-  private rel_new_password: AbstractControl;
+  public authForm: FormGroup;
+  public name: AbstractControl;
+  public slogan: AbstractControl;
+  public gravatar: AbstractControl;
+  public password: AbstractControl;
+  public new_password: AbstractControl;
+  public rel_new_password: AbstractControl;
 
   // optionForm
-  private optionForm: FormGroup;
-  private title: AbstractControl;
-  private sub_title: AbstractControl;
-  private keywords: AbstractControl;
-  private description: AbstractControl;
-  private site_url: AbstractControl;
-  private site_email: AbstractControl;
-  private site_icp: AbstractControl;
-  private blacklist_ips: AbstractControl;
-  private blacklist_mails: AbstractControl;
-  private blacklist_keywords: AbstractControl;
+  public optionForm: FormGroup;
+  public title: AbstractControl;
+  public sub_title: AbstractControl;
+  public keywords: AbstractControl;
+  public description: AbstractControl;
+  public site_url: AbstractControl;
+  public site_email: AbstractControl;
+  public site_icp: AbstractControl;
+  public blacklist_ips: AbstractControl;
+  public blacklist_mails: AbstractControl;
+  public blacklist_keywords: AbstractControl;
 
   constructor(
     private router: Router,
     private appState: AppState,
     private fb: FormBuilder,
+    private tokenService: SaTokenService,
+    private renewalService: SaRenewalService,
     private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
   ) {
 
     // authForm
@@ -167,28 +162,29 @@ export class OptionsComponent implements OnInit {
   }
 
   // 黑名单 ip 解析处理
-  private handleCommentBlacklistIpsChange(event) {
+  public handleCommentBlacklistIpsChange(event) {
     this.blacklist_ips.setValue(this.formatLongString(event.target.value));
   }
 
   // 黑名单邮箱解析处理
-  private handleCommentBlacklistMailsChange(event) {
+  public handleCommentBlacklistMailsChange(event) {
     this.blacklist_mails.setValue(this.formatLongString(event.target.value));
   }
 
   // 黑名单关键词解析处理
-  private handleCommentBlacklistKeywordsChange(event) {
+  public handleCommentBlacklistKeywordsChange(event) {
     this.blacklist_keywords.setValue(this.formatLongString(event.target.value));
   }
 
   // 关键词计息处理
-  private handleKeywordsChange(event) {
-    const newWords = event.target.value
-      .split('\n')
-      .map(keyword => lodash.trim(keyword))
-      .filter(Boolean)
-      .join('\n');
-    this.keywords.setValue(newWords);
+  public handleKeywordsChange(event) {
+    this.keywords.setValue(
+      event.target.value
+        .split('\n')
+        .map(keyword => lodash.trim(keyword))
+        .filter(Boolean)
+        .join('\n')
+    );
   }
 
   // 提交权限表单
@@ -235,8 +231,11 @@ export class OptionsComponent implements OnInit {
   public handleAuthChange(userAuthPromise) {
     userAuthPromise.then(({ result: adminInfo}) => {
       if (this.authForm.value.rel_new_password) {
+        // 清除本地的 token，并取消掉自动续约任务
         // tslint:disable-next-line:no-console
         console.info('密码更新成功，正跳转至登陆页');
+        this.tokenService.removeToken();
+        this.renewalService.stop();
         setTimeout(() => this.router.navigate(['/auth']), 960);
       } else {
         this.appState.set(EAppStoreKeys.AdminInfo, adminInfo);
@@ -260,9 +259,8 @@ export class OptionsComponent implements OnInit {
   // 获取用户
   public getUserAuth() {
     this.handleAuthChange(
-      humanizedLoading(
-        this.fetching,
-        ELoading.Auth,
+      this.httpLoadingService.promise(
+        Loading.Auth,
         this.httpService.get(this.authApiPath)
       )
     );
@@ -271,9 +269,8 @@ export class OptionsComponent implements OnInit {
   // 更新用户
   public putAuth(auth: IAuth) {
     this.handleAuthChange(
-      humanizedLoading(
-        this.fetching,
-        ELoading.Auth,
+      this.httpLoadingService.promise(
+        Loading.Auth,
         this.httpService.put(this.authApiPath, auth)
       )
     );
@@ -282,9 +279,8 @@ export class OptionsComponent implements OnInit {
   // 获取配置
   public getOptions() {
     this.handleOptionChange(
-      humanizedLoading(
-        this.fetching,
-        ELoading.Option,
+      this.httpLoadingService.promise(
+        Loading.Option,
         this.httpService.get(this.optionApiPath)
       )
     );
@@ -293,9 +289,8 @@ export class OptionsComponent implements OnInit {
   // 更新配置
   public putOptions(options: any) {
     this.handleOptionChange(
-      humanizedLoading(
-        this.fetching,
-        ELoading.Option,
+      this.httpLoadingService.promise(
+        Loading.Option,
         this.httpService.put(this.optionApiPath, options)
       )
     );
@@ -303,47 +298,46 @@ export class OptionsComponent implements OnInit {
 
   // 更新数据库备份
   public updateDatabaseBackup() {
-    return humanizedLoading(
-      this.fetching,
-      ELoading.DatabaseBackup,
-      this.httpService.patch(API_PATH.DATA_BASE_BACKUP),
+    return this.httpLoadingService.promise(
+      Loading.DatabaseBackup,
+      this.httpService.patch(API_PATH.DATA_BASE_BACKUP)
     );
   }
 
   // 更新音乐缓存
   public updateMusicCache() {
-    return humanizedLoading(
-      this.fetching,
-      ELoading.MusicCache,
-      this.httpService.patch(API_PATH.MUSIC_LIST_CACHE),
+    return this.httpLoadingService.promise(
+      Loading.MusicCache,
+      this.httpService.patch(API_PATH.MUSIC_LIST_CACHE)
     );
   }
 
   // 更新 Bilibili 缓存
   public updateBilibiliCache() {
-    return humanizedLoading(
-      this.fetching,
-      ELoading.BilibiliCache,
-      this.httpService.patch(API_PATH.BILIBILI_LIST_CACHE),
+    return this.httpLoadingService.promise(
+      Loading.BilibiliCache,
+      this.httpService.patch(API_PATH.BILIBILI_LIST_CACHE)
     );
   }
 
   // 更新 Github 缓存
   public updateGithubCache() {
-    return humanizedLoading(
-      this.fetching,
-      ELoading.GithubCache,
-      this.httpService.patch(API_PATH.GITHUB),
+    return this.httpLoadingService.promise(
+      Loading.GithubCache,
+      this.httpService.patch(API_PATH.GITHUB)
     );
   }
 
-  // 更新网站地图缓存
-  public updateSitemapCache() {
-    return humanizedLoading(
-      this.fetching,
-      ELoading.SitemapCache,
-      this.httpService.patch(API_PATH.SITEMAP),
+  // 更新 Syndication 缓存
+  public updateSyndicationCache() {
+    return this.httpLoadingService.promise(
+      Loading.SyndicationCache,
+      this.httpService.patch(API_PATH.SYNDICATION)
     );
+  }
+
+  public isLoading(key: Loading): boolean {
+    return this.httpLoadingService.isLoading(key);
   }
 
   ngOnInit() {

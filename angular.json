@@ -22,10 +22,15 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/ionicons",
+                "output": "./assets/ionicons"
+              }
             ],
             "styles": [
               "src/styles.scss"
@@ -54,6 +59,11 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -61,15 +71,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "hmrWarning": false,
           "options": {
             "browserTarget": "angular-admin:build"
           },
           "configurations": {
-            "hmr": {
-              "hmr": true,
-              "browserTarget": "angular-admin:build:hmr"
-            },
             "production": {
               "browserTarget": "angular-admin:build:production"
             }
@@ -95,7 +100,8 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           }
         },
         "lint": {

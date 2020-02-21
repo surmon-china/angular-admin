@@ -6,20 +6,18 @@
 
 import * as API_PATH from '@app/constants/api';
 import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core';
-import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@app/pages/article/article.service';
-import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { SaHttpRequesterService } from '@app/services';
-import { humanizedLoading } from '@app/pages/pages.service';
+import { SaHttpRequesterService, SaHttpLoadingService } from '@app/services';
+import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@app/pages/article/article.utils';
+import { TApiPath } from '@app/pages/pages.interface';
 
-enum ELoading {
-  Get
-}
+const LoadingKey = 'Getting';
 
 @Component({
   selector: 'box-article-edit-category',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  styleUrls: ['./category.component.scss'],
+  providers: [SaHttpLoadingService]
 })
 
 export class ArticleEditCategoryComponent implements OnInit, OnChanges {
@@ -27,25 +25,17 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
   @Input() category;
   @Output() categoryChange: EventEmitter<any> = new EventEmitter();
 
-  private Loading = ELoading;
   private apiPath: TApiPath = API_PATH.CATEGORY;
-
   public categories: ICategory[] = [];
   public originalCategories: ICategory[] = [];
-  public fetching: IFetching = {};
 
-  constructor(private httpService: SaHttpRequesterService) {}
+  constructor(
+    private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
+  ) {}
 
-  ngOnInit() {
-    this.getCategories();
-  }
-
-  ngOnChanges(changes) {
-    this.buildLevelCategories();
-  }
-
-  buildLevelCategories() {
-    this.categories = buildLevelCategories(this.originalCategories, this.category);
+  get isLoading(): boolean {
+    return this.httpLoadingService.isLoading(LoadingKey)
   }
 
   // 勾选动作
@@ -58,9 +48,8 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
 
   // 获取所有分类
   public getCategories() {
-    return humanizedLoading(
-      this.fetching,
-      ELoading.Get,
+    return this.httpLoadingService.promise(
+      LoadingKey,
       this.httpService
         .get<TResponsePaginationCategory>(this.apiPath, { per_page: 666 })
         .then(categories => {
@@ -68,5 +57,17 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
           this.buildLevelCategories();
         })
     );
+  }
+
+  buildLevelCategories() {
+    this.categories = buildLevelCategories(this.originalCategories, this.category);
+  }
+
+  ngOnInit() {
+    this.getCategories();
+  }
+
+  ngOnChanges(changes) {
+    this.buildLevelCategories();
   }
 }

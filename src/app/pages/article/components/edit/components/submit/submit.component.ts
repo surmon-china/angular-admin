@@ -14,11 +14,12 @@ import { EOriginState, EPublicState, EPublishState } from '@app/constants/state'
 
 export class ArticleEditSubmitComponent {
 
-  private OriginState = EOriginState;
-  private PublicState = EPublicState;
-  private PublishState = EPublishState;
+  public OriginState = EOriginState;
+  public PublicState = EPublicState;
+  public PublishState = EPublishState;
 
-  @Input() isEdit;
+  @Input() disabled: boolean;
+  @Input() isEdit: boolean;
   @Input() state;
   @Input() origin;
   @Input() ppublic;

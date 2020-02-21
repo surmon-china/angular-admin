@@ -3,10 +3,11 @@
     <label for="article-status" class="col-3 text-center form-control-label">来源</label>
     <div class="col-6">
       <select
-        class="form-control c-select" 
-        id="article-origin" 
-        name="article-origin" 
+        class="form-control c-select"
+        id="article-origin"
+        name="article-origin"
         [(ngModel)]="origin"
+        [disabled]="disabled"
         (change)="originChange.emit(origin)"
       >
         <option [ngValue]="OriginState.Original">原创</option>
@@ -19,10 +20,11 @@
     <label for="article-status" class="col-3 text-center form-control-label">状态</label>
     <div class="col-6">
       <select
-        class="form-control c-select" 
-        id="article-status" 
-        name="article-status" 
+        class="form-control c-select"
+        id="article-status"
+        name="article-status"
         [(ngModel)]="state"
+        [disabled]="disabled"
         (change)="stateChange.emit(state)"
       >
         <option [ngValue]="PublishState.Published">直接发布</option>
@@ -35,10 +37,11 @@
     <label for="article-public" class="col-3 text-center form-control-label">公开度</label>
     <div class="col-6">
       <select
-        class="form-control c-select" 
-        id="article-public" 
-        name="article-public" 
+        class="form-control c-select"
+        id="article-public"
+        name="article-public"
         [(ngModel)]="ppublic"
+        [disabled]="disabled"
         (change)="ppublicChange.emit(ppublic)"
       >
         <option [ngValue]="PublicState.Public">公开</option>
@@ -51,11 +54,11 @@
     <label for="article-password" class="col-3 text-center form-control-label">文章密码</label>
     <div class="col-6">
        <input
-        type="password" 
-        class="form-control" 
-        id="article-password" 
-        name="article-password" 
-        placeholder="文章密码" 
+        type="password"
+        class="form-control"
+        id="article-password"
+        name="article-password"
+        placeholder="文章密码"
         [(ngModel)]="password"
         [disabled]="ppublic !== PublicState.Password"
         (change)="passwordChange.emit(password)"
@@ -65,8 +68,12 @@
   <hr>
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-block btn-default btn-with-icon" (click)="submitArticle.emit()">
-        <i class="ion-md-done-all"></i>
+      <button
+        class="btn btn-block btn-default btn-with-icon"
+        [disabled]="disabled"
+        (click)="submitArticle.emit()"
+      >
+        <ion-icon class="icon" name="checkmark-done"></ion-icon>
         <span>{{ isEdit ? '修改' : '发布' }}文章</span>
       </button>
     </div>

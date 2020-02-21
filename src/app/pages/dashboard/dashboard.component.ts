@@ -6,14 +6,18 @@
 
 import * as API_PATH from '@app/constants/api';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { SaHttpRequesterService } from '@app/services';
-import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { humanizedLoading } from '@app/pages/pages.service';
+import { SaHttpRequesterService, SaHttpLoadingService } from '@app/services';
+import { TApiPath } from '@app/pages/pages.interface';
 
 const { loadScript } = require('./ga.embed.lib.loader.js');
 
 interface IStatistics {
   [key: string]: number;
+}
+
+enum Loading {
+  GetStatistics,
+  LoadingGA
 }
 
 const GOOGLE_CHART_BG_OPACITY = 0.05;
@@ -34,51 +38,52 @@ const GOOGLE_CHART_COLORS = [
 const DEFAULT_STATISTICS_DATA = [
   {
     description: '今日文章阅读',
-    icon: 'ion-md-eye',
+    icon: 'eye',
     type: 'views'
   }, {
     description: '全站文章数',
-    icon: 'ion-md-list',
+    icon: 'copy',
     type: 'articles'
   }, {
     description: '全站标签数',
-    icon: 'ion-md-pricetags',
+    icon: 'pricetags',
     type: 'tags'
   }, {
     description: '全站评论数',
-    icon: 'ion-md-text',
+    icon: 'chatbox-ellipses',
     type: 'comments'
   }
 ];
-
-enum ELoading {
-  Statistics
-}
 
 @Component({
   selector: 'page-dashboard',
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./dashboard.component.scss'],
-  templateUrl: './dashboard.component.html'
+  templateUrl: './dashboard.component.html',
+  providers: [SaHttpLoadingService]
 })
 export class DashboardComponent implements OnInit {
 
   private statisticApiPath: TApiPath = API_PATH.STATISTIC;
   private googleTokenApiPath: TApiPath = API_PATH.GOOGLE_TOKEN;
-  private isShowSelectView = false;
 
+  public isShowSelectView = false;
   public defaultStatistics = DEFAULT_STATISTICS_DATA;
   public googleToken: string = null;
-  public isLoadingGa: boolean = false;
   public statistics: IStatistics = {};
-  public fetching: IFetching = {};
 
-  constructor(private httpService: SaHttpRequesterService) {}
+  constructor(
+    private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
+  ) {}
+
+  get isLoadingGA(): boolean {
+    return this.httpLoadingService.isLoading(Loading.LoadingGA)
+  }
 
   getStatisticsData() {
-    return humanizedLoading(
-      this.fetching,
-      ELoading.Statistics,
+    return this.httpLoadingService.promise(
+      Loading.GetStatistics,
       this.httpService
         .get<IStatistics>(this.statisticApiPath)
         .then(statistics => {
@@ -87,24 +92,17 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  getGaToken(): Promise<string> {
+  getGAToken(): Promise<string> {
     return this.httpService
       .get<object>(this.googleTokenApiPath)
       .then(({ result: credentials }) => {
         return (credentials as any).access_token as string;
-      })
-      .catch(error => {
-        this.isLoadingGa = false;
-        return Promise.reject(error);
       });
   }
 
-  instanceGa(access_token: string) {
+  async instanceGA(access_token: string): Promise<void> {
     const gapi = (window as any).gapi;
     gapi.analytics.ready(() => {
-
-      this.isLoadingGa = false;
-
       // 服务端授权立即生效，无需事件处理
       gapi.analytics.auth.authorize({
         serverAuth: { access_token }
@@ -243,11 +241,14 @@ export class DashboardComponent implements OnInit {
   }
 
   async initGAClient() {
-    this.isLoadingGa = true;
+    this.httpLoadingService.start(Loading.LoadingGA);
     if (!(window as any).gapi) {
       loadScript();
     }
-    this.getGaToken().then(this.instanceGa.bind(this));
+    return this.httpLoadingService.promise(
+      Loading.LoadingGA,
+      this.getGAToken().then(this.instanceGA.bind(this))
+    );
   }
 
   ngOnInit() {

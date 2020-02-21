@@ -7,27 +7,22 @@
 import * as API_PATH from '@app/constants/api';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Component, EventEmitter, ViewEncapsulation, Input, Output, OnInit, OnChanges } from '@angular/core';
-import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
-import { ITag, TResponsePaginationTag } from '@app/pages/article/article.service';
-import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { SaHttpRequesterService } from '@app/services';
-import { humanizedLoading } from '@app/pages/pages.service';
+import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.utils';
+import { SaHttpRequesterService, SaHttpLoadingService } from '@app/services';
+import { ITag, TResponsePaginationTag } from '@app/pages/article/article.utils';
 
-enum ELoading {
-  Tag
-}
+const LoadingTagKey = 'GetTag';
 
 @Component({
   selector: 'box-article-edit-main',
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./main.component.scss'],
-  templateUrl: './main.component.html'
+  templateUrl: './main.component.html',
+  providers: [SaHttpLoadingService]
 })
 export class ArticleEditMainComponent implements OnInit, OnChanges {
 
-  private Loading = ELoading;
-  private tagApiPath: TApiPath = API_PATH.TAG;
-  private controlStateClass = formControlStateClass;
+  public controlStateClass = formControlStateClass;
 
   @Input() isSubmited;
   @Input() tag;
@@ -49,9 +44,12 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   public formDescription: AbstractControl;
 
   public tags: ITag[] = [];
-  public fetching: IFetching = {};
 
-  constructor(private fb: FormBuilder, private httpService: SaHttpRequesterService) {
+  constructor(
+    private fb: FormBuilder,
+    private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
+  ) {
     this.editForm = this.fb.group({
       formTitle: ['', Validators.compose([Validators.required])],
       formContent: ['', Validators.compose([Validators.required])],
@@ -61,16 +59,8 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
     mergeFormControlsToInstance(this, this.editForm);
   }
 
-  // 初始化
-  ngOnInit() {
-    this.getTags();
-    this.resetEditForm();
-  }
-
-  // 数据更新后重新初始化表单
-  ngOnChanges() {
-    this.resetEditForm();
-    this.resetTagsCheck();
+  get isLoadingTag(): boolean {
+    return this.httpLoadingService.isLoading(LoadingTagKey)
   }
 
   // 重置数据
@@ -124,15 +114,26 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
 
   // 获取所有标签
   public getTags() {
-    return humanizedLoading(
-      this.fetching,
-      ELoading.Tag,
+    return this.httpLoadingService.promise(
+      LoadingTagKey,
       this.httpService
-        .get<TResponsePaginationTag>(this.tagApiPath, { per_page: 666 })
+        .get<TResponsePaginationTag>(API_PATH.TAG, { per_page: 666 })
         .then(tags => {
           this.tags = tags.result.data;
           this.resetTagsCheck();
         })
     );
+  }
+
+  // 初始化
+  ngOnInit() {
+    this.getTags();
+    this.resetEditForm();
+  }
+
+  // 数据更新后重新初始化表单
+  ngOnChanges() {
+    this.resetEditForm();
+    this.resetTagsCheck();
   }
 }

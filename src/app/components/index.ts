@@ -7,6 +7,5 @@ export * from './saCard';
 export * from './saBackTop';
 export * from './saPictureUploader';
 export * from './saCheckbox';
-export * from './saMultiCheckbox';
 export * from './saMarkdownEditor';
 export * from './saLoadingSpider';

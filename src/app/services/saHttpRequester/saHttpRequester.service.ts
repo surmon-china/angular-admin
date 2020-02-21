@@ -8,11 +8,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { NotificationsService } from 'angular2-notifications';
-import { isValidToken } from '@app/discriminators/token';
 import { api as ENV_API } from '@/environments/environment';
-import { UNAUTHORIZED } from '@app/constants/http';
 import { isAuthPage } from '@app/discriminators/url';
-import { TOKEN, TOKEN_HEADER } from '@app/constants/auth';
+import { SaTokenService } from '@app/services/saToken/saToken.service';
+import { UNAUTHORIZED } from '@app/constants/http';
+import { TOKEN_HEADER } from '@app/constants/auth';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -58,6 +58,7 @@ export class SaHttpRequesterService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private tokenService: SaTokenService,
     private notificationsService: NotificationsService
   ) {}
 
@@ -89,7 +90,7 @@ export class SaHttpRequesterService {
     console.warn('数据请求失败：', response);
     // 如果是 401，即：登陆失败，则删除 token 并跳转到登陆页
     if (response.status === UNAUTHORIZED) {
-      localStorage.removeItem(TOKEN);
+      this.tokenService.removeToken();
       this.router.navigate(['/auth']);
     }
     return Promise.reject(response);
@@ -105,8 +106,8 @@ export class SaHttpRequesterService {
     }
 
     // 检查 token，创建一个合理的头
-    if (isValidToken()) {
-      this.token = localStorage.getItem(TOKEN);
+    if (this.tokenService.isTokenValid()) {
+      this.token = this.tokenService.getToken();
       this.headers = this.headers.set(TOKEN_HEADER, `Bearer ${this.token}`);
     } else {
       this.notificationsService.warn('Token 无效', 'Token 不存在或是无效的', { timeOut: 1000 });

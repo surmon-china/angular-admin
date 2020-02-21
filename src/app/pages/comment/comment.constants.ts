@@ -4,7 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { IDataExtends, IResponsePaginationData } from '@app/pages/pages.constants';
+import { IDataExtends, IResponsePaginationData } from '@app/pages/pages.interface';
 
 // 评论状态
 export enum ECommentState {

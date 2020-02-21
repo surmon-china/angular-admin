@@ -63,11 +63,7 @@ export class SaMenuService {
   }
 
   protected convertArrayToItems(routes: any[], parent?: any): any[] {
-    const items = [];
-    routes.forEach(route => {
-      items.push(this.convertObjectToItem(route, parent));
-    });
-    return items;
+    return routes.map(route => this.convertObjectToItem(route, parent));
   }
 
   protected convertObjectToItem(object, parent?: any): any {
@@ -87,8 +83,8 @@ export class SaMenuService {
       item.route.paths = item.route.path;
     } else {
       item.route.paths = parent && parent.route && parent.route.paths
-                          ? parent.route.paths.slice(0)
-                          : ['/'];
+        ? parent.route.paths.slice(0)
+        : ['/'];
       if (item.route.path) {
         item.route.paths.push(item.route.path);
       }

@@ -8,12 +8,11 @@ import * as lodash from 'lodash';
 import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@app/pages/article/article.service';
-import { TApiPath, IFetching, TSelectedIds } from '@app/pages/pages.constants';
-import { SaHttpRequesterService } from '@app/services';
-import { humanizedLoading } from '@app/pages/pages.service';
+import { SaHttpRequesterService, SaHttpLoadingService } from '@app/services';
+import { ICategory, TResponsePaginationCategory, buildLevelCategories } from '@app/pages/article/article.utils';
+import { TApiPath, TSelectedIds } from '@app/pages/pages.interface';
 
-enum ELoading {
+enum Loading {
   Get,
   Post
 }
@@ -21,24 +20,27 @@ enum ELoading {
 @Component({
   selector: 'page-article-category',
   templateUrl: './category.component.html',
+  providers: [SaHttpLoadingService]
 })
 export class ArticleCategoryComponent implements OnInit {
 
   @ViewChild('delModal', { static: false }) delModal: ModalDirective;
   @ViewChild('editCategoryForm', { static: false }) editCategoryForm;
 
-  private Loading = ELoading;
+  public Loading = Loading;
   private apiPath: TApiPath = API_PATH.CATEGORY;
 
   public categories: TResponsePaginationCategory = {
     data: []
   };
-  public fetching: IFetching = {};
   public todoDelCategory: ICategory;
   public todoEditCategory: ICategory;
   public todoDelCategories: TSelectedIds;
 
-  constructor(private httpService: SaHttpRequesterService) {}
+  constructor(
+    private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
+  ) {}
 
   ngOnInit() {
     this.getCategories();
@@ -82,9 +84,8 @@ export class ArticleCategoryComponent implements OnInit {
 
   // 获取分类
   public getCategories() {
-    humanizedLoading(
-      this.fetching,
-      ELoading.Get,
+    this.httpLoadingService.promise(
+      Loading.Get,
       this.httpService
         .get<TResponsePaginationCategory>(this.apiPath, { per_page: 100 })
         .then(categories => {
@@ -96,9 +97,8 @@ export class ArticleCategoryComponent implements OnInit {
 
   // 添加分类
   public addCategory(category: ICategory) {
-    humanizedLoading(
-      this.fetching,
-      ELoading.Post,
+    this.httpLoadingService.promise(
+      Loading.Post,
       this.httpService
         .post(this.apiPath, category)
         .then(_ => this.handlePostDone())
@@ -108,9 +108,8 @@ export class ArticleCategoryComponent implements OnInit {
   // 修改分类
   public doEditCategory(category: ICategory) {
     const newCategory = Object.assign(this.todoEditCategory, category);
-    humanizedLoading(
-      this.fetching,
-      ELoading.Post,
+    this.httpLoadingService.promise(
+      Loading.Post,
       this.httpService
         .put(`${ this.apiPath }/${ newCategory._id }`, newCategory)
         .then(_ => this.handlePostDone())
@@ -141,5 +140,9 @@ export class ArticleCategoryComponent implements OnInit {
     .catch(_ => {
       this.delModal.hide();
     });
+  }
+
+  public isLoading(key: Loading): boolean {
+    return this.httpLoadingService.isLoading(key);
   }
 }

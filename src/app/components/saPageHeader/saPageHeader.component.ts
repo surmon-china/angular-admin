@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { GlobalState } from 'app/global.state';
 import { AppState } from 'app/app.service';
-import { TOKEN } from '@app/constants/auth';
+import { SaTokenService } from 'app/services';
 import { APP_TITLE } from '@/config';
 
 type TCollapsedState = boolean;
@@ -21,7 +21,7 @@ type TCollapsedState = boolean;
 })
 export class SaPageHeaderComponent {
 
-  private APP_TITLE = APP_TITLE;
+  public APP_TITLE = APP_TITLE;
 
   public isScrolled: TCollapsedState = false;
   public isMenuCollapsed: TCollapsedState = false;
@@ -29,7 +29,8 @@ export class SaPageHeaderComponent {
   constructor(
     private router: Router,
     private state: GlobalState,
-    private appState: AppState
+    readonly appState: AppState,
+    readonly tokenService: SaTokenService
   ) {
     this.state.subscribe('menu.isCollapsed', isCollapsed => {
       this.isMenuCollapsed = isCollapsed;
@@ -38,7 +39,7 @@ export class SaPageHeaderComponent {
 
   public logout() {
     console.log('退出系统');
-    localStorage.removeItem(TOKEN);
+    this.tokenService.removeToken();
     this.router.navigate(['/auth']);
   }
 

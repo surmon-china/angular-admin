@@ -4,42 +4,55 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { Component, Input, Self } from '@angular/core';
-import { ControlValueAccessor, NgModel } from '@angular/forms';
+import { ControlValueAccessor } from '@angular/forms';
+import { Component, forwardRef, Input } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'sa-checkbox[ngModel]',
-  styleUrls: ['./saCheckbox.component.scss'],
-  templateUrl: './saCheckbox.component.html'
+    selector: 'sa-checkbox[ngModel]',
+    templateUrl: './saCheckbox.component.html',
+    styleUrls: ['./saCheckbox.component.scss'],
+    providers: [
+      {
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => SaCheckboxComponent),
+        multi: true
+      }
+    ]
 })
 export class SaCheckboxComponent implements ControlValueAccessor {
-  @Input() disabled: boolean;
+
   @Input() label: string;
-  @Input() value: string;
-  @Input() baCheckboxClass: string;
-  @Input() baCheckboxLabelClass: string;
+  @Input() disabled: boolean;
+  @Input() labelStrong: boolean;
 
-  public model: NgModel;
-  public state: boolean;
+  private innerValue: boolean;
+  private onTouchedCallback: () => void = () => {};
+  private onChangeCallback: (_: any) => void = () => {};
 
-  public constructor(@Self() state: NgModel) {
-    this.model = state;
-    state.valueAccessor = this;
+  constructor() {}
+
+  get value(): any {
+    return this.innerValue;
   }
 
-  public onChange(value: any): void {}
-  public onTouch(value: any): void {}
-  public writeValue(state: any): void {
-    this.state = state;
+  set value(value: any) {
+    if (value !== this.innerValue) {
+      this.innerValue = value;
+      this.onChangeCallback(value);
+    }
   }
 
-  public registerOnChange(fn: any): void {
-    this.onChange = (state: boolean) => {
-      this.writeValue(state);
-      this.model.viewToModelUpdate(state);
-    };
+  writeValue(value: any) {
+    if (value !== this.innerValue) {
+      this.innerValue = value;
+    }
   }
-  public registerOnTouched(fn: any): void {
-    this.onTouch = fn;
+
+  registerOnChange(fn: any) {
+    this.onChangeCallback = fn;
+  }
+  registerOnTouched(fn: any) {
+    this.onTouchedCallback = fn;
   }
 }

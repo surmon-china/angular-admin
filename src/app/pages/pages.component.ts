@@ -21,9 +21,12 @@ import { Component, ViewEncapsulation } from '@angular/core';
       </div>
     </div>
     <footer class="al-footer clearfix">
-      <div class="al-footer-right">Built with <i class="ion-md-heart"></i></div>
+      <div class="al-footer-right">
+        <span>Built with</span>
+        <ion-icon class="icon" name="heart"></ion-icon>
+      </div>
       <div class="al-footer-main clearfix">
-        <div class="al-copy">&copy; <a href="${BLOG_SITE}">Surmon</a> 2019</div>
+        <div class="al-copy">&copy; <a href="${BLOG_SITE}">Surmon</a> 2020</div>
       </div>
     </footer>
     <sa-back-top position="200"></sa-back-top>

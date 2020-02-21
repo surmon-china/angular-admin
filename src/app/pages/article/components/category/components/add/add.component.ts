@@ -6,9 +6,9 @@
 
 import { Component, ViewEncapsulation, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { IFetching, IResponsePaginationData } from '@app/pages/pages.constants';
-import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
-import { ICategory } from '@app/pages/article/article.service';
+import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.utils';
+import { IResponsePaginationData } from '@app/pages/pages.interface';
+import { ICategory } from '@app/pages/article/article.utils';
 
 const DEFAULT_FORM = {
   name: '',
@@ -28,9 +28,9 @@ export class ArticleCategoryAddComponent implements OnChanges {
 
   controlStateClass = formControlStateClass;
 
-  @Input() fetching: IFetching;
+  @Input() isFetching: boolean;
   @Input() category: ICategory;
-  @Input() categories: IResponsePaginationData<ICategory>;
+  @Input() categories: IResponsePaginationData<ICategory>[];
   @Output() resetForm: EventEmitter<any> = new EventEmitter();
   @Output() submitForm: EventEmitter<any> = new EventEmitter();
 

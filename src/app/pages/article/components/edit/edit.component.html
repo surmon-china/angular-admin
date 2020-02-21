@@ -20,7 +20,8 @@
       <box-article-edit-extend [(extends)]="article.extends"></box-article-edit-extend>
     </sa-card>
     <sa-card title="发布选项" baCardClass="with-scroll">
-      <box-article-edit-submit 
+      <box-article-edit-submit
+        [disabled]="isUpdating"
         [isEdit]="!!article._id"
         [(state)]="article.state"
         [(origin)]="article.origin"

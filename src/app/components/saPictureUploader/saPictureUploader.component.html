@@ -11,7 +11,12 @@
         <p class="load-progress">{{ uploadProgress }}%</p>
       </div>
     </div>
-    <i class="ion-md-close-circle-outline" *ngIf="picture && canDelete" (click)="removePicture()"></i>
+    <ion-icon
+      class="remove-icon"
+      name="close"
+      *ngIf="picture && canDelete"
+      (click)="removePicture()"
+    ></ion-icon>
     <a href class="change-picture" (click)="bringFileSelector()">点击上传图片</a>
     <input #fileUpload type="file" hidden="true" id="uploadFile" (change)="onFiles()">
     <button id="uploadFileBtn" style="display: none"></button>

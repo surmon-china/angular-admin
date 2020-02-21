@@ -1,11 +1,12 @@
+@import '~app/styles/init';
+
 .category-list {
   position: relative;
 
   .category-item-checkbox {
-    font-size: 16px;
-    margin: 20px 0;
+    margin: $gap 0;
 
-    &:first-child {
+    &:nth-of-type(1) {
       margin-top: 0;
     }
 
