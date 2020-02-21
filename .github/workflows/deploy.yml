@@ -10,38 +10,7 @@ jobs:
     if: github.event.pull_request.merged == true
     name: Deploy to server
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [10.x]
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
-        with:
-          ref: master
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install Dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
-      - name: ls and pwd
-        run: |
-          pwd
-          ls -la
-      - name: Compress dist files
-        run: tar -zcvf ./dist.tar.gz -C ./dist/angular-admin/ .
-      - name: Copy file to server
-        uses: appleboy/scp-action@master
-        with:
-          timeout: 3m
-          overwrite: true
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          password: ${{ secrets.PASSWORD }}
-          source: ./dist.tar.gz
-          target: ${{ secrets.WWW_PATH }}/angular-admin/product/
       - name: Exec deploy script with SSH
         uses: appleboy/ssh-action@master
         with:
@@ -49,5 +18,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
-          script: |
-            sh ${{ secrets.WWW_PATH }}/angular-admin/.deploy/main.sh
+          script: sh ${{ secrets.WWW_PATH }}/angular-admin/.deploy/main.sh

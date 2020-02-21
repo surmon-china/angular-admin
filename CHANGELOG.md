@@ -22,6 +22,7 @@
 - Update to Angular9
 - Update all dependencies
 - Update checkbox component
+- Update deploy scripts
 - Upgrade Ionicons to v5
 - Improve styles
 - Remove HMR module
