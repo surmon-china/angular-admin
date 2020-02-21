@@ -9,18 +9,18 @@ import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { SaHttpRequesterService } from '@app/services';
-import { humanizedLoading, handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.service';
+import { SaHttpRequesterService, SaHttpLoadingService } from '@app/services';
+import { handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.utils';
 import { EPublishState, EPublicState, EOriginState, ESortType } from '@app/constants/state';
-import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
-import { IGetParams } from '@app/pages/pages.constants';
-import { getArticlePath } from '@app/transforms/link';
+import { TApiPath, TSelectedIds, TSelectedAll } from '@app/pages/pages.interface';
+import { IGetParams } from '@app/pages/pages.interface';
+import { getArticlePath } from '@/app/transformers/link';
 import {
   buildLevelCategories,
   TResponsePaginationTag,
   TResponsePaginationArticle,
   TResponsePaginationCategory
-} from '@app/pages/article/article.service';
+} from '@app/pages/article/article.utils';
 
 const DEFAULT_SEARCH_FORM = {
   keyword: ''
@@ -35,7 +35,7 @@ const DEFAULT_GET_PARAMS = {
   origin: EOriginState.All
 };
 
-enum ELoading {
+enum Loading {
   GetList,
   PatchState,
   GetTagList,
@@ -46,11 +46,12 @@ enum ELoading {
   selector: 'page-article-list',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['./list.component.scss'],
+  providers: [SaHttpLoadingService]
 })
 export class ArticleListComponent implements OnInit {
 
-  Loading = ELoading;
+  Loading = Loading;
   SortType = ESortType;
   OriginState = EOriginState;
   PublicState = EPublicState;
@@ -80,18 +81,25 @@ export class ArticleListComponent implements OnInit {
     data: [],
     pagination: null
   };
-  public fetching: IFetching = {};
 
   // 其他数据
   public todoDelArticleId: string = null;
   public articlesSelectAll: TSelectedAll = false;
   public selectedArticles: TSelectedIds = [];
 
-  constructor(private fb: FormBuilder, private httpService: SaHttpRequesterService) {
+  constructor(
+    private fb: FormBuilder,
+    private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
+  ) {
     this.searchForm = this.fb.group({
       keyword: [DEFAULT_SEARCH_FORM.keyword, Validators.compose([Validators.required])]
     });
     this.keyword = this.searchForm.controls.keyword;
+  }
+
+  get isLoadingArticleList(): boolean {
+    return this.httpLoadingService.isLoading(Loading.GetList)
   }
 
   // 当前数据数量
@@ -181,9 +189,8 @@ export class ArticleListComponent implements OnInit {
       }
     });
 
-    humanizedLoading(
-      this.fetching,
-      ELoading.GetList,
+    this.httpLoadingService.promise(
+      Loading.GetList,
       this.httpService
         .get<TResponsePaginationArticle>(this.articleApiPath, params)
         .then(articles => {
@@ -196,9 +203,8 @@ export class ArticleListComponent implements OnInit {
 
   // 获取标签列表
   public getTags(): void {
-    humanizedLoading(
-      this.fetching,
-      ELoading.GetTagList,
+    this.httpLoadingService.promise(
+      Loading.GetTagList,
       this.httpService
         .get<TResponsePaginationTag>(this.tagApiPath, { per_page: 666 })
         .then(tags => {
@@ -209,9 +215,8 @@ export class ArticleListComponent implements OnInit {
 
   // 获取分类列表
   public getCategories(): void {
-    humanizedLoading(
-      this.fetching,
-      ELoading.GetCategoryList,
+    this.httpLoadingService.promise(
+      Loading.GetCategoryList,
       this.httpService
         .get<TResponsePaginationCategory>(this.categoryApiPath, { per_page: 666 })
         .then(categories => {
@@ -223,9 +228,8 @@ export class ArticleListComponent implements OnInit {
 
   // 对于所有修改进行相应统一处理
   public patchArticles(data: object): void {
-    humanizedLoading(
-      this.fetching,
-      ELoading.PatchState,
+    this.httpLoadingService.promise(
+      Loading.PatchState,
       this.httpService
         .patch(this.articleApiPath, data)
         .then(_ => this.refreshArticles())
@@ -265,6 +269,10 @@ export class ArticleListComponent implements OnInit {
       .catch(_ => {
         this.delModal.hide();
       });
+  }
+
+  public isLoading(key: Loading): boolean {
+    return this.httpLoadingService.isLoading(key);
   }
 
   // 初始化

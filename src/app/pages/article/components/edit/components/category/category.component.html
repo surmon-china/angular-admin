@@ -1,5 +1,5 @@
 <div class="category-list">
-  <sa-loading-spider [show]="fetching[Loading.Get]"></sa-loading-spider>
+  <sa-loading-spider [show]="isLoading"></sa-loading-spider>
   <p class="text-muted" *ngIf="!categories.length;else dstaList">暂无分类</p>
   <ng-template #dstaList>
     <div [title]="category.name" class="category-item-checkbox" *ngFor="let category of categories">
@@ -16,8 +16,8 @@
     </div>
   </ng-template>
   <hr>
-  <button class="btn btn-sm btn-default btn-with-icon" (click)="getCategories()" [disabled]="fetching[Loading.Get]">
-    <i class="ion-md-refresh"></i>
+  <button class="btn btn-sm btn-default btn-with-icon" (click)="getCategories()" [disabled]="isLoading">
+    <ion-icon class="icon" name="refresh"></ion-icon>
     <span>更新分类</span>
   </button>
 </div>

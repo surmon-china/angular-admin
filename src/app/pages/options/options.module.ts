@@ -4,7 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SaBaseModule } from '@app/sa-base.module';
@@ -19,9 +19,9 @@ import { RoutingModule } from './options.routing';
     SaBaseModule,
     RoutingModule
   ],
-  providers: [],
   declarations: [
     OptionsComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class OptionsModule {}

@@ -4,7 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -14,7 +14,6 @@ import { SaBaseModule } from '@app/sa-base.module';
 import { RoutingModule } from './article.routing';
 
 import { ArticleComponent } from './article.component';
-
 import { ArticleTagComponent } from './components/tag';
 import { ArticleListComponent } from './components/list';
 
@@ -53,6 +52,7 @@ import { ArticleEditCategoryComponent } from './components/edit/components/categ
     ArticleCategoryComponent,
     ArticleCategoryAddComponent,
     ArticleCategoryListComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ArticleModule {}

@@ -9,17 +9,11 @@ import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { getTagPath } from '@app/transforms/link';
-import { SaHttpRequesterService, IRequestParams } from '@app/services';
-import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
-import { ITag, TResponsePaginationTag } from '@app/pages/article/article.service';
-import {
-  humanizedLoading,
-  mergeFormControlsToInstance,
-  handleBatchSelectChange,
-  handleItemSelectChange,
-  formControlStateClass
-} from '@app/pages/pages.service';
+import { getTagPath } from '@/app/transformers/link';
+import { SaHttpRequesterService, SaHttpLoadingService, IRequestParams } from '@app/services';
+import { TApiPath, TSelectedIds, TSelectedAll } from '@app/pages/pages.interface';
+import { ITag, TResponsePaginationTag } from '@app/pages/article/article.utils';
+import { mergeFormControlsToInstance, handleBatchSelectChange, handleItemSelectChange, formControlStateClass } from '@app/pages/pages.utils';
 
 const DEFAULT_EDIT_FORM = {
   name: '',
@@ -32,7 +26,7 @@ const DEFAULT_SEARCH_FORM = {
   keyword: ''
 };
 
-enum ELoading {
+enum Loading {
   GetList,
   Post
 }
@@ -41,11 +35,11 @@ enum ELoading {
   selector: 'page-article-tag',
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./tag.component.scss'],
-  templateUrl: './tag.component.html'
+  templateUrl: './tag.component.html',
+  providers: [SaHttpLoadingService]
 })
 export class ArticleTagComponent implements OnInit {
 
-  Loading = ELoading;
   controlStateClass = formControlStateClass;
 
   @ViewChild('delModal', { static: false }) delModal: ModalDirective;
@@ -73,10 +67,13 @@ export class ArticleTagComponent implements OnInit {
     data: [],
     pagination: null
   };
-  public fetching: IFetching = {};
 
   // 构造函数
-  constructor(private fb: FormBuilder, private httpService: SaHttpRequesterService) {
+  constructor(
+    private fb: FormBuilder,
+    private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
+  ) {
 
     this.editForm = this.fb.group({
       name: [DEFAULT_EDIT_FORM.name, Validators.compose([Validators.required])],
@@ -91,6 +88,14 @@ export class ArticleTagComponent implements OnInit {
 
     mergeFormControlsToInstance(this, this.editForm);
     mergeFormControlsToInstance(this, this.searchForm);
+  }
+
+  get isGettingList(): boolean {
+    return this.httpLoadingService.isLoading(Loading.GetList)
+  }
+
+  get isPosting(): boolean {
+    return this.httpLoadingService.isLoading(Loading.Post)
   }
 
   // 删除自定义配置项目
@@ -187,9 +192,8 @@ export class ArticleTagComponent implements OnInit {
     }
 
     // 请求
-    return humanizedLoading(
-      this.fetching,
-      ELoading.GetList,
+    return this.httpLoadingService.promise(
+      Loading.GetList,
       this.httpService
         .get<TResponsePaginationTag>(this.apiPath, params)
         .then(tags => {
@@ -202,9 +206,8 @@ export class ArticleTagComponent implements OnInit {
 
   // 添加标签
   public addTag(tag: ITag) {
-    return humanizedLoading(
-      this.fetching,
-      ELoading.Post,
+    return this.httpLoadingService.promise(
+      Loading.Post,
       this.httpService.post(this.apiPath, tag).then(_ => {
         this.resetEditForm();
         this.resetSearchForm();
@@ -216,9 +219,8 @@ export class ArticleTagComponent implements OnInit {
   // 修改标签提交
   public doPutTag(tag: ITag) {
     const newTag = Object.assign({}, this.activeTag, tag);
-    return humanizedLoading(
-      this.fetching,
-      ELoading.Post,
+    return this.httpLoadingService.promise(
+      Loading.Post,
       this.httpService
         .put(`${this.apiPath}/${newTag._id}`, newTag)
         .then(_ => {

@@ -1,66 +1,41 @@
-@import '~app/styles/base/init';
+@import '~app/styles/init';
 
-@mixin validationState($color, $focusColor) {
-  .control-label {
-    color: $content-text;
-  }
+.sa-checkbox {
+  .checkbox-inline {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    cursor: pointer;
 
-  .form-control {
-    border: 1px solid $color;
-
-    &:focus {
-      box-shadow: none;
-      border-color: $focusColor;
-    }
-  }
-  label.custom-checkbox {
-    color: $color;
-
-    & > span {
-
-      &:before {
-        color: $color;
-      }
-
-      &:hover {
-        
-        &:before {
-          border-color: $color;
-        }
+    &:hover {
+      .icon {
+        opacity: 1;
       }
     }
-  }
 
-  .form-control-feedback {
-    color: $color;
-  }
+    &.disabled {
+      cursor: no-drop;
+      opacity: .3;
+    }
 
-  .input-group-addon {
-    background-color: $color;
-    color: $label-text;
-  }
-}
+    .checkbox {
+      display: none;
+    }
+  
+    .icon {
+      opacity: .6;
+      font-size: 18px;
+      margin-right: 8px;
+  
+      &.checked {
+        opacity: 1;
+      }
+    }
 
-.has-success {
-  @include validationState($success-bg, $success);
-  position: relative;
-}
-
-.has-warning {
-  @include validationState($warning-bg, $warning);
-  position: relative;
-}
-
-.has-error {
-  @include validationState($danger-bg, $danger);
-  position: relative;
-}
-
-label.custom-checkbox {
-  // margin-bottom: 12px;
-
-  & > span {
-    display: block;
-    margin-right: 10px;
+    .label {
+      &.strong {
+        font-weight: bold;
+      }
+    }
   }
 }

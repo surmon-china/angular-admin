@@ -1,14 +1,13 @@
+@import '~app/styles/init';
+
 .comment-form {
-
   .form-control {
-
     &.comemnt-content {
       padding: 0;
     }
   }
 
-  .comment-extend {
-    overflow: hidden;
-    margin-bottom: 1rem;
+  .action-btn {
+    margin-right: $gap;
   }
 }

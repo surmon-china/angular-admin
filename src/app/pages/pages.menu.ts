@@ -14,7 +14,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '仪表盘',
-            icon: 'ion-md-home',
+            icon: 'home',
             selected: false,
             expanded: false,
             order: 0
@@ -26,7 +26,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '公告管理',
-            icon: 'ion-md-sunny',
+            icon: 'volume-high',
             selected: false,
             expanded: false,
             order: 1,
@@ -38,7 +38,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '文章管理',
-            icon: 'ion-md-albums',
+            icon: 'brush',
             order: 2,
           }
         },
@@ -47,7 +47,7 @@ export const PAGES_MENU = [
             path: 'list',
             data: {
               menu: {
-                icon: 'ion-md-list',
+                icon: 'copy',
                 title: '所有文章',
               }
             }
@@ -56,7 +56,7 @@ export const PAGES_MENU = [
             path: 'category',
             data: {
               menu: {
-                icon: 'ion-md-folder',
+                icon: 'folder',
                 title: '分类目录',
               }
             }
@@ -65,7 +65,7 @@ export const PAGES_MENU = [
             path: 'post',
             data: {
               menu: {
-                icon: 'ion-md-create',
+                icon: 'create',
                 title: '发布文章',
               }
             }
@@ -74,7 +74,7 @@ export const PAGES_MENU = [
             path: 'tag',
             data: {
               menu: {
-                icon: 'ion-md-pricetags',
+                icon: 'pricetags',
                 title: '文章标签',
               }
             }
@@ -86,7 +86,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '评论管理',
-            icon: 'ion-md-text',
+            icon: 'chatbox-ellipses-sharp',
             order: 3
           }
         },
@@ -96,7 +96,7 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: '所有评论',
-                icon: 'ion-md-list'
+                icon: 'document-text-sharp'
               }
             }
           },
@@ -105,7 +105,7 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: '留言评论',
-                icon: 'ion-md-list'
+                icon: 'clipboard-sharp'
               }
             }
           }
@@ -116,7 +116,7 @@ export const PAGES_MENU = [
         data: {
           menu: {
             title: '全局设置',
-            icon: 'ion-md-settings',
+            icon: 'settings',
             order: 4,
           }
         }
@@ -127,7 +127,7 @@ export const PAGES_MENU = [
           menu: {
             title: 'Blog',
             url: BLOG_SITE,
-            icon: 'ion-md-ribbon',
+            icon: 'code-slash',
             target: '_blank',
             order: 9
           }
@@ -137,106 +137,84 @@ export const PAGES_MENU = [
         path: '',
         data: {
           menu: {
-            title: 'Github',
+            title: 'Repositorie',
             url: 'https://github.com/surmon-china/angular-admin',
-            icon: 'ion-logo-github',
+            icon: 'logo-github',
             target: '_blank',
             order: 10
           }
         }
       },
       {
-        path: 'demo',
+        path: 'example',
         data: {
           menu: {
-            title: 'Demo 开发',
-            icon: 'ion-logo-angular',
-            selected: false,
-            expanded: false,
-            order: 11,
+            title: '组件示例',
+            icon: 'logo-angular',
+            order: 11
           }
         },
         children: [
           {
-            path: '',
+            path: 'typography',
             data: {
               menu: {
-                title: '官方文档',
-                url: 'https://akveo.github.io/ng2-admin/',
-                icon: 'ion-md-school',
-                order: 800,
-                target: '_blank'
+                title: '排版',
+                icon: 'newspaper'
               }
             }
           },
           {
-            path: 'ui',
+            path: 'buttons',
             data: {
               menu: {
-                title: 'UI 展示',
-                icon: 'ion-md-color-fill',
-                selected: false,
-                expanded: false,
-                order: 300,
+                title: '按钮',
+                icon: 'radio-button-on'
               }
-            },
-            children: [
-              {
-                path: 'typography',
-                data: {
-                  menu: {
-                    title: '排版',
-                  }
-                }
-              },
-              {
-                path: 'buttons',
-                data: {
-                  menu: {
-                    title: '按钮',
-                  }
-                }
-              },
-              {
-                path: 'modals',
-                data: {
-                  menu: {
-                    title: '弹窗',
-                  }
-                }
-              },
-              {
-                path: 'grid',
-                data: {
-                  menu: {
-                    title: '栅格',
-                  }
-                }
-              },
-              {
-                path: 'icons',
-                data: {
-                  menu: {
-                    title: '图标',
-                  }
-                }
-              },
-              {
-                path: 'other',
-                data: {
-                  menu: {
-                    title: '其他',
-                  }
-                }
-              },
-            ]
+            }
+          },
+          {
+            path: 'modals',
+            data: {
+              menu: {
+                title: '弹窗',
+                icon: 'tablet-landscape'
+              }
+            }
+          },
+          {
+            path: 'grid',
+            data: {
+              menu: {
+                title: '栅格',
+                icon: 'grid'
+              }
+            }
+          },
+          {
+            path: 'icons',
+            data: {
+              menu: {
+                title: '图标',
+                icon: 'logo-ionic'
+              }
+            }
+          },
+          {
+            path: 'table',
+            data: {
+              menu: {
+                title: '表格',
+                icon: 'apps'
+              }
+            }
           },
           {
             path: 'forms',
             data: {
               menu: {
-                title: '表单组件',
-                icon: 'ion-md-clipboard',
+                title: '表单',
+                icon: 'help-circle',
                 selected: false,
                 expanded: false,
                 order: 400,
@@ -248,6 +226,7 @@ export const PAGES_MENU = [
                 data: {
                   menu: {
                     title: '表单元素',
+                    icon: 'information-circle'
                   }
                 }
               },
@@ -256,32 +235,20 @@ export const PAGES_MENU = [
                 data: {
                   menu: {
                     title: '表单布局',
+                    icon: 'information-circle'
                   }
                 }
               }
             ]
           },
           {
-            path: 'tables',
+            path: 'other',
             data: {
               menu: {
-                title: '表格',
-                icon: 'ion-md-grid',
-                selected: false,
-                expanded: false,
-                order: 500,
+                title: '其他',
+                icon: 'keypad'
               }
-            },
-            children: [
-              {
-                path: 'basictables',
-                data: {
-                  menu: {
-                    title: '基本表格',
-                  }
-                }
-              }
-            ]
+            }
           }
         ]
       }

@@ -5,10 +5,10 @@
  */
 
 import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { IFetching, IResponsePaginationData, TSelectedAll, TSelectedIds } from '@app/pages/pages.constants';
-import { handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.service';
-import { ICategory } from '@app/pages/article/article.service';
-import { getCategoryPath } from '@app/transforms/link';
+import { IResponsePaginationData, TSelectedAll, TSelectedIds } from '@app/pages/pages.interface';
+import { handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.utils';
+import { ICategory } from '@app/pages/article/article.utils';
+import { getCategoryPath } from '@/app/transformers/link';
 
 @Component({
   selector: 'box-category-list',
@@ -19,7 +19,7 @@ import { getCategoryPath } from '@app/transforms/link';
 
 export class ArticleCategoryListComponent {
 
-  @Input() fetching: IFetching;
+  @Input() isFetching: boolean;
   @Input() categories: IResponsePaginationData<ICategory>;
   @Output() delCategoryRequest = new EventEmitter();
   @Output() delCategoriesRequest = new EventEmitter();

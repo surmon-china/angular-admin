@@ -132,11 +132,11 @@
           <div class="form-group row">
             <div class="offset-sm-2 col-sm-10">
               <button
-                type="submit" 
+                type="submit"
                 class="btn btn-default btn-with-icon"
-                [disabled]="!optionForm.valid || fetching[Loading.Option]"
+                [disabled]="!optionForm.valid || isLoading(Loading.Option)"
               >
-                <i class="ion-md-done-all"></i>
+                <ion-icon class="icon" name="checkmark"></ion-icon>
                 <span>保存修改</span>
               </button>
             </div>
@@ -232,9 +232,9 @@
               <button
                 type="submit" 
                 class="btn btn-default  btn-with-icon"
-                [disabled]="!authForm.valid || fetching[Loading.Auth]"
+                [disabled]="!authForm.valid || isLoading(Loading.Auth)"
               >
-                <i class="ion-md-done-all"></i>
+                <ion-icon class="icon" name="checkmark"></ion-icon>
                 <span>保存修改</span>
               </button>
             </div>
@@ -247,11 +247,11 @@
         <div class="col-sm-12">
           <button
             class="btn btn-default btn-with-icon"
-            [disabled]="fetching[Loading.DatabaseBackup]"
+            [disabled]="isLoading(Loading.DatabaseBackup)"
             (click)="updateDatabaseBackup()"
           >
-            <i class="ion-md-cloud-upload"></i>
-            <span>立即更新数据库备份 {{ fetching[Loading.DatabaseBackup] ? '...' : '' }}</span>
+            <ion-icon class="icon" name="cloud-upload"></ion-icon>
+            <span>立即更新数据库备份 {{ isLoading(Loading.DatabaseBackup) ? '...' : '' }}</span>
           </button>
         </div>
       </div>
@@ -261,11 +261,11 @@
         <div class="col-sm-12">
           <button
             class="btn btn-default btn-with-icon"
-            [disabled]="fetching[Loading.GithubCache]"
+            [disabled]="isLoading(Loading.GithubCache)"
             (click)="updateGithubCache()"
           >
-            <i class="ion-md-refresh"></i>
-            <span>更新 Github 缓存{{ fetching[Loading.GithubCache] ? '...' : '' }}</span>
+            <ion-icon class="icon" name="refresh"></ion-icon>
+            <span>更新 Github 缓存{{ isLoading(Loading.GithubCache) ? '...' : '' }}</span>
           </button>
         </div>
       </div>
@@ -274,11 +274,11 @@
         <div class="col-sm-12">
           <button
             class="btn btn-default btn-with-icon"
-            [disabled]="fetching[Loading.MusicCache]"
+            [disabled]="isLoading(Loading.MusicCache)"
             (click)="updateMusicCache()"
           >
-            <i class="ion-md-refresh"></i>
-            <span>更新音乐缓存{{ fetching[Loading.MusicCache] ? '...' : '' }}</span>
+            <ion-icon class="icon" name="refresh"></ion-icon>
+            <span>更新音乐缓存{{ isLoading(Loading.MusicCache) ? '...' : '' }}</span>
           </button>
         </div>
       </div>
@@ -287,11 +287,11 @@
         <div class="col-sm-12">
           <button
             class="btn btn-default btn-with-icon"
-            [disabled]="fetching[Loading.BilibiliCache]"
+            [disabled]="isLoading(Loading.BilibiliCache)"
             (click)="updateBilibiliCache()"
           >
-            <i class="ion-md-refresh"></i>
-            <span>更新 Bilibili 缓存{{ fetching[Loading.BilibiliCache] ? '...' : '' }}</span>
+            <ion-icon class="icon" name="refresh"></ion-icon>
+            <span>更新 Bilibili 缓存{{ isLoading(Loading.BilibiliCache) ? '...' : '' }}</span>
           </button>
         </div>
       </div>
@@ -300,11 +300,11 @@
         <div class="col-sm-12">
           <button
             class="btn btn-default btn-with-icon"
-            [disabled]="fetching[Loading.SitemapCache]"
-            (click)="updateSitemapCache()"
+            [disabled]="isLoading(Loading.SyndicationCache)"
+            (click)="updateSyndicationCache()"
           >
-            <i class="ion-md-refresh"></i>
-            <span>更新网站地图缓存{{ fetching[Loading.SitemapCache] ? '...' : '' }}</span>
+            <ion-icon class="icon" name="refresh"></ion-icon>
+            <span>更新聚合供稿缓存{{ isLoading(Loading.SyndicationCache) ? '...' : '' }}</span>
           </button>
         </div>
       </div>

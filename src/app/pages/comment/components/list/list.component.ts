@@ -10,14 +10,14 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ActivatedRoute } from '@angular/router';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { TApiPath, TSelectedIds, TSelectedAll, IFetching } from '@app/pages/pages.constants';
-import { browserParser, osParser } from '@app/transforms/ua';
-import { getArticlePath, getGuestbookPath } from '@app/transforms/link';
-import { getGravatar } from '@app/transforms/gravatar';
-import { IGetParams } from '@app/pages/pages.constants';
-import { SaHttpRequesterService } from '@app/services';
+import { TApiPath, TSelectedIds, TSelectedAll } from '@app/pages/pages.interface';
+import { browserParser, osParser } from '@/app/transformers/ua';
+import { getArticlePath, getGuestbookPath } from '@/app/transformers/link';
+import { getGravatar } from '@/app/transformers/gravatar';
 import { ESortType } from '@app/constants/state';
-import { humanizedLoading, handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.service';
+import { SaHttpRequesterService, SaHttpLoadingService } from '@app/services';
+import { handleBatchSelectChange, handleItemSelectChange } from '@app/pages/pages.utils';
+import { IGetParams } from '@app/pages/pages.interface';
 import {
   IComment,
   TCommentId,
@@ -27,8 +27,9 @@ import {
   TResponsePaginationComment
 } from '@app/pages/comment/comment.constants';
 
-enum ELoading { Get, PatchState }
+enum Loading { Get, PatchState }
 
+const COMMENT_APT_PATH: TApiPath = API_PATH.COMMENT;
 const DEFAULT_GET_PARAMS = {
   sort: ESortType.Desc,
   state: ECommentState.All
@@ -38,21 +39,20 @@ const DEFAULT_GET_PARAMS = {
   selector: 'page-comment-list',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['./list.component.scss'],
+  providers: [SaHttpLoadingService]
 })
 export class CommentListComponent implements OnInit {
 
   @ViewChild('delModal', { static: false }) public delModal: ModalDirective;
 
-  public Loading = ELoading;
+  public Loading = Loading;
   public SortType = ESortType;
   public CommentState = ECommentState;
 
   public getGravatar = getGravatar;
   public getArticlePath = getArticlePath;
   public getGuestbookPath = getGuestbookPath;
-
-  private apiPath: TApiPath = API_PATH.COMMENT;
 
   // 搜索参数
   public osParser = osParser;
@@ -68,7 +68,6 @@ export class CommentListComponent implements OnInit {
     data: [],
     pagination: null
   };
-  public fetching: IFetching = {};
 
   // 其他数据
   public todoDelCommentId: TCommentId = null;
@@ -79,7 +78,8 @@ export class CommentListComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private httpService: SaHttpRequesterService
+    private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
   ) {
 
     this.searchForm = this.fb.group({
@@ -88,13 +88,8 @@ export class CommentListComponent implements OnInit {
     this.keyword = this.searchForm.controls.keyword;
   }
 
-  // 初始化
-  ngOnInit() {
-    // 如果是修改，则请求文章数据
-    this.route.params.subscribe(({ post_id }) => {
-      this.post_id = post_id;
-      this.getComments();
-    });
+  get isGettingList(): boolean {
+    return this.httpLoadingService.isLoading(Loading.Get)
   }
 
   // 当前数据数量
@@ -118,7 +113,9 @@ export class CommentListComponent implements OnInit {
     const data = this.comments.data;
     const selectedIds = this.selectedComments;
     this.selectedComments = handleBatchSelectChange({ data, selectedIds, isSelect });
-    this.selectedPostIds = isSelect ? data.map(comment => comment.post_id) : [];
+    this.selectedPostIds = isSelect
+      ? data.map(comment => comment.post_id)
+      : [];
   }
 
   // 评论列表单个切换
@@ -128,7 +125,9 @@ export class CommentListComponent implements OnInit {
     const result = handleItemSelectChange({ data, selectedIds });
     this.commentsSelectAll = result.all;
     this.selectedComments = result.selectedIds;
-    this.selectedPostIds = data.filter(comment => comment.selected).map(comment => comment.post_id);
+    this.selectedPostIds = data
+      .filter(comment => comment.selected)
+      .map(comment => comment.post_id);
   }
 
   // 弹窗
@@ -167,7 +166,9 @@ export class CommentListComponent implements OnInit {
 
   // 刷新评论列表
   public refreshComments(): void {
-    this.getComments({ page: this.comments.pagination.current_page });
+    this.getComments({
+      page: this.comments.pagination.current_page
+    });
   }
 
   // 分页获取标签
@@ -196,17 +197,16 @@ export class CommentListComponent implements OnInit {
     }
 
     // 请求评论
-    humanizedLoading(
-      this.fetching,
-      ELoading.Get,
+    this.httpLoadingService.promise(
+      Loading.Get,
       this.httpService
-      .get<TResponsePaginationComment>(this.apiPath, params)
-      .then(comments => {
-        this.comments = comments.result;
-        this.commentsSelectAll = false;
-        this.selectedComments = [];
-        this.selectedPostIds = [];
-      })
+        .get<TResponsePaginationComment>(COMMENT_APT_PATH, params)
+        .then(comments => {
+          this.comments = comments.result;
+          this.commentsSelectAll = false;
+          this.selectedComments = [];
+          this.selectedPostIds = [];
+        })
     );
   }
 
@@ -214,11 +214,10 @@ export class CommentListComponent implements OnInit {
   public updateCommentsState(state: ECommentState, comment?: IComment) {
     const comment_ids = comment ? [comment._id] : this.selectedComments;
     const post_ids = (comment ? [comment.post_id] : lodash.uniq(this.selectedPostIds)).filter(id => id);
-    humanizedLoading(
-      this.fetching,
-      ELoading.PatchState,
+    this.httpLoadingService.promise(
+      Loading.PatchState,
       this.httpService
-        .patch(this.apiPath, { comment_ids, post_ids, state })
+        .patch(COMMENT_APT_PATH, { comment_ids, post_ids, state })
         .then(() => this.refreshComments())
     );
   }
@@ -235,14 +234,24 @@ export class CommentListComponent implements OnInit {
         : lodash.uniq(this.selectedPostIds)
     ).filter(id => id);
 
-    this.httpService.delete(this.apiPath, { comment_ids, post_ids })
-    .then(_ => {
-      this.todoDelCommentId = null;
-      this.delModal.hide();
-      this.refreshComments();
-    })
-    .catch(_ => {
-      this.delModal.hide();
+    this.httpService
+      .delete(COMMENT_APT_PATH, { comment_ids, post_ids })
+      .then(_ => {
+        this.todoDelCommentId = null;
+        this.delModal.hide();
+        this.refreshComments();
+      })
+      .catch(_ => {
+        this.delModal.hide();
+      });
+  }
+
+  // 初始化
+  ngOnInit() {
+    // 如果是修改，则请求文章数据
+    this.route.params.subscribe(({ post_id }) => {
+      this.post_id = post_id;
+      this.getComments();
     });
   }
 }

@@ -16,6 +16,7 @@
         autocomplete
         #pwdInput
         *ngIf="editMode"
+        [disabled]="waiting"
         [(ngModel)]="password"
         (keyup.esc)="quitEdit()"
         (keyup.enter)="onEnter()"

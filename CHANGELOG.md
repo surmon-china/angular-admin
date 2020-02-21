@@ -1,5 +1,6 @@
 
 ## TODO
+- TSLint to ESLint (Angular10)
 - ~~需要增加一个数据库导出功能~~
 - ~~仪表盘图表组件和 echarts 整合~~
 - ~~各 CRUD 业务的操作项需统一~~
@@ -13,6 +14,18 @@
 
 ## CHANGELOG
 
+### v3.3.0
+- Support AOT [PR#39](https://github.com/surmon-china/angular-admin/pull/39) [issue#28](https://github.com/surmon-china/angular-admin/issues/28)
+- Add token renewal service
+- Add http loading service
+- Upgrade sitemap API to syndication API
+- Update to Angular9
+- Update all dependencies
+- Update checkbox component
+- Upgrade Ionicons to v5
+- Improve styles
+- Remove HMR module
+
 ### v3.2.4
 - Upgrade QINIU uploader to Aliyun OSS
 - Upgrade UA transformer
@@ -25,7 +38,6 @@
 - Fix qiniu upload token error
 
 ### v3.2.0
-
 - 升级 Angular
 - 升级 仪表盘，增加 GA 统计业务
 - 修复 热替换 HMR
@@ -37,12 +49,10 @@
 - 新增 应用入口配置项
 
 ### v3.1.0
-
 - 优化 API
 - 规范代码格式
 
 ### v3.0.0
-
 - update Angular to v7.x
 - 重构 Typescript 部分
 - 重构所有类型和接口
@@ -51,7 +61,6 @@
 - 响应式适应移动端
 
 ### v2.0.0
-
 - Angular 升级为 6.x 最新版本，并进行逻辑兼容
 - 增加文章来源性质的选项的增加
 - 剔除 JQuery 等不必要库的存在
@@ -62,20 +71,17 @@
 - 完善 Token 有效性检查机制
 
 ### v1.2.0
-
 - 由于数据的准确性没有测试，分类和标签列表的与文章内容的先后顺序不同会导致标签和分类不会被勾选
 - 升级至 Angular4 & Bootstrap4 最新测试版 
 - 升级至 ngx-bootstrap，并优化 Markdown
 - 全部升级为最新，一键安装构建
 
 ### v1.1.0
-
 - 发布文章页，在标签和分类为空时缺少提示信息，文章的默认缩略图需调整
 - 所有涉及发布的内容项，都需要增加自定义字段
 - 程序截图 + 文档撰写 README.md
 
 ### v1.0.0
-
 - 评论管理，增删改查功能
 - 增加黑名单功能，优化设置部分表单体验
 - 增加 Markdown 编辑器实时本地备份功能

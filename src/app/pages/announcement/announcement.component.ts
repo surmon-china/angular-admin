@@ -10,16 +10,10 @@ import * as API_PATH from '@app/constants/api';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Component, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { SaHttpRequesterService, IRequestParams } from '@app/services';
-import { TApiPath, TSelectedIds, TSelectedAll, IResponsePaginationData, IFetching } from '@app/pages/pages.constants';
 import { EPublishState } from '@app/constants/state';
-import {
-  humanizedLoading,
-  mergeFormControlsToInstance,
-  handleBatchSelectChange,
-  handleItemSelectChange,
-  formControlStateClass
-} from '@app/pages/pages.service';
+import { SaHttpRequesterService, SaHttpLoadingService, IRequestParams } from '@app/services';
+import { mergeFormControlsToInstance, handleBatchSelectChange, handleItemSelectChange, formControlStateClass } from '@app/pages/pages.utils';
+import { TApiPath, TSelectedIds, TSelectedAll, IResponsePaginationData } from '@app/pages/pages.interface';
 
 // 公告
 interface IAnnouncement {
@@ -33,7 +27,10 @@ interface IAnnouncement {
 }
 
 type TResponseAnnouncement = IResponsePaginationData<IAnnouncement>;
-enum ELoading { List }
+enum Loading {
+  GetList,
+  Update
+}
 
 const DEFAULT_EDIT_FORM = {
   content: '',
@@ -48,11 +45,11 @@ const DEFAULT_SEARCH_FORM = {
   selector: 'page-announcement',
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./announcement.component.scss'],
-  templateUrl: './announcement.component.html'
+  templateUrl: './announcement.component.html',
+  providers: [SaHttpLoadingService]
 })
 export class AnnouncementComponent implements OnInit {
 
-  public Loading = ELoading;
   public PublishState = EPublishState;
   public controlStateClass = formControlStateClass;
   private apiPath: TApiPath = API_PATH.ANNOUNCEMENT;
@@ -71,14 +68,16 @@ export class AnnouncementComponent implements OnInit {
   public announcementsSelectAll: TSelectedAll = false;
   public selectedAnnouncements: TSelectedIds = [];
   public publishState: EPublishState = EPublishState.All;
-  public fetching: IFetching = {};
   public announcements: TResponseAnnouncement = {
     data: [],
     pagination: null
   };
 
-  constructor(private fb: FormBuilder, private httpService: SaHttpRequesterService) {
-
+  constructor(
+    private fb: FormBuilder,
+    private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
+  ) {
     // 实例表单
     this.editForm = this.fb.group({
       content: [DEFAULT_EDIT_FORM.content, Validators.compose([Validators.required])],
@@ -111,6 +110,14 @@ export class AnnouncementComponent implements OnInit {
   get currentListTotal(): number {
     const pagination = this.announcements.pagination;
     return pagination && pagination.total || 0;
+  }
+
+  get isGetingList(): boolean {
+    return this.httpLoadingService.isLoading(Loading.GetList)
+  }
+
+  get isUpdating(): boolean {
+    return this.httpLoadingService.isLoading(Loading.Update)
   }
 
   // 解析 Markdown
@@ -152,9 +159,12 @@ export class AnnouncementComponent implements OnInit {
   // 提交表单
   public submitEditForm(announcement: IAnnouncement): void {
     if (this.editForm.valid) {
-      this.activeAnnouncement
-        ? this.putAnnouncement(announcement)
-        : this.addAnnouncement(announcement);
+      this.httpLoadingService.promise(
+        Loading.Update,
+        this.activeAnnouncement
+          ? this.putAnnouncement(announcement)
+          : this.addAnnouncement(announcement)
+      );
     }
   }
 
@@ -210,7 +220,7 @@ export class AnnouncementComponent implements OnInit {
   }
 
   // 获取公告
-  public getAnnouncements(params: IRequestParams = {}): Promise<any> {
+  public getAnnouncements(params: IRequestParams = {}): Promise<void> {
 
     // 搜索
     if (this.keyword.value) {
@@ -222,9 +232,8 @@ export class AnnouncementComponent implements OnInit {
       params.state = this.publishState;
     }
 
-    return humanizedLoading(
-      this.fetching,
-      ELoading.List,
+    return this.httpLoadingService.promise(
+      Loading.GetList,
       this.httpService
         .get<TResponseAnnouncement>(this.apiPath, params)
         .then(announcements => {

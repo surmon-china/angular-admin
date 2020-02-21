@@ -1,37 +1,39 @@
 <form class="form-horizontal">
   <div class="row">
     <div class="col-sm-12">
-      <div class="article-extend" *ngFor="let extend of extends; let i = index">
-        <div class="input-group">
-          <input
-            type="text" 
-            id="extend-key"
-            class="form-control"
-            placeholder="key" 
-            [(ngModel)]="extend.name"
-            [ngModelOptions]="{ standalone: true }"
-            (ngModelChange)="emitExtendData()"
-          />
-          <input
-            type="text" 
-            id="extend-value"
-            class="form-control"
-            placeholder="value" 
-            [(ngModel)]="extend.value"
-            [ngModelOptions]="{ standalone: true }"
-            (ngModelChange)="emitExtendData()"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-default" (click)="delExtendItem(i)">
-              <i class="ion-md-trash"></i>
-            </button>
-          </div>
+      <div class="input-group" *ngFor="let extend of extends; let i = index">
+        <input
+          type="text" 
+          id="extend-key"
+          class="form-control"
+          placeholder="key" 
+          [(ngModel)]="extend.name"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="emitExtendData()"
+        />
+        <input
+          type="text" 
+          id="extend-value"
+          class="form-control"
+          placeholder="value" 
+          [(ngModel)]="extend.value"
+          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="emitExtendData()"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-default" (click)="delExtendItem(i)">
+            <ion-icon class="icon" name="trash"></ion-icon>
+          </button>
         </div>
       </div>
-      <a [href]="" class="btn btn-default btn-sm btn-block btn-with-icon" (click)="addExtendItem()">
-        <i class="ion-md-add"></i>
+      <button
+        type="button"
+        class="btn btn-default btn-sm btn-block btn-with-icon"
+        (click)="addExtendItem()"
+      >
+        <ion-icon class="icon" name="add"></ion-icon>
         <span>增加扩展</span>
-      </a>
+      </button>
     </div>
   </div>
 </form>

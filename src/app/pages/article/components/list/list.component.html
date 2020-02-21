@@ -8,6 +8,7 @@
               type="button"
               class="btn btn-default active"
               [ngClass]="{ 'active': isState(PublishState.All)}"
+              [disabled]="isLoadingArticleList"
               (click)="switchState(PublishState.All)"
             >
               <span>全部</span>
@@ -15,28 +16,34 @@
             </button>
             <button
               type="button"
-              class="btn btn-default"
+              class="btn btn-default btn-with-icon"
               [ngClass]="{ 'active': isState(PublishState.Published) }"
+              [disabled]="isLoadingArticleList"
               (click)="switchState(PublishState.Published)"
             >
+              <ion-icon class="icon" name="checkmark-done"></ion-icon>
               <span>已发布</span>
               <span *ngIf="isState(PublishState.Published)">&nbsp;({{ currentListTotal }})</span>
             </button>
             <button
               type="button"
-              class="btn btn-default"
+              class="btn btn-default btn-with-icon"
               [ngClass]="{ 'active': isState(PublishState.Draft) }"
+              [disabled]="isLoadingArticleList"
               (click)="switchState(PublishState.Draft)"
             >
+              <ion-icon class="icon" name="create"></ion-icon>
               <span>草稿</span>
               <span *ngIf="isState(PublishState.Draft)">&nbsp;({{ currentListTotal }})</span>
             </button>
             <button
               type="button"
-              class="btn btn-default"
+              class="btn btn-default btn-with-icon"
               [ngClass]="{ 'active': isState(PublishState.Recycle) }"
+              [disabled]="isLoadingArticleList"
               (click)="switchState(PublishState.Recycle)"
             >
+              <ion-icon class="icon" name="trash"></ion-icon>
               <span>回收站</span>
               <span *ngIf="isState(PublishState.Recycle)">&nbsp;({{ currentListTotal }})</span>
             </button>
@@ -46,50 +53,52 @@
             <button
               type="button" 
               class="btn btn-default btn-with-icon"
+              [disabled]="isLoadingArticleList"
               (click)="refreshArticles()"
             >
-              <i class="ion-md-refresh"></i>
+              <ion-icon class="icon" name="refresh"></ion-icon>
               <span>刷新</span>
             </button>
             <button
               type="button" 
               class="btn btn-default btn-with-icon"
+              [disabled]="isLoadingArticleList"
               (click)="resetGetParams()"
             >
-              <i class="ion-md-remove-circle-outline"></i>
+              <ion-icon class="icon" name="remove-circle-outline"></ion-icon>
               <span>重置</span>
             </button>
-            <div class="btn-group" dropdown [isDisabled]="!selectedArticles.length">
+            <div class="btn-group" dropdown [isDisabled]="!selectedArticles.length || isLoadingArticleList">
               <button
-                type="button" 
+                type="button"
                 class="btn btn-default btn-with-icon dropdown-toggle"
                 dropdownToggle
               >
-                <i class="ion-md-list"></i>
+                <ion-icon class="icon" name="list"></ion-icon>
                 <span>批量操作</span>
               </button>
               <ul class="dropdown-menu" *dropdownMenu>
                 <li class="dropdown-item">
                   <a [href]="" (click)="moveToPublished()">
-                    <i class="ion-md-done-all icon"></i>
+                    <ion-icon class="icon" name="checkmark-done"></ion-icon>
                     <span>快速发布</span>
                   </a>
                 </li>
                 <li class="dropdown-item">
                   <a [href]="" (click)="moveToDraft()">
-                    <i class="ion-md-checkmark-circle-outline icon"></i>
+                    <ion-icon class="icon" name="enter"></ion-icon>
                     <span>移至草稿</span>
                   </a>
                 </li>
                 <li class="dropdown-item">
                   <a [href]="" (click)="moveToRecycle()">
-                    <i class="ion-md-pint icon"></i>
+                    <ion-icon class="icon" name="pint"></ion-icon>
                     <span>移至回收站</span>
                   </a>
                 </li>
                 <li class="dropdown-item">
                   <a [href]="" (click)="delArticleModal()">
-                    <i class="ion-md-trash icon"></i>
+                    <ion-icon class="icon" name="trash"></ion-icon>
                     <span>彻底删除</span>
                   </a>
                 </li>
@@ -112,7 +121,12 @@
         </form>
         <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
         <div class="pull-right form-inline">
-          <select class="form-control c-select" [(ngModel)]="getParams.category" (ngModelChange)="getArticles()">
+          <select
+            class="form-control c-select"
+            [disabled]="isLoading(Loading.GetCategoryList)"
+            [(ngModel)]="getParams.category"
+            (ngModelChange)="getArticles()"
+          >
             <option default value="all">所有分类</option>
             <ng-template [ngIf]="categories && categories.data.length">
               <option *ngFor="let category of categories.data" [ngValue]="category._id">
@@ -123,7 +137,12 @@
             </ng-template>
           </select>
           <span>&nbsp;&nbsp;</span>
-          <select class="form-control c-select" [(ngModel)]="getParams.tag" (ngModelChange)="getArticles()">
+          <select
+            class="form-control c-select"
+            [disabled]="isLoading(Loading.GetTagList)"
+            [(ngModel)]="getParams.tag"
+            (ngModelChange)="getArticles()"
+          >
             <option default value="all">所有标签</option>
             <ng-template [ngIf]="tags && tags.data.length">
               <option *ngFor="let tag of tags.data" [ngValue]="tag._id">
@@ -159,7 +178,7 @@
       </div>
       <div class="table-responsive">
         <div class="article-list">
-          <sa-loading-spider [show]="fetching[Loading.GetList]"></sa-loading-spider>
+          <sa-loading-spider [show]="isLoadingArticleList"></sa-loading-spider>
           <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
             <thead class="thead-inverse">
               <tr>
@@ -185,7 +204,7 @@
             <tbody>
               <tr *ngIf="!articles.data.length;else dataList">
                 <td colspan="10">
-                  <p class="text-muted text-center category-err-msg">{{ fetching[Loading.GetList] ? '数据请求中...' : '暂无数据' }}<p>
+                  <p class="text-muted text-center category-err-msg">{{ isLoadingArticleList ? '数据请求中...' : '暂无数据' }}<p>
                 </td>
               </tr>
               <ng-template #dataList>
@@ -203,7 +222,7 @@
                       <div
                         class="content-bg"
                         [ngStyle]="{ 
-                          'background-image': 'url(' + (article.thumb || '/assets/images/profile/mobile-thumb-carrousel.jpg') +')' 
+                          'background-image': 'url(' + (article.thumb || '/assets/images/profile/article-thumb.jpg') +')' 
                         }"
                       >
                       </div>
@@ -212,13 +231,29 @@
                           <strong>{{ article.title }}</strong>
                         </a>
                         <span>&nbsp;&nbsp;</span>
-                        <i class="ion-md-done-all text-success" *ngIf="article.state === PublishState.Published"></i>
+                        <ion-icon
+                          class="icon text-success"
+                          name="checkmark-done"
+                          *ngIf="article.state === PublishState.Published"
+                        ></ion-icon>
                         <span>&nbsp;</span>
-                        <i class="ion-md-create text-warning" *ngIf="article.state === PublishState.Draft"></i>
+                        <ion-icon
+                          class="icon text-warning"
+                          name="create"
+                          *ngIf="article.state === PublishState.Draft"
+                        ></ion-icon>
                         <span>&nbsp;</span>
-                        <i class="ion-md-trash text-danger" *ngIf="article.state === PublishState.Recycle"></i>
+                        <ion-icon
+                          class="icon text-danger"
+                          name="trash"
+                          *ngIf="article.state === PublishState.Recycle"
+                        ></ion-icon>
                         <span>&nbsp;</span>
-                        <i class="ion-md-lock text-danger" *ngIf="article.public !== PublicState.Public"></i>
+                        <ion-icon
+                          class="icon text-danger"
+                          name="lock-closed"
+                          *ngIf="article.public !== PublicState.Public"
+                        ></ion-icon>
                       </h4>
                       <small class="description">
                         <span *ngIf="article.description">{{ article.description | truncate : 128 }}</span>
@@ -230,13 +265,13 @@
                   <td class="article-category">
                     <ul class="list-unstyled category-list">
                       <li *ngFor="let category of article.category">
-                        <i class="ion-md-folder"></i>
-                        <span>&nbsp;</span>
+                        <ion-icon class="icon" name="folder"></ion-icon>
+                        <span>&nbsp;&nbsp;</span>
                         <span>{{ category.name }}</span>
                       </li>
                       <li *ngIf="!article.category.length" class="text-muted">
-                        <i class="ion-md-folder"></i>
-                        <span>&nbsp;</span>
+                        <ion-icon class="icon" name="folder"></ion-icon>
+                        <span>&nbsp;&nbsp;</span>
                         <span>暂无分类</span>
                       </li>
                     </ul>
@@ -244,76 +279,98 @@
                   <td class="article-tag">
                     <ul class="list-unstyled tag-list">
                       <li *ngFor="let tag of article.tag">
-                        <i class="ion-md-pricetags"></i>
-                        <span>&nbsp;</span>
+                        <ion-icon class="icon" name="pricetags"></ion-icon>
+                        <span>&nbsp;&nbsp;</span>
                         <span>{{ tag.name }}</span>
                       </li>
                       <li *ngIf="!article.tag.length" class="text-muted">
-                        <i class="ion-md-pricetags"></i>
-                        <span>&nbsp;</span>
+                        <ion-icon class="icon" name="pricetags"></ion-icon>
+                        <span>&nbsp;&nbsp;</span>
                         <span>暂无标签</span>
                       </li>
                     </ul>
                   </td>
                   <td>
                     <span *ngIf="article.meta.comments">
-                      <a [routerLink]="['/comment/post/', article.id]">{{ article.meta.comments }}条评论</a>
+                      <a [routerLink]="['/comment/post/', article.id]">{{ article.meta.comments }} 条评论</a>
                     </span>
                     <span class="text-muted" *ngIf="!article.meta.comments">暂无评论</span>
                   </td>
                   <td>
-                    <span *ngIf="article.meta.likes">{{ article.meta.likes }}人喜欢</span>
+                    <span *ngIf="article.meta.likes">{{ article.meta.likes }} 人喜欢</span>
                     <span class="text-muted" *ngIf="!article.meta.likes">无人问津</span>
                   </td>
-                  <td>{{ article.create_at | dataToLocale }}</td>
+                  <td>
+                    <span>最早创建：{{ article.create_at | dataToLocale }}</span>
+                    <br>
+                    <span>最后更新：{{ article.update_at | dataToLocale }}</span>
+                  </td>
                   <td>
                     <span [ngSwitch]="article.public">
-                      <span *ngSwitchCase="PublicState.Password">密码</span>
-                      <span *ngSwitchCase="PublicState.Public">公开</span>
+                      <span *ngSwitchCase="PublicState.Public">
+                        <ion-icon class="icon text-success" name="lock-open"></ion-icon>
+                        <span> 公开</span>
+                      </span>
+                      <span *ngSwitchCase="PublicState.Password">
+                        <ion-icon class="icon text-danger" name="lock-closed"></ion-icon>
+                        <span> 密码</span>
+                      </span>
+                      <span *ngSwitchCase="PublicState.Secret">
+                        <ion-icon class="icon text-danger" name="lock-closed"></ion-icon>
+                        <span> 私密</span>
+                      </span>
                     </span>
-                    <span *ngIf="article.public === PublicState.Secret">私密</span>
                   </td>
                   <td>
                     <span [ngSwitch]="article.state">
-                      <span *ngSwitchCase="PublishState.Draft">草稿</span>
-                      <span *ngSwitchCase="PublishState.Published">已发布</span>
+                      <span *ngSwitchCase="PublishState.Published">
+                        <ion-icon class="icon text-success" name="checkmark-done"></ion-icon>
+                        <span> 已发布</span>
+                      </span>
+                      <span *ngSwitchCase="PublishState.Draft">
+                        <ion-icon class="icon text-warning" name="create"></ion-icon>
+                        <span> 草稿</span>
+                      </span>
+                      <span *ngSwitchCase="PublishState.Recycle">
+                        <ion-icon class="icon text-danger" name="trash"></ion-icon>
+                        <span> 回收站</span>
+                      </span>
                     </span>
-                    <span *ngIf="article.state === PublishState.Recycle">回收站</span>
                   </td>
                   <td>
                     <div class="button-wrapper">
                       <a class="btn btn-primary btn-sm btn-with-icon" [routerLink]="['/article/edit/', article._id]">
-                        <i class="ion-md-create"></i>
+                        <ion-icon class="icon" name="create"></ion-icon>
                         <span>编辑文章</span>
                       </a>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state === PublishState.Draft">
                       <button class="btn btn-success btn-sm btn-with-icon" (click)="moveToPublished([article._id])">
-                        <i class="ion-md-done-all"></i>
+                        <ion-icon class="icon" name="checkmark-done"></ion-icon>
                         <span>快速发布</span>
                       </button>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state === PublishState.Recycle">
                       <button class="btn btn-warning btn-sm btn-with-icon" (click)="moveToDraft([article._id])">
-                        <i class="ion-md-checkmark-circle-outline"></i>
+                        <ion-icon class="icon" name="exit"></ion-icon>
                         <span>恢复文章</span>
                       </button>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state === PublishState.Published">
                       <button class="btn btn-warning btn-sm btn-with-icon" (click)="moveToDraft([article._id])">
-                        <i class="ion-md-checkmark-circle-outline"></i>
+                        <ion-icon class="icon" name="enter"></ion-icon>
                         <span>移至草稿</span>
                       </button>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state !== PublishState.Recycle">
                       <button class="btn btn-danger btn-sm btn-with-icon" (click)="moveToRecycle([article._id])">
-                        <i class="ion-md-pint"></i>
+                        <ion-icon class="icon" name="pint"></ion-icon>
                         <span>移回收站</span>
                       </button>
                     </div>
                     <div class="button-wrapper" *ngIf="article.state === PublishState.Recycle">
                       <button class="btn btn-danger btn-sm btn-with-icon" (click)="delArticleModal(article._id)">
-                        <i class="ion-md-trash"></i>
+                        <ion-icon class="icon" name="trash"></ion-icon>
                         <span>彻底删除</span>
                       </button>
                     </div>
@@ -323,7 +380,7 @@
                         [href]="getArticlePath(article.id)"
                         target="_blank"
                       >
-                        <i class="ion-md-share-alt"></i>
+                        <ion-icon class="icon" name="open"></ion-icon>
                         <span>新窗查看</span>
                       </a>
                     </div>
@@ -365,9 +422,7 @@
           </div>
           <div class="modal-body">
             <div class="message">
-              <span class="icon text-danger">
-                <i class="ion-md-information-circle-outline"></i>
-              </span>
+              <ion-icon class="icon text-danger" name="information-circle"></ion-icon>
               <span>确定要删除{{ todoDelArticleId ? '这篇' : '选中' }}文章吗？本操作不可逆</span>
             </div>
           </div>

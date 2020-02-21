@@ -1,23 +1,29 @@
-@import '~app/styles/base/init';
-$height: 52px;
+@import '~app/styles/init';
+$size: 52px;
 
 .back-cover-top {
   position: fixed;
   display: none;
   z-index: 9999;
-  width: $height;
-  height: $height;
-  right: 40px;
-  bottom: 40px !important;
+  width: $size;
+  height: $size;
+  right: $size;
+  bottom: $size !important;
   border-radius: 50%;
-  line-height: $height;
   text-decoration: none;
-  font-size: 1.5em;
   text-align: center;
   background-color: rgba($black-color, .75);
   opacity: 0.5;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  
+  transition: opacity .1s;
+
+  .icon {
+    font-size: 1.5em;
+    margin-bottom: 2px;
+  }
+
   &:hover {
     opacity: 0.8;
   }

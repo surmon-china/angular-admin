@@ -18,7 +18,8 @@ export class ArticleEditSubmitComponent {
   public PublicState = EPublicState;
   public PublishState = EPublishState;
 
-  @Input() isEdit;
+  @Input() disabled: boolean;
+  @Input() isEdit: boolean;
   @Input() state;
   @Input() origin;
   @Input() ppublic;

@@ -52,7 +52,7 @@
       <div class="form--control article-tags" title="选择文章标签">
         <div class="tags-list">
           <button class="btn btn-article-tag-item btn-with-icon btn-default text-muted disabled" *ngIf="!tags.length">
-            <i class="ion-md-information-circle-outline"></i>
+            <ion-icon class="icon" name="information-circle"></ion-icon>
             <span>暂无标签</span>
           </button>
           <button 
@@ -61,7 +61,7 @@
             [ngClass]="tag.selected ? 'btn-primary' : 'btn-default'"
             (click)="tag.selected = !tag.selected;handleTagChange()"
             [title]="tag.description || tag.name"
-            [disabled]="fetching[Loading.Tag]"
+            [disabled]="isLoadingTag"
           >
             <span>{{ tag.name }}</span>
           </button>
@@ -70,10 +70,10 @@
         <div class="clearfix">
           <button
             class="btn btn-sm btn-default btn-with-icon"
-            [disabled]="fetching[Loading.Tag]"
+            [disabled]="isLoadingTag"
             (click)="getTags()"
           >
-            <i class="ion-md-refresh"></i>
+            <ion-icon class="icon" name="refresh"></ion-icon>
             <span>更新标签列表</span>
           </button>
         </div>

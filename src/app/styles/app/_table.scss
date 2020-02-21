@@ -195,9 +195,11 @@ input.search-input {
     & > tr {
       & > th {
         border-bottom: none;
+        vertical-align: middle;
       }
     }
   }
+
   & > tbody {
     & > tr.no-top-border {
       &:first-child > td {
@@ -213,7 +215,7 @@ input.search-input {
 
 .table-hover {
   > tbody > tr:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    color: inherit;
   }
 }
 
@@ -348,7 +350,7 @@ th {
   cursor: no-drop;
 }
 
-.editable-buttons .btn-with-icon i {
+.editable-buttons .btn-with-icon .icon {
   margin-right: 0;
 }
 

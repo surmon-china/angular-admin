@@ -1,1 +1,1 @@
-export * from './linux.component';
+export * from './linux.module';

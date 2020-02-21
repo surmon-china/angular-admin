@@ -4,7 +4,7 @@
  * @author Surmon <https://github.com/surmon-china>
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PagesComponent } from './pages.component';
@@ -13,6 +13,7 @@ import { SaBaseModule } from '../sa-base.module';
 
 @NgModule({
   imports: [CommonModule, RoutingModule, SaBaseModule],
-  declarations: [PagesComponent]
+  declarations: [PagesComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PagesModule {}

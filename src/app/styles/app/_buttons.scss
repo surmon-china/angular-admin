@@ -166,7 +166,11 @@ button.btn.btn-inverse {
 }
 
 .btn-with-icon {
-  i {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  .icon {
     margin-right: 10px;
   }
 }

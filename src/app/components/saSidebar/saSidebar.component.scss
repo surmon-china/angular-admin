@@ -1,20 +1,18 @@
-@import '~app/styles/base/init';
+@import '~app/styles/init';
 
 $sidebar-scroll-width: 4px;
-$angle-left: "\f100";
-$angle-right: "\f101";
 $sidebar-user-height: 11rem;
 
 .al-sidebar {
   width: $sidebar-width;
-  top: $top-height;
+  top: $header-height;
   left: 0;
-  z-index: 997;
+  z-index: $z-index-layout;
   position: fixed;
   display: flex;
   flex-direction: column;
   background-color: $sidebar;
-  height: calc(100vh - #{$top-height});
+  height: calc(100vh - #{$header-height});
   @include scrollbars($sidebar-scroll-width, $sidebar-border, rgba($sidebar-border, .1));
 }
 
@@ -57,7 +55,7 @@ $sidebar-user-height: 11rem;
     a.al-sidebar-list-link {
       color: $sidebar-text;
 
-      b {
+      .arrow-icon {
         color: $sidebar-text;
       }
     }
@@ -68,17 +66,11 @@ $sidebar-user-height: 11rem;
   > ul.al-sidebar-sublist {
     display: block!important;
   }
-
 }
 
-.al-sidebar-list-item, .sa-sidebar-sublist-item {
+.al-sidebar-list-item,
+.sa-sidebar-sublist-item {
   &.sa-sidebar-item-expanded {
-    > .al-sidebar-list-link {
-      b {
-        transform: rotate(180deg);
-      }
-    }
-
     > .al-sidebar-sublist {
       display: block;
     }
@@ -97,36 +89,36 @@ a.al-sidebar-list-link {
   white-space: nowrap;
   overflow: hidden;
   cursor: pointer;
-  
+
   &:hover {
     color: $primary;
 
-    b {
+    .arrow-icon {
       color: $primary;
     }
   }
 
-  i {
+  .icon {
     margin-right: 18px;
     width: 16px;
     display: inline-block;
   }
-  
-  b {
-    display: block;
-    opacity: 1;
-    width: 14px;
-    height: 14px;
-    line-height: 14px;
-    text-shadow: none;
-    font-size: 18px;
+
+  .arrow-icon {
+    $size: 14px;
     position: absolute;
+    display: block;
+    font-size: 18px;
     right: 10px;
-    top: 12px;
+    top: $size;
     padding: 0;
+    width: $size;
+    height: $size;
+    line-height: $size;
+    text-shadow: none;
     text-align: center;
     color: $sidebar-text;
-    transition: transform 0.2s linear;
+    opacity: .5;
   }
 }
 
@@ -213,7 +205,6 @@ a.al-sidebar-user {
       font-size: 13px;
       text-decoration: none;
       color: $sidebar-text;
-      // padding-left: 52px;
       padding-left: 35px;
       height: auto;
       line-height: 40px;
@@ -238,7 +229,7 @@ a.al-sidebar-user {
   @include default-sublist();
 }
 
-.sidebar-hover-elem{
+.sidebar-hover-elem {
   width: $sidebar-scroll-width;
   background: $primary;
   position: absolute;
@@ -339,11 +330,11 @@ a.al-sidebar-user {
 
   .al-sidebar-list-link {
 
-    i {
+    .icon {
       font-size: 1.5em;
     }
 
-    b {
+    .arrow-icon {
       display: none!important;
     }
   }

@@ -1,36 +1,78 @@
 
-@import '~app/styles/base/init';
+@import '~app/styles/init';
 
 .page-header {
-  background-color: $sidebar;
   position: fixed;
-  z-index: 999;
-  height: $top-height;
+  height: $header-height;
   width: 100%;
   min-width: $resMin;
-  padding: 0 20px 0 0;
+  padding: 0 $gap 0 0;
   border-bottom: 3px solid $topbar-border;
+  z-index: 999;
+  background-color: $sidebar;
 
   .dropdown-toggle::after {
     display: none;
   }
+
+  .user-profile {
+    float: right;
+  
+    .al-user-profile {
+      float: right;
+      margin-right: 12px;
+      transition: all .15s ease-in-out;
+      padding: 0;
+      height: 45px;
+      border: 0;
+      opacity: 1;
+      position: relative;
+
+      a {
+        display: block;
+    
+        &.profile-toggle-link {
+          height: 45px;
+        }
+      }
+    
+      img {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        margin-top: 8px;
+      }
+
+      .profile-dropdown {
+        left: auto !important;
+        right: -($gap / 2) !important;
+      }
+    }
+  }
 }
 
 a.al-logo {
-  color: $topbar-text;
-  display: block;
-  font-size: 20px;
-  white-space: nowrap;
-  float: left;
-  outline: none !important;
-  line-height: $top-height;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: $header-height;
   width: $sidebar-width;
-  text-align: center;
+  padding-bottom: 5px;
+  font-size: 20px;
   font-weight: bolder;
+  color: $topbar-text;
+  outline: none !important;
+  float: left;
 
-  span {
-    margin-right: 2px;
-    color: $primary;
+  .icon {
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    .icon,
+    .text {
+      color: $primary;
+    }
   }
 }
 
@@ -40,57 +82,29 @@ a.al-logo {
   }
 }
 
-.user-profile {
-  float: right;
-}
-
-.al-user-profile {
-  float: right;
-  margin-right: 12px;
-  transition: all .15s ease-in-out;
-  padding: 0;
-  height: 45px;
-  border: 0;
-  opacity: 1;
-  position: relative;
-
-  a {
-    display: block;
-
-    &.profile-toggle-link {
-      height: 45px;
-    }
-  }
-
-  img {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    margin-top: 8px;
-  }
-
-  .profile-dropdown {
-    left: auto !important;
-    right: -20px !important;
-  }
-}
-
 // 左侧收缩按钮
 a.collapse-menu-link {
-  font-size: 31px;
-  cursor: pointer;
-  display: block;
-  text-decoration: none;
-  line-height: 43px;
-  color: $topbar-text;
-  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   float: left;
   width: 40px;
+  height: $header-height;
+  padding: 0;
+  line-height: 43px;
+  color: $topbar-text;
   text-align: center;
+  font-size: 31px;
+  text-decoration: none;
+  cursor: pointer;
 
   &:hover {
     text-decoration: none;
     color: $warning;
+  }
+
+  .icon {
+    margin-bottom: 4px;
   }
 }
 
@@ -101,7 +115,7 @@ a.collapse-menu-link {
 }
 
 @media (max-width: $resXXS) {
-  .user-profile{
+  .user-profile {
     min-width: 136px;
   }
   a.collapse-menu-link {

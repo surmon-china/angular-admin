@@ -71,39 +71,41 @@
     <label for="category-extend">
       <h5>自定义扩展</h5>
     </label>
-    <div class="category-extend" *ngFor="let extend of extends.value; let i = index">
-      <div class="input-group">
-        <input
-          type="text" 
-          id="category-extend"
-          class="form-control"
-          placeholder="key" 
-          [(ngModel)]="extend.name"
-          [ngModelOptions]="{ standalone: true }"
+    <div class="input-group" *ngFor="let extend of extends.value; let i = index">
+      <input
+        type="text" 
+        id="category-extend"
+        class="form-control"
+        placeholder="key" 
+        [(ngModel)]="extend.name"
+        [ngModelOptions]="{ standalone: true }"
+      >
+      <input
+        type="text" 
+        id="category-extend-value"
+        class="form-control"
+        placeholder="value" 
+        [(ngModel)]="extend.value"
+        [ngModelOptions]="{ standalone: true }"
+      >
+      <div class="input-group-append">
+        <button
+          class="btn btn-default" 
+          (click)="delExtendItem(i)"
+          [disabled]="extends.value.length < 2"
         >
-        <input
-          type="text" 
-          id="category-extend-value"
-          class="form-control"
-          placeholder="value" 
-          [(ngModel)]="extend.value"
-          [ngModelOptions]="{ standalone: true }"
-        >
-        <div class="input-group-append">
-          <button
-            class="btn btn-default" 
-            (click)="delExtendItem(i)"
-            [disabled]="extends.value.length < 2"
-          >
-            <i class="ion-md-trash"></i>
-          </button>
-        </div>
+          <ion-icon class="icon" name="trash"></ion-icon>
+        </button>
       </div>
     </div>
-    <a [href]="" class="btn btn-default btn-sm btn-block btn-with-icon" (click)="addExtendItem()">
-      <i class="ion-md-add"></i>
+    <button
+      type="button"
+      class="btn btn-default btn-sm btn-block btn-with-icon"
+      (click)="addExtendItem()"
+    >
+      <ion-icon class="icon" name="add"></ion-icon>
       <span>增加扩展</span>
-    </a>
+    </button>
     <span class="help-block sub-little-text">可以为当前标签扩展自定义扩展属性</span>
   </div>
   <hr>
@@ -111,16 +113,15 @@
     <div class="col-sm-12">
       <button
         type="submit" 
-        class="btn btn-success btn-with-icon" 
-        [disabled]="!editForm.valid || fetching"
+        class="btn btn-success btn-with-icon submit-btn" 
+        [disabled]="!editForm.valid || isFetching"
       >
-        <i class="ion-md-done-all"></i>
-        <span *ngIf="fetching">分类{{ category ? '修改' : '添加' }}中</span>
-        <span *ngIf="!fetching">{{ category ? '修改' : '添加' }}分类目录</span>
+        <ion-icon class="icon" name="checkmark-done"></ion-icon>
+        <span *ngIf="isFetching">分类{{ category ? '修改' : '添加' }}中</span>
+        <span *ngIf="!isFetching">{{ category ? '修改' : '添加' }}分类目录</span>
       </button>
-      <span>&nbsp;&nbsp;</span>
       <button class="btn btn-default btn-with-icon" (click)="resetEditForm(true)">
-        <i class="ion-md-refresh"></i>
+        <ion-icon class="icon" name="refresh"></ion-icon>
         <span>重置</span>
       </button>
     </div>

@@ -8,25 +8,19 @@ import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 
 const routes: Routes = [
-  { path: 'auth', loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule) },
+  { path: 'auth', loadChildren: () => import('./auth').then(module => module.AuthModule) },
   { path: '',
     component: PagesComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(mod => mod.DashboardModule) },
-      { path: 'announcement', loadChildren: () => import('./announcement/announcement.module').then(mod => mod.AnnouncementModule) },
-      { path: 'article', loadChildren: () => import('./article/article.module').then(mod => mod.ArticleModule) },
-      { path: 'comment', loadChildren: () => import('./comment/comment.module').then(mod => mod.CommentModule) },
-      { path: 'options', loadChildren: () => import('./options/options.module').then(mod => mod.OptionsModule) },
-      { path: 'linux', loadChildren: () => import('./linux/linux.module').then(mod => mod.LinuxModule) },
-      { path: 'auth', loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule) },
-      { path: 'demo',
-        children: [
-          { path: 'ui', loadChildren: () => import('./demo/ui/ui.module').then(mod => mod.UiModule) },
-          { path: 'forms', loadChildren: () => import('./demo/forms/forms.module').then(mod => mod.FormsModule) },
-          { path: 'tables', loadChildren: () => import('./demo/tables/tables.module').then(mod => mod.TablesModule) }
-        ]
-      }
+      { path: 'dashboard', loadChildren: () => import('./dashboard').then(module => module.DashboardModule) },
+      { path: 'announcement', loadChildren: () => import('./announcement').then(module => module.AnnouncementModule) },
+      { path: 'article', loadChildren: () => import('./article').then(module => module.ArticleModule) },
+      { path: 'comment', loadChildren: () => import('./comment').then(module => module.CommentModule) },
+      { path: 'options', loadChildren: () => import('./options').then(module => module.OptionsModule) },
+      { path: 'linux', loadChildren: () => import('./linux').then(module => module.LinuxModule) },
+      { path: 'auth', loadChildren: () => import('./auth').then(module => module.AuthModule) },
+      { path: 'example', loadChildren: () => import('./example').then(module => module.ExampleModule) }
     ]
   }
 ];

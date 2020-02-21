@@ -6,7 +6,7 @@
 
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 // ngx-bootstrap modules
@@ -28,7 +28,6 @@ const SA_COMPONENTS = [
   Components.SaMenuItemComponent,
   Components.SaMenuComponent,
   Components.SaPageHeaderComponent,
-  Components.SaMultiCheckboxComponent,
   Components.SaPictureUploaderComponent,
   Components.SaMarkdownEditorComponent,
   Components.SaLoadingSpiderComponent
@@ -46,12 +45,12 @@ const SA_PIPES = [
 
 
 const SA_SERVICES = [
-  // 史上未解之谜
-  // Services.SaHttpLoadingService,
+  Services.SaHttpLoadingService,
   Services.SaHttpRequesterService,
   Services.SaImageLoaderService,
-  Services.SaThemeSpinnerService,
-  Services.SaAppPreloaderService,
+  Services.SaBootingSpinnerService,
+  Services.SaTokenService,
+  Services.SaRenewalService
 ];
 
 const SA_VALIDATORS = [
@@ -77,7 +76,8 @@ const SA_VALIDATORS = [
     ...SA_PIPES,
     ...SA_DIRECTIVES,
     ...SA_COMPONENTS
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SaBaseModule {
   static forRoot(): ModuleWithProviders {

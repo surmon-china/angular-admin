@@ -1,9 +1,7 @@
-@import '~app/styles/base/init';
+@import '~app/styles/init';
 
 .comment-search-form {
-  
   > .input-group {
-
     > .form-control {
       width: 16em;
     }
@@ -14,7 +12,6 @@
   position: relative;
 
   .batch-checkbox {
-
     text-align: left;
     padding-left: 2em;
   }
@@ -24,22 +21,18 @@
   }
 
   tbody {
-
     tr {
-
       &.comment-item {
         height: 13em;
       }
 
       td {
-
         &.comment-content {
           line-height: 2;
           word-break: break-word;
         }
 
         &.comment-user {
-
           > .avatar,
           > .name,
           > .email,

@@ -5,8 +5,13 @@
   (scrollChange)="scrolledChanged($event)"
   [ngClass]="{scrolled: isScrolled}"
 >
-  <a routerLink="/dashboard" class="al-logo clearfix">{{ APP_TITLE }}</a>
-  <a href (click)="toggleMenu()" class="collapse-menu-link ion-md-menu"></a>
+  <a routerLink="/dashboard" class="al-logo clearfix">
+    <ion-icon class="icon" name="logo-angular"></ion-icon>
+    <span class="text">{{ APP_TITLE }}</span>
+  </a>
+  <a href (click)="toggleMenu()" class="collapse-menu-link ion-md-menu">
+    <ion-icon class="icon" name="reorder-three"></ion-icon>
+  </a>
   <div class="user-profile clearfix">
     <div class="dropdown al-user-profile" dropdown>
       <a class="profile-toggle-link dropdown-toggle" dropdownToggle>
@@ -18,14 +23,14 @@
         *dropdownMenu
       >
         <li class="dropdown-item" role="menuitem">
-          <a routerLink="/options">
-            <i class="ion-md-settings icon"></i>
+          <a class="link" routerLink="/options">
+            <ion-icon class="icon" name="settings"></ion-icon>
             <span>设置/资料</span>
           </a>
         </li>
         <li class="dropdown-item" role="menuitem">
-          <a class="signout" [href]="" (click)="logout()">
-            <i class="ion-md-power icon"></i>
+          <a class="link" [href]="" (click)="logout()">
+            <ion-icon class="icon" name="power"></ion-icon>
             <span>退出登录</span>
           </a>
         </li>

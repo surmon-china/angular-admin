@@ -9,11 +9,11 @@ import * as API_PATH from '@app/constants/api';
 import { ActivatedRoute } from '@angular/router';
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { IArticle } from '@app/pages/article/article.service';
-import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { SaHttpRequesterService, IRequestParams } from '@app/services';
-import { browserParser, osParser } from '@app/transforms/ua';
-import { humanizedLoading, mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.service';
+import { IArticle } from '@app/pages/article/article.utils';
+import { TApiPath } from '@app/pages/pages.interface';
+import { SaHttpRequesterService, SaHttpLoadingService, IRequestParams } from '@app/services';
+import { browserParser, osParser } from '@/app/transformers/ua';
+import { mergeFormControlsToInstance, formControlStateClass } from '@app/pages/pages.utils';
 import {
   IComment,
   TCommentId,
@@ -23,6 +23,7 @@ import {
   TResponsePaginationComment
 } from '@app/pages/comment/comment.constants';
 
+const COMMENT_API_PATH: TApiPath = API_PATH.COMMENT;
 const DEFAULT_COMMENT: IComment = {
   pid: ECommentParentType.Self,
   post_id: null,
@@ -39,21 +40,21 @@ const DEFAULT_COMMENT: IComment = {
   extends: []
 };
 
-enum ELoading { GetDetail, Update, GetList, GetArticle }
+enum Loading { GetDetail, Update, GetList, GetArticle }
 
 @Component({
   selector: 'page-comment-detail',
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./detail.component.scss'],
-  templateUrl: './detail.component.html'
+  templateUrl: './detail.component.html',
+  providers: [SaHttpLoadingService]
 })
 export class CommentDetailComponent implements OnInit {
 
-  public Loading = ELoading;
+  public Loading = Loading;
   public CommentState = ECommentState;
   public CommentPostType = ECommentPostType;
   public controlStateClass = formControlStateClass;
-  private apiPath: TApiPath = API_PATH.COMMENT;
 
   public osParser = osParser;
   public browserParser = browserParser;
@@ -63,7 +64,6 @@ export class CommentDetailComponent implements OnInit {
   public comments: TResponsePaginationComment = null;
   public article: IArticle = null;
   public comment: IComment = lodash.cloneDeep(DEFAULT_COMMENT);
-  public fetching: IFetching = {};
 
   // form
   public editForm: FormGroup;
@@ -80,9 +80,9 @@ export class CommentDetailComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private httpService: SaHttpRequesterService
+    private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
   ) {
-
     this.editForm = this.fb.group({
       pid: [DEFAULT_COMMENT.pid, Validators.compose([Validators.required])],
       state: [DEFAULT_COMMENT.state, Validators.compose([Validators.required])],
@@ -95,6 +95,15 @@ export class CommentDetailComponent implements OnInit {
       extends: [DEFAULT_COMMENT.extends]
     });
     mergeFormControlsToInstance(this, this.editForm);
+  }
+
+  get isDisabledAction(): boolean {
+    return (
+      this.httpLoadingService.isLoading(Loading.GetArticle) ||
+      this.httpLoadingService.isLoading(Loading.GetDetail) ||
+      this.httpLoadingService.isLoading(Loading.GetList) ||
+      this.httpLoadingService.isLoading(Loading.Update)
+    );
   }
 
   // 重置表单
@@ -123,11 +132,10 @@ export class CommentDetailComponent implements OnInit {
 
   // 获取评论信息
   public getCommentDetail() {
-    humanizedLoading(
-      this.fetching,
-      ELoading.GetDetail,
+    this.httpLoadingService.promise(
+      Loading.GetDetail,
       this.httpService
-        .get<IComment>(`${this.apiPath}/${this.comment_id}`)
+        .get<IComment>(`${COMMENT_API_PATH}/${this.comment_id}`)
         .then(comment => {
           this.comment = comment.result;
           this.updateEditForm(this.comment);
@@ -160,11 +168,10 @@ export class CommentDetailComponent implements OnInit {
       extends: comment.extends.filter(extend => extend && extend.name && extend.value)
     });
 
-    humanizedLoading(
-      this.fetching,
-      ELoading.Update,
+    this.httpLoadingService.promise(
+      Loading.Update,
       this.httpService
-        .put(`${this.apiPath}/${putComment._id}`, putComment)
+        .put(`${COMMENT_API_PATH}/${putComment._id}`, putComment)
         .then(newComment => {
           this.comment = newComment.result;
         })
@@ -173,11 +180,10 @@ export class CommentDetailComponent implements OnInit {
 
   // 获取评论列表
   public getComments(params: IRequestParams) {
-    humanizedLoading(
-      this.fetching,
-      ELoading.GetList,
+    this.httpLoadingService.promise(
+      Loading.GetList,
       this.httpService
-        .get<TResponsePaginationComment>(this.apiPath, params)
+        .get<TResponsePaginationComment>(COMMENT_API_PATH, params)
         .then(comments => {
           this.comments = comments.result;
         })
@@ -186,9 +192,8 @@ export class CommentDetailComponent implements OnInit {
 
   // 获取文章详情
   public getCommentArticleDetail() {
-    humanizedLoading(
-      this.fetching,
-      ELoading.GetArticle,
+    this.httpLoadingService.promise(
+      Loading.GetArticle,
       this.httpService
         .get<IArticle>(`/article/${this.comment.post_id}`)
         .then(article => {

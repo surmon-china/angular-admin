@@ -7,11 +7,10 @@
 import * as API_PATH from '@app/constants/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { IArticle, TArticleId } from '@app/pages/article/article.service';
 import { EPublishState, EPublicState, EOriginState } from '@app/constants/state';
-import { TApiPath, IFetching } from '@app/pages/pages.constants';
-import { humanizedLoading } from '@app/pages/pages.service';
-import { SaHttpRequesterService } from '@app/services';
+import { SaHttpRequesterService, SaHttpLoadingService } from '@app/services';
+import { IArticle, TArticleId } from '@app/pages/article/article.utils';
+import { TApiPath } from '@app/pages/pages.interface';
 
 const DEFAULT_ARTICLE = {
   title: '',
@@ -28,35 +27,39 @@ const DEFAULT_ARTICLE = {
   extends: []
 };
 
-enum ELoading {
+enum Loading {
   Get,
   Post
 }
 
 @Component({
   selector: 'page-article-edit',
-  templateUrl: './edit.component.html'
+  templateUrl: './edit.component.html',
+  providers: [SaHttpLoadingService]
 })
 
 export class ArticleEditComponent implements OnInit {
 
   @ViewChild('editForm', { static: false }) editFormMain: ElementRef;
 
-  private Loading = ELoading;
-  private apiPath: TApiPath = API_PATH.ARTICLE;
   public isSubmited: boolean = false;
+  private apiPath: TApiPath = API_PATH.ARTICLE;
 
   // 文章内容
   public article_id: TArticleId = null;
   public article: IArticle = DEFAULT_ARTICLE;
-  public fetching: IFetching = {};
 
   constructor(
     public elem: ElementRef,
     private router: Router,
     private route: ActivatedRoute,
-    private httpService: SaHttpRequesterService
+    private httpService: SaHttpRequesterService,
+    private httpLoadingService: SaHttpLoadingService
   ) {}
+
+  get isUpdating(): boolean {
+    return this.httpLoadingService.isLoading(Loading.Post);
+  }
 
   // 提交文章
   public submitArticle(): void {
@@ -66,9 +69,8 @@ export class ArticleEditComponent implements OnInit {
       return;
     }
     const isSubmitNewPost = !this.article._id;
-    humanizedLoading(
-      this.fetching,
-      ELoading.Post,
+    this.httpLoadingService.promise(
+      Loading.Post,
       (isSubmitNewPost
         ? this.httpService.post(this.apiPath, this.article)
         : this.httpService.put(`${this.apiPath}/${this.article._id}`, this.article)
@@ -84,9 +86,8 @@ export class ArticleEditComponent implements OnInit {
 
   // 获取文章信息
   public getArticle(article_id: string) {
-    humanizedLoading(
-      this.fetching,
-      ELoading.Get,
+    this.httpLoadingService.promise(
+      Loading.Get,
       this.httpService
         .get<IArticle>(`${this.apiPath}/${article_id}`)
         .then(article => {

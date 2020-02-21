@@ -1,9 +1,6 @@
 .contnet-top-tools {
-
   > .article-get-form {
-
     > .input-group {
-
       > .form-control {
         width: 16em;
       }
@@ -15,7 +12,6 @@
   position: relative;
 
   .batch-checkbox {
-
     text-align: left;
     padding-left: 2em;
   }
@@ -25,17 +21,13 @@
   }
 
   tbody {
-
     tr {
-
       &.article-item {
         height: 13em;
       }
 
       td {
-
         &.article-content {
-
           > .content-box {
             padding: 1em;
             line-height: 2;
@@ -60,7 +52,6 @@
               margin-bottom: 1rem;
 
               > a {
-
                 &:hover {
                   cursor: pointer;
                   // text-decoration: underline;
@@ -71,7 +62,6 @@
         }
 
         &.article-category {
-
           .category-list {
             margin: 0;
             line-height: 2.3;
@@ -79,7 +69,6 @@
         }
 
         &.article-tag {
-
           .tag-list {
             margin: 0;
             line-height: 2.3;

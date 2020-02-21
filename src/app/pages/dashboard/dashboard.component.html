@@ -12,7 +12,7 @@
               {{ statistics[item.type] !== null ? statistics[item.type] : '-' }}
             </p>
           </div>
-          <i class="icon {{ item.icon }}"></i>
+          <ion-icon class="icon" [name]="item.icon"></ion-icon>
         </div>
       </sa-card>
     </div>
@@ -25,7 +25,7 @@
     class="col-xlg-12 col-xl-12 col-lg-12 col-sm-12 col-xs-12"
   >
     <div class="ga-box">
-      <sa-loading-spider [show]="isLoadingGa"></sa-loading-spider>
+      <sa-loading-spider [show]="isLoadingGA"></sa-loading-spider>
       <div class="toolbar">
         <a
           role="button"
@@ -48,9 +48,10 @@
         <button
           type="button"
           class="btn btn-sm btn-default btn-icon"
+          [disabled]="isLoadingGA"
           (click)="isShowSelectView = !isShowSelectView"
         >
-          <i class="ion-md-podium"></i>
+          <ion-icon name="podium"></ion-icon>
         </button>
         <div
           id="view-selector"

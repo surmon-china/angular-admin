@@ -1,11 +1,10 @@
-
-// init
-@import "base/init";
-
 // third
 @import "~normalize.css";
 @import "~loaders.css";
 @import "~animate.css/animate";
+
+// init
+@import "./init";
 
 // bootstrap & overrides
 @import "~bootstrap/scss/bootstrap.scss";
@@ -19,7 +18,6 @@
 @import "app/typography";
 @import "app/buttons";
 @import "app/icons";
-@import 'app/ionicons';
 @import "app/layout";
 @import "app/table";
 @import "app/form";

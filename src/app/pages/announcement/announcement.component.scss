@@ -1,14 +1,12 @@
-.announcement-form {
+@import '~app/styles/init';
 
+.announcement-form {
   .announcement-content {
     padding: 0;
 
     > .markdown-editor {
-
       > .editor-toolbar {
-
         > .menus {
-
           .quote,
           .code,
           .-h3,
@@ -20,12 +18,14 @@
       }
     }
   }
+
+  .submit-btn {
+    margin-right: $gap;
+  }
 }
 
 .announcement-search-form {
-
   > .input-group {
-
     > .form-control {
       width: 16em;
     }
@@ -45,9 +45,7 @@
   }
 
   tbody {
-
     tr {
-
       td {
         line-height: 5em;
 
