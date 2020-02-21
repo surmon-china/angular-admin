@@ -6,8 +6,11 @@
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
-/product
+
+# prodect files
 /product/*
+!/product/dist.tar.gz
+!/product/.gitkeep
 
 # dependencies
 /node_modules

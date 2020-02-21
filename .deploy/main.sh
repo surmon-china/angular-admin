@@ -14,7 +14,7 @@ echo "[deploy] Delete old files..."
 rm -r ./www
 echo "[deploy] Decompression tar..."
 mkdir www
-tar -xvf dist.tar.gz -C ./www
+tar -xvf ./dist.tar.gz -C ./www
 echo "[deploy] Rename tar..."
 mv -f ./dist.tar.gz ./bak.dist.tar.gz
 echo "[deploy] Finished."
