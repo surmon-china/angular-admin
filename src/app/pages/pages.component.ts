@@ -19,6 +19,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <sa-content-header></sa-content-header>
         <router-outlet></router-outlet>
       </div>
+      <sa-back-top position="200"></sa-back-top>
     </div>
     <footer class="al-footer clearfix">
       <div class="al-footer-right">
@@ -29,7 +30,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <div class="al-copy">&copy; <a href="${BLOG_SITE}">Surmon</a> 2020</div>
       </div>
     </footer>
-    <sa-back-top position="200"></sa-back-top>
   `
 })
 export class PagesComponent {

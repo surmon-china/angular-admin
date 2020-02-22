@@ -13,10 +13,16 @@
       </li>
     </ul>
     <ul class="right">
-      <li class="preview-full" (click)="previewMode = 2;parseMarked();">Full</li>
-      <li class="preview-both" (click)="previewMode = 1;parseMarked();">Both</li>
-      <li class="preview-none" (click)="previewMode = 0">None</li>
-      <li class="fullscreen" (click)="fullscreen = !fullscreen">
+      <li class="preview-full" (click)="updatePreviewModeState(2)">
+        <ion-icon class="icon" name="eye"></ion-icon>
+      </li>
+      <li class="preview-both" (click)="updatePreviewModeState(1)">
+        <ion-icon class="icon" name="pause"></ion-icon>
+      </li>
+      <li class="preview-none" (click)="updatePreviewModeState(0)">
+        <ion-icon class="icon" name="eye-off"></ion-icon>
+      </li>
+      <li class="fullscreen" (click)="toggleFullScreenState()">
         <ion-icon *ngIf="fullscreen" class="icon" name="contract"></ion-icon>
         <ion-icon *ngIf="!fullscreen" class="icon" name="expand"></ion-icon>
       </li>
