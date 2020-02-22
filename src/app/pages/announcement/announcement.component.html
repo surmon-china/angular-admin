@@ -156,9 +156,9 @@
                     label="ID"
                   ></sa-checkbox>
                 </th>
-                <th width="50%">内容</th>
-                <th class="text-center">日期</th>
-                <th>状态</th>
+                <th width="40%">内容</th>
+                <th width="180px" class="text-center">日期</th>
+                <th width="100px">状态</th>
                 <th class="text-center">操作</th>
               </tr>
             </thead>
@@ -181,10 +181,7 @@
                     </sa-checkbox>
                   </td>
                   <td>
-                    <div
-                      class="content ql-editor" 
-                      [innerHTML]="parseMarkdown(announcement.content)"
-                    ></div>
+                    <div class="content" [innerHTML]="parseMarkdown(announcement.content)"></div>
                   </td>
                   <td>{{ announcement.create_at | dataToLocale }}</td>
                   <td>
