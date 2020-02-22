@@ -7,7 +7,7 @@ $sidebar-user-height: 11rem;
   width: $sidebar-width;
   top: $header-height;
   left: 0;
-  z-index: $z-index-layout;
+  z-index: $z-index-sidebar;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -357,15 +357,15 @@ a.al-sidebar-user {
 }
 
 @media (max-width: 1200px) {
+  .al-sidebar {
+    z-index: $z-index-sidebar-xs;
+  }
   @include sidebar-overlap();
 }
 
 @media (max-width: $resXS) {
   .menu-collapsed {
     @include sidebar-hidden();
-  }
-  .al-sidebar {
-    z-index: 999;
   }
   .al-main {
     margin-left: 0;

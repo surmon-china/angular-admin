@@ -4,7 +4,7 @@ $size: 52px;
 .back-cover-top {
   position: fixed;
   display: none;
-  z-index: 9999;
+  z-index: $z-index-main-backtop;
   width: $size;
   height: $size;
   right: $size;

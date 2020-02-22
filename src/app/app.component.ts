@@ -96,7 +96,8 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   // 初始化根据服务端验证 Token 有效性
   public checkTokenValidity(): void  {
-    this.httpService.post(API_PATH.CHECK_TOKEN)
+    this.httpService
+      .post(API_PATH.CHECK_TOKEN)
       .then(_ => {
         // 通过验证，则初始化 APP
         console.info('远程 Token 验证成功，正常工作');

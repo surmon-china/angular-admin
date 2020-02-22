@@ -8,11 +8,11 @@
 .markdown-editor {
   &.fullscreen {
     position: fixed;
-    width: calc(100% - #{$sidebar-width});
+    width: 100%;
     height: calc(100% - #{$header-height} - 2.8rem);
     top: $header-height;
-    left: $sidebar-width;
-    z-index: 999999;
+    left: 0;
+    z-index: $z-index-main-markdown;
     background-color: rgba(0, 0, 0, 0.95);
 
     .editor-content {

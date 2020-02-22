@@ -107,5 +107,9 @@ $font-size-base: 1rem;
 $font-size-lg: $font-size-base * 1.25;
 $font-size-sm: $font-size-base * .875;
 
-$z-index-layout: 998;
-$z-index-main: 996;
+$z-index-header: 999;
+$z-index-sidebar-xs: 998;
+$z-index-sidebar: 997;
+$z-index-main: 997;
+$z-index-main-markdown: 1;
+$z-index-main-backtop: 1;

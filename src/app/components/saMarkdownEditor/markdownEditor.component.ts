@@ -299,17 +299,32 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
     this.saveFile(this.content, `${data + time}.md`);
   }
 
+  updatePreviewModeState(value: EPreviewMode) {
+    this.previewMode = value;
+    if (value !== EPreviewMode.none) {
+      this.parseMarked();
+    }
+  }
+
+  updateFullScreenState(isFullscreen: boolean) {
+    this.fullscreen = isFullscreen;
+  }
+
+  toggleFullScreenState() {
+    this.updateFullScreenState(!this.fullscreen);
+  }
+
   // 按键listen
   keyDownListen(event) {
 
     // 退出全屏
     if (event.keyCode === KEYCODE.ESC) {
-      this.fullscreen = false;
+      this.updateFullScreenState(false);
     }
 
     // 全屏
     if (event.keyCode === KEYCODE.F5) {
-      this.fullscreen = !this.fullscreen;
+      this.toggleFullScreenState();
     }
 
     // 保存
