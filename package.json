@@ -18,6 +18,7 @@
     "e2e": "ng e2e",
     "tar": "rm -rf ./product/dist.tar.gz && tar -zcvf ./product/dist.tar.gz -C ./dist/angular-admin .",
     "build:tar": "npm run build && npm run tar",
+    "deploy": "npm ci && npm run build:tar && sh .deploy/decompression.sh",
     "server": "http-server ./dist/angular-admin"
   },
   "repository": {
