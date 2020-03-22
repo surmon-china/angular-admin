@@ -10,13 +10,11 @@
 
 # Angular Admin
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+[![nodepress](https://img.shields.io/badge/NODE-PRESS-%2383BA2F?style=for-the-badge&labelColor=90C53F)](https://github.com/surmon-china/nodepress)
 [![GitHub stars](https://img.shields.io/github/stars/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/issues)
-[![GitHub last commit](https://img.shields.io/github/last-commit/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin)
-[![GitHub license](https://img.shields.io/github/license/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin)
-
-## Introduction
+[![GitHub issues](https://img.shields.io/github/issues-raw/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/issues)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/surmon-china/angular-admin/Deploy?label=deploy&style=for-the-badge)](https://github.com/surmon-china/angular-admin/actions?query=workflow:%22Deploy%22)
+[![GitHub license](https://img.shields.io/github/license/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/blob/master/LICENSE)
 
 **Admin client for [surmon.me](https://github.com/surmon-china/surmon.me) blog, powered by [Angular](https://github.com/angular/angular) and [Bootstrap4](https://github.com/twbs/bootstrap).** 
 
