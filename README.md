@@ -10,7 +10,7 @@
 
 # Angular Admin
 
-[![nodepress](https://img.shields.io/badge/NODE-PRESS-%2383BA2F?style=for-the-badge&labelColor=90C53F)](https://github.com/surmon-china/nodepress)
+[![nodepress](https://img.shields.io/badge/NODE-PRESS-83BA2F?style=for-the-badge&labelColor=90C53F)](https://github.com/surmon-china/nodepress)
 [![GitHub stars](https://img.shields.io/github/stars/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues-raw/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/issues)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/surmon-china/angular-admin/Deploy?label=deploy&style=for-the-badge)](https://github.com/surmon-china/angular-admin/actions?query=workflow:%22Deploy%22)
