@@ -8,7 +8,7 @@ import marked from 'marked';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AfterViewInit, ViewChild, Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
-import { isPostArticlePage, isAnnouncementPage, isOptionsPage } from '@app/discriminators/url';
+import { isPostArticlePage, isAnnouncementPage } from '@app/discriminators/url';
 import * as KEYCODE from '@app/constants/keycode';
 
 const hljs = require('highlight.js');
@@ -127,7 +127,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
 
   // 派发事件
   @Output() ready: EventEmitter<any> = new EventEmitter();
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  @Output() inputChange: EventEmitter<any> = new EventEmitter();
 
   onModelChange: any = () => {};
   onModelTouched: any = () => {};
@@ -194,7 +194,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
       const content = cm.getValue();
       if (content !== this.content) {
         this.content = content;
-        this.change.emit({
+        this.inputChange.emit({
           editor: this.editor,
           content: this.content
         });
