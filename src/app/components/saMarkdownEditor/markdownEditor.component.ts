@@ -183,7 +183,6 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
       extraKeys: {
         Enter: 'newlineAndIndentContinueMarkdownList'
       },
-
       ...this.config
     });
 

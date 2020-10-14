@@ -1,10 +1,5 @@
 @import '~app/styles/init';
 
-@import '~highlight.js/styles/ocean.css';
-@import '~codemirror/lib/codemirror.css';
-@import '~codemirror/theme/base16-dark.css';
-@import '~codemirror/addon/fold/foldgutter.css';
-
 .markdown-editor {
   &.fullscreen {
     position: fixed;
