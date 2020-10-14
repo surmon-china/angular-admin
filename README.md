@@ -58,9 +58,9 @@ npm run build
 ## Actions setup
 
 **Rule:**
-- `any PR open` -> `CI:Build test`
-- `master PR close & merged` -> `CI:Deploy to server`
+- `any PR open` ➡️ `CI:Build test`
+- `master PR close & merged` ➡️ `CI:Deploy to server`
 
 **Example:**
-- `local:develop -> remote:develop` -> `CI:Build test`
-- `remote:develop/master -> remote:master -> merged` -> `CI:Deploy to server`
+- `local:develop` ➡️ `remote:develop` ➡️ `CI:Build test`
+- `remote:develop/master(local:build:tar)` ➡️ `remote:master` ➡️ `merged` ➡️ `CI:Deploy to server`
