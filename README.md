@@ -62,5 +62,5 @@ npm run build
 - `master PR close & merged` ➡️ `CI:Deploy to server`
 
 **Example:**
-- `local:develop` ➡️ `remote:develop` ➡️ `CI:Build test`
-- `remote:develop/master(local:build:tar)` ➡️ `remote:master` ➡️ `merged` ➡️ `CI:Deploy to server`
+- `local:develop(local:build:tar)` ➡️ `remote:develop` ➡️ `CI:Build test`
+- `remote:develop/master` ➡️ `remote:master` ➡️ `merged` ➡️ `CI:Deploy to server`
