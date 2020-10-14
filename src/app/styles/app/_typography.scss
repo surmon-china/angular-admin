@@ -2,6 +2,9 @@
 @font-face {
   font-family: 'DINRegular';
   src: url('/assets/fonts/DIN-Regular.ttf');
+  // CSS Unicode Range Generator https://codepen.io/elifitch/pen/Ljqway
+  // abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/.=-;',?!#@$%^&*()_+\|:"[]{}
+  unicode-range: U+21-3B,U+3D,U+3F-5F,U+61-7D;
 }
 
 h1, h2, h3, h4, h5, h6 {

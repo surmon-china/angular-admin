@@ -1,5 +1,5 @@
 <div class="markdown-editor" [ngClass]="{ 'fullscreen': fullscreen }">
-  <div class="editor-toolbar">
+  <div class="editor-toolbar" *ngIf="!disabledToolBar">
     <ul class="menus">
       <li class="bold" (click)="toggleBold()">粗体</li>
       <li class="italic" (click)="toggleItalic()">斜体</li>
@@ -30,13 +30,13 @@
   </div>
   <div
     class="editor-content"
-    [ngClass]="{ 
+    [ngClass]="{
       'preview-full': previewMode === 2,
       'preview-both': previewMode === 1
     }"
   >
     <div class="editor" (keyup)="keyDownListen($event)">
-      <textarea id="editor"></textarea>
+      <textarea id="textarea"></textarea>
     </div>
     <div class="marked" [innerHTML]="markedHtml"></div>
   </div>

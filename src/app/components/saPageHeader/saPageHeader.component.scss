@@ -17,7 +17,7 @@
 
   .user-profile {
     float: right;
-  
+
     .al-user-profile {
       float: right;
       margin-right: 12px;
@@ -30,12 +30,12 @@
 
       a {
         display: block;
-    
+
         &.profile-toggle-link {
           height: 45px;
         }
       }
-    
+
       img {
         width: 26px;
         height: 26px;
@@ -58,14 +58,19 @@ a.al-logo {
   height: $header-height;
   width: $sidebar-width;
   padding-bottom: 5px;
-  font-size: 20px;
-  font-weight: bolder;
   color: $topbar-text;
   outline: none !important;
   float: left;
 
   .icon {
     margin-right: 0.5rem;
+    font-size: 20px;
+  }
+
+  .text {
+    font-size: 15px;
+    font-weight: bolder;
+    text-transform: uppercase;
   }
 
   &:hover {

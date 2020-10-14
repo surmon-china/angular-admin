@@ -8,7 +8,7 @@ import marked from 'marked';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { AfterViewInit, ViewChild, Component, ElementRef, EventEmitter, forwardRef, Input, Output, ViewEncapsulation } from '@angular/core';
-import { isPostArticlePage, isAnnouncementPage } from '@app/discriminators/url';
+import { isPostArticlePage, isAnnouncementPage, isOptionsPage } from '@app/discriminators/url';
 import * as KEYCODE from '@app/constants/keycode';
 
 const hljs = require('highlight.js');
@@ -22,8 +22,8 @@ enum EPreviewMode {
 }
 
 const EDIT_CONFIG = {
-  draftTimer: 1600,
-  autoTimer: 1000
+  draftTimer: 1688,
+  autoTimer: 666
 };
 
 (window as any).hljs = hljs;
@@ -93,9 +93,7 @@ marked.setOptions({
 @Component({
   selector: 'sa-markdown-editor',
   templateUrl: './markdownEditor.component.html',
-  styleUrls: [
-    './markdownEditor.component.scss'
-  ],
+  styleUrls: ['./markdownEditor.component.scss'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => SaMarkdownEditorComponent),
@@ -120,15 +118,17 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
 
   @ViewChild('bakModal', { static: false }) bakModal: ModalDirective;
 
-  // 传入配置
+  // 自定义配置
   @Input() config: object;
+  // 禁用工具栏
+  @Input() disabledToolBar: boolean = false;
+  // 禁用自动草稿
+  @Input() disabledDraft: boolean = false;
 
   // 派发事件
   @Output() ready: EventEmitter<any> = new EventEmitter();
-  // tslint:disable-next-line:no-output-native
   @Output() change: EventEmitter<any> = new EventEmitter();
 
-  // ...
   onModelChange: any = () => {};
   onModelTouched: any = () => {};
 
@@ -155,9 +155,9 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
       return false;
     }
 
-    this.editorElem = this.elementRef.nativeElement.children[0].children[1].children[0].children[0];
-    this.editor = CodeMirror.fromTextArea(this.editorElem, Object.assign({
-      // 语言模式 github markdown扩展
+    this.editorElem = this.elementRef.nativeElement.querySelector('#textarea');
+    this.editor = CodeMirror.fromTextArea(this.editorElem, {
+      // 语言模式 GitHub markdown 扩展
       mode: 'gfm',
       // 行号
       lineNumbers: true,
@@ -182,8 +182,10 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
       // 回车键自动补全上一步格式
       extraKeys: {
         Enter: 'newlineAndIndentContinueMarkdownList'
-      }
-    }, this.config));
+      },
+
+      ...this.config
+    });
 
     this.editor.on('blur', cm => {
       this.onModelTouched();
@@ -204,33 +206,43 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
         }
       }
       // 自动保存草稿
-      if (this.timer) {
-        clearTimeout(this.timer);
-      }
-      if (content !== store.get(location.pathname)) {
-        this.timer = setTimeout(() => {
-          store.set(location.pathname, content);
-        }, EDIT_CONFIG.draftTimer);
+      if (!this.disabledDraft) {
+        if (this.timer) {
+          clearTimeout(this.timer);
+        }
+        if (content !== store.get(location.pathname)) {
+          this.timer = setTimeout(() => {
+            store.set(location.pathname, content);
+          }, EDIT_CONFIG.draftTimer);
+        }
       }
     });
 
-    // 如果是发布页面，有本地存储，则直接读取存储
-    const url = location.pathname;
-    if (isPostArticlePage(url) || isAnnouncementPage(url)) {
-      const bak = store.get(location.pathname);
-      if (bak) {
-        this.content = bak;
-        this.editor.setValue(this.content);
-        // this.markedHtml = marked(this.content);
-      }
-    } else {
-    // 如果是编辑页面，没有弹窗，则设置
+    // 如果禁用了草稿能力，就直接赋值
+    if (this.disabledDraft) {
       setTimeout(() => {
-        if (!this.bakModal.isShown) {
-          this.editor.setValue(this.content);
-          this.markedHtml = marked(this.content);
-        }
+        this.editor.setValue(this.content);
+        this.markedHtml = marked(this.content);
       }, EDIT_CONFIG.autoTimer);
+    } else {
+      // 如果是发布页面，有本地存储，则直接读取存储
+      const url = location.pathname;
+      if (isPostArticlePage(url) || isAnnouncementPage(url)) {
+        const bak = store.get(location.pathname);
+        if (bak) {
+          this.content = bak;
+          this.editor.setValue(this.content);
+          // this.markedHtml = marked(this.content);
+        }
+      } else {
+      // 如果是编辑页面，没有弹窗，则设置
+        setTimeout(() => {
+          if (!this.bakModal.isShown) {
+            this.editor.setValue(this.content);
+            this.markedHtml = marked(this.content);
+          }
+        }, EDIT_CONFIG.autoTimer);
+      }
     }
 
     /*
@@ -255,6 +267,16 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
 
   // 写数据
   writeValue(currentValue: any) {
+    // 禁用草稿，则直接写数据
+    if (this.disabledDraft) {
+      if (currentValue !== undefined && currentValue !== this.content) {
+        this.content = currentValue;
+        this.editor.setValue(this.content);
+      }
+      return
+    }
+
+    // 走草稿缓存机制
     const bak = store.get(location.pathname);
     if (currentValue !== undefined && currentValue !== this.content) {
       // 如果是公告页就啥也不干

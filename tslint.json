@@ -1,6 +1,7 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "attr-lowercase": false,
     "directive-selector": [
       true,
       "attribute",

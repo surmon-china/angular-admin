@@ -30,3 +30,7 @@ export function isPostArticlePage(url: TUrlPath): boolean {
 export function isAnnouncementPage(url: TUrlPath): boolean {
   return url && url === '/announcement';
 }
+
+export function isOptionsPage(url: TUrlPath): boolean {
+  return url && url === '/options';
+}

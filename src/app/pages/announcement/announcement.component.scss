@@ -27,10 +27,14 @@
   }
 }
 
+.announcement-tools {
+  margin-left: $gap-xs;
+}
+
 .announcement-search-form {
   > .input-group {
     > .form-control {
-      width: 16em;
+      width: 14em;
     }
   }
 }
@@ -38,13 +42,12 @@
 .announcement-list {
   position: relative;
 
-  .batch-checkbox {
-    text-align: left;
-    padding-left: 2em;
+  .announcement-err-msg {
+    margin: 1rem 0;
   }
 
-  .announcement-err-msg {
-    margin: 1em 0;
+  .select-box {
+    text-align: left;
   }
 
   tbody {
@@ -61,8 +64,8 @@
           }
 
           img {
-            max-width: 4em;
-            margin: 0 1em;
+            max-width: 4rem;
+            margin: 0 1rem;
           }
         }
       }

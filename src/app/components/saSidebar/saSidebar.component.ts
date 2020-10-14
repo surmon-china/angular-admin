@@ -7,7 +7,7 @@
 import { Component, ElementRef, HostListener, ViewEncapsulation, OnInit, AfterViewInit } from '@angular/core';
 import { GlobalState } from 'app/global.state';
 import { MENU } from 'app/app.menu';
-import * as lodash from 'lodash';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'sa-sidebar',
@@ -17,7 +17,7 @@ import * as lodash from 'lodash';
 })
 export class SaSidebarComponent implements OnInit, AfterViewInit {
 
-  public routes = lodash.cloneDeep(MENU);
+  public routes = cloneDeep(MENU);
   public menuHeight: number;
   public isMenuCollapsed = false;
   public isMenuShouldCollapsed = false;

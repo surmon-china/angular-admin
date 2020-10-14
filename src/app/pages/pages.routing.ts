@@ -18,7 +18,6 @@ const routes: Routes = [
       { path: 'article', loadChildren: () => import('./article').then(module => module.ArticleModule) },
       { path: 'comment', loadChildren: () => import('./comment').then(module => module.CommentModule) },
       { path: 'options', loadChildren: () => import('./options').then(module => module.OptionsModule) },
-      { path: 'linux', loadChildren: () => import('./linux').then(module => module.LinuxModule) },
       { path: 'auth', loadChildren: () => import('./auth').then(module => module.AuthModule) },
       { path: 'example', loadChildren: () => import('./example').then(module => module.ExampleModule) }
     ]

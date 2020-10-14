@@ -1,16 +1,16 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
-    <sa-card title="添加公告">
+    <sa-card name="添加公告">
       <form
         class="announcement-form"
-        [formGroup]="editForm" 
+        [formGroup]="editForm"
         (ngSubmit)="submitEditForm(editForm.value)"
       >
         <div class="form-group" [ngClass]="controlStateClass(state)">
           <label for="announcement-type">
             <h5>公告状态</h5>
           </label>
-          <select class="form-control c-select" id="announcement-type" [formControl]="state">
+          <select class="form-control" id="announcement-type" [formControl]="state">
             <option [ngValue]="PublishState.Published">已发布</option>
             <option [ngValue]="PublishState.Draft">草稿</option>
           </select>
@@ -21,7 +21,7 @@
           </label>
           <sa-markdown-editor
             id="announcement-content"
-            class="form-control announcement-content" 
+            class="form-control announcement-content"
             title="文章内容"
             [config]="{ lineWrapping: true }"
             [formControl]="content"
@@ -36,7 +36,7 @@
             [disabled]="!editForm.valid || isUpdating"
           >
             <ion-icon class="icon" name="checkmark-done"></ion-icon>
-            <span>{{ activeAnnouncement ? '修改' : '添加' }}公告</span>
+            <span>{{ activeAnnouncement ? '更新' : '添加' }}公告</span>
           </button>
           <button class="btn btn-default btn-with-icon" (click)="resetEditForm()">
             <ion-icon class="icon" name="refresh"></ion-icon>
@@ -47,7 +47,7 @@
     </sa-card>
   </div>
   <div class="col-md-8 col-xs-12">
-    <sa-card title="全部公告" baCardClass="with-scroll">
+    <sa-card name="全部公告" baCardClass="with-scroll">
       <div class="clearfix">
         <div class="pull-left">
           <div class="btn-group">
@@ -84,10 +84,9 @@
               <span *ngIf="isState(PublishState.Draft)">&nbsp;({{ currentListTotal }})</span>
             </button>
           </div>
-          <span>&nbsp;&nbsp;</span>
-          <div class="btn-group" role="group">
+          <div class="btn-group announcement-tools">
             <button
-              type="button" 
+              type="button"
               class="btn btn-default btn-with-icon"
               [disabled]="isGetingList"
               (click)="refreshAnnouncements()"
@@ -96,7 +95,7 @@
               <span>刷新</span>
             </button>
             <button
-              type="button" 
+              type="button"
               class="btn btn-default btn-with-icon"
               [disabled]="isGetingList"
               (click)="resetSearchForm()"
@@ -124,23 +123,27 @@
             </div>
           </div>
         </div>
-        <form
-          class="pull-right form-inline navbar-form announcement-search-form" 
-          [formGroup]="searchForm" 
-          (ngSubmit)="submitSearchForm()"
-        >
-          <div class="input-group" style="margin: 0">
-            <input
-              type="text"
-              placeholder="公告内容"
-              [formControl]="keyword"
-              class="form-control with-default-addon"
-            />
-            <span class="input-group-append">
-              <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
-            </span>
-          </div>
-        </form>
+        <div class="pull-right">
+          <form
+            class="form-inline navbar-form announcement-search-form"
+            [formGroup]="searchForm"
+            (ngSubmit)="submitSearchForm()"
+          >
+            <div class="input-group" style="margin: 0">
+              <input
+                type="text"
+                placeholder="公告内容"
+                [formControl]="keyword"
+                class="form-control with-default-addon"
+              />
+              <span class="input-group-append">
+                <button class="btn btn-default btn-icon" type="submit" [disabled]="!searchForm.valid">
+                  <ion-icon class="icon" name="search"></ion-icon>
+                </button>
+              </span>
+            </div>
+          </form>
+        </div>
       </div>
       <div class="table-responsive">
         <div class="announcement-list">
@@ -148,7 +151,7 @@
           <table class="table table-striped table-no-borders black-muted-bg table-enrich">
             <thead class="thead-inverse">
               <tr>
-                <th class="batch-checkbox">
+                <th class="batch-checkbox select-box">
                   <sa-checkbox
                     [(ngModel)]="announcementsSelectAll"
                     (ngModelChange)="handleBatchSelectChange($event)"
@@ -156,10 +159,10 @@
                     label="ID"
                   ></sa-checkbox>
                 </th>
-                <th width="40%">内容</th>
-                <th width="180px" class="text-center">日期</th>
+                <th>内容</th>
+                <th width="186px" class="text-center">日期</th>
                 <th width="100px">状态</th>
-                <th class="text-center">操作</th>
+                <th width="170px" class="text-center">操作</th>
               </tr>
             </thead>
             <tbody>
@@ -172,7 +175,7 @@
               </tr>
               <ng-template #dataList>
                 <tr *ngFor="let announcement of announcements.data">
-                  <td class="batch-checkbox">
+                  <td class="batch-checkbox select-box">
                     <sa-checkbox
                       [(ngModel)]="announcement.selected"
                       (ngModelChange)="handleItemSelectChange()"
@@ -181,12 +184,24 @@
                     </sa-checkbox>
                   </td>
                   <td>
-                    <div class="content" [innerHTML]="parseMarkdown(announcement.content)"></div>
+                    <div
+                      class="content"
+                      [innerHTML]="parseMarkdown(announcement.content)"
+                      [title]="announcement.content"
+                    ></div>
                   </td>
                   <td>{{ announcement.create_at | dataToLocale }}</td>
                   <td>
-                    <ion-icon class="icon text-success" name="checkmark-done" *ngIf="announcement.state === PublishState.Published"></ion-icon>
-                    <ion-icon class="icon text-warning" name="create" *ngIf="announcement.state === PublishState.Draft"></ion-icon>
+                    <ion-icon
+                      class="icon text-success"
+                      name="checkmark-done"
+                      *ngIf="announcement.state === PublishState.Published"
+                    ></ion-icon>
+                    <ion-icon
+                      class="icon text-warning"
+                      name="create"
+                      *ngIf="announcement.state === PublishState.Draft"
+                    ></ion-icon>
                     <span>&nbsp;&nbsp;</span>
                     <span>{{ announcement.state === PublishState.Published ? '已发布' : '草稿' }}</span>
                   </td>

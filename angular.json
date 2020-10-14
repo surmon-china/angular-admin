@@ -100,8 +100,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           }
         },
         "lint": {
@@ -130,6 +129,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "angular-admin"
 }

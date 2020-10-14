@@ -1,8 +1,14 @@
+@import '~app/styles/init';
+
 .contnet-top-tools {
-  > .article-get-form {
-    > .input-group {
-      > .form-control {
-        width: 16em;
+  .article-search-form {
+    margin-left: $gap-xs;
+
+    .input-group {
+      margin-bottom: 0;
+
+      .form-control {
+        width: 12rem;
       }
     }
   }
@@ -11,25 +17,20 @@
 .article-list {
   position: relative;
 
-  .batch-checkbox {
-    text-align: left;
-    padding-left: 2em;
-  }
-
   .article-err-msg {
-    margin: 1em 0;
+    margin: 1rem 0;
   }
 
   tbody {
     tr {
       &.article-item {
-        height: 13em;
+        height: 13rem;
       }
 
       td {
         &.article-content {
           > .content-box {
-            padding: 1em;
+            padding: 1rem;
             line-height: 2;
             position: relative;
 
@@ -40,11 +41,13 @@
               top: 0;
               left: 0;
               z-index: -1;
+              background-color: $disabled-bg;
               background-position: center;
               background-size: cover;
               border-radius: 1px;
               filter: brightness(0.4);
               opacity: .8;
+              border-radius: $radius-sm;
             }
 
             > .title {
@@ -54,7 +57,7 @@
               > a {
                 &:hover {
                   cursor: pointer;
-                  // text-decoration: underline;
+                  border-bottom: 1px solid;
                 }
               }
             }
@@ -62,14 +65,7 @@
         }
 
         &.article-category {
-          .category-list {
-            margin: 0;
-            line-height: 2.3;
-          }
-        }
-
-        &.article-tag {
-          .tag-list {
+          .list {
             margin: 0;
             line-height: 2.3;
           }

@@ -108,11 +108,6 @@ export class ArticleListComponent implements OnInit {
     return pagination && pagination.total || 0;
   }
 
-  // 判断数据类型
-  public isState(state: EPublishState): boolean {
-    return this.getParams.state === state;
-  }
-
   // 文章列表多选切换
   public batchSelectChange(isSelect: boolean): void {
     const data = this.articles.data;
@@ -145,15 +140,6 @@ export class ArticleListComponent implements OnInit {
   public cancelArticleModal() {
     this.delModal.hide();
     this.todoDelArticleId = null;
-  }
-
-  // 切换文章类型
-  public switchState(state: EPublishState): void {
-    if (state === undefined || state === this.getParams.state) {
-      return;
-    }
-    this.getParams.state = state;
-    this.getArticles();
   }
 
   // 提交搜索
