@@ -1,10 +1,14 @@
 
+### TODO
+- TSLint to ESLint
+
 ## CHANGELOG
 
 ### v3.4.0
 - Improve archive page toolbar
 - Add AD Config in options page
-- TSLint to ESLint
+- Update CI
+- NPM to Yarn
 
 ### v3.3.0
 - Support AOT [PR#39](https://github.com/surmon-china/angular-admin/pull/39) [issue#28](https://github.com/surmon-china/angular-admin/issues/28)

@@ -7,17 +7,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [14.x]
     steps:
       - name: Checkout
-        uses: actions/checkout@master
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v2-beta
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
+
       - name: Install Dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
+
       - name: Lint
-        run: npm run lint
+        run: yarn lint
+
       - name: Build
-        run: npm run build
+        run: yarn build

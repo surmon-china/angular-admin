@@ -11,7 +11,7 @@ dump.rdb
 
 # prodect files
 /product/*
-!/product/dist.tar.gz
+!/product/www.tar.gz
 !/product/.gitkeep
 
 # dependencies

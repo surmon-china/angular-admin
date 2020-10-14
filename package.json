@@ -16,10 +16,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "tar": "rm -rf ./product/dist.tar.gz && tar -zcvf ./product/dist.tar.gz -C ./dist/angular-admin .",
-    "build:tar": "npm run build && npm run tar",
-    "deploy": "npm ci && npm run build:tar && sh .deploy/decompression.sh",
-    "server": "http-server ./dist/angular-admin"
+    "local:tar": "rm -rf ./product/www.tar.gz && tar -zcvf ./product/www.tar.gz -C ./dist/angular-admin .",
+    "local:build:tar": "npm run build && npm run local:tar",
+    "local:deploy": "npm run local:build:tar && sh .deploy/decompression.sh",
+    "local:server": "http-server ./dist/angular-admin"
   },
   "repository": {
     "type": "git",
