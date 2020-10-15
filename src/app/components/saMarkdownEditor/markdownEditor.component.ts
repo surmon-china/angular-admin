@@ -127,7 +127,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
 
   // 派发事件
   @Output() ready: EventEmitter<any> = new EventEmitter();
-  @Output() inputChange: EventEmitter<any> = new EventEmitter();
+  @Output() change: EventEmitter<any> = new EventEmitter();
 
   onModelChange: any = () => {};
   onModelTouched: any = () => {};
@@ -194,7 +194,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
       const content = cm.getValue();
       if (content !== this.content) {
         this.content = content;
-        this.inputChange.emit({
+        this.change.emit({
           editor: this.editor,
           content: this.content
         });
