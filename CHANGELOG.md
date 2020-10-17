@@ -9,6 +9,7 @@
 - Add AD Config in options page
 - Update CI
 - NPM to Yarn
+- markdown support more config
 
 ### v3.3.0
 - Support AOT [PR#39](https://github.com/surmon-china/angular-admin/pull/39) [issue#28](https://github.com/surmon-china/angular-admin/issues/28)
