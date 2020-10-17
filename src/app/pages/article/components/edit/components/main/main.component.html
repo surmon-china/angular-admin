@@ -1,44 +1,44 @@
 <form class="form-horizontal article-editor-main-form" name="articleForm" [formGroup]="editForm">
   <div class="form-group row" [ngClass]="controlStateClass(formTitle, null, isSubmited)">
-    <label for="article-title" class="col-sm-1 form-control-label text-right">文章标题</label>
+    <label for="article-title" class="col-sm-1 form-control-label text-right">标题</label>
     <div class="col-sm-5">
       <input
         autofocus
         type="text"
-        title="文章标题" 
-        placeholder="文章标题" 
+        title="文章标题"
+        placeholder="文章标题"
         id="article-title"
         name="article-title"
-        class="form-control form-control-lg" 
+        class="form-control form-control-lg"
         [formControl]="formTitle"
         (change)="handleTitleChange($event)"
       />
     </div>
   </div>
   <div class="form-group row" [ngClass]="controlStateClass(formKeywords, 'has-warning', isSubmited)">
-    <label for="article-keywords" class="col-sm-1 form-control-label text-right">文章关键词</label>
+    <label for="article-keywords" class="col-sm-1 form-control-label text-right">关键词</label>
     <div class="col-sm-5">
       <input
         type="text"
         id="article-keywords"
         name="article-keywords"
-        class="form-control form-control-lg" 
-        title="多个关键词以 ' , ' 隔开" 
-        placeholder="多个关键词以 ' , ' 隔开" 
+        class="form-control form-control-lg"
+        title="多个关键词以 ' , ' 隔开"
+        placeholder="多个关键词以 ' , ' 隔开"
         [formControl]="formKeywords"
         (change)="handleKeywordsChange($event)"
       />
     </div>
   </div>
   <div class="form-group row" [ngClass]="controlStateClass(formDescription, 'has-warning', isSubmited)">
-    <label for="article-description" class="col-sm-1 form-control-label text-right">文章描述</label>
+    <label for="article-description" class="col-sm-1 form-control-label text-right">描述</label>
     <div class="col-sm-10">
       <textarea
         class="form-control article-description"
-        cols="30" 
-        rows="20" 
-        name="article-description" 
-        id="article-description" 
+        cols="30"
+        rows="20"
+        name="article-description"
+        id="article-description"
         title="文章描述"
         placeholder="文章描述"
         [formControl]="formDescription"
@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class="form-group row" [ngClass]="{ 'has-success': tag.length && editForm.touched }">
-    <label class="col-sm-1 form-control-label text-right">文章标签</label>
+    <label class="col-sm-1 form-control-label text-right">标签</label>
     <div class="col-sm-10 col-sm-offset-1">
       <div class="form--control article-tags" title="选择文章标签">
         <div class="tags-list">
@@ -55,8 +55,8 @@
             <ion-icon class="icon" name="information-circle"></ion-icon>
             <span>暂无标签</span>
           </button>
-          <button 
-            class="btn btn-sm article-tag-item" 
+          <button
+            class="btn btn-sm article-tag-item"
             *ngFor="let tag of tags"
             [ngClass]="tag.selected ? 'btn-primary' : 'btn-default'"
             (click)="tag.selected = !tag.selected;handleTagChange()"
@@ -81,7 +81,7 @@
     </div>
   </div>
   <div class="form-group row" [ngClass]="controlStateClass(formContent, 'has-error', isSubmited)">
-    <label for="articleContent" class="col-sm-1 form-control-label text-right">文章内容</label>
+    <label for="articleContent" class="col-sm-1 form-control-label text-right">内容</label>
     <div class="col-sm-10">
       <sa-markdown-editor
         class="form-control article-content"

@@ -1,2 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+// preloader
 @import 'app/styles/app/preloader';
+
+// app
+@import 'app/styles/app';
+
+// editor
+@import '~highlight.js/styles/ocean.css';
+@import '~codemirror/lib/codemirror.css';
+@import '~codemirror/theme/base16-dark.css';
+@import '~codemirror/addon/fold/foldgutter.css';

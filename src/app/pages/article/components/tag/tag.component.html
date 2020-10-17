@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-md-4 col-xs-12">
-    <sa-card title="添加标签" baCardClass="with-scroll">
+    <sa-card name="添加标签" baCardClass="with-scroll">
       <form
         class="tag-form"
-        [formGroup]="editForm" 
+        [formGroup]="editForm"
         (ngSubmit)="handleSubmitTag(editForm.value)"
       >
         <div class="form-group" [ngClass]="controlStateClass(name)">
@@ -11,10 +11,10 @@
             <h5>标签名称</h5>
           </label>
           <input
-            type="text" 
+            type="text"
             id="tag-name"
             class="form-control"
-            placeholder="标签名称" 
+            placeholder="标签名称"
             [formControl]="name"
           />
           <span class="help-block sub-little-text">这将是它在站点上显示的名字</span>
@@ -24,10 +24,10 @@
             <h5>别名</h5>
           </label>
           <input
-            type="text" 
-            id="tag-slug" 
-            class="form-control" 
-            placeholder="标签名称" 
+            type="text"
+            id="tag-slug"
+            class="form-control"
+            placeholder="标签名称"
             [formControl]="slug"
           />
           <span class="help-block sub-little-text">“别名” 是在URL中使用的别称，建议小写，字母、数字、连字符（-）</span>
@@ -54,22 +54,22 @@
           </label>
           <div class="input-group" *ngFor="let extend of extends.value; let i = index">
             <input
-              type="text" 
+              type="text"
               class="form-control"
-              placeholder="key" 
+              placeholder="key"
               [(ngModel)]="extend.name"
               [ngModelOptions]="{ standalone: true }"
             />
             <input
-              type="text" 
+              type="text"
               class="form-control"
-              placeholder="value" 
+              placeholder="value"
               [(ngModel)]="extend.value"
               [ngModelOptions]="{ standalone: true }"
             />
             <div class="input-group-append">
               <button
-                class="btn btn-default" 
+                class="btn btn-default"
                 (click)="delExtendItem(i)"
                 [disabled]="extends.value.length < 2"
               >
@@ -112,12 +112,12 @@
     </sa-card>
   </div>
   <div class="col-md-8 col-xs-12">
-    <sa-card title="标签管理" baCardClass="with-scroll">
+    <sa-card name="标签管理">
       <div class="contnet-top-tools">
         <div class="pull-left">
           <div class="btn-group" role="group">
             <button
-              type="button" 
+              type="button"
               class="btn btn-default btn-with-icon"
               [disabled]="isGettingList"
               (click)="refreshTags()"
@@ -126,7 +126,7 @@
               <span>刷新</span>
             </button>
             <button
-              type="button" 
+              type="button"
               class="btn btn-default btn-with-icon"
               [disabled]="isGettingList"
               (click)="resetSearchForm()"
@@ -156,22 +156,24 @@
         </div>
         <form
           class="pull-right form-inline navbar-form tag-search-form"
-          [formGroup]="searchForm" 
+          [formGroup]="searchForm"
           (ngSubmit)="searchTags()"
         >
           <div class="input-group">
             <input
-              type="text" 
+              type="text"
               placeholder="搜索相关标签"
               class="form-control with-default-addon"
               [formControl]="keyword"
             />
             <span class="input-group-append">
               <button
-                class="btn btn-default"
                 type="submit"
+                class="btn btn-default btn-icon"
                 [disabled]="!searchForm.valid || isGettingList"
-              >搜索</button>
+              >
+                <ion-icon class="icon" name="search"></ion-icon>
+              </button>
             </span>
           </div>
         </form>
@@ -191,10 +193,9 @@
                   </sa-checkbox>
                 </th>
                 <th>名称</th>
-                <th>别名</th>
                 <th>描述</th>
                 <th>文章</th>
-                <th width="30%" class="text-center">操作</th>
+                <th class="text-center">操作</th>
               </tr>
             </thead>
             <tbody>
@@ -215,10 +216,7 @@
                       </span>
                     </sa-checkbox>
                   </td>
-                  <td>{{ tag.name }}</td>
-                  <td>
-                    <div class="tag-slug">{{ tag.slug }}</div>
-                  </td>
+                  <td>{{ tag.name }}（{{ tag.slug }}）</td>
                   <td>
                     <div class="tag-description" [title]="tag.description">{{ tag.description }}</div>
                   </td>

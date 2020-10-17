@@ -1,18 +1,15 @@
 
-## TODO
-- TSLint to ESLint (Angular10)
-- ~~需要增加一个数据库导出功能~~
-- ~~仪表盘图表组件和 echarts 整合~~
-- ~~各 CRUD 业务的操作项需统一~~
-- ~~各种扩展字段的输入表单可以使用 bootstrap 的 input + button 连体~~
-- ~~Markdown 按钮图标化~~
-- ~~`//surmon.me` 等信息应该配在 env~~
-- ~~GA 接口的完善，view-select 需要一个按钮显示隐藏~~
-- ~~仪表盘 GA 配色调整~~
-- ~~文档完善~~
-- ~~截图更新~~
+### TODO
+- TSLint to ESLint
 
 ## CHANGELOG
+
+### v3.4.0
+- Improve archive page toolbar
+- Add AD Config in options page
+- Update CI
+- NPM to Yarn
+- markdown support more config
 
 ### v3.3.0
 - Support AOT [PR#39](https://github.com/surmon-china/angular-admin/pull/39) [issue#28](https://github.com/surmon-china/angular-admin/issues/28)

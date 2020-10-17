@@ -1,159 +1,165 @@
 <div class="row">
   <div class="col-lg-12 col-md-12">
-    <sa-card title="评论列表" baCardClass="with-scroll table-panel">
+    <sa-card name="评论列表" baCardClass="with-scroll table-panel">
       <div class="contnet-top-tools">
-        <div class="pull-left">
-          <div class="btn-group">
-            <button class="btn btn-success" *ngIf="isGuestbook(post_id);else postListTitle">
-              <strong>留言板评论列表</strong>
-            </button>
-            <ng-template #postListTitle>
-              <button class="btn btn-info">
-                <strong>{{ post_id ? ('文章 ' + post_id + ' ') : '全部' }}评论列表</strong>
+        <div class="clearfix">
+          <div class="pull-left">
+            <div class="btn-group">
+              <button class="btn btn-success" *ngIf="isGuestbook(post_id);else postListTitle">
+                <strong>留言板评论（{{ currentListTotal }}）</strong>
               </button>
-            </ng-template>
-            <button
-              type="button"
-              class="btn btn-default active"
-              [ngClass]="{ 'active': isState(CommentState.All)}"
-              [disabled]="isGettingList"
-              (click)="switchState(CommentState.All)"
-            >
-              <span>全部</span>
-              <span *ngIf="isState(CommentState.All)">&nbsp;({{ currentListTotal }})</span>
-            </button>
-            <button
-              type="button"
-              class="btn btn-default btn-with-icon"
-              [ngClass]="{ 'active': isState(CommentState.Published) }"
-              [disabled]="isGettingList"
-              (click)="switchState(CommentState.Published)"
-            >
-              <ion-icon class="icon" name="checkmark-done"></ion-icon>
-              <span>已发布</span>
-              <span *ngIf="isState(CommentState.Published)">&nbsp;({{ currentListTotal }})</span>
-            </button>
-            <button
-              type="button"
-              class="btn btn-default btn-with-icon"
-              [ngClass]="{ 'active': isState(CommentState.Auditing) }"
-              [disabled]="isGettingList"
-              (click)="switchState(CommentState.Auditing)"
-            >
-              <ion-icon class="icon" name="create"></ion-icon>
-              <span>待审核</span>
-              <span *ngIf="isState(CommentState.Auditing)">&nbsp;({{ currentListTotal }})</span>
-            </button>
-            <button
-              type="button"
-              class="btn btn-default btn-with-icon"
-              [ngClass]="{ 'active': isState(CommentState.Deleted) }"
-              [disabled]="isGettingList"
-              (click)="switchState(CommentState.Deleted)"
-            >
-              <ion-icon class="icon" name="trash"></ion-icon>
-              <span>回收站</span>
-              <span *ngIf="isState(CommentState.Deleted)">&nbsp;({{ currentListTotal }})</span>
-            </button>
-            <button
-              type="button"
-              class="btn btn-default btn-with-icon"
-              [ngClass]="{ 'active': isState(CommentState.Spam) }"
-              [disabled]="isGettingList"
-              (click)="switchState(CommentState.Spam)"
-            >
-              <ion-icon class="icon" name="nuclear"></ion-icon>
-              <span>垃圾评论</span>
-              <span *ngIf="isState(CommentState.Spam)">&nbsp;({{ currentListTotal }})</span>
-            </button>
-          </div>
-          <span>&nbsp;&nbsp;</span>
-          <div class="btn-group">
-            <button
-              type="button" 
-              class="btn btn-default btn-with-icon"
-              [disabled]="isGettingList"
-              (click)="refreshComments()"
-            >
-              <ion-icon class="icon" name="refresh"></ion-icon>
-              <span>刷新</span>
-            </button>
-            <button
-              type="button" 
-              class="btn btn-default btn-with-icon"
-              (click)="resetGetParams()"
-            >
-              <ion-icon class="icon" name="remove-circle-outline"></ion-icon>
-              <span>重置参数</span>
-            </button>
-            <div class="btn-group" dropdown [isDisabled]="!selectedComments.length || isGettingList">
+              <ng-template #postListTitle>
+                <button class="btn btn-info">
+                  <strong>
+                    {{ post_id
+                      ? ('文章 ' + post_id + ' 评论')
+                      : '全部评论'
+                    }}（{{ currentListTotal }}）
+                </strong>
+                </button>
+              </ng-template>
               <button
-                type="button" 
-                class="btn btn-default btn-with-icon dropdown-toggle"
-                dropdownToggle
+                type="button"
+                class="btn btn-default active"
+                [ngClass]="{ 'active': isState(CommentState.All)}"
+                [disabled]="isGettingList"
+                (click)="switchState(CommentState.All)"
               >
-                <ion-icon class="icon" name="list"></ion-icon>
-                <span>批量操作</span>
+                <span>全部</span>
               </button>
-              <ul class="dropdown-menu" *dropdownMenu>
-                <li class="dropdown-item">
-                  <a [href]="" (click)="updateCommentsState(CommentState.Published)">
-                    <ion-icon class="icon" name="checkmark"></ion-icon>
-                    <span>审核通过</span>
-                  </a>
-                </li>
-                <li class="dropdown-item">
-                  <a [href]="" (click)="updateCommentsState(CommentState.Auditing)">
-                    <ion-icon class="icon" name="enter"></ion-icon>
-                    <span>移至待审核</span>
-                  </a>
-                </li>
-                <li class="dropdown-item">
-                  <a [href]="" (click)="updateCommentsState(CommentState.Deleted)">
-                    <ion-icon class="icon" name="pint"></ion-icon>
-                    <span>移至回收站</span>
-                  </a>
-                </li>
-                <li class="dropdown-item">
-                  <a [href]="" (click)="updateCommentsState(CommentState.Spam)">
-                    <ion-icon class="icon" name="nuclear"></ion-icon>
-                    <span>标为垃圾评论</span>
-                  </a>
-                </li>
-                <li class="dropdown-item">
-                  <a [href]="" (click)="delCommentModal()">
-                    <ion-icon class="icon" name="trash"></ion-icon>
-                    <span>彻底删除</span>
-                  </a>
-                </li>
-              </ul>
+              <button
+                type="button"
+                class="btn btn-default btn-with-icon"
+                [ngClass]="{ 'active': isState(CommentState.Published) }"
+                [disabled]="isGettingList"
+                (click)="switchState(CommentState.Published)"
+              >
+                <ion-icon class="icon" name="checkmark-done"></ion-icon>
+                <span>已发布</span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-default btn-with-icon"
+                [ngClass]="{ 'active': isState(CommentState.Auditing) }"
+                [disabled]="isGettingList"
+                (click)="switchState(CommentState.Auditing)"
+              >
+                <ion-icon class="icon" name="create"></ion-icon>
+                <span>待审核</span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-default btn-with-icon"
+                [ngClass]="{ 'active': isState(CommentState.Deleted) }"
+                [disabled]="isGettingList"
+                (click)="switchState(CommentState.Deleted)"
+              >
+                <ion-icon class="icon" name="trash"></ion-icon>
+                <span>回收站</span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-default btn-with-icon"
+                [ngClass]="{ 'active': isState(CommentState.Spam) }"
+                [disabled]="isGettingList"
+                (click)="switchState(CommentState.Spam)"
+              >
+                <ion-icon class="icon" name="nuclear"></ion-icon>
+                <span>垃圾评论</span>
+              </button>
+            </div>
+            <select
+              class="form-control sort-select"
+              [(ngModel)]="getParams.sort"
+              (ngModelChange)="getComments()"
+            >
+              <option [ngValue]="SortType.Desc" default>最新</option>
+              <option [ngValue]="SortType.Asc">最早</option>
+              <option [ngValue]="SortType.Hot">最热门</option>
+            </select>
+            <form
+              class="form-inline comment-search-form"
+              [formGroup]="searchForm"
+              (ngSubmit)="searchComments()"
+            >
+              <div class="input-group">
+                <input
+                  type="text"
+                  [formControl]="keyword"
+                  class="form-control with-default-addon"
+                  placeholder="评论内容、作者信息"
+                />
+                <span class="input-group-append">
+                  <button class="btn btn-default btn-icon" type="submit" [disabled]="!searchForm.valid">
+                    <ion-icon class="icon" name="search"></ion-icon>
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+          <div class="pull-right">
+            <div class="btn-group">
+              <button
+                type="button"
+                class="btn btn-default btn-with-icon"
+                [disabled]="isGettingList"
+                (click)="refreshComments()"
+              >
+                <ion-icon class="icon" name="refresh"></ion-icon>
+                <span>刷新</span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-default btn-with-icon"
+                (click)="resetGetParams()"
+              >
+                <ion-icon class="icon" name="remove-circle-outline"></ion-icon>
+                <span>重置参数</span>
+              </button>
+              <div class="btn-group" dropdown [isDisabled]="!selectedComments.length || isGettingList">
+                <button
+                  type="button"
+                  class="btn btn-default btn-with-icon dropdown-toggle"
+                  dropdownToggle
+                >
+                  <ion-icon class="icon" name="list"></ion-icon>
+                  <span>批量操作</span>
+                </button>
+                <ul class="dropdown-menu" *dropdownMenu>
+                  <li class="dropdown-item">
+                    <a [href]="" (click)="updateCommentsState(CommentState.Published)">
+                      <ion-icon class="icon" name="checkmark"></ion-icon>
+                      <span>审核通过</span>
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a [href]="" (click)="updateCommentsState(CommentState.Auditing)">
+                      <ion-icon class="icon" name="enter"></ion-icon>
+                      <span>移至待审核</span>
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a [href]="" (click)="updateCommentsState(CommentState.Deleted)">
+                      <ion-icon class="icon" name="pint"></ion-icon>
+                      <span>移至回收站</span>
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a [href]="" (click)="updateCommentsState(CommentState.Spam)">
+                      <ion-icon class="icon" name="nuclear"></ion-icon>
+                      <span>标为垃圾评论</span>
+                    </a>
+                  </li>
+                  <li class="dropdown-item">
+                    <a [href]="" (click)="delCommentModal()">
+                      <ion-icon class="icon" name="trash"></ion-icon>
+                      <span>彻底删除</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-        <form
-          class="pull-right form-inline comment-search-form"
-          [formGroup]="searchForm" 
-          (ngSubmit)="searchComments()"
-        >
-          <div class="input-group">
-            <input
-              type="text"
-              [formControl]="keyword" 
-              class="form-control with-default-addon" 
-              placeholder="评论内容、作者信息"
-            />
-            <span class="input-group-append">
-              <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
-            </span>
-          </div>
-        </form>
-        <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
-        <div class="pull-right form-inline">
-          <select class="form-control c-select" [(ngModel)]="getParams.sort" (ngModelChange)="getComments()">
-            <option [ngValue]="SortType.Desc" default>最新</option>
-            <option [ngValue]="SortType.Asc">最早</option>
-            <option [ngValue]="SortType.Hot">最热门</option>
-          </select>
         </div>
       </div>
       <div class="table-responsive">
@@ -175,13 +181,10 @@
                 </th>
                 <th>PID</th>
                 <th>POST_ID</th>
-                <th width="23%">评论内容</th>
+                <th width="188px">评论内容</th>
                 <th>个人信息</th>
-                <th>终端</th>
-                <th>点赞</th>
-                <th>置顶</th>
-                <th>日期</th>
-                <th>状态</th>
+                <th width="240px">终端</th>
+                <th width="120px">状态</th>
                 <th>操作</th>
               </tr>
             </thead>
@@ -255,13 +258,18 @@
                       <strong>系统：</strong>
                       <span>{{ osParser(comment.agent) }}</span>
                     </div>
+                    <div>
+                      <strong>发布日期：</strong>
+                      <span>{{ comment.create_at | dataToLocale }}</span>
+                    </div>
                   </td>
                   <td>
-                    <span>{{ comment.likes }}</span>
-                  </td>
-                  <td>{{ comment.is_top ? '是' : '否' }}</td>
-                  <td>{{ comment.create_at | dataToLocale }}</td>
-                  <td>
+                    <p>
+                      <ion-icon class="icon" name="heart"></ion-icon>
+                      <span>&nbsp;</span>
+                      <strong>{{ comment.likes }}</strong>&nbsp;个赞
+                    </p>
+                    <hr>
                     <ion-icon class="icon text-success" name="cloud-done" *ngIf="comment.state === CommentState.Published"></ion-icon>
                     <ion-icon class="icon text-warning" name="create" *ngIf="comment.state === CommentState.Auditing"></ion-icon>
                     <ion-icon class="icon text-danger" name="trash" *ngIf="comment.state === CommentState.Deleted"></ion-icon>

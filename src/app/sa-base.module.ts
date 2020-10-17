@@ -80,13 +80,13 @@ const SA_VALIDATORS = [
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SaBaseModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<SaBaseModule> {
     return {
       ngModule: SaBaseModule,
       providers: [
         ...SA_VALIDATORS,
         ...SA_SERVICES
       ]
-    } as ModuleWithProviders;
+    };
   }
 }

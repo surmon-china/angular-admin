@@ -10,6 +10,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DataToLocalePipe implements PipeTransform {
 
   transform(input: any): string {
-    return new Date(input).toLocaleString();
+    const date = new Date(input);
+    const ymd = date.toLocaleDateString().replace(/\//ig, '-');
+    const timeString = date.toLocaleTimeString();
+    const time = timeString.slice(0, timeString.length - 3);
+    return `${ymd} ${time}`
   }
 }

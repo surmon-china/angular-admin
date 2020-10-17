@@ -1,29 +1,38 @@
 @import '~app/styles/init';
 
+.sort-select,
 .comment-search-form {
-  > .input-group {
+  width: auto;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: $gap-xs;
+}
+
+.comment-search-form {
+  .input-group {
+    margin: 0;
+
     > .form-control {
-      width: 16em;
+      width: 14em;
     }
   }
+}
+
+.table-responsive {
+  margin-top: 1rem;
 }
 
 .comment-list {
   position: relative;
 
-  .batch-checkbox {
-    text-align: left;
-    padding-left: 2em;
-  }
-
   .comment-err-msg {
-    margin: 1em 0;
+    margin: 1rem 0;
   }
 
   tbody {
     tr {
       &.comment-item {
-        height: 13em;
+        height: 13rem;
       }
 
       td {

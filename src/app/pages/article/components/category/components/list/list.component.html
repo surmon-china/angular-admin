@@ -51,7 +51,6 @@
           </th>
           <th width="20%">名称</th>
           <th width="30%">描述</th>
-          <th>别名</th>
           <th>文章</th>
           <th width="30%" class="text-center">操作</th>
         </tr>
@@ -85,11 +84,11 @@
               <strong>{{ ''.padEnd(category.level, '─') }}</strong>
               <span>&nbsp;</span>
               <strong>{{ category.name }}</strong>
+              <span>（{{ category.slug }}）</span>
             </td>
             <td class="category-description" title="{{ category.description }}">
               <span [class.text-muted]="!category.description">{{ category.description || '暂无描述' }}</span>
             </td>
-            <td>{{ category.slug }}</td>
             <td>{{ category.count || 0 }}</td>
             <td>
               <div class="text-center">

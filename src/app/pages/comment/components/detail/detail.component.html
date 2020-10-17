@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-12">
-    <sa-card title="评论详情" baCardClass="with-scroll">
+    <sa-card name="评论详情" baCardClass="with-scroll">
       <form class="comment-form form-horizontal" [formGroup]="editForm" (ngSubmit)="submitComment()">
         <div class="form-group row">
           <label class="col-sm-1 form-control-label text-right">ID</label>
@@ -21,10 +21,10 @@
           <label for="comment-likes" class="col-sm-1 form-control-label text-right">喜欢人数</label>
           <div class="col-sm-2">
             <input
-              type="number" 
-              id="comment-likes" 
-              class="form-control" 
-              placeholder="喜欢人数" 
+              type="number"
+              id="comment-likes"
+              class="form-control"
+              placeholder="喜欢人数"
               [formControl]="likes"
             />
           </div>
@@ -32,7 +32,7 @@
         <div  class="form-group row" [ngClass]="controlStateClass(is_top)">
           <label for="comment-is-top" class="col-sm-1 form-control-label text-right">是否置顶</label>
           <div class="col-sm-2">
-            <select class="form-control c-select" id="comment-is-top" [formControl]="is_top">
+            <select class="form-control" id="comment-is-top" [formControl]="is_top">
               <option [ngValue]="false">不置顶</option>
               <option [ngValue]="true">置顶</option>
             </select>
@@ -41,7 +41,7 @@
         <div  class="form-group row" [ngClass]="controlStateClass(state)">
           <label for="comment-state" class="col-sm-1 form-control-label text-right">状态</label>
           <div class="col-sm-2">
-            <select class="form-control c-select" id="comment-state" [formControl]="state">
+            <select class="form-control" id="comment-state" [formControl]="state">
               <option [ngValue]="CommentState.Spam">垃圾评论</option>
               <option [ngValue]="CommentState.Deleted">已删除</option>
               <option [ngValue]="CommentState.Auditing">待审核</option>
@@ -53,10 +53,10 @@
           <label for="comment-user-name" class="col-sm-1 form-control-label text-right">用户名</label>
           <div class="col-sm-2">
             <input
-              type="text" 
-              id="comment-user-name" 
-              class="form-control" 
-              placeholder="用户名" 
+              type="text"
+              id="comment-user-name"
+              class="form-control"
+              placeholder="用户名"
               [formControl]="user_name"
             />
           </div>
@@ -65,10 +65,10 @@
           <label for="comment-user-email" class="col-sm-1 form-control-label text-right">用户邮箱</label>
           <div class="col-sm-2">
             <input
-              type="email" 
-              id="comment-user-email" 
-              class="form-control" 
-              placeholder="用户邮箱" 
+              type="email"
+              id="comment-user-email"
+              class="form-control"
+              placeholder="用户邮箱"
               [formControl]="user_email"
             />
           </div>
@@ -77,10 +77,10 @@
           <label for="comment-user-site" class="col-sm-1 form-control-label text-right">用户地址</label>
           <div class="col-sm-2">
             <input
-              type="url" 
-              id="comment-user-site" 
-              class="form-control" 
-              placeholder="用户的个人网址" 
+              type="url"
+              id="comment-user-site"
+              class="form-control"
+              placeholder="用户的个人网址"
               [formControl]="user_site"
             />
           </div>
@@ -123,11 +123,11 @@
         <div class="form-group row" [ngClass]="controlStateClass(pid)">
           <label for="PID" class="col-sm-1 form-control-label text-right">父级评论</label>
           <div class="col-sm-5">
-            <select class="form-control c-select" [formControl]="pid">
+            <select class="form-control" [formControl]="pid">
               <option default [value]="0">无父级评论</option>
               <ng-template [ngIf]="comment.id && comments && comments.data.length">
                 <option
-                  *ngFor="let item of comments.data" 
+                  *ngFor="let item of comments.data"
                   [ngValue]="item.id"
                   [disabled]="item.id === comment.id"
                 >
@@ -141,7 +141,7 @@
           <label for="comment-content" class="col-sm-1 form-control-label text-right">内容</label>
           <div class="col-sm-5">
             <sa-markdown-editor
-              class="form-control comemnt-content" 
+              class="form-control comemnt-content"
               title="评论内容"
               id="comment-content"
               [formControl]="content"
@@ -153,18 +153,18 @@
           <div class="col-sm-5">
             <div class="input-group" *ngFor="let extend of extends.value; let i = index">
               <input
-                type="text" 
+                type="text"
                 id="comment-name"
                 class="form-control"
-                placeholder="key" 
+                placeholder="key"
                 [(ngModel)]="extend.name"
                 [ngModelOptions]="{ standalone: true }"
               />
               <input
-                type="text" 
+                type="text"
                 id="comment-name"
                 class="form-control"
-                placeholder="value" 
+                placeholder="value"
                 [(ngModel)]="extend.value"
                 [ngModelOptions]="{ standalone: true }"
               />

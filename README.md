@@ -1,10 +1,10 @@
 <p align="center">
   <a href="https://github.com/angular/angular" target="blank">
-    <img src="https://angular.io/assets/images/logos/angular/angular.svg" height="90" alt="Angular Logo" />
+    <img src="https://angular.io/assets/images/logos/angular/angular.svg" height="90" alt="Angular logo" />
   </a>
   <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
   <a href="https://github.com/surmon-china/nodepress" target="blank">
-    <img src="https://raw.githubusercontent.com/surmon-china/angular-admin/master/src/assets/images/profile/logo.png" height="90" alt="nodepress Logo" />
+    <img src="https://raw.githubusercontent.com/surmon-china/angular-admin/master/src/assets/images/profile/logo.png" height="90" alt="nodepress logo" />
   </a>
 </p>
 
@@ -58,9 +58,9 @@ npm run build
 ## Actions setup
 
 **Rule:**
-- `any PR open` -> `CI:Build test`
-- `master PR close & merged` -> `CI:Deploy to server`
+- `any PR open` → `CI:Build test`
+- `master PR close & merged` → `CI:Deploy to server`
 
 **Example:**
-- `local:develop -> remote:develop` -> `CI:Build test`
-- `remote:develop/master -> remote:master -> merged` -> `CI:Deploy to server`
+- `local:develop(local:build:tar)` → `remote:develop` → `CI:Build test`
+- `remote:develop/master` → `remote:master` → `merged` → `CI:Deploy to server`

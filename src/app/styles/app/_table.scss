@@ -5,16 +5,16 @@
   & > thead {
     & > tr {
       & > th {
-        padding: 1em;
+        padding: 1rem;
         // border-bottom: 1px solid $border-light;
         white-space: nowrap;
 
         &:first-child {
-          text-align: center;
+          text-align: left;
         }
 
         &:last-child {
-          padding-right: 1em;
+          padding-right: 1rem;
         }
       }
     }
@@ -26,16 +26,16 @@
       }
 
       & > td {
-        padding: .5em 1em;
+        padding: .5rem 1rem;
         line-height: 3em;
         vertical-align: middle;
         // border-top: 1px solid $border-light;
 
         &:first-child {
-          text-align: center;
+          text-align: left;
         }
         &:last-child {
-          padding-right: 1em !important;
+          padding-right: 1rem !important;
         }
       }
     }
@@ -292,13 +292,13 @@ th {
 
   > li {
 
-    &:first-child > a, 
+    &:first-child > a,
     &:first-child > span {
       border-top-left-radius: 0px;
       border-bottom-left-radius: 0px;
     }
 
-    &:last-child > a, 
+    &:last-child > a,
     &:last-child > span {
       border-top-right-radius: 0px;
       border-bottom-right-radius: 0px;

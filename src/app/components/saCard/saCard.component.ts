@@ -13,6 +13,6 @@ import { Component, ViewEncapsulation, Input } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class SaCardComponent {
-  @Input() title: string;
+  @Input() name: string;
   @Input() baCardClass: string;
 }

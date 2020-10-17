@@ -3,7 +3,7 @@
     <label for="article-status" class="col-3 text-center form-control-label">来源</label>
     <div class="col-6">
       <select
-        class="form-control c-select"
+        class="form-control"
         id="article-origin"
         name="article-origin"
         [(ngModel)]="origin"
@@ -20,7 +20,7 @@
     <label for="article-status" class="col-3 text-center form-control-label">状态</label>
     <div class="col-6">
       <select
-        class="form-control c-select"
+        class="form-control"
         id="article-status"
         name="article-status"
         [(ngModel)]="state"
@@ -34,10 +34,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="article-public" class="col-3 text-center form-control-label">公开度</label>
+    <label for="article-public" class="col-3 text-center form-control-label">公开</label>
     <div class="col-6">
       <select
-        class="form-control c-select"
+        class="form-control"
         id="article-public"
         name="article-public"
         [(ngModel)]="ppublic"
@@ -51,7 +51,7 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="article-password" class="col-3 text-center form-control-label">文章密码</label>
+    <label for="article-password" class="col-3 text-center form-control-label">密码</label>
     <div class="col-6">
        <input
         type="password"
@@ -69,12 +69,12 @@
   <div class="row">
     <div class="col-sm-12">
       <button
-        class="btn btn-block btn-default btn-with-icon"
+        class="btn btn-block btn-primary btn-with-icon"
         [disabled]="disabled"
         (click)="submitArticle.emit()"
       >
         <ion-icon class="icon" name="checkmark-done"></ion-icon>
-        <span>{{ isEdit ? '修改' : '发布' }}文章</span>
+        <span>{{ isEdit ? '更新' : '发布' }}文章</span>
       </button>
     </div>
   </div>

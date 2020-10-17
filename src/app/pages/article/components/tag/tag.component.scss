@@ -13,7 +13,7 @@
 .tag-search-form {
   > .input-group {
     > .form-control {
-      width: 18em;
+      width: 14rem;
     }
   }
 }
@@ -21,13 +21,8 @@
 .tag-list {
   position: relative;
 
-  .batch-checkbox {
-    text-align: left;
-    padding-left: 2em;
-  }
-
   .tag-err-msg {
-    margin: 1em 0;
+    margin: 1rem 0;
   }
 
   tbody {
@@ -35,9 +30,8 @@
       td {
         line-height: 5em;
 
-        > .tag-slug,
-        > .tag-description {
-          width: 10em;
+        .tag-description {
+          max-width: 10rem;
           overflow: hidden;
           text-overflow: ellipsis;
           -o-text-overflow: ellipsis;

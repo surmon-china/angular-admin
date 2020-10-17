@@ -1,57 +1,98 @@
 <div class="row">
   <div class="col-lg-12 col-md-12">
-    <sa-card title="文章列表" baCardClass="with-scroll table-panel">
+    <sa-card name="文章列表" baCardClass="with-scroll table-panel">
       <div class="contnet-top-tools">
         <div class="pull-left">
-          <div class="btn-group">
-            <button
-              type="button"
-              class="btn btn-default active"
-              [ngClass]="{ 'active': isState(PublishState.All)}"
-              [disabled]="isLoadingArticleList"
-              (click)="switchState(PublishState.All)"
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <button class="btn btn-default">
+                <strong>{{ currentListTotal }} 篇</strong>
+              </button>
+            </div>
+            <select
+              class="form-control"
+              [(ngModel)]="getParams.state"
+              (ngModelChange)="getArticles()"
             >
-              <span>全部</span>
-              <span *ngIf="isState(PublishState.All)">&nbsp;({{ currentListTotal }})</span>
-            </button>
-            <button
-              type="button"
-              class="btn btn-default btn-with-icon"
-              [ngClass]="{ 'active': isState(PublishState.Published) }"
-              [disabled]="isLoadingArticleList"
-              (click)="switchState(PublishState.Published)"
+              <option [ngValue]="PublishState.All" default>全部文章</option>
+              <option [ngValue]="PublishState.Published">已发布</option>
+              <option [ngValue]="PublishState.Draft">草稿</option>
+              <option [ngValue]="PublishState.Recycle">回收站</option>
+            </select>
+            <select
+              class="form-control"
+              [disabled]="isLoading(Loading.GetCategoryList)"
+              [(ngModel)]="getParams.category"
+              (ngModelChange)="getArticles()"
             >
-              <ion-icon class="icon" name="checkmark-done"></ion-icon>
-              <span>已发布</span>
-              <span *ngIf="isState(PublishState.Published)">&nbsp;({{ currentListTotal }})</span>
-            </button>
-            <button
-              type="button"
-              class="btn btn-default btn-with-icon"
-              [ngClass]="{ 'active': isState(PublishState.Draft) }"
-              [disabled]="isLoadingArticleList"
-              (click)="switchState(PublishState.Draft)"
+              <option default value="all">所有分类</option>
+              <ng-template [ngIf]="categories && categories.data.length">
+                <option *ngFor="let category of categories.data" [ngValue]="category._id">
+                  <span *ngIf="category.level">└</span>
+                  <strong>{{ ''.padEnd(category.level, '─') }}</strong>
+                  <span>{{ category.name }}</span>
+                </option>
+              </ng-template>
+            </select>
+            <select
+              class="form-control"
+              [disabled]="isLoading(Loading.GetTagList)"
+              [(ngModel)]="getParams.tag"
+              (ngModelChange)="getArticles()"
             >
-              <ion-icon class="icon" name="create"></ion-icon>
-              <span>草稿</span>
-              <span *ngIf="isState(PublishState.Draft)">&nbsp;({{ currentListTotal }})</span>
-            </button>
-            <button
-              type="button"
-              class="btn btn-default btn-with-icon"
-              [ngClass]="{ 'active': isState(PublishState.Recycle) }"
-              [disabled]="isLoadingArticleList"
-              (click)="switchState(PublishState.Recycle)"
+              <option default value="all">所有标签</option>
+              <ng-template [ngIf]="tags && tags.data.length">
+                <option *ngFor="let tag of tags.data" [ngValue]="tag._id">
+                  <span>{{ tag.name }}</span>
+                </option>
+              </ng-template>
+            </select>
+            <select class="form-control" [(ngModel)]="getParams.sort" (ngModelChange)="getArticles()">
+              <option [ngValue]="SortType.Desc" default>最新发布</option>
+              <option [ngValue]="SortType.Asc">最早发布</option>
+              <option [ngValue]="SortType.Hot">文章热度</option>
+            </select>
+            <select class="form-control" [(ngModel)]="getParams.public" (ngModelChange)="getArticles()">
+              <option [ngValue]="PublicState.All" default>所有类型</option>
+              <option [ngValue]="PublicState.Public">公开</option>
+              <option [ngValue]="PublicState.Password">密码</option>
+              <option [ngValue]="PublicState.Secret">私密</option>
+            </select>
+            <select
+              class="form-control"
+              [(ngModel)]="getParams.origin"
+              (ngModelChange)="getArticles()"
             >
-              <ion-icon class="icon" name="trash"></ion-icon>
-              <span>回收站</span>
-              <span *ngIf="isState(PublishState.Recycle)">&nbsp;({{ currentListTotal }})</span>
-            </button>
+              <option [ngValue]="OriginState.All" default>所有来源</option>
+              <option [ngValue]="OriginState.Original">原创</option>
+              <option [ngValue]="OriginState.Reprint">转载</option>
+              <option [ngValue]="OriginState.Hybrid">混合</option>
+            </select>
+            <form
+              class="form-inline article-search-form"
+              [formGroup]="searchForm"
+              (ngSubmit)="searchArticles()"
+            >
+              <div class="input-group">
+                <input
+                  type="text"
+                  [formControl]="keyword"
+                  class="form-control with-default-addon"
+                  placeholder="文章标题、描述"
+                />
+                <span class="input-group-append">
+                  <button class="btn btn-default btn-icon" type="submit" [disabled]="!searchForm.valid">
+                    <ion-icon class="icon" name="search"></ion-icon>
+                  </button>
+                </span>
+              </div>
+            </form>
           </div>
-          <span>&nbsp;&nbsp;</span>
+        </div>
+        <div class="pull-right">
           <div class="btn-group">
             <button
-              type="button" 
+              type="button"
               class="btn btn-default btn-with-icon"
               [disabled]="isLoadingArticleList"
               (click)="refreshArticles()"
@@ -60,7 +101,7 @@
               <span>刷新</span>
             </button>
             <button
-              type="button" 
+              type="button"
               class="btn btn-default btn-with-icon"
               [disabled]="isLoadingArticleList"
               (click)="resetGetParams()"
@@ -106,75 +147,6 @@
             </div>
           </div>
         </div>
-        <form class="pull-right form-inline article-get-form" [formGroup]="searchForm" (ngSubmit)="searchArticles()">
-          <div class="input-group">
-            <input
-              type="text"
-              [formControl]="keyword" 
-              class="form-control with-default-addon" 
-              placeholder="文章标题、描述"
-            />
-            <span class="input-group-append">
-              <button class="btn btn-default" type="submit" [disabled]="!searchForm.valid">搜索</button>
-            </span>
-          </div>
-        </form>
-        <span class="pull-right">&nbsp;&nbsp;&nbsp;</span>
-        <div class="pull-right form-inline">
-          <select
-            class="form-control c-select"
-            [disabled]="isLoading(Loading.GetCategoryList)"
-            [(ngModel)]="getParams.category"
-            (ngModelChange)="getArticles()"
-          >
-            <option default value="all">所有分类</option>
-            <ng-template [ngIf]="categories && categories.data.length">
-              <option *ngFor="let category of categories.data" [ngValue]="category._id">
-                <span *ngIf="category.level">└</span>
-                <strong>{{ ''.padEnd(category.level, '─') }}</strong>
-                <span>{{ category.name }}</span>
-              </option>
-            </ng-template>
-          </select>
-          <span>&nbsp;&nbsp;</span>
-          <select
-            class="form-control c-select"
-            [disabled]="isLoading(Loading.GetTagList)"
-            [(ngModel)]="getParams.tag"
-            (ngModelChange)="getArticles()"
-          >
-            <option default value="all">所有标签</option>
-            <ng-template [ngIf]="tags && tags.data.length">
-              <option *ngFor="let tag of tags.data" [ngValue]="tag._id">
-                <span>{{ tag.name }}</span>
-              </option>
-            </ng-template>
-          </select>
-          <span>&nbsp;&nbsp;</span>
-          <select class="form-control c-select" [(ngModel)]="getParams.sort" (ngModelChange)="getArticles()">
-            <option [ngValue]="SortType.Desc" default>最新发布</option>
-            <option [ngValue]="SortType.Asc">最早发布</option>
-            <option [ngValue]="SortType.Hot">文章热度</option>
-          </select>
-          <span>&nbsp;&nbsp;</span>
-          <select class="form-control c-select" [(ngModel)]="getParams.public" (ngModelChange)="getArticles()">
-            <option [ngValue]="PublicState.All" default>所有类型</option>
-            <option [ngValue]="PublicState.Public">公开</option>
-            <option [ngValue]="PublicState.Password">密码</option>
-            <option [ngValue]="PublicState.Secret">私密</option>
-          </select>
-          <span>&nbsp;&nbsp;</span>
-          <select
-            class="form-control c-select" 
-            [(ngModel)]="getParams.origin"
-            (ngModelChange)="getArticles()"
-          >
-            <option [ngValue]="OriginState.All" default>所有来源</option>
-            <option [ngValue]="OriginState.Original">原创</option>
-            <option [ngValue]="OriginState.Reprint">转载</option>
-            <option [ngValue]="OriginState.Hybrid">混合</option>
-          </select>
-        </div>
       </div>
       <div class="table-responsive">
         <div class="article-list">
@@ -182,7 +154,7 @@
           <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
             <thead class="thead-inverse">
               <tr>
-                <th>
+                <th width="88px">
                   <sa-checkbox [(ngModel)]="articlesSelectAll" (ngModelChange)="batchSelectChange($event)">
                     <span sa-checkbox-label>
                       <span>&nbsp;</span>
@@ -190,15 +162,12 @@
                     </span>
                   </sa-checkbox>
                 </th>
-                <th width="30%">文章</th>
-                <th>分类目录</th>
-                <th width="150">标签</th>
-                <th>评论</th>
-                <th>喜欢</th>
-                <th>日期</th>
-                <th>公开</th>
-                <th>状态</th>
-                <th>操作</th>
+                <th>文章</th>
+                <th width="138px">分类/标签</th>
+                <th width="120px">评论/喜欢</th>
+                <th width="220px">日期</th>
+                <th width="110px">状态</th>
+                <th width="130px">操作</th>
               </tr>
             </thead>
             <tbody>
@@ -221,8 +190,8 @@
                     <div class="content-box">
                       <div
                         class="content-bg"
-                        [ngStyle]="{ 
-                          'background-image': 'url(' + (article.thumb || '/assets/images/profile/article-thumb.jpg') +')' 
+                        [ngStyle]="{
+                          'background-image': 'url(' + (article.thumb || '/assets/images/profile/article-thumb.jpg') +')'
                         }"
                       >
                       </div>
@@ -263,7 +232,7 @@
                     </div>
                   </td>
                   <td class="article-category">
-                    <ul class="list-unstyled category-list">
+                    <ul class="list-unstyled list">
                       <li *ngFor="let category of article.category">
                         <ion-icon class="icon" name="folder"></ion-icon>
                         <span>&nbsp;&nbsp;</span>
@@ -275,9 +244,8 @@
                         <span>暂无分类</span>
                       </li>
                     </ul>
-                  </td>
-                  <td class="article-tag">
-                    <ul class="list-unstyled tag-list">
+                    <hr>
+                    <ul class="list-unstyled list">
                       <li *ngFor="let tag of article.tag">
                         <ion-icon class="icon" name="pricetags"></ion-icon>
                         <span>&nbsp;&nbsp;</span>
@@ -291,35 +259,22 @@
                     </ul>
                   </td>
                   <td>
-                    <span *ngIf="article.meta.comments">
-                      <a [routerLink]="['/comment/post/', article.id]">{{ article.meta.comments }} 条评论</a>
+                    <span>
+                      <span *ngIf="article.meta.comments">
+                        <a [routerLink]="['/comment/post/', article.id]">{{ article.meta.comments }} 条评论</a>
+                      </span>
+                      <span class="text-muted" *ngIf="!article.meta.comments">暂无评论</span>
                     </span>
-                    <span class="text-muted" *ngIf="!article.meta.comments">暂无评论</span>
-                  </td>
-                  <td>
-                    <span *ngIf="article.meta.likes">{{ article.meta.likes }} 人喜欢</span>
-                    <span class="text-muted" *ngIf="!article.meta.likes">无人问津</span>
-                  </td>
-                  <td>
-                    <span>最早创建：{{ article.create_at | dataToLocale }}</span>
-                    <br>
-                    <span>最后更新：{{ article.update_at | dataToLocale }}</span>
-                  </td>
-                  <td>
-                    <span [ngSwitch]="article.public">
-                      <span *ngSwitchCase="PublicState.Public">
-                        <ion-icon class="icon text-success" name="lock-open"></ion-icon>
-                        <span> 公开</span>
-                      </span>
-                      <span *ngSwitchCase="PublicState.Password">
-                        <ion-icon class="icon text-danger" name="lock-closed"></ion-icon>
-                        <span> 密码</span>
-                      </span>
-                      <span *ngSwitchCase="PublicState.Secret">
-                        <ion-icon class="icon text-danger" name="lock-closed"></ion-icon>
-                        <span> 私密</span>
-                      </span>
+                    <hr>
+                    <span>
+                      <span *ngIf="article.meta.likes">{{ article.meta.likes }} 人喜欢</span>
+                      <span class="text-muted" *ngIf="!article.meta.likes">无人问津</span>
                     </span>
+                  </td>
+                  <td>
+                    <span>最早：{{ article.create_at | dataToLocale }}</span>
+                    <hr>
+                    <span>最后：{{ article.update_at | dataToLocale }}</span>
                   </td>
                   <td>
                     <span [ngSwitch]="article.state">
@@ -334,6 +289,21 @@
                       <span *ngSwitchCase="PublishState.Recycle">
                         <ion-icon class="icon text-danger" name="trash"></ion-icon>
                         <span> 回收站</span>
+                      </span>
+                    </span>
+                    <hr>
+                    <span [ngSwitch]="article.public">
+                      <span *ngSwitchCase="PublicState.Public">
+                        <ion-icon class="icon text-success" name="lock-open"></ion-icon>
+                        <span> 公开</span>
+                      </span>
+                      <span *ngSwitchCase="PublicState.Password">
+                        <ion-icon class="icon text-danger" name="lock-closed"></ion-icon>
+                        <span> 密码</span>
+                      </span>
+                      <span *ngSwitchCase="PublicState.Secret">
+                        <ion-icon class="icon text-danger" name="lock-closed"></ion-icon>
+                        <span> 私密</span>
                       </span>
                     </span>
                   </td>

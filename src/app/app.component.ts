@@ -18,7 +18,6 @@ type TMenuCollapsedState = boolean;
 @Component({
   selector: 'app-admin',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./styles/app.scss'],
   template: `
     <main [ngClass]="isMenuCollapsed ? 'menu-collapsed': ''">
       <ngx-loading-bar color="#017170" height="4px" diameter="20px"></ngx-loading-bar>

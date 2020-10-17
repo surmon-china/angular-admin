@@ -1,7 +1,7 @@
 <form
-  name="addCatrgory" 
-  class="category-edit-form" 
-  [formGroup]="editForm" 
+  name="addCatrgory"
+  class="category-edit-form"
+  [formGroup]="editForm"
   (ngSubmit)="submitEditForm()"
 >
   <div class="form-group" [ngClass]="controlStateClass(name)">
@@ -9,10 +9,10 @@
       <h5>名称</h5>
     </label>
     <input
-      type="text" 
-      class="form-control" 
-      id="category-name" 
-      placeholder="分类名称" 
+      type="text"
+      class="form-control"
+      id="category-name"
+      placeholder="分类名称"
       [formControl]="name"
     >
     <span class="help-block sub-little-text">这将是它在站点上显示的名字</span>
@@ -22,10 +22,10 @@
       <h5>别名</h5>
     </label>
     <input
-      type="text" 
-      class="form-control" 
-      id="category-slug" 
-      placeholder="分类别名" 
+      type="text"
+      class="form-control"
+      id="category-slug"
+      placeholder="分类别名"
       [formControl]="slug"
     >
     <span class="help-block sub-little-text">“别名”是在URL中使用的别称，建议小写，字母、数字、连字符（-）</span>
@@ -34,12 +34,12 @@
     <label for="category-parent">
       <h5>父分类</h5>
     </label>
-    <select class="form-control c-select" id="category-parent" [formControl]="pid">
+    <select class="form-control" id="category-parent" [formControl]="pid">
       <option [ngValue]="null">无</option>
       <ng-template [ngIf]="categories && categories.length">
         <option
-          *ngFor="let cate of categories" 
-          [ngValue]="cate._id" 
+          *ngFor="let cate of categories"
+          [ngValue]="cate._id"
           [disabled]="isDisableCateSelect(cate)"
         >
           <span *ngIf="cate.level">└</span>
@@ -73,24 +73,24 @@
     </label>
     <div class="input-group" *ngFor="let extend of extends.value; let i = index">
       <input
-        type="text" 
+        type="text"
         id="category-extend"
         class="form-control"
-        placeholder="key" 
+        placeholder="key"
         [(ngModel)]="extend.name"
         [ngModelOptions]="{ standalone: true }"
       >
       <input
-        type="text" 
+        type="text"
         id="category-extend-value"
         class="form-control"
-        placeholder="value" 
+        placeholder="value"
         [(ngModel)]="extend.value"
         [ngModelOptions]="{ standalone: true }"
       >
       <div class="input-group-append">
         <button
-          class="btn btn-default" 
+          class="btn btn-default"
           (click)="delExtendItem(i)"
           [disabled]="extends.value.length < 2"
         >
@@ -112,8 +112,8 @@
   <div class="row">
     <div class="col-sm-12">
       <button
-        type="submit" 
-        class="btn btn-success btn-with-icon submit-btn" 
+        type="submit"
+        class="btn btn-success btn-with-icon submit-btn"
         [disabled]="!editForm.valid || isFetching"
       >
         <ion-icon class="icon" name="checkmark-done"></ion-icon>

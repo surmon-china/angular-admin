@@ -9,5 +9,5 @@ echo "[deploy] Delete old files..."
 rm -r ./www
 echo "[deploy] Decompression tar..."
 mkdir www
-tar -xvf ./dist.tar.gz -C ./www
+tar -xvf ./www.tar.gz -C ./www
 echo "[deploy] Finished."

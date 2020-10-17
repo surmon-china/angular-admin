@@ -18,6 +18,10 @@ import { AppComponent } from '@app/app.component';
 import { RoutingModule } from '@app/app.routing';
 import { GlobalState } from '@app/global.state';
 import { AppState, TInternalState } from '@app/app.service';
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+
+registerLocaleData(zh);
 
 export interface IAppStore {
   state: TInternalState;

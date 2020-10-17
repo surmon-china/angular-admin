@@ -41,6 +41,7 @@ const DEFAULT_OPTION_FORM = {
   site_url: '',
   site_email: '',
   site_icp: '',
+  ad_config: '',
   blacklist_ips: [],
   blacklist_mails: [],
   blacklist_keywords: []
@@ -54,6 +55,18 @@ enum Loading {
   DatabaseBackup,
   GithubCache,
   SyndicationCache,
+}
+
+// 长数据处理器
+const formatLongString = (value: string): string => {
+  return value.replace(/\s+/g, ' ').replace(/\s/g, '\n');
+}
+// JSON 字符串处理
+const formatJSONString = (json: string, indent = 0): string => {
+  const jsonString = json || '';
+  return !jsonString.trim()
+    ? ''
+    : JSON.stringify(JSON.parse(jsonString), null, indent);
 }
 
 @Component({
@@ -88,6 +101,7 @@ export class OptionsComponent implements OnInit {
   public site_url: AbstractControl;
   public site_email: AbstractControl;
   public site_icp: AbstractControl;
+  public ad_config: AbstractControl;
   public blacklist_ips: AbstractControl;
   public blacklist_mails: AbstractControl;
   public blacklist_keywords: AbstractControl;
@@ -126,11 +140,18 @@ export class OptionsComponent implements OnInit {
       keywords: [DEFAULT_OPTION_FORM.keywords, Validators.compose([Validators.required])],
       description: [DEFAULT_OPTION_FORM.description, Validators.compose([Validators.required])],
       site_url: [DEFAULT_OPTION_FORM.site_url, Validators.compose([Validators.required])],
-      site_email: [
-        DEFAULT_OPTION_FORM.site_email,
-        Validators.compose([Validators.pattern('([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+')])
-      ],
+      site_email: [DEFAULT_OPTION_FORM.site_email,Validators.compose([Validators.email])],
       site_icp: [DEFAULT_OPTION_FORM.site_icp],
+      ad_config: [DEFAULT_OPTION_FORM.ad_config, Validators.compose([control => {
+        try {
+          formatJSONString(control.value || '');
+          return null;
+        } catch (error) {
+          return {
+            error: '不合法的 JSON'
+          }
+        }
+      }])],
       blacklist_ips: [DEFAULT_OPTION_FORM.blacklist_ips],
       blacklist_mails: [DEFAULT_OPTION_FORM.blacklist_mails],
       blacklist_keywords: [DEFAULT_OPTION_FORM.blacklist_keywords]
@@ -156,24 +177,19 @@ export class OptionsComponent implements OnInit {
     return null;
   }
 
-  // 长数据处理器
-  private formatLongString(value: string): string {
-    return value.replace(/\s+/g, ' ').replace(/\s/g, '\n');
-  }
-
   // 黑名单 ip 解析处理
   public handleCommentBlacklistIpsChange(event) {
-    this.blacklist_ips.setValue(this.formatLongString(event.target.value));
+    this.blacklist_ips.setValue(formatLongString(event.target.value));
   }
 
   // 黑名单邮箱解析处理
   public handleCommentBlacklistMailsChange(event) {
-    this.blacklist_mails.setValue(this.formatLongString(event.target.value));
+    this.blacklist_mails.setValue(formatLongString(event.target.value));
   }
 
   // 黑名单关键词解析处理
   public handleCommentBlacklistKeywordsChange(event) {
-    this.blacklist_keywords.setValue(this.formatLongString(event.target.value));
+    this.blacklist_keywords.setValue(formatLongString(event.target.value));
   }
 
   // 关键词计息处理
@@ -207,21 +223,23 @@ export class OptionsComponent implements OnInit {
     if (!this.optionForm.valid) {
       return false;
     }
-    const format = value => String(value).split('\n').filter(t => !!t);
+    const formatStringList = value => String(value).split('\n').filter(t => !!t);
     const {
       blacklist_ips,
       blacklist_keywords,
       blacklist_mails,
       keywords,
+      ad_config,
       ...other
     } = this.optionForm.value;
     const formValue = {
       ...other,
-      keywords: format(keywords),
+      ad_config: formatJSONString(ad_config),
+      keywords: formatStringList(keywords),
       blacklist: {
-        ips: format(this.blacklist_ips.value),
-        mails: format(this.blacklist_mails.value),
-        keywords: format(this.blacklist_keywords.value)
+        ips: formatStringList(this.blacklist_ips.value),
+        mails: formatStringList(this.blacklist_mails.value),
+        keywords: formatStringList(this.blacklist_keywords.value)
       }
     };
     this.putOptions(formValue);
@@ -232,7 +250,6 @@ export class OptionsComponent implements OnInit {
     userAuthPromise.then(({ result: adminInfo}) => {
       if (this.authForm.value.rel_new_password) {
         // 清除本地的 token，并取消掉自动续约任务
-        // tslint:disable-next-line:no-console
         console.info('密码更新成功，正跳转至登陆页');
         this.tokenService.removeToken();
         this.renewalService.stop();
@@ -247,11 +264,12 @@ export class OptionsComponent implements OnInit {
   // 解析返回的设置表单数据
   public handleOptionChange(optionPromise: Promise<any>) {
     return optionPromise.then(({ result: options }) => {
-      const format = value => value.toString().replace(/,/g, '\n');
-      options.blacklist_ips = format(options.blacklist.ips);
-      options.blacklist_mails = format(options.blacklist.mails);
-      options.blacklist_keywords = format(options.blacklist.keywords);
-      options.keywords = format(options.keywords);
+      const formatListString = value => value.toString().replace(/,/g, '\n');
+      options.blacklist_ips = formatListString(options.blacklist.ips);
+      options.blacklist_mails = formatListString(options.blacklist.mails);
+      options.blacklist_keywords = formatListString(options.blacklist.keywords);
+      options.keywords = formatListString(options.keywords);
+      options.ad_config = formatJSONString(options.ad_config, 2);
       this.optionForm.reset(options);
     }).catch(error => {});
   }

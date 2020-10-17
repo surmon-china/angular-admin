@@ -5,9 +5,9 @@
 
 export const APP_TITLE = 'Surmon.me';
 export const BLOG_HOST = '//surmon.me';
-export const BLOG_SITE = 'https:' + BLOG_HOST;
+export const BLOG_SITE = `https:${BLOG_HOST}`;
 export const STATIC_URL = 'https://static.surmon.me';
-export const GRAVATAR_API = STATIC_URL + '/avatar';
+export const GRAVATAR_API = `${STATIC_URL}/avatar`;
 export const ALIYUN_OSS_REGION = 'oss-cn-hangzhou';
 export const ALIYUN_OSS_BUCKET = 'surmon-static';
 
