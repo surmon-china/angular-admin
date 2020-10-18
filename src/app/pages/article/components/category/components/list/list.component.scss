@@ -1,10 +1,6 @@
 .category-list {
   position: relative;
 
-  .batch-checkbox {
-    text-align: left;
-  }
-
   .category-err-msg {
     margin: 1rem 0;
   }
@@ -12,9 +8,7 @@
   tbody {
     tr {
       td {
-        line-height: 5em;
-
-        &.category-description {
+        .category-description {
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;

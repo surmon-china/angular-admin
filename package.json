@@ -11,7 +11,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "dev": "ng serve --proxy-config proxy.conf.json",
+    "dev": "ng serve --proxy-config proxy.dev.conf.json",
+    "dev:online": "ng serve --proxy-config proxy.prod.conf.json",
     "build": "ng build --prod --configuration production",
     "test": "ng test",
     "lint": "ng lint",

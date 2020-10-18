@@ -2,6 +2,10 @@
   color: $content-text;
   margin-bottom: 0px;
 
+  td.no-wrap {
+    white-space: nowrap;
+  }
+
   & > thead {
     & > tr {
       & > th {
@@ -26,10 +30,9 @@
       }
 
       & > td {
-        padding: .5rem 1rem;
-        line-height: 3em;
+        padding: $gap-lg $gap;
+        line-height: 2em;
         vertical-align: middle;
-        // border-top: 1px solid $border-light;
 
         &:first-child {
           text-align: left;
@@ -355,5 +358,5 @@ th {
 }
 
 .table-responsive {
-  margin-top: 1em;
+  margin-top: 1rem;
 }

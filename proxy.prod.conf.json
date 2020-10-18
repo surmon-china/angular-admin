@@ -1,0 +1,15 @@
+{
+  "/api/*": {
+    "target": "https://api.surmon.me",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "headers": {
+      "referer": "https://admin.surmon.me/",
+      "origin": "https://admin.surmon.me"
+    },
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

@@ -28,46 +28,60 @@
       }
 
       td {
-        &.article-content {
-          > .content-box {
-            padding: 1rem;
-            line-height: 2;
-            position: relative;
+        .article-content {
+          padding: 1rem;
+          line-height: 2;
+          position: relative;
 
-            > .content-bg {
-              position: absolute;
-              width: 100%;
-              height: 100%;
-              top: 0;
-              left: 0;
-              z-index: -1;
-              background-color: $disabled-bg;
-              background-position: center;
-              background-size: cover;
-              border-radius: 1px;
-              filter: brightness(0.4);
-              opacity: .8;
-              border-radius: $radius-sm;
-            }
+          > .content-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background-color: $disabled-bg;
+            background-position: center;
+            background-size: cover;
+            border-radius: 1px;
+            filter: brightness(0.4);
+            opacity: .8;
+            border-radius: $radius-sm;
+          }
 
-            > .title {
-              margin-top: .2rem;
-              margin-bottom: 1rem;
+          > .title {
+            margin-top: .2rem;
+            margin-bottom: 1rem;
 
-              > a {
-                &:hover {
-                  cursor: pointer;
-                  border-bottom: 1px solid;
-                }
+            > a {
+              &:hover {
+                cursor: pointer;
+                border-bottom: 1px solid;
               }
             }
           }
+
+          .description {
+            font-size: $font-size-sm;
+            margin-bottom: 0;
+          }
         }
 
-        &.article-category {
+        .article-category {
           .list {
             margin: 0;
             line-height: 2.3;
+          }
+        }
+
+        .action-btn-list {
+          text-align: center;
+
+          .button-wrapper {
+            margin-bottom: $gap-xs;
+            &:last-child {
+              margin: 0;
+            }
           }
         }
       }

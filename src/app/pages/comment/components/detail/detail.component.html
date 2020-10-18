@@ -111,7 +111,9 @@
             <div class="form-control">
               <span>操作系统：</span>
               <span *ngIf="comment.agent" [innerHTML]="osParser(comment.agent)"></span>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <br>
+            <div class="form-control">
               <span>浏览器：</span>
               <span *ngIf="comment.agent;else unknowUa">{{ browserParser(comment.agent) }}</span>
               <ng-template #unknowUa>

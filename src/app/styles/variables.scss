@@ -102,14 +102,15 @@ $font-bolder: 500;
 $font-ultraBold: 900;
 
 $gap: 1rem;
-$gap-xs: 0.618rem;
+$gap-xs: $gap * 0.618;
+$gap-lg: $gap-xs * 3;
 $radius-xs: 1px;
 $radius-sm: 4px;
 $radius-lg: 8px;
 
 $font-size-base: 1rem;
 $font-size-lg: $font-size-base * 1.25;
-$font-size-sm: $font-size-base * .875;
+$font-size-sm: $font-size-base * .86;
 
 $z-index-header: 999;
 $z-index-sidebar-xs: 998;

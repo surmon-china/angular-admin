@@ -165,8 +165,8 @@
       <div class="table-responsive">
         <div class="comment-list">
           <sa-loading-spider [show]="isGettingList"></sa-loading-spider>
-          <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
-            <thead class="thead-inverse">
+          <table class="table table-striped table-no-borders black-muted-bg">
+            <thead>
               <tr>
                 <th>
                   <sa-checkbox
@@ -181,11 +181,11 @@
                 </th>
                 <th>PID</th>
                 <th>POST_ID</th>
-                <th width="188px">评论内容</th>
+                <th>评论内容</th>
                 <th>个人信息</th>
                 <th width="240px">终端</th>
-                <th width="120px">状态</th>
-                <th>操作</th>
+                <th>状态</th>
+                <th class="text-center" width="100px">操作</th>
               </tr>
             </thead>
             <tbody>
@@ -198,7 +198,7 @@
               </tr>
               <ng-template #dataList>
                 <tr *ngFor="let comment of comments.data" class="comment-item">
-                  <td class="batch-checkbox">
+                  <td class="no-wrap">
                     <sa-checkbox
                       ngDefaultControl
                       [(ngModel)]="comment.selected"
@@ -207,64 +207,71 @@
                       <strong sa-checkbox-label>&nbsp;{{ comment.id }}</strong>
                     </sa-checkbox>
                   </td>
-                  <td>
+                  <td class="no-wrap">
                     <a *ngIf="comment.pid;else noLinkPid" [routerLink]="['/comment/detail/', comment.pid]">{{ comment.pid }}</a>
                     <ng-template #noLinkPid><span>{{ comment.pid }}</span></ng-template>
                   </td>
-                  <td>
+                  <td class="no-wrap">
                     <a [routerLink]="['/comment/post/', comment.post_id]">{{ comment.post_id }}</a>
                   </td>
-                  <td class="comment-content">
-                    <span class="content">
+                  <td>
+                    <div class="comment-content">
                       <span *ngIf="comment.content;else emptyComment">{{ comment.content | truncate : 160 }}</span>
                       <ng-template #emptyComment><span class="text-muted">暂无内容</span></ng-template>
-                    </span>
-                  </td>
-                  <td class="comment-user">
-                    <div class="avatar">
-                      <strong>头像：</strong>
-                      <img
-                        class="image"
-                        [src]="getGravatar(comment.author.email)"
-                        [alt]="comment.author.name"
-                      />
-                    </div>
-                    <div class="name"><strong>名字：</strong>{{ comment.author.name }}</div>
-                    <div class="email">
-                      <strong>邮箱：</strong>
-                      <a [href]="'mailto:' + comment.author.email" target="_blank">{{ comment.author.email }}</a>
-                    </div>
-                    <div class="site">
-                      <strong>网址：</strong>
-                      <a [href]="comment.author.site" target="_blank">{{ comment.author.site || '无' }}</a>
                     </div>
                   </td>
-                  <td class="comment-tag">
-                    <div>
-                      <strong>IP：</strong>
-                      <span *ngIf="comment.ip;else unknowip">{{ comment.ip }}</span>
-                      <ng-template #unknowip><span class="text-muted">未知</span></ng-template>
-                    </div>
-                    <div>
-                      <strong>地理位置：</strong>
-                      <span *ngIf="comment.ip_location;else unknowIpLocation">{{ comment.ip_location.country + ' - ' + comment.ip_location.city }}</span>
-                      <ng-template #unknowIpLocation><span class="text-muted">未知</span></ng-template>
-                    </div>
-                    <div>
-                      <strong>浏览器：</strong>
-                      <span>{{ browserParser(comment.agent) }}</span>
-                    </div>
-                    <div>
-                      <strong>系统：</strong>
-                      <span>{{ osParser(comment.agent) }}</span>
-                    </div>
-                    <div>
-                      <strong>发布日期：</strong>
-                      <span>{{ comment.create_at | dataToLocale }}</span>
+                  <td class="no-wrap">
+                    <div class="comment-user">
+                      <div class="avatar">
+                        <strong>头像：</strong>
+                        <img
+                          class="image"
+                          [src]="getGravatar(comment.author.email)"
+                          [alt]="comment.author.name"
+                        />
+                      </div>
+                      <div class="name"><strong>名字：</strong>{{ comment.author.name }}</div>
+                      <div class="email">
+                        <strong>邮箱：</strong>
+                        <a [href]="'mailto:' + comment.author.email" target="_blank">{{ comment.author.email }}</a>
+                      </div>
+                      <div class="site">
+                        <strong>网址：</strong>
+                        <a [href]="comment.author.site" target="_blank">{{ comment.author.site || '无' }}</a>
+                      </div>
                     </div>
                   </td>
-                  <td>
-                    <p>
+                  <td class="no-wrap">
+                    <div class="comment-tag">
+                      <div>
+                        <strong>IP：</strong>
+                        <span *ngIf="comment.ip;else unknowip">{{ comment.ip }}</span>
+                        <ng-template #unknowip><span class="text-muted">未知</span></ng-template>
+                      </div>
+                      <div>
+                        <strong>地理位置：</strong>
+                        <span *ngIf="comment.ip_location;else unknowIpLocation">
+                          {{ comment.ip_location.country || '-' }} -
+                          {{ comment.ip_location.city || '-' }}
+                        </span>
+                        <ng-template #unknowIpLocation><span class="text-muted">未知</span></ng-template>
+                      </div>
+                      <div>
+                        <strong>浏览器：</strong>
+                        <span>{{ comment.agent ? browserParser(comment.agent) : '-' }}</span>
+                      </div>
+                      <div>
+                        <strong>系统：</strong>
+                        <span>{{ osParser(comment.agent) }}</span>
+                      </div>
+                      <div>
+                        <strong>发布日期：</strong>
+                        <span>{{ comment.create_at | dataToLocale }}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="no-wrap">
+                    <p class="like-count">
                       <ion-icon class="icon" name="heart"></ion-icon>
                       <span>&nbsp;</span>
                       <strong>{{ comment.likes }}</strong>&nbsp;个赞
@@ -282,67 +289,69 @@
                       <span *ngSwitchCase="CommentState.Spam">垃圾评论</span>
                     </span>
                   </td>
-                  <td>
-                    <div class="button-wrapper">
-                      <a
-                        class="btn btn-primary btn-sm btn-with-icon"
-                        [routerLink]="['/comment/detail/', comment.id]"
-                      >
-                        <ion-icon class="icon" name="create"></ion-icon>
-                        <span>评论详情</span>
-                      </a>
-                    </div>
-                    <div class="button-wrapper" *ngIf="comment.state === CommentState.Auditing">
-                      <button
-                        class="btn btn-success btn-sm btn-with-icon"
-                        (click)="updateCommentsState(CommentState.Published, comment)"
-                      >
-                        <ion-icon class="icon" name="checkmark"></ion-icon>
-                        <span>审核通过</span>
-                      </button>
-                    </div>
-                    <div class="button-wrapper" *ngIf="comment.state === CommentState.Deleted || comment.state === CommentState.Spam">
-                      <button
-                        class="btn btn-warning btn-sm btn-with-icon"
-                        (click)="updateCommentsState(CommentState.Auditing, comment)"
-                      >
-                        <ion-icon class="icon" name="checkmark"></ion-icon>
-                        <span>恢复评论</span>
-                      </button>
-                    </div>
-                    <div class="button-wrapper" *ngIf="comment.state === CommentState.Published">
-                      <button
-                        class="btn btn-danger btn-sm btn-with-icon"
-                        (click)="updateCommentsState(CommentState.Spam, comment)"
-                      >
-                        <ion-icon class="icon" name="nuclear"></ion-icon>
-                        <span>标为垃圾</span>
-                      </button>
-                    </div>
-                    <div class="button-wrapper" *ngIf="comment.state !== CommentState.Deleted">
-                      <button
-                        class="btn btn-danger btn-sm btn-with-icon"
-                        (click)="updateCommentsState(CommentState.Deleted, comment)"
-                      >
-                        <ion-icon class="icon" name="pint"></ion-icon>
-                        <span>移回收站</span>
-                      </button>
-                    </div>
-                    <div class="button-wrapper" *ngIf="comment.state === CommentState.Deleted">
-                      <button class="btn btn-danger btn-sm btn-with-icon" (click)="delCommentModal(comment._id)">
-                        <ion-icon class="icon" name="trash"></ion-icon>
-                        <span>彻底删除</span>
-                      </button>
-                    </div>
-                     <div class="button-wrapper">
-                      <a
-                        class="btn btn-info btn-sm btn-with-icon"
-                        target="_blank"
-                        [href]="isGuestbook(comment.post_id) ? getGuestbookPath() : getArticlePath(comment.post_id)"
-                      >
-                        <ion-icon class="icon" name="arrow-redo"></ion-icon>
-                        <span>宿主页面</span>
-                      </a>
+                  <td class="no-wrap">
+                    <div class="action-btn-list">
+                      <div class="button-wrapper">
+                        <a
+                          class="btn btn-primary btn-sm btn-with-icon"
+                          [routerLink]="['/comment/detail/', comment.id]"
+                        >
+                          <ion-icon class="icon" name="create"></ion-icon>
+                          <span>评论详情</span>
+                        </a>
+                      </div>
+                      <div class="button-wrapper" *ngIf="comment.state === CommentState.Auditing">
+                        <button
+                          class="btn btn-success btn-sm btn-with-icon"
+                          (click)="updateCommentsState(CommentState.Published, comment)"
+                        >
+                          <ion-icon class="icon" name="checkmark"></ion-icon>
+                          <span>审核通过</span>
+                        </button>
+                      </div>
+                      <div class="button-wrapper" *ngIf="comment.state === CommentState.Deleted || comment.state === CommentState.Spam">
+                        <button
+                          class="btn btn-warning btn-sm btn-with-icon"
+                          (click)="updateCommentsState(CommentState.Auditing, comment)"
+                        >
+                          <ion-icon class="icon" name="checkmark"></ion-icon>
+                          <span>恢复评论</span>
+                        </button>
+                      </div>
+                      <div class="button-wrapper" *ngIf="comment.state === CommentState.Published">
+                        <button
+                          class="btn btn-danger btn-sm btn-with-icon"
+                          (click)="updateCommentsState(CommentState.Spam, comment)"
+                        >
+                          <ion-icon class="icon" name="nuclear"></ion-icon>
+                          <span>标为垃圾</span>
+                        </button>
+                      </div>
+                      <div class="button-wrapper" *ngIf="comment.state !== CommentState.Deleted">
+                        <button
+                          class="btn btn-danger btn-sm btn-with-icon"
+                          (click)="updateCommentsState(CommentState.Deleted, comment)"
+                        >
+                          <ion-icon class="icon" name="pint"></ion-icon>
+                          <span>移回收站</span>
+                        </button>
+                      </div>
+                      <div class="button-wrapper" *ngIf="comment.state === CommentState.Deleted">
+                        <button class="btn btn-danger btn-sm btn-with-icon" (click)="delCommentModal(comment._id)">
+                          <ion-icon class="icon" name="trash"></ion-icon>
+                          <span>彻底删除</span>
+                        </button>
+                      </div>
+                      <div class="button-wrapper">
+                        <a
+                          class="btn btn-info btn-sm btn-with-icon"
+                          target="_blank"
+                          [href]="isGuestbook(comment.post_id) ? getGuestbookPath() : getArticlePath(comment.post_id)"
+                        >
+                          <ion-icon class="icon" name="arrow-redo"></ion-icon>
+                          <span>宿主页面</span>
+                        </a>
+                      </div>
                     </div>
                   </td>
                 </tr>
