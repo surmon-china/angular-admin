@@ -36,12 +36,14 @@
       }
 
       td {
-        &.comment-content {
+        line-height: 2.6;
+
+        .comment-content {
           line-height: 2;
           word-break: break-word;
         }
 
-        &.comment-user {
+        .comment-user {
           > .avatar,
           > .name,
           > .email,
@@ -55,6 +57,21 @@
               width: 30px;
               height: 30px;
               border-radius: 1px;
+            }
+          }
+        }
+
+        .like-count {
+          color: pink;
+        }
+
+        .action-btn-list {
+          text-align: center;
+
+          .button-wrapper {
+            margin-bottom: $gap-xs;
+            &:last-child {
+              margin: 0;
             }
           }
         }

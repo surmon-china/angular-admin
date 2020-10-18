@@ -11,12 +11,20 @@ const parser = new UAParser();
 export function browserParser(ua: string): string {
   parser.setUA(ua);
   const result = parser.getBrowser();
-  return `${result.name} | ${result.version}`;
+  if (!result.name && !result.version) {
+    return ua;
+  } else {
+    return `${result.name || '未知'} | ${result.version || '未知'}`;
+  }
 }
 
 // os解析
 export function osParser(ua: string): string {
   parser.setUA(ua);
   const result = parser.getOS();
-  return `${result.name} | ${result.version}`;
+  if (!result.name && !result.version) {
+    return ua;
+  } else {
+    return `${result.name || '未知'} | ${result.version || '未知'}`;
+  }
 }

@@ -46,18 +46,12 @@
     margin: 1rem 0;
   }
 
-  .select-box {
-    text-align: left;
-  }
-
   tbody {
     tr {
       td {
-        line-height: 5em;
-
         .content {
           word-break: break-all;
-          line-height: 2.6;
+          line-height: 2;
 
           p {
             margin: 0;

@@ -28,10 +28,8 @@
   tbody {
     tr {
       td {
-        line-height: 5em;
-
         .tag-description {
-          max-width: 10rem;
+          max-width: 13em;
           overflow: hidden;
           text-overflow: ellipsis;
           -o-text-overflow: ellipsis;

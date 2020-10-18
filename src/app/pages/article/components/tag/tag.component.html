@@ -180,12 +180,15 @@
       </div>
       <div class="table-responsive">
         <div class="tag-list">
-            <sa-loading-spider [show]="isGettingList"></sa-loading-spider>
-            <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
-            <thead class="thead-inverse">
+          <sa-loading-spider [show]="isGettingList"></sa-loading-spider>
+          <table class="table table-striped table-no-borders black-muted-bg">
+            <thead>
               <tr>
                 <th class="batch-checkbox">
-                  <sa-checkbox [(ngModel)]="tagsSelectAll" (ngModelChange)="batchSelectChange($event)">
+                  <sa-checkbox
+                    [(ngModel)]="tagsSelectAll"
+                    (ngModelChange)="batchSelectChange($event)"
+                  >
                     <span sa-checkbox-label>
                       <span>&nbsp;</span>
                       <strong>ID</strong>
@@ -193,9 +196,10 @@
                   </sa-checkbox>
                 </th>
                 <th>名称</th>
+                <th>别名</th>
                 <th>描述</th>
-                <th>文章</th>
-                <th class="text-center">操作</th>
+                <th class="text-center">文章</th>
+                <th class="text-center" width="260px">操作</th>
               </tr>
             </thead>
             <tbody>
@@ -208,7 +212,7 @@
               </tr>
               <ng-template #dataList>
                 <tr *ngFor="let tag of tags.data">
-                  <td class="batch-checkbox">
+                  <td class="no-wrap">
                     <sa-checkbox [(ngModel)]="tag.selected" (ngModelChange)="itemSelectChange()">
                       <span sa-checkbox-label>
                         <span>&nbsp;</span>
@@ -216,12 +220,19 @@
                       </span>
                     </sa-checkbox>
                   </td>
-                  <td>{{ tag.name }}（{{ tag.slug }}）</td>
-                  <td>
-                    <div class="tag-description" [title]="tag.description">{{ tag.description }}</div>
+                  <td class="no-wrap">
+                    <strong>{{ tag.name }}</strong>
                   </td>
-                  <td>{{ tag.count || 0 }}</td>
+                  <td class="no-wrap">{{ tag.slug }}</td>
                   <td>
+                    <div class="tag-[TODO-BAK]-description" [title]="tag.description">
+                      {{ tag.description }}
+                    </div>
+                  </td>
+                  <td class="no-wrap">
+                    <div class="text-center">{{ tag.count || 0 }}</div>
+                  </td>
+                  <td class="no-wrap">
                     <div class="text-center">
                       <div class="btn-group">
                         <button

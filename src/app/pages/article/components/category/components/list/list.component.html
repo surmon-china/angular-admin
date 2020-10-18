@@ -34,10 +34,10 @@
 <div class="table-responsive">
   <div class="category-list">
     <sa-loading-spider [show]="isFetching"></sa-loading-spider>
-    <table class="table tablehover table-striped table-no-borders black-muted-bg table-enrich">
-      <thead class="thead-inverse">
+    <table class="table table-striped table-no-borders black-muted-bg">
+      <thead>
         <tr>
-          <th class="batch-checkbox">
+          <th>
             <sa-checkbox
               ngDefaultControl
               [(ngModel)]="categoriesSelectAll"
@@ -49,21 +49,24 @@
               </span>
             </sa-checkbox>
           </th>
-          <th width="20%">名称</th>
-          <th width="30%">描述</th>
-          <th>文章</th>
-          <th width="30%" class="text-center">操作</th>
+          <th>名称</th>
+          <th>别名</th>
+          <th>描述</th>
+          <th class="text-center">文章</th>
+          <th class="text-center" width="260px">操作</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngIf="!categories.data.length;else dataList">
           <td colspan="7">
-            <p class="text-muted text-center category-err-msg">{{ isFetching ? '数据请求中...' : '暂无数据' }}<p>
+            <p class="text-muted text-center category-err-msg">
+              {{ isFetching ? '数据请求中...' : '暂无数据' }}
+            <p>
           </td>
         </tr>
         <ng-template #dataList>
           <tr *ngFor="let category of categories.data">
-            <td class="batch-checkbox">
+            <td class="no-wrap">
               <sa-checkbox
                 ngDefaultControl
                 [(ngModel)]="category.selected"
@@ -75,7 +78,7 @@
                 </span>
               </sa-checkbox>
             </td>
-            <td>
+            <td class="no-wrap">
               <strong *ngIf="category.unrepaired" class="text-warning">
                 <ion-icon class="icon" name="alert"></ion-icon>
                 <span>&nbsp;</span>
@@ -84,13 +87,19 @@
               <strong>{{ ''.padEnd(category.level, '─') }}</strong>
               <span>&nbsp;</span>
               <strong>{{ category.name }}</strong>
-              <span>（{{ category.slug }}）</span>
             </td>
-            <td class="category-description" title="{{ category.description }}">
-              <span [class.text-muted]="!category.description">{{ category.description || '暂无描述' }}</span>
-            </td>
-            <td>{{ category.count || 0 }}</td>
+            <td class="no-wrap">{{ category.slug }}</td>
             <td>
+              <div class="category-[TODO-BAK]-description" [title]="category.description">
+                <span [class.text-muted]="!category.description">
+                  {{ category.description || '暂无描述' }}
+                </span>
+              </div>
+            </td>
+            <td class="no-wrap">
+              <div class="text-center">{{ category.count || 0 }}</div>
+            </td>
+            <td class="no-wrap">
               <div class="text-center">
                 <div class="btn-group">
                   <button
