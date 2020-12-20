@@ -32,7 +32,7 @@ The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/). 项目�
 
 ## Screenshot
 
-![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/screenshots/dashboard-dark.png)
+![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/presses/dashboard-dark.png)
 
 
 ## Development setup
