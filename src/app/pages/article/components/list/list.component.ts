@@ -99,7 +99,7 @@ export class ArticleListComponent implements OnInit {
   }
 
   get isLoadingArticleList(): boolean {
-    return this.httpLoadingService.isLoading(Loading.GetList)
+    return this.httpLoadingService.isLoading(Loading.GetList);
   }
 
   // 当前数据数量
@@ -213,12 +213,12 @@ export class ArticleListComponent implements OnInit {
   }
 
   // 对于所有修改进行相应统一处理
-  public patchArticles(data: object): void {
+  public patchArticles(data: any): void {
     this.httpLoadingService.promise(
       Loading.PatchState,
       this.httpService
         .patch(this.articleApiPath, data)
-        .then(_ => this.refreshArticles())
+        .then(() => this.refreshArticles())
     );
   }
 
@@ -247,12 +247,12 @@ export class ArticleListComponent implements OnInit {
   public delArticles() {
     const article_ids: TSelectedIds = this.todoDelArticleId ? [this.todoDelArticleId] : this.selectedArticles;
     this.httpService.delete(this.articleApiPath, { article_ids })
-      .then(_ => {
+      .then(() => {
         this.delModal.hide();
         this.todoDelArticleId = null;
         this.refreshArticles();
       })
-      .catch(_ => {
+      .catch(() => {
         this.delModal.hide();
       });
   }

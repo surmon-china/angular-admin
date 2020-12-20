@@ -37,7 +37,7 @@ export class AuthComponent implements AfterViewChecked {
   ) {}
 
   get waiting(): boolean {
-    return this.httpLoadingService.isLoading(LoadingKey)
+    return this.httpLoadingService.isLoading(LoadingKey);
   }
 
   toEditMode() {

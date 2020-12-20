@@ -27,7 +27,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <ion-icon class="icon" name="heart"></ion-icon>
       </div>
       <div class="al-footer-main clearfix">
-        <div class="al-copy">&copy; <a href="${BLOG_SITE}">Surmon</a> 2020</div>
+        <div class="al-copy">&copy; <a href="${BLOG_SITE}">Surmon</a> 2021</div>
       </div>
     </footer>
   `

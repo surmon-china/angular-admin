@@ -72,7 +72,7 @@ export type TResponsePaginationArticle = IResponsePaginationData<IArticle>;
 export type TResponsePaginationCategory = IResponsePaginationData<ICategory>;
 
 // 构建有级别的分类数据（保证两级数据可用）
-export function buildLevelCategories(categories: ICategory[], selectedIds?: ICategory['_id'][]): ICategory[] {
+export const buildLevelCategories = (categories: ICategory[], selectedIds?: ICategory['_id'][]): ICategory[] => {
   const todoDeletes = [];
   const newCategories = [];
   const todoCategories = lodash.cloneDeep(categories);
@@ -108,4 +108,4 @@ export function buildLevelCategories(categories: ICategory[], selectedIds?: ICat
   );
 
   return newCategories;
-}
+};

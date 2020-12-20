@@ -59,6 +59,7 @@ export class SaMenuService {
       }
     });
 
+    // eslint-disable-next-line prefer-spread
     return [].concat.apply([], menu);
   }
 

@@ -7,30 +7,18 @@
 type TUrlPath = string;
 
 // 权限页面
-export function isAuthPage(url: TUrlPath): boolean {
-  return url && url === '/auth';
-}
+export const isAuthPage = (url: TUrlPath) => url === '/auth';
 
 // 首页
-export function isIndexPage(url: TUrlPath): boolean {
-  return url && url === '/';
-}
+export const isIndexPage = (url: TUrlPath) => url === '/';
 
 // 仪表盘
-export function isDashboardPage(url: TUrlPath): boolean {
-  return url && url === '/dashboard';
-}
+export const isDashboardPage = (url: TUrlPath) => url === '/dashboard';
 
 // 发布文章页面
-export function isPostArticlePage(url: TUrlPath): boolean {
-  return url && url === '/article/post';
-}
+export const isPostArticlePage = (url: TUrlPath) => url === '/article/post';
 
 // 公告页面
-export function isAnnouncementPage(url: TUrlPath): boolean {
-  return url && url === '/announcement';
-}
+export const isAnnouncementPage = (url: TUrlPath) => url === '/announcement';
 
-export function isOptionsPage(url: TUrlPath): boolean {
-  return url && url === '/options';
-}
+export const isOptionsPage = (url: TUrlPath) => url === '/options';

@@ -35,7 +35,7 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
   ) {}
 
   get isLoading(): boolean {
-    return this.httpLoadingService.isLoading(LoadingKey)
+    return this.httpLoadingService.isLoading(LoadingKey);
   }
 
   // 勾选动作
@@ -67,7 +67,7 @@ export class ArticleEditCategoryComponent implements OnInit, OnChanges {
     this.getCategories();
   }
 
-  ngOnChanges(changes) {
+  ngOnChanges() {
     this.buildLevelCategories();
   }
 }

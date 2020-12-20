@@ -9,6 +9,7 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { SaHttpRequesterService, SaHttpLoadingService } from '@app/services';
 import { TApiPath } from '@app/pages/pages.interface';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { loadScript } = require('./ga.embed.lib.loader.js');
 
 interface IStatistics {
@@ -78,7 +79,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   get isLoadingGA(): boolean {
-    return this.httpLoadingService.isLoading(Loading.LoadingGA)
+    return this.httpLoadingService.isLoading(Loading.LoadingGA);
   }
 
   getStatisticsData() {
@@ -94,10 +95,8 @@ export class DashboardComponent implements OnInit {
 
   getGAToken(): Promise<string> {
     return this.httpService
-      .get<object>(this.googleTokenApiPath)
-      .then(({ result: credentials }) => {
-        return (credentials as any).access_token as string;
-      });
+      .get<any>(this.googleTokenApiPath)
+      .then(({ result: credentials }) => (credentials as any).access_token as string);
   }
 
   async instanceGA(access_token: string): Promise<void> {
@@ -165,8 +164,7 @@ export class DashboardComponent implements OnInit {
         }
       });
 
-      const getPieChart = (dimensions: string, container: string, title: string) => {
-        return new gapi.analytics.googleCharts.DataChart({
+      const getPieChart = (dimensions: string, container: string, title: string) => new gapi.analytics.googleCharts.DataChart({
           query: {
             dimensions,
             metrics: 'ga:sessions',
@@ -220,7 +218,6 @@ export class DashboardComponent implements OnInit {
             },
           },
         });
-      };
 
       const countryChart = getPieChart('ga:country', 'pie-country', '国家地区');
       const cityChart = getPieChart('ga:city', 'pie-city', '城市');

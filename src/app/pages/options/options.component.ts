@@ -50,24 +50,19 @@ const DEFAULT_OPTION_FORM = {
 enum Loading {
   Auth,
   Option,
-  MusicCache,
-  BilibiliCache,
   DatabaseBackup,
-  GithubCache,
   SyndicationCache,
 }
 
 // 长数据处理器
-const formatLongString = (value: string): string => {
-  return value.replace(/\s+/g, ' ').replace(/\s/g, '\n');
-}
+const formatLongString = (value: string): string => value.replace(/\s+/g, ' ').replace(/\s/g, '\n');
 // JSON 字符串处理
 const formatJSONString = (json: string, indent = 0): string => {
   const jsonString = json || '';
   return !jsonString.trim()
     ? ''
     : JSON.stringify(JSON.parse(jsonString), null, indent);
-}
+};
 
 @Component({
   selector: 'page-options',
@@ -80,8 +75,6 @@ export class OptionsComponent implements OnInit {
 
   public Loading = Loading;
   public controlStateClass = formControlStateClass;
-  private authApiPath: TApiPath = API_PATH.ADMIN_INFO;
-  private optionApiPath: TApiPath = API_PATH.OPTION;
 
   // authForm
   public authForm: FormGroup;
@@ -106,6 +99,9 @@ export class OptionsComponent implements OnInit {
   public blacklist_mails: AbstractControl;
   public blacklist_keywords: AbstractControl;
 
+  private authApiPath: TApiPath = API_PATH.ADMIN_INFO;
+  private optionApiPath: TApiPath = API_PATH.OPTION;
+
   constructor(
     private router: Router,
     private appState: AppState,
@@ -124,11 +120,11 @@ export class OptionsComponent implements OnInit {
       password: [DEFAULT_AUTH_FORM.password],
       new_password: [
         DEFAULT_AUTH_FORM.new_password,
-        Validators.compose([this.vaildatePassword.bind(this)]),
+        Validators.compose([this.validatePassword.bind(this)]),
       ],
       rel_new_password: [
         DEFAULT_AUTH_FORM.rel_new_password,
-        Validators.compose([this.vaildatePassword.bind(this)])
+        Validators.compose([this.validatePassword.bind(this)])
       ],
     });
     mergeFormControlsToInstance(this, this.authForm);
@@ -149,7 +145,7 @@ export class OptionsComponent implements OnInit {
         } catch (error) {
           return {
             error: '不合法的 JSON'
-          }
+          };
         }
       }])],
       blacklist_ips: [DEFAULT_OPTION_FORM.blacklist_ips],
@@ -160,7 +156,7 @@ export class OptionsComponent implements OnInit {
   }
 
   // 验证重复输入密码
-  private vaildatePassword(control: AbstractControl): ValidationErrors {
+  private validatePassword(control: AbstractControl): ValidationErrors {
     if (
       (this.new_password && this.new_password.value) !==
       (this.rel_new_password && this.rel_new_password.value)
@@ -178,22 +174,22 @@ export class OptionsComponent implements OnInit {
   }
 
   // 黑名单 ip 解析处理
-  public handleCommentBlacklistIpsChange(event) {
+  public handleCommentBlacklistIpsChange(event: any) {
     this.blacklist_ips.setValue(formatLongString(event.target.value));
   }
 
   // 黑名单邮箱解析处理
-  public handleCommentBlacklistMailsChange(event) {
+  public handleCommentBlacklistMailsChange(event: any) {
     this.blacklist_mails.setValue(formatLongString(event.target.value));
   }
 
   // 黑名单关键词解析处理
-  public handleCommentBlacklistKeywordsChange(event) {
+  public handleCommentBlacklistKeywordsChange(event: any) {
     this.blacklist_keywords.setValue(formatLongString(event.target.value));
   }
 
   // 关键词计息处理
-  public handleKeywordsChange(event) {
+  public handleKeywordsChange(event: any) {
     this.keywords.setValue(
       event.target.value
         .split('\n')
@@ -316,34 +312,12 @@ export class OptionsComponent implements OnInit {
 
   // 更新数据库备份
   public updateDatabaseBackup() {
-    return this.httpLoadingService.promise(
-      Loading.DatabaseBackup,
-      this.httpService.patch(API_PATH.DATA_BASE_BACKUP)
-    );
-  }
-
-  // 更新音乐缓存
-  public updateMusicCache() {
-    return this.httpLoadingService.promise(
-      Loading.MusicCache,
-      this.httpService.patch(API_PATH.MUSIC_LIST_CACHE)
-    );
-  }
-
-  // 更新 Bilibili 缓存
-  public updateBilibiliCache() {
-    return this.httpLoadingService.promise(
-      Loading.BilibiliCache,
-      this.httpService.patch(API_PATH.BILIBILI_LIST_CACHE)
-    );
-  }
-
-  // 更新 Github 缓存
-  public updateGithubCache() {
-    return this.httpLoadingService.promise(
-      Loading.GithubCache,
-      this.httpService.patch(API_PATH.GITHUB)
-    );
+    if (window.confirm('更新备份会导致强制覆盖旧的数据库备份，确定要继续吗？')) {
+      this.httpLoadingService.promise(
+        Loading.DatabaseBackup,
+        this.httpService.patch(API_PATH.DATA_BASE_BACKUP)
+      );
+    }
   }
 
   // 更新 Syndication 缓存

@@ -8,7 +8,7 @@ import { UAParser } from 'ua-parser-js';
 const parser = new UAParser();
 
 // 浏览器解析
-export function browserParser(ua: string): string {
+export const browserParser = (ua: string): string => {
   parser.setUA(ua);
   const result = parser.getBrowser();
   if (!result.name && !result.version) {
@@ -16,10 +16,10 @@ export function browserParser(ua: string): string {
   } else {
     return `${result.name || '未知'} | ${result.version || '未知'}`;
   }
-}
+};
 
-// os解析
-export function osParser(ua: string): string {
+// OS 解析
+export const osParser = (ua: string): string => {
   parser.setUA(ua);
   const result = parser.getOS();
   if (!result.name && !result.version) {
@@ -27,4 +27,4 @@ export function osParser(ua: string): string {
   } else {
     return `${result.name || '未知'} | ${result.version || '未知'}`;
   }
-}
+};

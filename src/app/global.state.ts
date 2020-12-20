@@ -12,7 +12,7 @@ type TFunc = (...args: any) => any;
 @Injectable()
 export class GlobalState {
 
-  private data = new Subject<object>();
+  private data = new Subject<any>();
   private dataStream$ = this.data.asObservable();
   private subscriptions: Map<string, Array<TFunc>> = new Map<string, Array<TFunc>>();
 

@@ -1,6 +1,6 @@
 /**
  * @file 公告管理页面组件
- * @desc app/page/annoucement/component
+ * @desc app/page/announcement/component
  * @author Surmon <https://github.com/surmon-china>
  */
 
@@ -112,12 +112,12 @@ export class AnnouncementComponent implements OnInit {
     return pagination && pagination.total || 0;
   }
 
-  get isGetingList(): boolean {
-    return this.httpLoadingService.isLoading(Loading.GetList)
+  get isGettingList(): boolean {
+    return this.httpLoadingService.isLoading(Loading.GetList);
   }
 
   get isUpdating(): boolean {
-    return this.httpLoadingService.isLoading(Loading.Update)
+    return this.httpLoadingService.isLoading(Loading.Update);
   }
 
   // 解析 Markdown
@@ -182,7 +182,7 @@ export class AnnouncementComponent implements OnInit {
   }
 
   // 删除弹窗取消
-  public canceldDelModal() {
+  public cancelDelModal() {
     this.delModal.hide();
     this.activeAnnouncement = null;
   }
@@ -247,7 +247,7 @@ export class AnnouncementComponent implements OnInit {
   // 添加公告
   public addAnnouncement(announcement: IAnnouncement): Promise<any> {
     return this.httpService.post<IAnnouncement>(this.apiPath, announcement)
-      .then(_ => {
+      .then(() => {
         this.resetEditForm();
         this.refreshAnnouncements();
       });
@@ -259,7 +259,7 @@ export class AnnouncementComponent implements OnInit {
       `${this.apiPath}/${this.activeAnnouncement._id}`,
       Object.assign(this.activeAnnouncement, announcement)
     )
-    .then(_ => {
+    .then(() => {
       this.resetEditForm();
       this.refreshAnnouncements();
       this.activeAnnouncement = null;
@@ -270,12 +270,12 @@ export class AnnouncementComponent implements OnInit {
   public doDelAnnouncement() {
     this.httpService
     .delete<IAnnouncement>(`${this.apiPath}/${this.activeAnnouncement._id}`)
-    .then(_ => {
+    .then(() => {
       this.delModal.hide();
       this.activeAnnouncement = null;
       this.refreshAnnouncements();
     })
-    .catch(_ => {
+    .catch(() => {
       this.delModal.hide();
     });
   }
@@ -284,12 +284,12 @@ export class AnnouncementComponent implements OnInit {
   public doDelAnnouncements() {
     this.httpService
     .delete<any>(this.apiPath, { announcement_ids: this.selectedAnnouncements })
-    .then(_ => {
+    .then(() => {
       this.delModal.hide();
       this.refreshAnnouncements();
       this.selectedAnnouncements = [];
     })
-    .catch(_ => {
+    .catch(() => {
       this.delModal.hide();
     });
   }

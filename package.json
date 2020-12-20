@@ -1,6 +1,6 @@
 {
   "name": "angular-admin",
-  "version": "3.4.0",
+  "version": "3.4.2",
   "author": {
     "name": "Surmon",
     "email": "surmon@foxmail.com",
@@ -49,7 +49,7 @@
     "angular2-notifications": "^9.0.0",
     "animate.css": "^4.1.1",
     "bootstrap": "^4.5.3",
-    "codemirror": "^5.58.3",
+    "codemirror": "^5.59.0",
     "core-js": "^3.8.1",
     "gravatar": "^1.8.1",
     "highlight.js": "^10.4.1",
@@ -82,7 +82,6 @@
     "@types/node": "~14.14.14",
     "@types/systemjs": "^6.1.0",
     "@types/ua-parser-js": "^0.7.35",
-    "codelyzer": "^6.0.1",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~6.0.0",
     "karma": "~5.2.3",
@@ -92,7 +91,17 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "protractor": "~7.0.0",
     "ts-node": "~9.1.1",
-    "tslint": "~6.1.0",
-    "typescript": "~4.1.3"
+    "typescript": "~4.0.5",
+    "eslint": "^7.16.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsdoc": "30.7.9",
+    "eslint-plugin-prefer-arrow": "1.2.2",
+    "@angular-eslint/builder": "0.8.0-beta.6",
+    "@angular-eslint/eslint-plugin": "0.8.0-beta.6",
+    "@angular-eslint/eslint-plugin-template": "0.8.0-beta.6",
+    "@angular-eslint/schematics": "^0.8.0-beta.6",
+    "@angular-eslint/template-parser": "0.8.0-beta.6",
+    "@typescript-eslint/eslint-plugin": "4.10.0",
+    "@typescript-eslint/parser": "4.10.0"
   }
 }

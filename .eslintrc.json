@@ -1,0 +1,100 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json",
+          "e2e/tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/ng-cli-compat",
+        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+        "no-shadow": 0,
+        "no-console": 0,
+        "no-unused-expressions": 0,
+        "@typescript-eslint/no-explicit-any": 0,
+        "@typescript-eslint/no-unused-expressions": 0,
+        "@typescript-eslint/no-empty-function": 0,
+        "@typescript-eslint/naming-convention": 0,
+        "@typescript-eslint/member-ordering": 0,
+        "@typescript-eslint/explicit-module-boundary-types": 0,
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": [
+              "sa",
+              "app",
+              "page",
+              "box"
+            ],
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": [
+              "sa",
+              "app",
+              "page"
+            ],
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/no-output-native": "off",
+        "@typescript-eslint/explicit-member-accessibility": [
+          "off",
+          {
+            "accessibility": "explicit"
+          }
+        ],
+        "@typescript-eslint/no-inferrable-types": [
+          "off",
+          {
+            "ignoreParameters": true
+          }
+        ],
+        "arrow-parens": [
+          "off",
+          "always"
+        ],
+        "id-blacklist": "off",
+        "id-match": "off",
+        "import/order": "off",
+        "max-len": [
+          "error",
+          {
+            "code": 160
+          }
+        ],
+        "no-underscore-dangle": "off"
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {
+        "attr-lowercase": 0
+      }
+    }
+  ]
+}
