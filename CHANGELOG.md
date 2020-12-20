@@ -2,7 +2,13 @@
 ### TODO
 - TSLint to ESLint
 
-## CHANGELOG
+# Changelog
+All notable changes to this project will be documented in this file.
+
+### v3.4.2
+
+- TSLint to ESLint
+
 
 ### v3.4.0
 - Improve archive page toolbar
