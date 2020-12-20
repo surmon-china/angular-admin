@@ -1,23 +1,14 @@
 /**
- * @file 链接获取器
+ * @file 链接转换
  * @author Surmon <https://github.com/surmon-china>
  */
 
 import { BLOG_HOST } from '@/config';
 
-export function getTagPath(tagSlug: string): string {
-  return `${BLOG_HOST}/tag/${tagSlug}`;
-}
+export const getTagPath = (tagSlug: string): string => `${BLOG_HOST}/tag/${tagSlug}`;
 
-export function getCategoryPath(categorySlug: string): string {
-  return `${BLOG_HOST}/category/${categorySlug}`;
-}
+export const getCategoryPath = (categorySlug: string): string => `${BLOG_HOST}/category/${categorySlug}`;
 
-export function getArticlePath(articleId: string | number): string {
-  return `${BLOG_HOST}/article/${articleId}`;
-}
+export const getArticlePath = (articleId: string | number): string => `${BLOG_HOST}/article/${articleId}`;
 
-export function getGuestbookPath(): string {
-  return `${BLOG_HOST}/guestbook`;
-}
-
+export const getGuestbookPath = (): string => `${BLOG_HOST}/guestbook`;

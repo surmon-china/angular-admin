@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /**
  * @file markdown 编辑器组件
  * @desc app/component/markdownn-editor
@@ -85,7 +86,8 @@ marked.setOptions({
   sanitize: false,
   smartLists: true,
   smartypants: false,
-  highlight(code, lang, callback) {
+  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+  highlight(code) {
     return hljs.highlightAuto(code).value;
   }
 });
@@ -119,7 +121,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
   @ViewChild('bakModal', { static: false }) bakModal: ModalDirective;
 
   // 自定义配置
-  @Input() config: object;
+  @Input() config: any;
   // 禁用工具栏
   @Input() disabledToolBar: boolean = false;
   // 禁用自动草稿
@@ -186,7 +188,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
       ...this.config
     });
 
-    this.editor.on('blur', cm => {
+    this.editor.on('blur', () => {
       this.onModelTouched();
     });
 
@@ -272,7 +274,7 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
         this.content = currentValue;
         this.editor.setValue(this.content);
       }
-      return
+      return;
     }
 
     // 走草稿缓存机制
@@ -403,9 +405,9 @@ export class SaMarkdownEditorComponent implements AfterViewInit, ControlValueAcc
     if (!stat.type || !stat.type.split) { return {}; }
     const types = stat.type.split(' ');
     const ret = {};
-    // tslint:disable-next-line:one-variable-per-declaration
+    // eslint-disable-next-line one-var
     let data, text;
-    // tslint:disable-next-line:prefer-for-of
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < types.length; i++) {
       data = types[i];
       if (data === 'strong') {

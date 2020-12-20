@@ -64,17 +64,17 @@ export class AppComponent implements AfterViewInit, OnInit {
     });
 
     // 路由拦截器
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe(() => {
       const url: string = this.router.url;
       // 如果发生 非首页或登陆页 的跳转事件，则执行 Token 全面检查
       if (!isIndexPage(url) && !isAuthPage(url) && !this.tokenService.isTokenValid()) {
-        this.remiveTokenToLogin();
+        this.removeTokenToLogin();
       }
     });
   }
 
   // 删除 Token 并跳转到登陆页
-  public remiveTokenToLogin(): void {
+  public removeTokenToLogin(): void {
     this.tokenService.removeToken();
     setTimeout(() => {
       this.notificationsService.error('久违', '...', { timeOut: 1000 });
@@ -97,7 +97,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   public checkTokenValidity(): void  {
     this.httpService
       .post(API_PATH.CHECK_TOKEN)
-      .then(_ => {
+      .then(() => {
         // 通过验证，则初始化 APP
         console.info('远程 Token 验证成功，正常工作');
         this.initAppOptions();
@@ -105,7 +105,7 @@ export class AppComponent implements AfterViewInit, OnInit {
       })
       .catch(error => {
         console.warn('Token 被验证是无效的，跳登陆页', error);
-        this.remiveTokenToLogin();
+        this.removeTokenToLogin();
       });
   }
 
@@ -119,6 +119,6 @@ export class AppComponent implements AfterViewInit, OnInit {
     // 程序初始化时检查本地 Token
     this.tokenService.isTokenValid()
       ? this.checkTokenValidity()
-      : this.remiveTokenToLogin();
+      : this.removeTokenToLogin();
   }
 }

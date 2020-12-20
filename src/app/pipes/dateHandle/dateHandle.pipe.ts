@@ -14,6 +14,6 @@ export class DataToLocalePipe implements PipeTransform {
     const ymd = date.toLocaleDateString().replace(/\//ig, '-');
     const timeString = date.toLocaleTimeString();
     const time = timeString.slice(0, timeString.length - 3);
-    return `${ymd} ${time}`
+    return `${ymd} ${time}`;
   }
 }

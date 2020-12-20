@@ -77,7 +77,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
           this.upToken = res.result;
         }
       })
-      .catch(_ => {
+      .catch(() => {
         this.tokenOk = false;
       });
   }
@@ -86,6 +86,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   public doUploadPicture(file: File): void {
 
     // 上传
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
     const fileKey = `thumbnail/${file.name.replace(/ /ig, '')}`;
     let client = new OSS({
@@ -102,6 +103,7 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
     this.uploadProgress = 0;
 
     client.multipartUpload(fileKey, file, {
+      // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
       async progress(progress) {
         // console.info('上传有一个新进度', progress);
         self.uploadInProgress = true;
@@ -174,10 +176,10 @@ export class SaPictureUploaderComponent implements OnInit, ControlValueAccessor 
   // 根据 url 读取一张图片
   public changePictureFromURL(url: string): void {
     const image = new Image();
-    image.onload = _ => {
+    image.onload = () => {
       this.emitPicture(url);
     };
-    image.onerror = _ => {
+    image.onerror = () => {
       this.notificationsService.error('预览失败', '存储源问题！', { timeOut: 800 });
       this.emitPicture(url);
     };

@@ -9,8 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class EqualPasswordsValidator {
 
   public static validate(firstField, secondField) {
-    return (context: FormGroup) => {
-      return (
+    return (context: FormGroup) => (
         context.controls &&
         context.controls[firstField].value === context.controls[secondField].value
       ) ? null : {
@@ -18,6 +17,5 @@ export class EqualPasswordsValidator {
           valid: false
         }
       };
-    };
   }
 }

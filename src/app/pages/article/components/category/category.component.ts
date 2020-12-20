@@ -64,7 +64,7 @@ export class ArticleCategoryComponent implements OnInit {
   }
 
   // 分类弹窗取消
-  public canceldDelCategory() {
+  public cancelDelCategory() {
     this.todoDelCategory = null;
     this.delModal.hide();
   }
@@ -101,7 +101,7 @@ export class ArticleCategoryComponent implements OnInit {
       Loading.Post,
       this.httpService
         .post(this.apiPath, category)
-        .then(_ => this.handlePostDone())
+        .then(() => this.handlePostDone())
     );
   }
 
@@ -112,19 +112,19 @@ export class ArticleCategoryComponent implements OnInit {
       Loading.Post,
       this.httpService
         .put(`${ this.apiPath }/${ newCategory._id }`, newCategory)
-        .then(_ => this.handlePostDone())
+        .then(() => this.handlePostDone())
     );
   }
 
   // 删除分类
   public doDelCategory() {
     this.httpService.delete(`${ this.apiPath }/${ this.todoDelCategory._id }`)
-    .then(_ => {
+    .then(() => {
       this.todoDelCategory = null;
       this.delModal.hide();
       this.getCategories();
     })
-    .catch(_ => {
+    .catch(() => {
       this.delModal.hide();
     });
   }
@@ -132,12 +132,12 @@ export class ArticleCategoryComponent implements OnInit {
   // 批量删除
   public doDelCategories() {
     this.httpService.delete(this.apiPath, { categorie_ids: this.todoDelCategories })
-    .then(_ => {
+    .then(() => {
       this.todoDelCategories = null;
       this.delModal.hide();
       this.getCategories();
     })
-    .catch(_ => {
+    .catch(() => {
       this.delModal.hide();
     });
   }

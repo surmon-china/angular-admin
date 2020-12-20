@@ -259,14 +259,23 @@
     <sa-card name="数据库操作" baCardClass="with-scroll">
       <div class="row">
         <div class="col-sm-12">
-          <button
-            class="btn btn-default btn-with-icon"
-            [disabled]="isLoading(Loading.DatabaseBackup)"
-            (click)="updateDatabaseBackup()"
-          >
-            <ion-icon class="icon" name="cloud-upload"></ion-icon>
-            <span>立即更新数据库备份 {{ isLoading(Loading.DatabaseBackup) ? '...' : '' }}</span>
-          </button>
+          <div class="btn-group">
+            <button
+              class="btn btn-default btn-with-icon"
+              [disabled]="isLoading(Loading.DatabaseBackup)"
+              (click)="updateDatabaseBackup()"
+            >
+              <ion-icon class="icon" name="cloud-upload"></ion-icon>
+              <span>立即更新数据库备份 {{ isLoading(Loading.DatabaseBackup) ? '...' : '' }}</span>
+            </button>
+            <button
+              class="btn btn-default btn-with-icon"
+              disabled
+            >
+              <ion-icon class="icon" name="cloud-download"></ion-icon>
+              <span>从备份文件恢复数据库（暂未开放）</span>
+            </button>
+          </div>
         </div>
       </div>
     </sa-card>
@@ -275,50 +284,11 @@
         <div class="col-sm-12">
           <button
             class="btn btn-default btn-with-icon"
-            [disabled]="isLoading(Loading.GithubCache)"
-            (click)="updateGithubCache()"
-          >
-            <ion-icon class="icon" name="refresh"></ion-icon>
-            <span>更新 Github 缓存{{ isLoading(Loading.GithubCache) ? '...' : '' }}</span>
-          </button>
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-sm-12">
-          <button
-            class="btn btn-default btn-with-icon"
-            [disabled]="isLoading(Loading.MusicCache)"
-            (click)="updateMusicCache()"
-          >
-            <ion-icon class="icon" name="refresh"></ion-icon>
-            <span>更新音乐缓存{{ isLoading(Loading.MusicCache) ? '...' : '' }}</span>
-          </button>
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-sm-12">
-          <button
-            class="btn btn-default btn-with-icon"
-            [disabled]="isLoading(Loading.BilibiliCache)"
-            (click)="updateBilibiliCache()"
-          >
-            <ion-icon class="icon" name="refresh"></ion-icon>
-            <span>更新 Bilibili 缓存{{ isLoading(Loading.BilibiliCache) ? '...' : '' }}</span>
-          </button>
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-sm-12">
-          <button
-            class="btn btn-default btn-with-icon"
             [disabled]="isLoading(Loading.SyndicationCache)"
             (click)="updateSyndicationCache()"
           >
             <ion-icon class="icon" name="refresh"></ion-icon>
-            <span>更新聚合供稿缓存{{ isLoading(Loading.SyndicationCache) ? '...' : '' }}</span>
+            <span>更新 Sitemap & RSS {{ isLoading(Loading.SyndicationCache) ? '...' : '' }}</span>
           </button>
         </div>
       </div>

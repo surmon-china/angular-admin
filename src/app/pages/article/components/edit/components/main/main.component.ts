@@ -60,7 +60,7 @@ export class ArticleEditMainComponent implements OnInit, OnChanges {
   }
 
   get isLoadingTag(): boolean {
-    return this.httpLoadingService.isLoading(LoadingTagKey)
+    return this.httpLoadingService.isLoading(LoadingTagKey);
   }
 
   // 重置数据

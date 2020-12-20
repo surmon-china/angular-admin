@@ -91,11 +91,11 @@ export class ArticleTagComponent implements OnInit {
   }
 
   get isGettingList(): boolean {
-    return this.httpLoadingService.isLoading(Loading.GetList)
+    return this.httpLoadingService.isLoading(Loading.GetList);
   }
 
   get isPosting(): boolean {
-    return this.httpLoadingService.isLoading(Loading.Post)
+    return this.httpLoadingService.isLoading(Loading.Post);
   }
 
   // 删除自定义配置项目
@@ -208,7 +208,7 @@ export class ArticleTagComponent implements OnInit {
   public addTag(tag: ITag) {
     return this.httpLoadingService.promise(
       Loading.Post,
-      this.httpService.post(this.apiPath, tag).then(_ => {
+      this.httpService.post(this.apiPath, tag).then(() => {
         this.resetEditForm();
         this.resetSearchForm();
         this.getTags();
@@ -223,7 +223,7 @@ export class ArticleTagComponent implements OnInit {
       Loading.Post,
       this.httpService
         .put(`${this.apiPath}/${newTag._id}`, newTag)
-        .then(_ => {
+        .then(() => {
           this.refreshTags();
           this.resetEditForm();
           this.activeTag = null;
@@ -234,12 +234,12 @@ export class ArticleTagComponent implements OnInit {
   // 确认删除标签
   public doDelTag() {
     this.httpService.delete(`${this.apiPath}/${this.activeTag._id}`)
-      .then(_ => {
+      .then(() => {
         this.delModal.hide();
         this.activeTag = null;
         this.refreshTags();
       })
-      .catch(_ => {
+      .catch(() => {
         this.delModal.hide();
       });
   }
@@ -247,11 +247,11 @@ export class ArticleTagComponent implements OnInit {
   // 确认批量删除
   public doDelTags() {
     this.httpService.delete(this.apiPath, { tag_ids: this.selectedTags })
-      .then(_ => {
+      .then(() => {
         this.delModal.hide();
         this.refreshTags();
       })
-      .catch(_ => {
+      .catch(() => {
         this.delModal.hide();
       });
   }

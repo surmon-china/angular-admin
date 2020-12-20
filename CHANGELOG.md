@@ -1,8 +1,12 @@
 
-### TODO
-- TSLint to ESLint
+# Changelog
+All notable changes to this project will be documented in this file.
 
-## CHANGELOG
+### v3.4.2
+- Upgrade deps
+- Update CI
+- TSLint to ESLint
+- Remove GitHub/Music/Bilibili/Wallpaper action for option page
 
 ### v3.4.0
 - Improve archive page toolbar

@@ -54,7 +54,7 @@
               type="button"
               class="btn btn-default active"
               [ngClass]="{ 'active': isState(PublishState.All) }"
-              [disabled]="isGetingList"
+              [disabled]="isGettingList"
               (click)="switchState(PublishState.All)"
             >
               <span>全部</span>
@@ -64,7 +64,7 @@
               type="button"
               class="btn btn-default btn-with-icon"
               [ngClass]="{ 'active': isState(PublishState.Published) }"
-              [disabled]="isGetingList"
+              [disabled]="isGettingList"
               (click)="switchState(PublishState.Published)"
             >
               <ion-icon class="icon" name="checkmark-done"></ion-icon>
@@ -75,7 +75,7 @@
               type="button"
               class="btn btn-default btn-with-icon"
               [ngClass]="{ 'active': isState(PublishState.Draft) }"
-              [disabled]="isGetingList"
+              [disabled]="isGettingList"
               (click)="switchState(PublishState.Draft)"
             >
               <ion-icon class="icon" name="create"></ion-icon>
@@ -87,7 +87,7 @@
             <button
               type="button"
               class="btn btn-default btn-with-icon"
-              [disabled]="isGetingList"
+              [disabled]="isGettingList"
               (click)="refreshAnnouncements()"
             >
               <ion-icon class="icon" name="refresh"></ion-icon>
@@ -96,13 +96,13 @@
             <button
               type="button"
               class="btn btn-default btn-with-icon"
-              [disabled]="isGetingList"
+              [disabled]="isGettingList"
               (click)="resetSearchForm()"
             >
               <ion-icon class="icon" name="remove-circle-outline"></ion-icon>
               <span>重置参数</span>
             </button>
-            <div class="btn-group" dropdown [isDisabled]="!selectedAnnouncements.length || isGetingList">
+            <div class="btn-group" dropdown [isDisabled]="!selectedAnnouncements.length || isGettingList">
               <button
                 type="button"
                 class="btn btn-default btn-with-icon dropdown-toggle"
@@ -146,7 +146,7 @@
       </div>
       <div class="table-responsive">
         <div class="announcement-list">
-          <sa-loading-spider [show]="isGetingList"></sa-loading-spider>
+          <sa-loading-spider [show]="isGettingList"></sa-loading-spider>
           <table class="table table-striped table-no-borders black-muted-bg">
             <thead>
               <tr>
@@ -168,7 +168,7 @@
               <tr *ngIf="!announcements.data.length;else dataList">
                 <td colspan="7">
                   <p class="text-muted text-center announcement-err-msg">
-                    <span>{{ isGetingList ? '数据请求中...' : '暂无数据' }}</span>
+                    <span>{{ isGettingList ? '数据请求中...' : '暂无数据' }}</span>
                   <p>
                 </td>
               </tr>
@@ -258,7 +258,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button class="close" aria-label="Close" (click)="canceldDelModal()">
+          <button class="close" aria-label="Close" (click)="cancelDelModal()">
             <span aria-hidden="true">&times;</span>
           </button>
           <h4 class="modal-title">确认操作</h4>
@@ -277,7 +277,7 @@
             (click)="(activeAnnouncement ? doDelAnnouncement() : doDelAnnouncements())"
           >确认删除</button>
           <span>&nbsp;&nbsp;</span>
-          <button class="btn btn-default confirm-btn" (click)="canceldDelModal()">取消</button>
+          <button class="btn btn-default confirm-btn" (click)="cancelDelModal()">取消</button>
         </div>
       </div>
     </div>

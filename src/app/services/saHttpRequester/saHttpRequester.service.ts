@@ -18,7 +18,7 @@ import 'rxjs/add/operator/toPromise';
 
 // 路径和数据
 type TRequestUrlPath = string;
-type TRequestData = object;
+type TRequestData = any;
 
 // 响应状态
 export enum EHttpStatus {

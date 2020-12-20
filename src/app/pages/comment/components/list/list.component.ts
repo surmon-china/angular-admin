@@ -89,7 +89,7 @@ export class CommentListComponent implements OnInit {
   }
 
   get isGettingList(): boolean {
-    return this.httpLoadingService.isLoading(Loading.Get)
+    return this.httpLoadingService.isLoading(Loading.Get);
   }
 
   // 当前数据数量
@@ -236,12 +236,12 @@ export class CommentListComponent implements OnInit {
 
     this.httpService
       .delete(COMMENT_APT_PATH, { comment_ids, post_ids })
-      .then(_ => {
+      .then(() => {
         this.todoDelCommentId = null;
         this.delModal.hide();
         this.refreshComments();
       })
-      .catch(_ => {
+      .catch(() => {
         this.delModal.hide();
       });
   }
