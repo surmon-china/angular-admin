@@ -39,20 +39,25 @@ The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/). 项目�
 
 ```bash
 # install dependencies
-npm ci
+yarn
 
 # serve with hot reload at localhost:4200 
-npm run dev
+yarn dev
 
 # lint
-npm run lint
+yarn lint
 
 # test
-npm run test
-npm run e2e
+yarn test
+yarn e2e
 
 # build
-npm run build
+yarn build
+
+# CD (local build)
+yarn local:build:tar
+# CD (remote deploy)
+yarn local:deploy
 ```
 
 ## Actions setup
