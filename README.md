@@ -10,8 +10,9 @@
 
 # DEPRECATED‼️
 
-- 👉 [The new admin project (veact-admin)](https://github.com/surmon-china/veact-admin)
-- 此项目已废弃，请关注 [veact-admin](https://github.com/surmon-china/veact-admin)
+👉 **The new admin project [veact-admin](https://github.com/surmon-china/veact-admin)**
+
+**此项目已废弃，请关注 [veact-admin](https://github.com/surmon-china/veact-admin)**
 
 ---
 
