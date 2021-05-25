@@ -8,6 +8,13 @@
   </a>
 </p>
 
+# DEPRECATED‼️
+
+- 👉 [The new admin project (veact-admin)](https://github.com/surmon-china/veact-admin)
+- 此项目已废弃，请关注 [veact-admin](https://github.com/surmon-china/veact-admin)
+
+---
+
 # Angular Admin
 
 [![nodepress](https://img.shields.io/badge/NODE-PRESS-83BA2F?style=for-the-badge&labelColor=90C53F)](https://github.com/surmon-china/nodepress)
