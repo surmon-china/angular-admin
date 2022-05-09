@@ -1,10 +1,6 @@
 <p align="center">
   <a href="https://github.com/angular/angular" target="blank">
-    <img src="https://angular.io/assets/images/logos/angular/angular.svg" height="90" alt="Angular logo" />
-  </a>
-  <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-  <a href="https://github.com/surmon-china/nodepress" target="blank">
-    <img src="https://raw.githubusercontent.com/surmon-china/angular-admin/master/src/assets/images/profile/logo.png" height="90" alt="nodepress logo" />
+    <img src="https://angular.io/assets/images/logos/angular/angular.svg" height="100" alt="Angular logo" />
   </a>
 </p>
 
