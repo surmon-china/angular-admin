@@ -14,11 +14,13 @@
 
 # Angular Admin
 
-[![nodepress](https://img.shields.io/badge/NODE-PRESS-83BA2F?style=for-the-badge&labelColor=90C53F)](https://github.com/surmon-china/nodepress)
+[![nodepress](https://raw.githubusercontent.com/surmon-china/nodepress/main/badge.svg)](https://github.com/surmon-china/nodepress)
+&nbsp;
 [![GitHub stars](https://img.shields.io/github/stars/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/stargazers)
+&nbsp;
 [![GitHub issues](https://img.shields.io/github/issues-raw/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/issues)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/surmon-china/angular-admin/Deploy?label=deploy&style=for-the-badge)](https://github.com/surmon-china/angular-admin/actions?query=workflow:%22Deploy%22)
-[![GitHub license](https://img.shields.io/github/license/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/blob/master/LICENSE)
+&nbsp;
+[![GitHub license](https://img.shields.io/github/license/surmon-china/angular-admin.svg?style=for-the-badge)](/LICENSE)
 
 **Admin client for [surmon.me](https://github.com/surmon-china/surmon.me) blog, powered by [Angular](https://github.com/angular/angular) and [Bootstrap4](https://github.com/twbs/bootstrap).** 
 
