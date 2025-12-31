@@ -6,9 +6,9 @@
 
 # DEPRECATED‼️
 
-👉 **The new admin project [veact-admin](https://github.com/surmon-china/veact-admin)**
+👉 **The new admin project [surmon.me.admin](https://github.com/surmon-china/surmon.me.admin)**
 
-**此项目已废弃，请关注 [veact-admin](https://github.com/surmon-china/veact-admin)**
+**此项目已废弃，请关注 [surmon.me.admin](https://github.com/surmon-china/surmon.me.admin)**
 
 ---
 
