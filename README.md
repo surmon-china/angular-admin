@@ -29,7 +29,7 @@ This project was originally forked from [ng2-admin](https://akveo.github.io/ng2-
 
 **Changelog: [CHANGELOG.md](./CHANGELOG.md)**
 
-**Related Projects**
+**Related projects**
 - [NodePress](https://github.com/surmon-china/nodepress) — RESTful API service (CMS core)
 - [surmon.me](https://github.com/surmon-china/surmon.me) — SSR blog website
 - [surmon.me.native](https://github.com/surmon-china/surmon.me.native) — Blog native app
