@@ -4,13 +4,12 @@
   </a>
 </p>
 
-# DEPRECATED‼️
+# ⚠️ DEPRECATED
 
-👉 **The new admin project [surmon.me.admin](https://github.com/surmon-china/surmon.me.admin)**
+**This project has been deprecated.**
+Please use the new admin project instead: 
 
-**此项目已废弃，请关注 [surmon.me.admin](https://github.com/surmon-china/surmon.me.admin)**
-
----
+👉 [**surmon.me.admin**](https://github.com/surmon-china/surmon.me.admin)
 
 # Angular Admin
 
@@ -22,24 +21,22 @@
 &nbsp;
 [![GitHub license](https://img.shields.io/github/license/surmon-china/angular-admin.svg?style=for-the-badge)](/LICENSE)
 
-**Admin client for [surmon.me](https://github.com/surmon-china/surmon.me) blog, powered by [Angular](https://github.com/angular/angular) and [Bootstrap4](https://github.com/twbs/bootstrap).** 
+**An admin panel for [surmon.me](https://github.com/surmon-china/surmon.me), built with [Angular](https://github.com/angular/angular) and [Bootstrap 4](https://github.com/twbs/bootstrap).**
 
-**适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 管理员后台的前端应用，使用 [Angular](https://github.com/angular/angular) 和 [Bootstrap4](https://github.com/twbs/bootstrap) 进行开发。** 
+**适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 的后台管理系统（旧版），使用 [Angular](https://github.com/angular/angular) 和 [Bootstrap 4](https://github.com/twbs/bootstrap) 进行开发。** 
 
-The project forked from [ng2-admin](https://akveo.github.io/ng2-admin/). 项目原始来自 [ng2-admin](https://akveo.github.io/ng2-admin/)。
+This project was originally forked from [ng2-admin](https://akveo.github.io/ng2-admin/). 项目最初基于 [ng2-admin](https://akveo.github.io/ng2-admin/)。
 
+**Changelog: [CHANGELOG.md](./CHANGELOG.md)**
 
-**其他相关项目：**
-- **RESTful API service:** [nodepress](https://github.com/surmon-china/nodepress) powered by [nestjs](https://github.com/nestjs/nest)
-- **web client for user:** [surmon.me](https://github.com/surmon-china/surmon.me) powered by [Vue (3)](https://vuejs.org/)
-- **native app client:** [surmon.me.native](https://github.com/surmon-china/surmon.me.native) powered by [react-native](https://github.com/facebook/react-native)
-
-**更新记录：[CHANGELOG.md](https://github.com/surmon-china/angular-admin/blob/master/CHANGELOG.md#changelog)**
+**Related Projects**
+- [NodePress](https://github.com/surmon-china/nodepress) — RESTful API service (CMS core)
+- [surmon.me](https://github.com/surmon-china/surmon.me) — SSR blog website
+- [surmon.me.native](https://github.com/surmon-china/surmon.me.native) — Blog native app
 
 ## Screenshot
 
 ![](https://raw.githubusercontent.com/surmon-china/angular-admin/master/presses/dashboard-dark.png)
-
 
 ## Development setup
 
