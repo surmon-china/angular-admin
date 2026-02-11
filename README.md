@@ -6,7 +6,7 @@
 
 # ⚠️ DEPRECATED
 
-**This project has been deprecated.**
+**This project has been deprecated!**
 
 Please use the new admin project instead: [**surmon.me.admin**](https://github.com/surmon-china/surmon.me.admin)
 
