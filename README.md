@@ -4,12 +4,6 @@
   </a>
 </p>
 
-# ⚠️ DEPRECATED
-
-**This project has been deprecated!**
-
-Please use the new admin project instead: [**surmon.me.admin**](https://github.com/surmon-china/surmon.me.admin)
-
 # Angular Admin
 
 [![nodepress](https://raw.githubusercontent.com/surmon-china/nodepress/main/branding/badge.svg)](https://github.com/surmon-china/nodepress)
@@ -19,6 +13,12 @@ Please use the new admin project instead: [**surmon.me.admin**](https://github.c
 [![GitHub issues](https://img.shields.io/github/issues-raw/surmon-china/angular-admin.svg?style=for-the-badge)](https://github.com/surmon-china/angular-admin/issues)
 &nbsp;
 [![GitHub license](https://img.shields.io/github/license/surmon-china/angular-admin.svg?style=for-the-badge)](/LICENSE)
+
+⚠️ **This project has been deprecated!**
+
+Please use the new admin project instead: [**surmon.me.admin**](https://github.com/surmon-china/surmon.me.admin)
+
+---
 
 **An admin panel for [surmon.me](https://github.com/surmon-china/surmon.me), built with [Angular](https://github.com/angular/angular) and [Bootstrap 4](https://github.com/twbs/bootstrap).**
 
