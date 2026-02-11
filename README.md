@@ -24,7 +24,7 @@ Please use the new admin project instead: [**surmon.me.admin**](https://github.c
 
 **适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 的后台管理系统（旧版），使用 [Angular](https://github.com/angular/angular) 和 [Bootstrap 4](https://github.com/twbs/bootstrap) 进行开发。** 
 
-**Changelog: [CHANGELOG.md](./CHANGELOG.md)**
+[CHANGELOG.md](./CHANGELOG.md)
 
 **Related projects**
 - [NodePress](https://github.com/surmon-china/nodepress) — RESTful API service (CMS core)
