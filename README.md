@@ -1,15 +1,14 @@
 <p align="center">
   <a href="https://github.com/angular/angular" target="blank">
-    <img src="https://angular.io/assets/images/logos/angular/angular.svg" height="100" alt="Angular logo" />
+    <img src="https://angular.io/assets/images/logos/angular/angular.svg" height="160" alt="Angular logo" />
   </a>
 </p>
 
 # ⚠️ DEPRECATED
 
 **This project has been deprecated.**
-Please use the new admin project instead: 
 
-👉 [**surmon.me.admin**](https://github.com/surmon-china/surmon.me.admin)
+Please use the new admin project instead: [**surmon.me.admin**](https://github.com/surmon-china/surmon.me.admin)
 
 # Angular Admin
 
@@ -25,14 +24,14 @@ Please use the new admin project instead:
 
 **适用于 [surmon.me](https://github.com/surmon-china/surmon.me) 的后台管理系统（旧版），使用 [Angular](https://github.com/angular/angular) 和 [Bootstrap 4](https://github.com/twbs/bootstrap) 进行开发。** 
 
-This project was originally forked from [ng2-admin](https://akveo.github.io/ng2-admin/). 项目最初基于 [ng2-admin](https://akveo.github.io/ng2-admin/)。
-
 **Changelog: [CHANGELOG.md](./CHANGELOG.md)**
 
 **Related projects**
 - [NodePress](https://github.com/surmon-china/nodepress) — RESTful API service (CMS core)
 - [surmon.me](https://github.com/surmon-china/surmon.me) — SSR blog website
 - [surmon.me.native](https://github.com/surmon-china/surmon.me.native) — Blog native app
+
+This project was originally forked from [ng2-admin](https://akveo.github.io/ng2-admin/). 项目最初基于 [ng2-admin](https://akveo.github.io/ng2-admin/)。
 
 ## Screenshot
 
