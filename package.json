@@ -57,7 +57,7 @@
     "js-base64": "^3.6.0",
     "loaders.css": "^0.1.2",
     "lodash": "^4.17.20",
-    "marked": "^1.2.7",
+    "marked": "^2.0.0",
     "ngx-bootstrap": "^6.2.0",
     "normalize.css": "^8.0.1",
     "rxjs": "~6.6.3",
